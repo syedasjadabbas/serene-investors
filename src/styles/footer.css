@@ -1,0 +1,31 @@
+.site-footer {
+  --footer-muted: #aebbaf;
+  --footer-line: rgb(247 245 239 / 0.18);
+  background: #1f3d2e;
+  color: #f7f5ef;
+}
+
+.site-footer a {
+  color: #dce7de;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: #ffffff;
+}
+
+.site-footer :where(a, button):focus-visible {
+  outline: 2px solid #f7f5ef;
+  outline-offset: 3px;
+}
+
+.site-footer__rule {
+  border: 0;
+  border-top: 1px solid var(--footer-line);
+}
+
+.site-footer__static {
+  color: var(--footer-muted);
+}

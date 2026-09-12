@@ -1,0 +1,69 @@
+.hero {
+  --hero-copy: 24rem;
+}
+
+.hero-copy {
+  max-width: var(--hero-copy);
+}
+
+.hero-visual {
+  max-width: 34rem;
+}
+
+.hero-image {
+  object-position: 50% 22%;
+  transform-origin: center center;
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  [data-hero-frame] {
+    perspective: var(--depth-perspective);
+    transform-style: preserve-3d;
+  }
+
+  [data-hero-image] {
+    transform: rotateY(-1.2deg) rotateX(0.8deg);
+  }
+}
+
+.hero-card,
+.hero-receipt {
+  box-shadow: var(--lift-deep);
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding-right: 0;
+  }
+
+  .hero-visual {
+    max-width: none;
+  }
+
+  .hero-image {
+    height: min(72rem, calc(100dvh - var(--header-h) - var(--promo-h) + 2rem));
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    object-position: 48% 18%;
+  }
+
+  .hero-card {
+    left: -0.75rem;
+    bottom: 2.5rem;
+    width: 21rem;
+    transform: rotate(-1.5deg);
+  }
+
+  .hero-receipt {
+    top: 12%;
+    right: 7%;
+    width: 13.5rem;
+    transform: rotate(2.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-card,
+  .hero-receipt {
+    transform: none;
+  }
+}

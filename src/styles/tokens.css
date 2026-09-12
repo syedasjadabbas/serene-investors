@@ -1,0 +1,89 @@
+:root {
+  /* Serene Investors: warm paper, charcoal type, botanical green accent. */
+  --bg: #f7f5ef;
+  --bg-warm: #efede5;
+  --surface: #ffffff;
+  --ink: #182019;
+  --muted: #5d665e;
+  --subtle: #8a918b;
+  --primary: #315c45;
+  --primary-ink: #ffffff;
+  --accent: #1f3d2e;
+  --accent-ink: #f7f5ef;
+  --soft: #dce7de;
+  --soft-ink: #1f3d2e;
+  --line: #d9ddd7;
+  --danger: #7a4036;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  --type-display: clamp(2.75rem, 6vw, 5.15rem);
+  --type-section: clamp(2.35rem, 4.1vw, 3.75rem);
+  --type-quote: clamp(2rem, 4vw, 3.35rem);
+  --type-panel: clamp(1.65rem, 2.4vw, 2.2rem);
+  --type-name: 1.4rem;
+  --type-figure: clamp(3.4rem, 6.2vw, 5.6rem);
+  --type-invest: clamp(3rem, 5.2vw, 4.6rem);
+  --type-body: 1.0625rem;
+  --type-meta: 0.875rem;
+  --type-kicker: 0.75rem;
+  --lh-display: 1.06;
+  --lh-section: 1.12;
+  --lh-body: 1.7;
+  --track-display: -0.03em;
+
+  --section-y: 4rem;
+  --section-y-lg: 5.5rem;
+  --section-y-quiet: 2.75rem;
+  --section-y-quiet-lg: 3.25rem;
+
+  --container: 72rem;
+  --container-wide: 80rem;
+  --header-h: 4.25rem;
+  --promo-h-open: 2.5rem;
+  --promo-h: var(--promo-h-open);
+  --lift: 0 4px 12px rgb(24 32 25 / 0.08);
+  --lift-deep: 0 18px 40px rgb(24 32 25 / 0.14);
+  --depth-perspective: 1400px;
+  --depth-far: -56px;
+  --depth-back: -32px;
+  --depth-mid: 0px;
+  --depth-front: 40px;
+  --depth-hover: 28px;
+
+  --z-dropdown: 20;
+  --z-sticky: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-med: 320ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 1ms;
+    --duration-med: 1ms;
+  }
+}

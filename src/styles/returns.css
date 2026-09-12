@@ -1,0 +1,41 @@
+.return-flow__rule {
+  width: 1px;
+  height: 1.25rem;
+  margin-inline: auto;
+  background: var(--line);
+}
+
+.return-flow__bar {
+  min-width: 4.5rem;
+  height: 0.55rem;
+  border-radius: var(--radius-pill);
+}
+
+.return-flow__bar--rent {
+  background: var(--soft);
+}
+
+.return-flow__bar--value {
+  background: var(--primary);
+}
+
+.return-media {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.return-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 1024px) {
+  .return-media img {
+    aspect-ratio: 4 / 5;
+    min-height: 42rem;
+  }
+}

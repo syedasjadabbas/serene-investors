@@ -1,0 +1,503 @@
+.chapter-dark {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.chapter-dark .home-kicker,
+.chapter-dark .home-lede,
+.chapter-dark .text-muted,
+.chapter-dark .trust-point__index {
+  color: #aebbaf;
+}
+
+.chapter-dark .home-heading {
+  color: var(--accent-ink);
+}
+
+.chapter-dark .border-line {
+  border-color: rgb(247 245 239 / 0.16);
+}
+
+.chapter-green {
+  background: var(--primary);
+  color: var(--primary-ink);
+}
+
+.chapter-green .home-kicker,
+.chapter-green .home-lede,
+.chapter-green .text-muted {
+  color: #d5e0d6;
+}
+
+.chapter-green .home-heading {
+  color: var(--primary-ink);
+}
+
+.chapter-green .text-subtle {
+  color: #c3d1c6;
+}
+
+.how-canvas {
+  position: relative;
+}
+
+.how-canvas img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 18rem;
+  object-fit: cover;
+  object-position: 50% 62%;
+  border-radius: var(--radius-lg);
+}
+
+.how-canvas__steps {
+  display: grid;
+  list-style: none;
+  padding: 0;
+  gap: 0;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.holding-canvas {
+  position: relative;
+}
+
+.holding-canvas__main {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.holding-canvas__main img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.holding-canvas__panel {
+  margin-top: 1rem;
+}
+
+.holding-canvas__support {
+  margin-top: 1rem;
+}
+
+.holding-canvas__support img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.property-stage {
+  position: relative;
+  min-height: 32rem;
+}
+
+.property-stage__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 22rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.property-stage__card {
+  margin-top: 1.25rem;
+}
+
+.fund-stage {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.fund-stage__scene {
+  position: relative;
+  min-height: 28rem;
+}
+
+.fund-stage__field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.fund-stage__field img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  opacity: 0.34;
+  filter: saturate(0.45) contrast(1.08);
+  mix-blend-mode: luminosity;
+}
+
+.fund-phone {
+  position: relative;
+  z-index: 2;
+  width: min(20rem, 100%);
+  margin-inline: auto;
+}
+
+.fund-phone__photo {
+  display: block;
+  width: 100%;
+  height: 11.5rem;
+  margin-top: 1rem;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.fund-float {
+  overflow: hidden;
+  width: min(16.5rem, 100%);
+  margin-top: 1rem;
+}
+
+.fund-float__image {
+  display: block;
+  width: 100%;
+  height: 7.5rem;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.fund-float__body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.reward-deck {
+  display: grid;
+  gap: 1rem;
+}
+
+.reward-deck__card {
+  min-height: 22rem;
+  padding: 1.75rem 1.6rem;
+  border-radius: var(--radius-lg);
+}
+
+.reward-deck__card--one {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.reward-deck__card--two {
+  background: var(--primary);
+  color: var(--primary-ink);
+}
+
+.reward-deck__card--three {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.reward-deck__card--two .text-muted,
+.reward-deck__card--three .text-muted {
+  color: rgb(247 245 239 / 0.72);
+}
+
+.reward-deck__card--two .home-kicker,
+.reward-deck__card--three .home-kicker {
+  color: rgb(247 245 239 / 0.7);
+}
+
+.value-stage {
+  position: relative;
+  min-height: 28rem;
+}
+
+.value-stage__phone {
+  position: relative;
+  z-index: 2;
+  width: min(21rem, 100%);
+  margin-inline: auto;
+}
+
+.value-stage__float {
+  width: min(16rem, 100%);
+  margin-top: 1rem;
+}
+
+.mark-wall {
+  display: grid;
+  gap: 1.5rem 2rem;
+}
+
+.mark-wall__name {
+  font-size: clamp(1.35rem, 3vw, 2.15rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.trust-stage {
+  position: relative;
+}
+
+.trust-stage__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 22rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  opacity: 0.28;
+}
+
+.trust-stage__cards {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .how-canvas img {
+    min-height: 26rem;
+  }
+
+  .how-canvas__steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .reward-deck {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-inline: -0.75rem;
+  }
+
+  .reward-deck__card {
+    margin-inline: -0.65rem;
+  }
+
+  .reward-deck__card--one {
+    transform: rotate(-2.5deg) translateY(1rem);
+  }
+
+  .reward-deck__card--two {
+    transform: rotate(1deg) translateY(-1.25rem);
+    z-index: 2;
+    box-shadow: var(--lift-deep);
+  }
+
+  .reward-deck__card--three {
+    transform: rotate(3deg) translateY(0.75rem);
+  }
+
+  .mark-wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 3rem;
+  }
+
+  .trust-stage__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .how-canvas img {
+    min-height: 34rem;
+    aspect-ratio: 21 / 9;
+  }
+
+  .how-canvas__steps {
+    position: absolute;
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 0;
+    border: 0;
+    background: var(--surface);
+    box-shadow: var(--lift-deep);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.75rem;
+  }
+
+  .holding-canvas {
+    min-height: 44rem;
+  }
+
+  .holding-canvas__main {
+    width: 78%;
+  }
+
+  .holding-canvas__main img {
+    min-height: 44rem;
+    aspect-ratio: auto;
+    height: 44rem;
+  }
+
+  .holding-canvas__panel {
+    position: absolute;
+    left: 1.75rem;
+    bottom: -1.75rem;
+    z-index: 4;
+    width: min(22rem, calc(100% - 3.5rem));
+    margin-top: 0;
+    box-shadow: var(--lift-deep);
+  }
+
+  .holding-canvas__support {
+    position: absolute;
+    width: 27%;
+    margin-top: 0;
+    z-index: 3;
+    box-shadow: var(--lift-deep);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .holding-canvas__support--one {
+    top: 7%;
+    right: -1.25rem;
+    transform: rotate(2.2deg);
+  }
+
+  .holding-canvas__support--two {
+    right: 6%;
+    bottom: -2.25rem;
+    transform: rotate(-2.8deg);
+  }
+
+  .property-stage {
+    min-height: 42rem;
+  }
+
+  .property-stage__media img {
+    min-height: 40rem;
+    aspect-ratio: 16 / 9;
+  }
+
+  .property-stage__card {
+    position: absolute;
+    left: 2.25rem;
+    bottom: -1.75rem;
+    z-index: 3;
+    width: min(23rem, calc(100% - 4.5rem));
+    margin-top: 0;
+    box-shadow: var(--lift-deep);
+  }
+
+  .fund-stage {
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .fund-stage__scene {
+    min-height: 40rem;
+  }
+
+  .fund-phone {
+    width: 22.5rem;
+    margin-left: 18%;
+  }
+
+  .fund-float {
+    position: absolute;
+    width: 16.75rem;
+    margin-top: 0;
+    box-shadow: var(--lift-deep);
+  }
+
+  .fund-float--one {
+    top: 6%;
+    right: 0;
+    transform: rotate(3deg);
+  }
+
+  .fund-float--two {
+    left: 0;
+    bottom: 12%;
+    transform: rotate(-3.5deg);
+  }
+
+  .fund-float--three {
+    right: 8%;
+    bottom: 0;
+    transform: rotate(2deg);
+  }
+
+  .value-stage {
+    min-height: 42rem;
+  }
+
+  .value-stage__phone {
+    width: 24rem;
+    margin-left: 18%;
+  }
+
+  .value-stage__float {
+    position: absolute;
+    width: 16.5rem;
+    margin-top: 0;
+    box-shadow: var(--lift-deep);
+  }
+
+  .value-stage__float--one {
+    top: 8%;
+    right: 0;
+    transform: rotate(2.5deg);
+  }
+
+  .value-stage__float--two {
+    left: 0;
+    bottom: 10%;
+    transform: rotate(-3deg);
+  }
+
+  .reward-deck {
+    margin-inline: -2.5rem;
+  }
+
+  .mark-wall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem 3.5rem;
+  }
+
+  .trust-stage__media img {
+    min-height: 36rem;
+  }
+
+  .trust-stage__record {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 3;
+    width: min(24rem, calc(100% - 3rem));
+    transform: translate(-50%, -42%);
+    box-shadow: var(--lift-deep);
+  }
+
+  .trust-stage__cards {
+    margin-top: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reward-deck__card--one,
+  .reward-deck__card--two,
+  .reward-deck__card--three,
+  .holding-canvas__support--one,
+  .holding-canvas__support--two,
+  .fund-float--one,
+  .fund-float--two,
+  .fund-float--three,
+  .value-stage__float--one,
+  .value-stage__float--two {
+    transform: none;
+  }
+}

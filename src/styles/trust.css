@@ -1,0 +1,33 @@
+.trust-record {
+  padding: 1.5rem 1.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--lift);
+}
+
+.trust-point {
+  padding-block: 1.5rem;
+  border-top: 1px solid rgb(247 245 239 / 0.16);
+}
+
+.trust-point:first-child {
+  border-top: 0;
+}
+
+@media (min-width: 768px) {
+  .trust-point {
+    padding: 1.75rem 1.75rem 1.75rem 0;
+    border-top: 0;
+  }
+
+  .trust-point:nth-child(even) {
+    padding-left: 1.75rem;
+    border-left: 1px solid rgb(247 245 239 / 0.16);
+  }
+
+  .trust-point:nth-child(n + 3) {
+    border-top: 1px solid rgb(247 245 239 / 0.16);
+  }
+}

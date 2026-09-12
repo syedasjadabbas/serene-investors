@@ -1,0 +1,123 @@
+.app-devices {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  min-height: 34rem;
+}
+
+.app-phone {
+  background: var(--accent);
+  border-radius: 1.7rem;
+  padding: 0.5rem;
+  box-shadow: var(--lift-deep);
+}
+
+.app-phone__screen {
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: var(--bg);
+}
+
+.app-phone__island {
+  width: 5.5rem;
+  height: 0.7rem;
+  margin: 0.55rem auto 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+}
+
+.app-phone--main {
+  position: relative;
+  z-index: 2;
+  width: min(20rem, 100%);
+}
+
+.app-phone--side {
+  position: relative;
+  z-index: 1;
+  width: min(15rem, 72%);
+  margin-top: -7rem;
+  margin-right: 5rem;
+}
+
+.app-phone__photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.app-float {
+  position: absolute;
+  z-index: 3;
+  width: min(12.5rem, calc(100% - 2rem));
+}
+
+.app-float--yield {
+  top: 6%;
+  right: 0;
+}
+
+.app-float--value {
+  bottom: 8%;
+  left: 0;
+}
+
+@media (min-width: 1024px) {
+  .app-devices {
+    min-height: 48rem;
+  }
+
+  .app-phone--main {
+    width: 24rem;
+    margin-left: 16%;
+  }
+
+  .app-phone--side {
+    position: absolute;
+    top: 8%;
+    left: 0;
+    width: 18rem;
+    margin: 0;
+  }
+
+  .app-float--yield {
+    top: 4%;
+    right: 0;
+    transform: rotate(2.5deg);
+  }
+
+  .app-float--value {
+    bottom: 6%;
+    left: 2%;
+    transform: rotate(-2.5deg);
+  }
+}
+
+@media (max-width: 1023px) {
+  .app-float--yield {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .app-float--value {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    margin-top: 1rem;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-phone--main,
+  .app-phone--side,
+  .app-float--yield,
+  .app-float--value {
+    transform: none;
+  }
+}

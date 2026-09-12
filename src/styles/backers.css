@@ -1,0 +1,23 @@
+.backer-item {
+  padding-block: 1.35rem;
+  border-top: 1px solid var(--line);
+}
+
+.backer-item:first-child {
+  border-top: 0;
+}
+
+.backer-item__name {
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+.backer-item:hover .backer-item__name,
+.backer-item:focus-within .backer-item__name {
+  color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backer-item__name {
+    transition: none;
+  }
+}

@@ -1,0 +1,22 @@
+.property-chips {
+  scrollbar-width: none;
+}
+
+.property-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.property-select {
+  min-height: 2.75rem;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding-inline: 0 1.5rem;
+  font-size: 0.875rem;
+}
+
+.property-select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}

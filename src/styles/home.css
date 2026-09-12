@@ -1,0 +1,78 @@
+.home-band {
+  padding-inline: 1.25rem;
+  padding-block: var(--section-y);
+}
+
+.home-band--quiet {
+  padding-block: var(--section-y-quiet);
+}
+
+.home-kicker {
+  font-size: var(--type-kicker);
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.home-heading {
+  font-size: var(--type-section);
+  font-weight: 600;
+  line-height: var(--lh-section);
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+.home-lede {
+  margin-top: 1.1rem;
+  font-size: var(--type-body);
+  line-height: var(--lh-body);
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.home-cta {
+  min-height: 2.75rem;
+  padding-inline: 1.5rem;
+  font-size: 0.9375rem;
+}
+
+.home-band--stage {
+  padding-block: 5rem;
+}
+
+.stage-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--lift);
+}
+
+.stage-breakout {
+  width: min(100vw, 92rem);
+  margin-inline: auto;
+}
+
+.how-scene {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .home-band {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-band {
+    padding-inline: 2.5rem;
+    padding-block: var(--section-y-lg);
+  }
+
+  .home-band--quiet {
+    padding-block: var(--section-y-quiet-lg);
+  }
+
+  .home-band--stage {
+    padding-block: 7rem;
+  }
+}

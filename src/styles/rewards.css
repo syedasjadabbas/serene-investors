@@ -1,0 +1,4 @@
+.reward-deck__card {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,131 @@
+.offering-panel__action {
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+.offering-panel__action:hover,
+.offering-panel__action:focus-visible {
+  color: var(--primary);
+}
+
+.offering-stage {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.offering-stage__media {
+  position: relative;
+}
+
+.offering-stage__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.offering-stage--property .offering-stage__media img {
+  aspect-ratio: 4 / 3;
+}
+
+.offering-stage__card {
+  position: relative;
+}
+
+.offering-stage--fund .offering-stack {
+  position: relative;
+  min-height: 22rem;
+}
+
+.offering-stage--fund .offering-stack img {
+  position: absolute;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--lift);
+}
+
+.offering-stage--fund .offering-stack img:nth-child(1) {
+  inset: 0 18% 12% 0;
+  z-index: 1;
+}
+
+.offering-stage--fund .offering-stack img:nth-child(2) {
+  top: 18%;
+  right: 0;
+  width: 46%;
+  height: 58%;
+  z-index: 2;
+}
+
+.offering-stage--fund .offering-stack img:nth-child(3) {
+  right: 8%;
+  bottom: 0;
+  width: 38%;
+  height: 42%;
+  z-index: 3;
+}
+
+@media (min-width: 768px) {
+  .offering-stage--property {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .offering-stage--property {
+    display: block;
+    position: relative;
+  }
+
+  .offering-stage--property .offering-stage__media img {
+    aspect-ratio: 16 / 9;
+    min-height: 34rem;
+  }
+
+  .offering-stage--property .offering-stage__card {
+    position: absolute;
+    left: 2rem;
+    bottom: 2rem;
+    z-index: 2;
+    width: min(22rem, calc(100% - 4rem));
+  }
+
+  .offering-stage--fund {
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: end;
+    gap: 3rem;
+  }
+
+  .offering-stage--fund .offering-stack {
+    min-height: 34rem;
+  }
+
+  .offering-stage--fund .offering-stage__card {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .offering-stage--fund .offering-stack {
+    min-height: 20rem;
+  }
+
+  .offering-stage--fund .offering-stack img:nth-child(1) {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .offering-stage--fund .offering-stack img:nth-child(2),
+  .offering-stage--fund .offering-stack img:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offering-stage__media img {
+    transition: none;
+  }
+}

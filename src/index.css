@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/mona-sans';
+@import './styles/tokens.css';
+@import './styles/home.css';
+@import './styles/chapters.css';
+@import './styles/hero.css';
+@import './styles/holdings.css';
+@import './styles/offerings.css';
+@import './styles/returns.css';
+@import './styles/rewards.css';
+@import './styles/trust.css';
+@import './styles/backers.css';
+@import './styles/stories.css';
+@import './styles/app.css';
+@import './styles/pinned-story.css';
+@import './styles/depth.css';
+@import './styles/footer.css';
+@import './styles/properties.css';
+@import './styles/property-detail.css';
+
+@theme inline {
+  --font-sans: 'Mona Sans Variable', 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
+  --color-bg: var(--bg);
+  --color-bg-warm: var(--bg-warm);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-ink: var(--primary-ink);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-soft: var(--soft);
+  --color-soft-ink: var(--soft-ink);
+  --color-line: var(--line);
+  --color-danger: var(--danger);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+}
+
+:where(a, button, summary, [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  z-index: var(--z-tooltip);
+  translate: 0 -120%;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.5rem 1rem;
+}
+
+.skip-link:focus {
+  translate: 0 1rem;
+}
+
+.brand-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    translate: 0 -0.75rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}

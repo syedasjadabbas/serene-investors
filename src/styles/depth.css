@@ -1,0 +1,214 @@
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  [data-depth-stage] {
+    perspective: var(--depth-perspective);
+    transform-style: preserve-3d;
+  }
+
+  [data-depth] {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  [data-depth='far'] {
+    transform: translateZ(var(--depth-far));
+  }
+
+  [data-depth='back'] {
+    transform: translateZ(var(--depth-back));
+  }
+
+  [data-depth='mid'] {
+    transform: translateZ(var(--depth-mid));
+  }
+
+  [data-depth='front'] {
+    transform: translateZ(var(--depth-front));
+  }
+
+  .depth-lift {
+    transition:
+      transform 0.6s var(--ease-out-quart),
+      box-shadow 0.6s var(--ease-out-quart);
+  }
+
+  .depth-lift:hover {
+    transform: translate3d(0, -6px, var(--depth-hover)) rotateX(1.6deg);
+    box-shadow: var(--lift-deep);
+  }
+
+  .holding-canvas__support,
+  .holding-canvas__panel,
+  .property-stage__card,
+  .fund-float,
+  .stage-card.depth-lift {
+    transform-style: preserve-3d;
+  }
+
+  .holding-canvas__support img,
+  .holding-canvas__main img,
+  .holding-canvas__support a {
+    transition: transform 0.65s var(--ease-out-quart);
+  }
+
+  .holding-canvas__support {
+    transition:
+      transform 0.65s var(--ease-out-quart),
+      box-shadow 0.65s var(--ease-out-quart);
+  }
+
+  .holding-canvas__support:hover {
+    box-shadow: var(--lift-deep);
+  }
+
+  .holding-canvas__support:hover a {
+    transform: translate3d(0, -8px, 0);
+  }
+
+  .holding-canvas__support:hover img {
+    transform: scale(1.045);
+  }
+
+  .holding-canvas__support:hover p {
+    transform: translateY(-2px);
+  }
+
+  .holding-canvas__support p {
+    transition: transform 0.65s var(--ease-out-quart);
+  }
+
+  .reward-deck {
+    perspective: var(--depth-perspective);
+    transform-style: preserve-3d;
+  }
+
+  .reward-deck__card--one {
+    transform: translateZ(-32px) rotateY(2deg) rotateX(1deg);
+  }
+
+  .reward-deck__card--two {
+    transform: translateZ(0);
+  }
+
+  .reward-deck__card--three {
+    transform: translateZ(28px) rotateY(-2deg);
+  }
+
+  .reward-deck:hover .reward-deck__card {
+    transform: translateZ(-18px) scale(0.985);
+  }
+
+  .reward-deck__card {
+    transition:
+      transform 0.6s var(--ease-out-quart),
+      box-shadow 0.6s var(--ease-out-quart);
+  }
+
+  .reward-deck__card:hover {
+    z-index: 3;
+    transform: translate3d(0, -10px, 48px) rotateY(-2deg);
+    box-shadow: var(--lift-deep);
+  }
+
+  .story-portrait img {
+    transition: transform 0.6s var(--ease-out-quart);
+  }
+
+  .story-portrait:hover img {
+    transform: scale(1.03);
+  }
+
+  .story-nav__button {
+    transition:
+      transform 0.35s var(--ease-out-quart),
+      color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .story-nav__button:hover {
+    transform: translateY(-2px);
+  }
+
+  .home-cta {
+    transition:
+      transform 0.35s var(--ease-out-quart),
+      background-color 0.35s var(--ease-out-quart),
+      color 0.35s var(--ease-out-quart);
+  }
+
+  .home-cta:hover {
+    transform: translateY(-2px) scale(1.015);
+  }
+
+  .home-cta svg,
+  [data-rewards-cta] svg,
+  .property-stage__card svg,
+  .fund-float svg,
+  .holding-canvas__panel svg {
+    transition: transform 0.35s var(--ease-out-quart);
+  }
+
+  .home-cta:hover svg,
+  [data-rewards-cta]:hover svg,
+  .property-stage__card:hover svg,
+  .fund-float:hover svg,
+  .holding-canvas__panel:hover svg {
+    transform: translateX(4px);
+  }
+
+  .site-nav-link {
+    position: relative;
+  }
+
+  .site-nav-link::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.35rem;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease-out-quart);
+    content: '';
+  }
+
+  .site-nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .press-mark {
+    overflow: hidden;
+  }
+
+  .press-mark span {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+  [data-depth-stage],
+  [data-depth] {
+    transform: none;
+    transform-style: flat;
+    perspective: none;
+  }
+
+  .depth-lift,
+  .depth-lift:hover,
+  .holding-canvas__support:hover,
+  .holding-canvas__support:hover a,
+  .reward-deck__card,
+  .reward-deck__card:hover,
+  .home-cta:hover,
+  .story-portrait:hover img,
+  .story-nav__button:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-cta svg,
+  .site-nav-link::after {
+    transition: none;
+  }
+}
