@@ -77,36 +77,39 @@
   }
 
   .reward-deck {
-    perspective: var(--depth-perspective);
+    perspective: 1300px;
     transform-style: preserve-3d;
   }
 
-  .reward-deck__card--one {
-    transform: translateZ(-32px) rotateY(2deg) rotateX(1deg);
-  }
-
-  .reward-deck__card--two {
-    transform: translateZ(0);
-  }
-
-  .reward-deck__card--three {
-    transform: translateZ(28px) rotateY(-2deg);
-  }
-
-  .reward-deck:hover .reward-deck__card {
-    transform: translateZ(-18px) scale(0.985);
+  .reward-deck__mark {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    z-index: 0;
+    margin: 0;
+    transform: translate(-50%, -50%) translateZ(-70px);
+    font-size: clamp(6rem, 16vw, 12rem);
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    line-height: 0.8;
+    color: var(--primary);
+    opacity: 0.07;
+    pointer-events: none;
+    user-select: none;
   }
 
   .reward-deck__card {
-    transition:
-      transform 0.6s var(--ease-out-quart),
-      box-shadow 0.6s var(--ease-out-quart);
+    z-index: 1;
+    transform-style: preserve-3d;
   }
 
-  .reward-deck__card:hover {
+  .reward-deck__card--two {
     z-index: 3;
-    transform: translate3d(0, -10px, 48px) rotateY(-2deg);
-    box-shadow: var(--lift-deep);
+  }
+
+  .reward-deck__content {
+    transform: translateZ(14px);
   }
 
   .story-portrait img {
@@ -197,8 +200,10 @@
   .depth-lift:hover,
   .holding-canvas__support:hover,
   .holding-canvas__support:hover a,
+  .reward-deck__mark,
   .reward-deck__card,
   .reward-deck__card:hover,
+  .reward-deck__content,
   .home-cta:hover,
   .story-portrait:hover img,
   .story-nav__button:hover {

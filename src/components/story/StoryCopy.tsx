@@ -36,6 +36,7 @@ export function StoryCopy({ state, active, stacked, order }: Props) {
   return (
     <div
       data-story-copy
+      data-story-id={state.id}
       className={active ? 'story-copy story-copy-state is-active' : 'story-copy story-copy-state'}
       style={style}
       aria-hidden={stacked && !active ? true : undefined}

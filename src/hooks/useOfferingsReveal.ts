@@ -60,6 +60,10 @@ export function useOfferingsReveal(rootRef: RefObject<HTMLElement | null>) {
             stagger: 0.14,
             ease: 'power4.out',
             force3D: true,
+            onComplete: () => {
+              gsap.set(cards, { opacity: 1 })
+              gsap.set(root.querySelectorAll('[data-offering-card] *'), { opacity: 1 })
+            },
           },
           '-=0.35',
         )

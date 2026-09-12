@@ -1,5 +1,8 @@
+import { useLayoutEffect, useRef } from 'react'
 import { appDownload, longTermValue, returnsIllustration } from '@/data'
 import { storyAssets, storyHoldingThumb } from '@/data/story-assets'
+import { DEPTH_QUERY } from '@/lib/motion'
+import { gsap, registerGsapPlugins } from '@/lib/gsap'
 
 export function ValueReceiveVisual() {
   const rental = returnsIllustration.components.find((item) => item.id === 'rental')
@@ -29,49 +32,133 @@ export function ValueReceiveVisual() {
 }
 
 export function ValueBuildVisual() {
+  const rootRef = useRef<HTMLDivElement>(null)
   const rental = returnsIllustration.components.find((item) => item.id === 'rental')
   const movement = returnsIllustration.components.find((item) => item.id === 'value')
 
+  useLayoutEffect(() => {
+    const root = rootRef.current
+    const section = root?.closest('section')
+    if (!root || !section) return
+
+    registerGsapPlugins()
+    const media = gsap.matchMedia()
+
+    media.add(DEPTH_QUERY, () => {
+      const ctx = gsap.context(() => {
+        const field = root.querySelector('[data-build-field]')
+        const deck = root.querySelector('[data-build-deck]')
+        if (field) {
+          gsap.fromTo(
+            field,
+            { yPercent: -6 },
+            {
+              yPercent: 6,
+              ease: 'none',
+              force3D: true,
+              scrollTrigger: {
+                trigger: section,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.85,
+              },
+            },
+          )
+        }
+        if (deck) {
+          gsap.fromTo(
+            deck,
+            { y: 16 },
+            {
+              y: -12,
+              ease: 'none',
+              force3D: true,
+              scrollTrigger: {
+                trigger: section,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.85,
+              },
+            },
+          )
+        }
+      }, root)
+
+      return () => ctx.revert()
+    })
+
+    return () => media.revert()
+  }, [])
+
   return (
-    <article className="story-canvas story-statement" data-depth="mid">
-      <header className="story-statement__head">
-        <img src={storyAssets.choose.src} alt="" width={72} height={54} />
-        <div>
-          <p className="story-overlay__kicker">{returnsIllustration.figureLabel}</p>
-          <p className="story-statement__property">{returnsIllustration.propertyName}</p>
-        </div>
-      </header>
+    <div ref={rootRef} className="story-visual-state story-build">
+      <img
+        className="story-build__field"
+        data-build-field
+        data-depth="back"
+        src={storyAssets.choose.src}
+        alt=""
+        width={1400}
+        height={1867}
+      />
+      <div className="story-build__aura" aria-hidden="true" />
 
-      <div className="story-statement__row" data-depth="mid">
-        <p className="story-statement__value">{returnsIllustration.investmentValue}</p>
-        <p className="story-statement__label">{returnsIllustration.investmentLabel}</p>
+      <div className="story-build__deck" data-build-deck>
+        <div className="story-build__pose">
+          <div className="story-build__plate" aria-hidden="true" />
+          <article className="story-canvas story-statement" data-build-panel data-depth="mid">
+          <header className="story-statement__head" data-build-head data-depth="front">
+            <img src={storyAssets.choose.src} alt="" width={72} height={54} />
+            <div>
+              <p className="story-overlay__kicker">{returnsIllustration.figureLabel}</p>
+              <p className="story-statement__property">{returnsIllustration.propertyName}</p>
+            </div>
+          </header>
+
+          <div className="story-statement__row story-statement__row--base">
+            <p className="story-statement__label">{returnsIllustration.investmentLabel}</p>
+            <p className="story-statement__value">{returnsIllustration.investmentValue}</p>
+          </div>
+
+          <div className="story-statement__metrics">
+            {rental ? (
+              <div className="story-statement__row story-statement__row--accent">
+                <p className="story-statement__label">{rental.label}</p>
+                <p className="story-statement__value" data-build-figure>
+                  {rental.value}
+                </p>
+              </div>
+            ) : null}
+            {movement ? (
+              <div className="story-statement__row story-statement__row--accent">
+                <p className="story-statement__label">{movement.label}</p>
+                <p className="story-statement__value" data-build-figure>
+                  {movement.value}
+                </p>
+              </div>
+            ) : null}
+          </div>
+
+          <div className="story-statement__total">
+            <div className="story-statement__row story-statement__row--total">
+              <p className="story-statement__label">{returnsIllustration.total.label}</p>
+              <p className="story-statement__value" data-build-figure>
+                {returnsIllustration.total.value}
+              </p>
+            </div>
+            <div className="story-statement__row story-statement__row--rate">
+              <p className="story-statement__label">{returnsIllustration.rate.label}</p>
+              <p className="story-statement__value" data-build-figure>
+                {returnsIllustration.rate.value}
+              </p>
+            </div>
+          </div>
+
+          <p className="story-statement__disclaimer">{returnsIllustration.disclaimer}</p>
+          </article>
+        </div>
       </div>
-      {rental ? (
-        <div className="story-statement__row story-statement__row--accent">
-          <p className="story-statement__value">{rental.value}</p>
-          <p className="story-statement__label">{rental.label}</p>
-        </div>
-      ) : null}
-      {movement ? (
-        <div className="story-statement__row story-statement__row--accent">
-          <p className="story-statement__value">{movement.value}</p>
-          <p className="story-statement__label">{movement.label}</p>
-        </div>
-      ) : null}
-
-      <div className="story-statement__total" data-depth="front">
-        <div className="story-statement__row story-statement__row--total">
-          <p className="story-statement__value">{returnsIllustration.total.value}</p>
-          <p className="story-statement__label">{returnsIllustration.total.label}</p>
-        </div>
-        <div className="story-statement__row story-statement__row--rate">
-          <p className="story-statement__value">{returnsIllustration.rate.value}</p>
-          <p className="story-statement__label">{returnsIllustration.rate.label}</p>
-        </div>
-      </div>
-
-      <p className="story-statement__disclaimer">{returnsIllustration.disclaimer}</p>
-    </article>
+    </div>
   )
 }
 

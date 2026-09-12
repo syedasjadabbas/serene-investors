@@ -2,7 +2,14 @@ import { useLayoutEffect, type RefObject } from 'react'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { gsap, registerGsapPlugins } from '@/lib/gsap'
 
-export function useTestimonialsReveal(rootRef: RefObject<HTMLElement | null>) {
+type Options = {
+  skipVisual?: boolean
+}
+
+export function useTestimonialsReveal(
+  rootRef: RefObject<HTMLElement | null>,
+  { skipVisual = false }: Options = {},
+) {
   const reduced = usePrefersReducedMotion()
 
   useLayoutEffect(() => {
@@ -12,13 +19,13 @@ export function useTestimonialsReveal(rootRef: RefObject<HTMLElement | null>) {
     registerGsapPlugins()
 
     const headings = root.querySelectorAll('[data-reveal-heading]')
-    const portrait = root.querySelectorAll('[data-story-portrait]')
-    const quote = root.querySelectorAll('[data-story-quote]')
+    const portrait = skipVisual ? [] : root.querySelectorAll('[data-story-portrait]')
+    const quote = skipVisual ? [] : root.querySelectorAll('[data-story-quote]')
 
     const ctx = gsap.context(() => {
       gsap.set(headings, { opacity: 0, y: 14 })
-      gsap.set(portrait, { opacity: 0, scale: 1.06, z: -24 })
-      gsap.set(quote, { opacity: 0, y: 22, z: 20 })
+      if (portrait.length) gsap.set(portrait, { opacity: 0, scale: 1.06, z: -24 })
+      if (quote.length) gsap.set(quote, { opacity: 0, y: 22, z: 20 })
 
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -28,15 +35,16 @@ export function useTestimonialsReveal(rootRef: RefObject<HTMLElement | null>) {
         },
       })
 
-      timeline
-        .to(headings, {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.06,
-          ease: 'power4.out',
-        })
-        .to(
+      timeline.to(headings, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.06,
+        ease: 'power4.out',
+      })
+
+      if (portrait.length) {
+        timeline.to(
           portrait,
           {
             opacity: 1,
@@ -47,7 +55,10 @@ export function useTestimonialsReveal(rootRef: RefObject<HTMLElement | null>) {
           },
           '-=0.12',
         )
-        .to(
+      }
+
+      if (quote.length) {
+        timeline.to(
           quote,
           {
             opacity: 1,
@@ -58,8 +69,9 @@ export function useTestimonialsReveal(rootRef: RefObject<HTMLElement | null>) {
           },
           '-=0.28',
         )
+      }
     }, root)
 
     return () => ctx.revert()
-  }, [reduced, rootRef])
+  }, [reduced, rootRef, skipVisual])
 }

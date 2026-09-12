@@ -16,11 +16,12 @@ export type PointerTiltLayer = {
 type Options = {
   layers: PointerTiltLayer[]
   perspective?: number
+  enabled?: boolean
 }
 
 export function usePointerTilt(
   rootRef: RefObject<HTMLElement | null>,
-  { layers, perspective = 1200 }: Options,
+  { layers, perspective = 1200, enabled = true }: Options,
 ) {
   const layersRef = useRef(layers)
   layersRef.current = layers
@@ -28,7 +29,7 @@ export function usePointerTilt(
 
   useLayoutEffect(() => {
     const root = rootRef.current
-    if (!root || layersRef.current.length === 0) return
+    if (!enabled || !root || layersRef.current.length === 0) return
 
     registerGsapPlugins()
     const media = gsap.matchMedia()
@@ -114,5 +115,5 @@ export function usePointerTilt(
     })
 
     return () => media.revert()
-  }, [key, perspective, rootRef])
+  }, [enabled, key, perspective, rootRef])
 }

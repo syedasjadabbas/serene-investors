@@ -42,8 +42,8 @@ export const offeringSplits: OfferingSplit[] = [
     body: 'Own exposure to a specific fictional property.',
     href: '/properties',
     cta: 'Browse properties',
-    image: cedarCourt.image,
-    imageAlt: cedarCourt.imageAlt,
+    image: '/images/story/direct-cedar-court.png',
+    imageAlt: 'A pale contemporary residence with a planted courtyard in soft morning light',
     example: {
       name: cedarCourt.name,
       meta: cedarCourt.neighborhood,

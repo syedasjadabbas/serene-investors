@@ -4,8 +4,20 @@ import type { Testimonial } from '@/types'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { gsap, registerGsapPlugins } from '@/lib/gsap'
 
-type Props = {
+type ViewProps = {
   item: Testimonial
+  index: number
+  total: number
+  onPrev: () => void
+  onNext: () => void
+}
+
+type SlideProps = {
+  item: Testimonial
+  active: boolean
+}
+
+type ControlsProps = {
   index: number
   total: number
   onPrev: () => void
@@ -16,14 +28,91 @@ function padIndex(value: number) {
   return String(value).padStart(2, '0')
 }
 
-export function TestimonialView({ item, index, total, onPrev, onNext }: Props) {
+export function TestimonialCopy({ item }: { item: Testimonial }) {
+  return (
+    <>
+      <blockquote className="story-quote m-0 text-ink">
+        <p>“{item.quote}”</p>
+      </blockquote>
+      <p className="mt-10 text-lg font-medium tracking-tight">{item.name}</p>
+      <p className="mt-1 text-[length:var(--type-meta)] text-muted">{item.role}</p>
+      <p className="text-[length:var(--type-meta)] text-muted">{item.location}</p>
+    </>
+  )
+}
+
+export function TestimonialControls({ index, total, onPrev, onNext }: ControlsProps) {
+  const current = padIndex(index + 1)
+  const count = padIndex(total)
+
+  return (
+    <div className="mt-12 flex items-center gap-5">
+      <p className="text-sm tabular-nums" aria-hidden="true">
+        <span className="font-medium text-primary">{current}</span>
+        <span className="text-muted"> / {count}</span>
+      </p>
+      <p className="sr-only">
+        Fictional testimonial {index + 1} of {total}
+      </p>
+      <div className="flex gap-2">
+        <button type="button" className="story-nav__button" onClick={onPrev}>
+          <span className="sr-only">Previous fictional testimonial</span>
+          <ChevronLeft size={18} strokeWidth={1.75} aria-hidden="true" />
+        </button>
+        <button type="button" className="story-nav__button" onClick={onNext}>
+          <span className="sr-only">Next fictional testimonial</span>
+          <ChevronRight size={18} strokeWidth={1.75} aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export function TestimonialSlide({ item, active }: SlideProps) {
+  return (
+    <article
+      className="stories-slide"
+      data-stories-slide
+      aria-hidden={active ? undefined : true}
+    >
+      <div
+        className="stories-slide__inner grid items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20"
+        data-stories-inner
+        data-depth-stage
+      >
+        <figure
+          data-story-portrait
+          data-stories-portrait
+          data-depth="back"
+          className="story-portrait depth-lift m-0"
+        >
+          <img
+            src={item.image}
+            alt={item.imageAlt}
+            width={900}
+            height={1120}
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+
+        <div data-story-quote data-stories-quote data-depth="front">
+          <div className="story-pane">
+            <TestimonialCopy item={item} />
+          </div>
+          <div className="stories-controls-spacer" aria-hidden="true" />
+        </div>
+      </div>
+    </article>
+  )
+}
+
+export function TestimonialView({ item, index, total, onPrev, onNext }: ViewProps) {
   const paneRef = useRef<HTMLDivElement>(null)
   const portraitRef = useRef<HTMLElement>(null)
   const firstRef = useRef(true)
   const busyRef = useRef(false)
   const reduced = usePrefersReducedMotion()
-  const current = padIndex(index + 1)
-  const count = padIndex(total)
 
   useLayoutEffect(() => {
     const pane = paneRef.current
@@ -93,35 +182,9 @@ export function TestimonialView({ item, index, total, onPrev, onNext }: Props) {
 
       <div data-story-quote data-depth="front">
         <div ref={paneRef} className="story-pane" aria-live="polite" aria-atomic="true">
-          <blockquote className="story-quote m-0 text-ink">
-            <p>“{item.quote}”</p>
-          </blockquote>
-          <p className="mt-10 text-lg font-medium tracking-tight">{item.name}</p>
-          <p className="mt-1 text-[length:var(--type-meta)] text-muted">
-            {item.role}
-          </p>
-          <p className="text-[length:var(--type-meta)] text-muted">{item.location}</p>
+          <TestimonialCopy item={item} />
         </div>
-
-        <div className="mt-12 flex items-center gap-5">
-          <p className="text-sm tabular-nums" aria-hidden="true">
-            <span className="font-medium text-primary">{current}</span>
-            <span className="text-muted"> / {count}</span>
-          </p>
-          <p className="sr-only">
-            Fictional testimonial {index + 1} of {total}
-          </p>
-          <div className="flex gap-2">
-            <button type="button" className="story-nav__button" onClick={() => swap(onPrev)}>
-              <span className="sr-only">Previous fictional testimonial</span>
-              <ChevronLeft size={18} strokeWidth={1.75} aria-hidden="true" />
-            </button>
-            <button type="button" className="story-nav__button" onClick={() => swap(onNext)}>
-              <span className="sr-only">Next fictional testimonial</span>
-              <ChevronRight size={18} strokeWidth={1.75} aria-hidden="true" />
-            </button>
-          </div>
-        </div>
+        <TestimonialControls index={index} total={total} onPrev={() => swap(onPrev)} onNext={() => swap(onNext)} />
       </div>
     </div>
   )

@@ -12,16 +12,18 @@ export function useBackersReveal(rootRef: RefObject<HTMLElement | null>) {
     registerGsapPlugins()
 
     const headings = root.querySelectorAll('[data-reveal-heading]')
+    const media = root.querySelector('[data-community-media] img')
     const marks = root.querySelectorAll('[data-backer-mark]')
 
     const ctx = gsap.context(() => {
-      gsap.set(headings, { opacity: 0, y: 14 })
-      gsap.set(marks, { opacity: 0, y: 16, x: -12, scale: 0.96, z: -16 })
+      gsap.set(headings, { opacity: 0, y: 16 })
+      if (media) gsap.set(media, { opacity: 0, scale: 1.06 })
+      gsap.set(marks, { opacity: 0, y: 14 })
 
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: root,
-          start: 'top 78%',
+          start: 'top 76%',
           once: true,
         },
       })
@@ -30,24 +32,30 @@ export function useBackersReveal(rootRef: RefObject<HTMLElement | null>) {
         .to(headings, {
           opacity: 1,
           y: 0,
-          duration: 0.5,
-          stagger: 0.06,
-          ease: 'power4.out',
+          duration: 0.52,
+          stagger: 0.07,
+          ease: 'power3.out',
         })
+        .to(
+          media,
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.85,
+            ease: 'power3.out',
+          },
+          '-=0.2',
+        )
         .to(
           marks,
           {
             opacity: 1,
             y: 0,
-            x: 0,
-            scale: 1,
-            z: 0,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: 'power4.out',
-            force3D: true,
+            duration: 0.42,
+            stagger: 0.06,
+            ease: 'power3.out',
           },
-          '-=0.12',
+          '-=0.45',
         )
     }, root)
 

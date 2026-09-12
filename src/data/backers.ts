@@ -1,10 +1,15 @@
 import type { BackerGroup } from '@/types'
+import { storyAssets } from './story-assets'
 
 export const backersIntro = {
   eyebrow: 'Built with',
   heading: 'A fictional property community.',
   body: 'Typographic marks for fictional organizations used only inside this demonstration.',
   sampleLabel: 'Fictional organizations',
+  image: {
+    src: storyAssets.marble.src,
+    alt: storyAssets.marble.alt,
+  },
 } as const
 
 export const backerGroups: BackerGroup[] = [

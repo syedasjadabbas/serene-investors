@@ -14,6 +14,9 @@ type Props = {
   states: StoryState[]
   visuals: ReactNode[]
   footer?: ReactNode
+  segmentVh?: number
+  thresholds?: number[]
+  stepOnScroll?: boolean
 }
 
 export function PinnedStorySection({
@@ -24,19 +27,35 @@ export function PinnedStorySection({
   states,
   visuals,
   footer,
+  segmentVh,
+  thresholds,
+  stepOnScroll,
 }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   const pinRef = useRef<HTMLDivElement>(null)
   const { activeIndex, isPinned } = usePinnedStory(rootRef, pinRef, {
     stateCount: states.length,
+    segmentVh,
+    thresholds,
+    stepOnScroll,
   })
 
   usePointerTilt(rootRef, {
     perspective: 1500,
     layers: [
       { selector: '[data-depth="back"]', x: 10, y: 7, rotateX: 1.6, rotateY: 2, z: -36, invert: true },
-      { selector: '[data-depth="mid"]', x: 8, y: 0, rotateX: 1.8, rotateY: 2.2, z: 12 },
-      { selector: '[data-depth="front"]:not(.story-receipt__card):not(.story-property__card)', x: 12, y: 0, rotateX: 2, rotateY: 2.8, z: 44 },
+      { selector: '[data-depth="mid"]:not([data-build-panel])', x: 8, y: 0, rotateX: 1.8, rotateY: 2.2, z: 12 },
+      { selector: '[data-build-panel]', x: 7, y: 4, rotateX: 2.1, rotateY: 2.6, z: 18 },
+      {
+        selector:
+          '[data-depth="front"]:not(.story-receipt__card):not(.story-property__card):not([data-build-head])',
+        x: 12,
+        y: 0,
+        rotateX: 2,
+        rotateY: 2.8,
+        z: 44,
+      },
+      { selector: '[data-build-head]', x: 10, y: 5, rotateX: 2.4, rotateY: 3, z: 56 },
       { selector: '.story-receipt__card', x: 14, y: 8, rotateX: 2, rotateY: 2.6, rotateZ: -1.2, z: 56 },
       { selector: '.story-property__card', x: 14, y: 8, rotateX: 2.2, rotateY: 3.2, z: 48 },
     ],

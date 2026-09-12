@@ -3,10 +3,15 @@ import Lenis from 'lenis'
 import { gsap, registerGsapPlugins, ScrollTrigger } from '@/lib/gsap'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 
+type ScrollToOptions = {
+  immediate?: boolean
+  duration?: number
+}
+
 type LenisControl = {
   stop: () => void
   start: () => void
-  scrollTo: (target: number | string | HTMLElement) => void
+  scrollTo: (target: number | string | HTMLElement, options?: ScrollToOptions) => void
 }
 
 function scrollWindowTo(target: number | string | HTMLElement) {
@@ -41,10 +46,13 @@ export function LenisProvider({ children }: Props) {
     () => ({
       stop: () => lenisRef.current?.stop(),
       start: () => lenisRef.current?.start(),
-      scrollTo: (target) => {
+      scrollTo: (target, options) => {
         const lenis = lenisRef.current
         if (lenis) {
-          lenis.scrollTo(target, { immediate: true })
+          lenis.scrollTo(target, {
+            immediate: options?.immediate ?? options?.duration === undefined,
+            duration: options?.duration,
+          })
           return
         }
         scrollWindowTo(target)
@@ -67,6 +75,7 @@ export function LenisProvider({ children }: Props) {
     })
 
     lenisRef.current = lenis
+    lenis.scrollTo(0, { immediate: true })
     lenis.on('scroll', ScrollTrigger.update)
 
     const onTick = (time: number) => {

@@ -6,15 +6,16 @@ type Options = {
   selector: string
   yPercent?: number
   scale?: number
+  enabled?: boolean
 }
 
 export function useScrollDepth(
   rootRef: RefObject<HTMLElement | null>,
-  { selector, yPercent = 3, scale = 1.02 }: Options,
+  { selector, yPercent = 3, scale = 1.02, enabled = true }: Options,
 ) {
   useLayoutEffect(() => {
     const root = rootRef.current
-    if (!root) return
+    if (!enabled || !root) return
 
     registerGsapPlugins()
     const media = gsap.matchMedia()
@@ -51,5 +52,5 @@ export function useScrollDepth(
     media.add(MOBILE_MOTION_QUERY, () => bind(0.45))
 
     return () => media.revert()
-  }, [rootRef, scale, selector, yPercent])
+  }, [enabled, rootRef, scale, selector, yPercent])
 }

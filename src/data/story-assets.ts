@@ -5,7 +5,7 @@ export const storyAssets = {
   },
   receive: {
     src: '/images/story/receive-cedar-court.png',
-    alt: 'Warm afternoon light on a planted residential courtyard',
+    alt: 'Warm afternoon light on a pale contemporary house and planted front garden',
   },
   valueWalk: {
     src: '/images/story/value-cedar-walk.png',

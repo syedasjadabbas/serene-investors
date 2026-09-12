@@ -4,6 +4,7 @@ import type { RewardItem as RewardContent } from '@/types'
 import { RewardItem } from '@/components/cards/RewardItem'
 import { ButtonLink } from '@/components/ui/Button'
 import { rewardsIntro } from '@/data'
+import { useRewardsDepth } from '@/hooks/useRewardsDepth'
 import { useRewardsReveal } from '@/hooks/useRewardsReveal'
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 export function RewardsSection({ items }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   useRewardsReveal(rootRef)
+  useRewardsDepth(rootRef)
 
   return (
     <section
@@ -42,6 +44,9 @@ export function RewardsSection({ items }: Props) {
         </div>
 
         <div className="reward-deck mt-14 lg:mt-20" data-depth-stage>
+          <p className="reward-deck__mark" data-reward-mark aria-hidden="true">
+            Rewards
+          </p>
           {items.map((item, index) => (
             <RewardItem key={item.id} item={item} index={index} />
           ))}

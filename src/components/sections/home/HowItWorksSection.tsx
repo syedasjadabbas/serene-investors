@@ -10,6 +10,9 @@ export function HowItWorksSection() {
       sectionLabel={howItWorksIntro.heading}
       className="home-band bg-bg-warm"
       states={howItWorksStory}
+      segmentVh={1}
+      thresholds={[0.25, 0.5, 0.75]}
+      stepOnScroll
       visuals={howItWorksStory.map((state) => (
         <HowItWorksVisual key={state.id} id={state.id} />
       ))}
