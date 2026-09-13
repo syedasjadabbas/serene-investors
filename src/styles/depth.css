@@ -102,6 +102,7 @@
   .reward-deck__card {
     z-index: 1;
     transform-style: preserve-3d;
+    cursor: pointer;
   }
 
   .reward-deck__card--two {

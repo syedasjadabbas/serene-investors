@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
 import { catalogueFeatured, propertiesFeaturedBand } from '@/data'
@@ -18,16 +19,21 @@ export function FeaturedPropertyBand() {
     >
       <div className="mx-auto grid max-w-[var(--container-wide)] items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <figure className="m-0 overflow-hidden rounded-[var(--radius-lg)]">
-          <img
-            data-featured-property-image
-            src={catalogueFeatured.image}
-            alt={catalogueFeatured.imageAlt}
-            width={1400}
-            height={1750}
-            loading="lazy"
-            decoding="async"
-            className="aspect-[4/5] w-full object-cover object-[50%_28%] md:aspect-[5/4] lg:aspect-[4/5]"
-          />
+          <Link
+            to={`/properties/${catalogueFeatured.id}`}
+            aria-label={`View sample listing for ${catalogueFeatured.name}`}
+          >
+            <img
+              data-featured-property-image
+              src={catalogueFeatured.image}
+              alt={catalogueFeatured.imageAlt}
+              width={1400}
+              height={1750}
+              loading="lazy"
+              decoding="async"
+              className="aspect-[4/5] w-full object-cover object-[50%_28%] md:aspect-[5/4] lg:aspect-[4/5]"
+            />
+          </Link>
         </figure>
 
         <div>
@@ -43,7 +49,12 @@ export function FeaturedPropertyBand() {
           </h2>
 
           <p data-reveal-item className="mt-8 text-xl font-medium tracking-tight">
-            {catalogueFeatured.name}
+            <Link
+              to={`/properties/${catalogueFeatured.id}`}
+              className="hover:text-primary"
+            >
+              {catalogueFeatured.name}
+            </Link>
           </p>
           <p data-reveal-item className="mt-1 text-sm text-muted">
             {location}

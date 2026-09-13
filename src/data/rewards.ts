@@ -7,7 +7,7 @@ export const rewardsIntro = {
   sampleLabel: 'Sample benefits',
   action: {
     label: 'Explore rewards',
-    href: '/learn',
+    href: '/get-started',
   },
 } as const
 

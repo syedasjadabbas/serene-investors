@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { heroVisual } from '@/data'
 
 export function HeroVisual() {
@@ -17,9 +18,11 @@ export function HeroVisual() {
           className="hero-image aspect-[4/5] h-auto w-full rounded-[var(--radius-lg)] object-cover sm:aspect-[5/6] lg:aspect-auto"
         />
 
-        <article
+        <Link
+          to="/properties/cedar-court"
           data-hero-card="property"
           data-depth="mid"
+          aria-label={`View sample listing for ${listing.place}`}
           className="hero-card stage-card absolute bottom-4 left-4 w-[min(19rem,calc(100%-2rem))] px-5 py-4"
         >
           <p className="home-kicker text-muted">{listing.type}</p>
@@ -27,7 +30,7 @@ export function HeroVisual() {
           <p className="mt-3 text-sm font-medium text-primary">{listing.yieldLabel}</p>
           <p className="text-sm text-muted">{listing.priceLabel}</p>
           <p className="mt-1 text-xs text-muted">{listing.sampleLabel}</p>
-        </article>
+        </Link>
 
         <p
           data-hero-pill
@@ -37,9 +40,11 @@ export function HeroVisual() {
           {yieldPill.label}
         </p>
 
-        <aside
+        <Link
+          to="/properties/cedar-court"
           data-hero-card="receipt"
           data-depth="front"
+          aria-label={`View sample listing for ${receipt.detail}`}
           className="hero-receipt stage-card absolute right-4 top-16 w-[min(13.5rem,calc(100%-2rem))] px-3.5 py-3"
         >
           <p className="flex items-baseline justify-between gap-2 text-sm">
@@ -48,7 +53,7 @@ export function HeroVisual() {
           </p>
           <p className="mt-1 text-xs text-muted">{receipt.detail}</p>
           <p className="text-xs text-muted">{receipt.sampleLabel}</p>
-        </aside>
+        </Link>
       </div>
     </div>
   )

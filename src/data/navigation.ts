@@ -29,16 +29,16 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { id: 'f-about', label: 'About', href: '/about' },
       { id: 'f-learn', label: 'Learn', href: '/learn' },
-      { id: 'f-contact', label: 'Contact' },
+      { id: 'f-contact', label: 'Contact', href: '/about#contact' },
     ],
   },
   {
     id: 'resources',
     title: 'Resources',
     links: [
-      { id: 'f-guide', label: 'Property guide', href: '/learn' },
-      { id: 'f-basics', label: 'Investment basics', href: '/learn' },
-      { id: 'f-faq', label: 'FAQ', href: '/learn' },
+      { id: 'f-guide', label: 'Property guide', href: '/learn#property-guide' },
+      { id: 'f-basics', label: 'Investment basics', href: '/learn#investment-basics' },
+      { id: 'f-faq', label: 'FAQ', href: '/learn#faq' },
     ],
   },
   {

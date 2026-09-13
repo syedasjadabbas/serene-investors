@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, type CSSProperties } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useHeaderState } from '@/hooks/useHeaderState'
+import { useScrollToHash } from '@/hooks/useScrollToHash'
 import { registerGsapPlugins, ScrollTrigger } from '@/lib/gsap'
 import { MobileNav } from './MobileNav'
 import { PromoBar } from './PromoBar'
@@ -12,6 +13,7 @@ export function AppShell() {
   const [menuOpen, setMenuOpen] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
   const { elevated } = useHeaderState(sentinelRef)
+  useScrollToHash()
 
   useEffect(() => {
     registerGsapPlugins()
@@ -27,7 +29,7 @@ export function AppShell() {
         } as CSSProperties
       }
     >
-      <a href="#hero" className="skip-link">
+      <a href="#main" className="skip-link">
         Skip to content
       </a>
       <div ref={sentinelRef} className="h-px" aria-hidden="true" />
@@ -42,7 +44,7 @@ export function AppShell() {
       </div>
       <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} />
       <div inert={menuOpen || undefined}>
-        <main>
+        <main id="main" tabIndex={-1}>
           <Outlet />
         </main>
         <SiteFooter />

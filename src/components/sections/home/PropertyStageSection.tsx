@@ -66,31 +66,34 @@ export function PropertyStageSection({ offering }: Props) {
           </figure>
 
           <article data-offering-card data-depth="front" className="property-stage__card stage-card p-6">
-            <p className="home-kicker text-muted">{offering.label}</p>
-            <h3 className="mt-3 text-[length:var(--type-panel)] font-semibold tracking-tight">
-              {cedar?.name ?? offering.example.name}
-            </h3>
-            <p className="mt-1 text-sm text-muted">{cedar?.neighborhood ?? offering.example.meta}</p>
-            <dl className="mt-5 space-y-3 border-t border-line pt-4 text-sm">
-              <div className="flex items-baseline justify-between gap-6">
-                <dt className="text-muted">Sample yield</dt>
-                <dd className="font-semibold tabular-nums">
-                  {cedar ? formatPercent(cedar.sampleYieldPct) : offering.example.detail}
-                </dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-6">
-                <dt className="text-muted">From</dt>
-                <dd className="font-semibold tabular-nums">
-                  {cedar ? formatSampleAmount(cedar.sampleMinInvestment) : '$5,000'}
-                </dd>
-              </div>
-            </dl>
             <Link
               to={cedar ? `/properties/${cedar.id}` : offering.href}
-              className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium"
+              className="block"
+              aria-label={`View sample listing for ${cedar?.name ?? offering.example.name}`}
             >
-              View property
-              <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+              <p className="home-kicker text-muted">{offering.label}</p>
+              <h3 className="mt-3 text-[length:var(--type-panel)] font-semibold tracking-tight">
+                {cedar?.name ?? offering.example.name}
+              </h3>
+              <p className="mt-1 text-sm text-muted">{cedar?.neighborhood ?? offering.example.meta}</p>
+              <dl className="mt-5 space-y-3 border-t border-line pt-4 text-sm">
+                <div className="flex items-baseline justify-between gap-6">
+                  <dt className="text-muted">Sample yield</dt>
+                  <dd className="font-semibold tabular-nums">
+                    {cedar ? formatPercent(cedar.sampleYieldPct) : offering.example.detail}
+                  </dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-6">
+                  <dt className="text-muted">From</dt>
+                  <dd className="font-semibold tabular-nums">
+                    {cedar ? formatSampleAmount(cedar.sampleMinInvestment) : '$5,000'}
+                  </dd>
+                </div>
+              </dl>
+              <p className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium">
+                View property
+                <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+              </p>
             </Link>
           </article>
         </div>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { AppDownloadContent } from '@/types'
 
 type Props = {
@@ -7,11 +8,17 @@ type Props = {
 export function AppMockup({ content }: Props) {
   return (
     <div className="app-devices" data-depth-stage>
-      <aside data-app-float data-depth="front" className="app-float app-float--yield stage-card px-3.5 py-3">
+      <Link
+        to="/properties/cedar-court"
+        data-app-float
+        data-depth="front"
+        aria-label={`View sample listing for ${content.featured.name}`}
+        className="app-float app-float--yield stage-card px-3.5 py-3"
+      >
         <p className="home-kicker text-muted">Sample property</p>
         <p className="mt-2 text-lg font-semibold tracking-tight">{content.featured.name}</p>
         <p className="mt-1 text-xs text-muted">{content.featured.yieldLabel}</p>
-      </aside>
+      </Link>
 
       <article data-app-phone-side data-depth="back" className="app-phone app-phone--side" aria-hidden="true">
         <div className="app-phone__screen px-3.5 pb-4 pt-2">

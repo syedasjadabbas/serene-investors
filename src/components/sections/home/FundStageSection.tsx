@@ -7,6 +7,7 @@ import { fundStageAssets, fundStageImage } from '@/data/fund-stage-assets'
 import { formatSampleAmount } from '@/lib/format'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { useFloatingMotion } from '@/hooks/useFloatingMotion'
+import { useFundFocus } from '@/hooks/useFundFocus'
 import { useOfferingsReveal } from '@/hooks/useOfferingsReveal'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 
@@ -17,6 +18,7 @@ type Props = {
 export function FundStageSection({ offering }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   useOfferingsReveal(rootRef)
+  useFundFocus(rootRef)
   usePointerTilt(rootRef, {
     layers: [
       { selector: '[data-offering-media] img', x: 10, y: 7, rotateX: 1.6, rotateY: 2, z: -40, invert: true },
@@ -150,7 +152,7 @@ export function FundStageSection({ offering }: Props) {
                     <span className="font-semibold tabular-nums">{formatSampleAmount(10000)}</span>
                   </p>
                   <Link
-                    to="/funds"
+                    to={`/funds#${fund.id}`}
                     className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium"
                   >
                     Explore funds

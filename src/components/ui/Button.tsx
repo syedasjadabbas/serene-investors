@@ -35,18 +35,17 @@ export function Button({
 
 type ButtonLinkProps = Shared & {
   to: string
-  onClick?: ComponentProps<typeof Link>['onClick']
-}
+} & Omit<ComponentProps<typeof Link>, 'to' | 'className' | 'children'>
 
 export function ButtonLink({
   to,
   variant = 'primary',
   className,
   children,
-  onClick,
+  ...props
 }: ButtonLinkProps) {
   return (
-    <Link to={to} onClick={onClick} className={cn(base, variants[variant], className)}>
+    <Link to={to} className={cn(base, variants[variant], className)} {...props}>
       {children}
     </Link>
   )

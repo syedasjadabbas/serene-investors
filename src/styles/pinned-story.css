@@ -951,6 +951,11 @@
     height: 100%;
   }
 
+  .story-grow {
+    transform-style: preserve-3d;
+    perspective: 1400px;
+  }
+
   .story-holdings,
   .story-grow__phone {
     display: block;

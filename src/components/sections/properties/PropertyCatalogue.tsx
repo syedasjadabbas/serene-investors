@@ -16,7 +16,7 @@ export function PropertyCatalogue({ properties }: Props) {
     <section
       ref={rootRef}
       id="property-collection"
-      className="overflow-x-clip px-5 py-12 md:px-8 lg:px-10 lg:py-16"
+      className="scroll-mt-[calc(var(--header-h)+var(--promo-h)+1.5rem)] overflow-x-clip px-5 py-12 md:px-8 lg:px-10 lg:py-16"
       aria-labelledby="collection-heading"
     >
       <div className="mx-auto max-w-[var(--container-wide)]">

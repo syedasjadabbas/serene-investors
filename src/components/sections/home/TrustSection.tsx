@@ -74,10 +74,10 @@ export function TrustSection({ items }: Props) {
                 key={item.id}
                 data-trust-doc
                 data-depth={index === 0 ? 'mid' : 'front'}
-                className="stage-card depth-lift px-5 py-4 text-ink"
+                className="trust-doc stage-card depth-lift text-ink"
               >
-                <p className="home-kicker text-primary">{item.title}</p>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{item.body}</p>
+                <h3 className="trust-doc__title">{item.title}</h3>
+                <p className="trust-doc__body">{item.body}</p>
               </article>
             ))}
           </div>

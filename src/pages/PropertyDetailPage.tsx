@@ -1,6 +1,5 @@
 import { useLayoutEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useLenisControl } from '@/app/providers/LenisProvider'
 import { PropertyBreadcrumb } from '@/components/sections/property/PropertyBreadcrumb'
 import { PropertyClosingCta } from '@/components/sections/property/PropertyClosingCta'
 import { PropertyCtaPanel } from '@/components/sections/property/PropertyCtaPanel'
@@ -18,7 +17,6 @@ import { ScrollTrigger } from '@/lib/gsap'
 
 export function PropertyDetailPage() {
   const { slug } = useParams()
-  const { scrollTo } = useLenisControl()
   const property = properties.find((item) => item.id === slug)
 
   usePageMeta(
@@ -29,12 +27,11 @@ export function PropertyDetailPage() {
   )
 
   useLayoutEffect(() => {
-    scrollTo(0)
     const frame = requestAnimationFrame(() => {
       ScrollTrigger.refresh()
     })
     return () => cancelAnimationFrame(frame)
-  }, [scrollTo, slug])
+  }, [slug])
 
   if (!property) {
     return <PropertyNotFound />

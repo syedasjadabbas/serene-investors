@@ -1,7 +1,8 @@
 import { useRef } from 'react'
 import { ArrowRight } from 'lucide-react'
 import type { Property } from '@/types'
-import { ButtonLink } from '@/components/ui/Button'
+import { useLenisControl } from '@/app/providers/LenisProvider'
+import { Button, ButtonLink } from '@/components/ui/Button'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 
 export function PropertyCtaPanel({ property }: Props) {
   const rootRef = useRef<HTMLElement>(null)
+  const { scrollTo } = useLenisControl()
   useSectionReveal(rootRef)
   const canExplore = property.status === 'open' || property.status === 'funding'
 
@@ -37,14 +39,21 @@ export function PropertyCtaPanel({ property }: Props) {
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
             {canExplore ? (
-              <ButtonLink to="/get-started" className="min-h-11 w-full gap-1.5 sm:w-auto">
+              <ButtonLink
+                to={`/get-started?intent=property&id=${property.id}`}
+                className="min-h-11 w-full gap-1.5 sm:w-auto"
+              >
                 Start with this property
                 <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
               </ButtonLink>
             ) : (
-              <ButtonLink to="#property-overview" className="min-h-11 w-full gap-1.5 sm:w-auto">
+              <Button
+                type="button"
+                className="min-h-11 w-full gap-1.5 sm:w-auto"
+                onClick={() => scrollTo('#property-overview', { duration: 0.65 })}
+              >
                 View property information
-              </ButtonLink>
+              </Button>
             )}
             <ButtonLink to="/properties" variant="ghost" className="min-h-11 w-full sm:w-auto">
               Back to properties

@@ -17,11 +17,14 @@ import {
   platformStats,
   pressLogos,
   rewards,
+  site,
   testimonials,
   trustItems,
 } from '@/data'
+import { usePageMeta } from '@/hooks/usePageMeta'
 
 export function HomePage() {
+  usePageMeta(site.name, site.disclaimer)
   const propertyOffering = offeringSplits.find((item) => item.kind === 'property')
   const fundOffering = offeringSplits.find((item) => item.kind === 'fund')
 

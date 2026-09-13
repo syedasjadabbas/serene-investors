@@ -52,43 +52,54 @@ export function useRewardsDepth(rootRef: RefObject<HTMLElement | null>) {
           }
         })
 
+        let active = -1
         let hovered = -1
 
-        const poseCards = (active: number) => {
-          hovered = active
+        const poseCards = (duration = 0.62) => {
           cards.forEach((card, index) => {
             const rest = REWARD_RESTS[index] ?? REWARD_RESTS[0]
+            const isOn = index === active
+            const isHover = index === hovered
+            const restZIndex = index === 1 ? 3 : 1
+
+            card.dataset.rewardActive = isOn ? 'true' : 'false'
+
+            let z: number = rest.z
+            let scale = 1
+            let zIndex = restZIndex
+
             if (active === -1) {
-              gsap.to(card, {
-                z: rest.z,
-                scale: 1,
-                duration: 0.6,
-                ease: 'power3.out',
-                overwrite: 'auto',
-                force3D: true,
-              })
-              return
+              if (isHover) {
+                z = Math.min(rest.z + 28, 40)
+                scale = 1.035
+                zIndex = 6
+              }
+            } else if (isOn) {
+              z = Math.max(rest.z + 28, 52) + (isHover ? 6 : 0)
+              scale = 1.045
+              zIndex = 8
+            } else {
+              z = rest.z - 16 + (isHover ? 8 : 0)
+              scale = 0.978
+              zIndex = restZIndex
             }
-            if (index === active) {
-              gsap.to(card, {
-                z: Math.min(rest.z + 28, 40),
-                scale: 1.035,
-                duration: 0.6,
-                ease: 'power3.out',
-                overwrite: 'auto',
-                force3D: true,
-              })
-              return
-            }
+
+            card.style.zIndex = String(zIndex)
             gsap.to(card, {
-              z: rest.z - 16,
-              scale: 0.985,
-              duration: 0.6,
+              z,
+              scale,
+              duration,
               ease: 'power3.out',
               overwrite: 'auto',
               force3D: true,
             })
           })
+        }
+
+        const focusCard = (index: number) => {
+          if (index === active) return
+          active = index
+          poseCards(0.62)
         }
 
         const onMove = (event: PointerEvent) => {
@@ -98,7 +109,7 @@ export function useRewardsDepth(rootRef: RefObject<HTMLElement | null>) {
           const ny = ((event.clientY - rect.top) / rect.height - 0.5) * 2
 
           drivers.forEach((driver, index) => {
-            const toward = hovered === index ? 1.15 : 1
+            const toward = hovered === index || active === index ? 1.15 : 1
             driver.x(nx * driver.maxX)
             driver.rotateX(driver.rest.rotateX - ny * driver.maxRX * toward)
             driver.rotateY(driver.rest.rotateY + nx * driver.maxRY * toward)
@@ -106,7 +117,8 @@ export function useRewardsDepth(rootRef: RefObject<HTMLElement | null>) {
         }
 
         const onLeave = () => {
-          poseCards(-1)
+          hovered = -1
+          poseCards(0.5)
           drivers.forEach((driver) => {
             driver.x(0)
             driver.rotateX(driver.rest.rotateX)
@@ -114,16 +126,43 @@ export function useRewardsDepth(rootRef: RefObject<HTMLElement | null>) {
           })
         }
 
-        const onCardEnter = (index: number) => () => poseCards(index)
-        const onCardLeave = () => poseCards(-1)
+        const enters = cards.map((_, index) => () => {
+          hovered = index
+          poseCards(0.5)
+        })
+
+        const onCardLeave = () => {
+          hovered = -1
+          poseCards(0.5)
+        }
+
+        const onClick = (event: MouseEvent) => {
+          const target = event.target
+          if (!(target instanceof Element)) return
+          if (target.closest('a')) return
+          const card = target.closest<HTMLElement>('[data-reward-item]')
+          if (!card || !stage.contains(card)) return
+          const index = cards.indexOf(card)
+          if (index < 0) return
+          focusCard(index)
+        }
+
+        const onKey = (event: KeyboardEvent) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return
+          const card = event.target
+          if (!(card instanceof HTMLElement) || !cards.includes(card)) return
+          if (event.key === ' ') event.preventDefault()
+          focusCard(cards.indexOf(card))
+        }
 
         stage.addEventListener('pointermove', onMove)
         stage.addEventListener('pointerleave', onLeave)
-        const cardLeaves = cards.map((card, index) => {
-          const enter = onCardEnter(index)
-          card.addEventListener('pointerenter', enter)
+        stage.addEventListener('click', onClick)
+        cards.forEach((card, index) => {
+          card.tabIndex = 0
+          card.addEventListener('pointerenter', enters[index])
           card.addEventListener('pointerleave', onCardLeave)
-          return { card, enter }
+          card.addEventListener('keydown', onKey)
         })
 
         ScrollTrigger.create({
@@ -150,9 +189,14 @@ export function useRewardsDepth(rootRef: RefObject<HTMLElement | null>) {
         return () => {
           stage.removeEventListener('pointermove', onMove)
           stage.removeEventListener('pointerleave', onLeave)
-          cardLeaves.forEach(({ card, enter }) => {
-            card.removeEventListener('pointerenter', enter)
+          stage.removeEventListener('click', onClick)
+          cards.forEach((card, index) => {
+            card.removeEventListener('pointerenter', enters[index])
             card.removeEventListener('pointerleave', onCardLeave)
+            card.removeEventListener('keydown', onKey)
+            card.removeAttribute('data-reward-active')
+            card.removeAttribute('tabindex')
+            card.style.zIndex = ''
           })
         }
       }, root)

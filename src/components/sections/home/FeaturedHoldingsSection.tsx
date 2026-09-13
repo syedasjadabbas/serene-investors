@@ -68,31 +68,34 @@ export function FeaturedHoldingsSection({ properties }: Props) {
               decoding="async"
             />
             <div data-reveal-item data-holding-panel data-depth="front" className="holding-canvas__panel stage-card p-5">
-              <p className="home-kicker text-muted">{featured.type}</p>
-              <p className="mt-2 text-[1.5rem] font-medium tracking-tight">{featured.name}</p>
-              <p className="mt-1 text-sm text-muted">{location}</p>
-              <dl className="mt-5 space-y-3 border-t border-line pt-4 text-sm">
-                <div className="flex items-baseline justify-between gap-6">
-                  <dt className="text-muted">Sample yield</dt>
-                  <dd className="font-semibold tabular-nums">{formatPercent(featured.sampleYieldPct)}</dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-6">
-                  <dt className="text-muted">Sample minimum</dt>
-                  <dd className="font-semibold tabular-nums">
-                    {formatSampleAmount(featured.sampleMinInvestment)}
-                  </dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-6">
-                  <dt className="text-muted">Status</dt>
-                  <dd className="font-semibold">{formatStatus(featured.status)}</dd>
-                </div>
-              </dl>
               <Link
                 to={`/properties/${featured.id}`}
-                className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium"
+                className="block"
+                aria-label={`View sample listing for ${featured.name}`}
               >
-                View property
-                <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                <p className="home-kicker text-muted">{featured.type}</p>
+                <p className="mt-2 text-[1.5rem] font-medium tracking-tight">{featured.name}</p>
+                <p className="mt-1 text-sm text-muted">{location}</p>
+                <dl className="mt-5 space-y-3 border-t border-line pt-4 text-sm">
+                  <div className="flex items-baseline justify-between gap-6">
+                    <dt className="text-muted">Sample yield</dt>
+                    <dd className="font-semibold tabular-nums">{formatPercent(featured.sampleYieldPct)}</dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-6">
+                    <dt className="text-muted">Sample minimum</dt>
+                    <dd className="font-semibold tabular-nums">
+                      {formatSampleAmount(featured.sampleMinInvestment)}
+                    </dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-6">
+                    <dt className="text-muted">Status</dt>
+                    <dd className="font-semibold">{formatStatus(featured.status)}</dd>
+                  </div>
+                </dl>
+                <p className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium">
+                  View property
+                  <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                </p>
               </Link>
             </div>
           </figure>
@@ -109,7 +112,11 @@ export function FeaturedHoldingsSection({ properties }: Props) {
                   : 'holding-canvas__support holding-canvas__support--two'
               }
             >
-              <Link to={`/properties/${property.id}`} className="block">
+              <Link
+                to={`/properties/${property.id}`}
+                className="block"
+                aria-label={`View sample listing for ${property.name}`}
+              >
                 <img
                   data-holding-image
                   src={property.image}

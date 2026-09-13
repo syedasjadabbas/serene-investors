@@ -429,7 +429,9 @@
     width: 16.75rem;
     margin-top: 0;
     box-shadow: var(--lift-deep);
+    cursor: pointer;
   }
+
 
   .fund-float--one {
     top: 6%;

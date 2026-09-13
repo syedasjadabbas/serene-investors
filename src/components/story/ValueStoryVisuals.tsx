@@ -166,16 +166,17 @@ export function ValueGrowVisual() {
   const { brand, holdings } = appDownload
 
   return (
-    <div className="story-visual-state story-grow">
+    <div className="story-visual-state story-grow" data-grow-stage>
       <img
         className="story-grow__backdrop"
         data-depth="back"
+        data-grow-layer="backdrop"
         src={storyAssets.grow.src}
         alt={storyAssets.grow.alt}
         width={1400}
         height={1867}
       />
-      <article className="story-grow__phone app-phone" aria-hidden="true" data-depth="mid" data-float-layer="phone">
+      <article className="story-grow__phone app-phone" aria-hidden="true" data-depth="mid" data-float-layer="phone" data-grow-layer="phone">
         <div className="app-phone__screen story-holdings__screen">
           <div className="app-phone__island" />
           <p className="brand-label story-holdings__brand">{brand}</p>
@@ -200,11 +201,11 @@ export function ValueGrowVisual() {
         </div>
       </article>
 
-      <aside className="story-grow__float story-grow__float--one stage-card" data-depth="front" data-float-layer="card">
+      <aside className="story-grow__float story-grow__float--one stage-card" data-depth="front" data-float-layer="card" data-grow-layer="value">
         <p className="story-overlay__kicker">{longTermValue.valueCard.label}</p>
         <p className="story-overlay__title">{longTermValue.valueCard.value}</p>
       </aside>
-      <aside className="story-grow__float story-grow__float--two stage-card" data-depth="front" data-float-layer="card">
+      <aside className="story-grow__float story-grow__float--two stage-card" data-depth="front" data-float-layer="card" data-grow-layer="gain">
         <p className="story-overlay__kicker">{longTermValue.appreciationCard.label}</p>
         <p className="story-overlay__title story-overlay__title--accent">
           {longTermValue.appreciationCard.value}

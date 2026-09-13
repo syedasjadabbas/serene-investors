@@ -21,6 +21,7 @@ type Props = {
   releaseVh?: number
   lockMs?: number
   scrubbed?: boolean
+  scrubLag?: number
 }
 
 export function PinnedStorySection({
@@ -38,6 +39,7 @@ export function PinnedStorySection({
   releaseVh,
   lockMs,
   scrubbed,
+  scrubLag,
 }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   const pinRef = useRef<HTMLDivElement>(null)
@@ -50,6 +52,7 @@ export function PinnedStorySection({
     releaseVh,
     lockMs,
     scrubbed,
+    scrubLag,
   })
 
   usePointerTilt(rootRef, {

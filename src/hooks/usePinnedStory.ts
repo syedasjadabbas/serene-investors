@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { useLenisControl } from '@/app/providers/LenisProvider'
 import { gsap, registerGsapPlugins, ScrollTrigger } from '@/lib/gsap'
+import { appendValueGrowScrub } from '@/lib/value-grow-scrub'
 
 const PIN_QUERY = '(min-width: 1024px) and (prefers-reduced-motion: no-preference)'
 const SEGMENT_VH = 0.8
@@ -247,28 +248,32 @@ type Options = {
   releaseVh?: number
   lockMs?: number
   scrubbed?: boolean
+  scrubLag?: number
 }
 
 function createScrubTimeline(
+  root: HTMLElement,
   copies: NodeListOf<Element>,
   visuals: NodeListOf<Element>,
   stateCount: number,
 ) {
   copies.forEach((layer, index) => {
+    const growCopy = layer.getAttribute('data-story-id') === 'grow'
     gsap.set(layer, {
       opacity: index === 0 ? 1 : 0,
-      y: index === 0 ? 0 : 30,
+      y: index === 0 ? 0 : growCopy ? 42 : 30,
       visibility: 'visible',
       pointerEvents: 'none',
     })
   })
 
   visuals.forEach((layer, index) => {
+    const growVisual = Boolean(layer.querySelector('.story-grow'))
     gsap.set(layer, {
       opacity: index === 0 ? 1 : 0,
-      y: index === 0 ? 0 : 36,
-      z: index === 0 ? 0 : -56,
-      scale: index === 0 ? 1 : 0.94,
+      y: index === 0 ? 0 : growVisual ? 52 : 36,
+      z: index === 0 ? 0 : growVisual ? -72 : -56,
+      scale: index === 0 ? 1 : growVisual ? 0.9 : 0.94,
       rotateX: index === 0 ? 0 : 2.4,
       visibility: 'visible',
       pointerEvents: 'none',
@@ -284,21 +289,41 @@ function createScrubTimeline(
     const outgoingVisual = visuals[index]
     const incomingVisual = visuals[index + 1]
     const at = index
+    const incomingGrow = Boolean(incomingVisual?.querySelector('.story-grow'))
 
     if (outgoingCopy) {
-      timeline.to(outgoingCopy, { opacity: 0, y: -30, duration: 1 }, at)
+      timeline.to(
+        outgoingCopy,
+        { opacity: 0, y: incomingGrow ? -36 : -30, duration: incomingGrow ? 1.1 : 1 },
+        at,
+      )
     }
     if (outgoingVisual) {
       timeline.to(
         outgoingVisual,
-        { opacity: 0, y: -18, z: -48, scale: 0.94, rotateX: 1.6, duration: 1, force3D: true },
+        {
+          opacity: 0,
+          y: incomingGrow ? -24 : -18,
+          z: incomingGrow ? -56 : -48,
+          scale: incomingGrow ? 0.92 : 0.94,
+          rotateX: incomingGrow ? 2 : 1.6,
+          duration: incomingGrow ? 1.12 : 1,
+          force3D: true,
+        },
         at,
       )
     }
     if (incomingCopy) {
-      timeline.to(incomingCopy, { opacity: 1, y: 0, duration: 1 }, at)
+      timeline.to(
+        incomingCopy,
+        { opacity: 1, y: 0, duration: incomingGrow ? 1.12 : 1 },
+        at,
+      )
     }
-    if (incomingVisual) {
+    if (incomingVisual && incomingGrow) {
+      timeline.to(incomingVisual, { opacity: 1, rotateX: 0, duration: 1.08, force3D: true }, at)
+      timeline.to(incomingVisual, { y: 0, z: 0, scale: 1, duration: 1.42, force3D: true }, at)
+    } else if (incomingVisual) {
       timeline.to(
         incomingVisual,
         { opacity: 1, y: 0, z: 0, scale: 1, rotateX: 0, duration: 1, force3D: true },
@@ -308,6 +333,7 @@ function createScrubTimeline(
   }
 
   timeline.to({}, { duration: 1 }, Math.max(0, stateCount - 1))
+  appendValueGrowScrub(timeline, root, visuals)
   return timeline
 }
 
@@ -368,6 +394,7 @@ export function usePinnedStory(
     releaseVh = 0,
     lockMs = 0,
     scrubbed = false,
+    scrubLag,
   }: Options,
 ) {
   const { scrollTo } = useLenisControl()
@@ -407,14 +434,14 @@ export function usePinnedStory(
       let lockTimer = 0
       const ctx = gsap.context(() => {
         if (scrubbed) {
-          const timeline = createScrubTimeline(copies, visuals, stateCount)
+          const timeline = createScrubTimeline(root, copies, visuals, stateCount)
           ScrollTrigger.create({
             trigger: root,
             pin,
             start: 'top top',
             end: () => `+=${Math.round(window.innerHeight * segmentVh * stateCount)}`,
             pinSpacing: true,
-            scrub: true,
+            scrub: scrubLag && scrubLag > 0 ? scrubLag : true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
             animation: timeline,
@@ -618,6 +645,7 @@ export function usePinnedStory(
     segmentVh,
     stateCount,
     scrubbed,
+    scrubLag,
     stepOnScroll,
     thresholdKey,
   ])

@@ -22,6 +22,9 @@ export function ValueStorySection() {
       states={valueStory}
       visuals={visuals}
       footer={<p>{valueStoryIntro.disclaimer}</p>}
+      segmentVh={0.8}
+      scrubbed
+      scrubLag={0.62}
     />
   )
 }

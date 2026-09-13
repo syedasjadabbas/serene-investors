@@ -6,6 +6,7 @@ import { primaryNav, site, utilityNav } from '@/data'
 import { Badge } from '@/components/ui/Badge'
 import { ButtonLink } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
+import { isModifiedClick } from '@/lib/nav'
 
 type Props = {
   elevated: boolean
@@ -29,6 +30,7 @@ export function SiteHeader({ elevated, menuOpen, onMenuToggle, onMenuClose }: Pr
   }, [onMenuClose])
 
   function goToTop(event: MouseEvent<HTMLAnchorElement>) {
+    if (isModifiedClick(event)) return
     event.preventDefault()
     onMenuClose()
     if (location.pathname !== '/') {
@@ -52,6 +54,7 @@ export function SiteHeader({ elevated, menuOpen, onMenuToggle, onMenuClose }: Pr
         <Link
           to="/"
           onClick={goToTop}
+          aria-label={`${site.name} home`}
           className="relative z-10 whitespace-nowrap text-[0.875rem] font-semibold tracking-[0.14em] sm:text-[1rem] lg:text-[1.0625rem]"
         >
           {site.name}
