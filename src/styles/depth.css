@@ -76,8 +76,14 @@
     transition: transform 0.65s var(--ease-out-quart);
   }
 
-  .reward-deck {
+  .reward-deck[data-depth-stage] {
+    display: block;
+    position: relative;
+    isolation: auto;
+    overflow: visible;
+    min-height: 22rem;
     perspective: 1300px;
+    transform: none;
     transform-style: preserve-3d;
   }
 
@@ -88,7 +94,7 @@
     top: 46%;
     z-index: 0;
     margin: 0;
-    transform: translate(-50%, -50%) translateZ(-70px);
+    transform: translate(-50%, -50%) translateZ(-80px);
     font-size: clamp(6rem, 16vw, 12rem);
     font-weight: 600;
     letter-spacing: -0.06em;
@@ -100,17 +106,67 @@
   }
 
   .reward-deck__card {
-    z-index: 1;
-    transform-style: preserve-3d;
+    position: absolute;
+    top: 0;
+    width: 33.333%;
+    margin-inline: -0.65rem;
+    isolation: auto;
+    overflow: visible;
+    transform: none;
+    transform-style: flat;
+    backface-visibility: visible;
     cursor: pointer;
   }
 
+  .reward-deck__card--one,
+  .reward-deck__card--two,
+  .reward-deck__card--three {
+    transform: none;
+    z-index: auto;
+  }
+
+  .reward-deck__card--one {
+    left: 0;
+  }
+
   .reward-deck__card--two {
-    z-index: 3;
+    left: 33.333%;
+  }
+
+  .reward-deck__card--three {
+    left: 66.666%;
   }
 
   .reward-deck__content {
-    transform: translateZ(14px);
+    transform: none;
+  }
+
+  .fund-stage__scene[data-depth-stage] {
+    isolation: auto;
+    overflow: visible;
+    perspective: 1300px;
+    transform: none;
+    transform-style: preserve-3d;
+  }
+
+  .fund-stage__scene .fund-float {
+    isolation: auto;
+    overflow: visible;
+    transform: none;
+    transform-style: flat;
+    backface-visibility: visible;
+    cursor: pointer;
+  }
+
+  .fund-stage__scene .fund-float--one,
+  .fund-stage__scene .fund-float--two,
+  .fund-stage__scene .fund-float--three {
+    transform: none;
+  }
+
+  .fund-stage__scene .fund-float__image {
+    overflow: hidden;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
   }
 
   .story-portrait img {

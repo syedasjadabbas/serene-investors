@@ -18,14 +18,13 @@ type Props = {
 export function FundStageSection({ offering }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   useOfferingsReveal(rootRef)
-  useFundFocus(rootRef)
   usePointerTilt(rootRef, {
     layers: [
       { selector: '[data-offering-media] img', x: 10, y: 7, rotateX: 1.6, rotateY: 2, z: -40, invert: true },
       { selector: '[data-fund-phone]', x: 12, y: 0, rotateX: 2.2, rotateY: 2.8, z: 16 },
-      { selector: '[data-fund-float="0"]', x: 10, y: 0, rotateX: 1.8, rotateY: 2.2, z: -28, rotateZ: -2 },
-      { selector: '[data-fund-float="1"]', x: 12, y: 0, rotateX: 2, rotateY: 2.4, z: 8 },
-      { selector: '[data-fund-float="2"]', x: 14, y: 0, rotateX: 2.2, rotateY: 2.8, z: 36, rotateZ: 1.2 },
+      { selector: '[data-fund-float="0"]', x: 10, y: 0, rotateX: 1.8, rotateY: 2.2, rotateZ: -2 },
+      { selector: '[data-fund-float="1"]', x: 12, y: 0, rotateX: 2, rotateY: 2.4 },
+      { selector: '[data-fund-float="2"]', x: 14, y: 0, rotateX: 2.2, rotateY: 2.8, rotateZ: 1.2 },
     ],
   })
   useFloatingMotion(rootRef, [
@@ -38,6 +37,7 @@ export function FundStageSection({ offering }: Props) {
     { selector: '[data-fund-float="0"]', yPercent: -3 },
     { selector: '[data-fund-float="2"]', yPercent: -7 },
   ])
+  useFundFocus(rootRef)
 
   const urban = funds.find((item) => item.id === 'urban-living-fund')
   const quay = funds.find((item) => item.id === 'quay-mixed-fund')
@@ -129,7 +129,6 @@ export function FundStageSection({ offering }: Props) {
                 key={fund.id}
                 data-offering-card
                 data-fund-float={index}
-                data-depth={index === 2 ? 'front' : index === 0 ? 'far' : 'mid'}
                 className={`fund-float ${position} stage-card`}
               >
                 <img

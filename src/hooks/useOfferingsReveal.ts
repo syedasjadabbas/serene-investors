@@ -14,12 +14,14 @@ export function useOfferingsReveal(rootRef: RefObject<HTMLElement | null>) {
     const headings = root.querySelectorAll('[data-reveal-heading]')
     const panels = root.querySelectorAll('[data-reveal-item]')
     const media = root.querySelectorAll('[data-offering-media], .offering-stack img')
-    const cards = root.querySelectorAll('[data-offering-card]')
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-offering-card]'))
+    const revealDepthCards = cards.filter((card) => !card.hasAttribute('data-fund-float'))
 
     const ctx = gsap.context(() => {
       gsap.set(headings, { opacity: 0, y: 14 })
       gsap.set(panels, { opacity: 1 })
-      gsap.set(cards, { opacity: 0, y: 24, z: -80, rotateX: 3 })
+      gsap.set(cards, { opacity: 0, y: 24, rotateX: 3 })
+      if (revealDepthCards.length > 0) gsap.set(revealDepthCards, { z: -80 })
       gsap.set(media, { opacity: 0, scale: 1.08 })
 
       const timeline = gsap.timeline({
@@ -54,7 +56,6 @@ export function useOfferingsReveal(rootRef: RefObject<HTMLElement | null>) {
           {
             opacity: 1,
             y: 0,
-            z: 0,
             rotateX: 0,
             duration: 0.7,
             stagger: 0.14,
@@ -67,6 +68,14 @@ export function useOfferingsReveal(rootRef: RefObject<HTMLElement | null>) {
           },
           '-=0.35',
         )
+
+      if (revealDepthCards.length > 0) {
+        timeline.to(
+          revealDepthCards,
+          { z: 0, duration: 0.7, stagger: 0.14, ease: 'power4.out', force3D: true },
+          '<',
+        )
+      }
     }, root)
 
     return () => ctx.revert()

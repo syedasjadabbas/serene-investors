@@ -38,8 +38,8 @@ export function usePointerTilt(
       const ctx = gsap.context(() => {
         const stage = (root.querySelector('[data-depth-stage]') as HTMLElement | null) ?? root
         gsap.set(stage, {
-          transformPerspective: perspective,
           transformStyle: 'preserve-3d',
+          ...(stage.hasAttribute('data-depth-stage') ? {} : { transformPerspective: perspective }),
         })
 
         const drivers = layersRef.current.flatMap((layer) => {
@@ -49,9 +49,9 @@ export function usePointerTilt(
           gsap.set(nodes, {
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
-            z: layer.z ?? 0,
             rotationZ: layer.rotateZ ?? 0,
             force3D: true,
+            ...(layer.z !== undefined ? { z: layer.z } : {}),
           })
 
           return nodes.map((node) => ({

@@ -9,14 +9,9 @@ const tones = ['reward-deck__card--one', 'reward-deck__card--two', 'reward-deck_
 
 export function RewardItem({ item, index }: Props) {
   const tone = tones[index] ?? tones[0]
-  const depth = index === 1 ? 'front' : 'back'
 
   return (
-    <article
-      data-reward-item={index}
-      data-depth={depth}
-      className={`reward-deck__card ${tone}`}
-    >
+    <article data-reward-item={index} className={`reward-deck__card ${tone}`}>
       <div className="reward-deck__content">
         <p data-reward-kicker className="home-kicker">
           {item.level}
