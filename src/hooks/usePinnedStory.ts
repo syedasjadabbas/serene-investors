@@ -243,6 +243,72 @@ type Options = {
   segmentVh?: number
   thresholds?: number[]
   stepOnScroll?: boolean
+  hysteresis?: number
+  releaseVh?: number
+  lockMs?: number
+  scrubbed?: boolean
+}
+
+function createScrubTimeline(
+  copies: NodeListOf<Element>,
+  visuals: NodeListOf<Element>,
+  stateCount: number,
+) {
+  copies.forEach((layer, index) => {
+    gsap.set(layer, {
+      opacity: index === 0 ? 1 : 0,
+      y: index === 0 ? 0 : 30,
+      visibility: 'visible',
+      pointerEvents: 'none',
+    })
+  })
+
+  visuals.forEach((layer, index) => {
+    gsap.set(layer, {
+      opacity: index === 0 ? 1 : 0,
+      y: index === 0 ? 0 : 36,
+      z: index === 0 ? 0 : -56,
+      scale: index === 0 ? 1 : 0.94,
+      rotateX: index === 0 ? 0 : 2.4,
+      visibility: 'visible',
+      pointerEvents: 'none',
+      force3D: true,
+    })
+  })
+
+  const timeline = gsap.timeline({ paused: true, defaults: { ease: 'none' } })
+
+  for (let index = 0; index < stateCount - 1; index += 1) {
+    const outgoingCopy = copies[index]
+    const incomingCopy = copies[index + 1]
+    const outgoingVisual = visuals[index]
+    const incomingVisual = visuals[index + 1]
+    const at = index
+
+    if (outgoingCopy) {
+      timeline.to(outgoingCopy, { opacity: 0, y: -30, duration: 1 }, at)
+    }
+    if (outgoingVisual) {
+      timeline.to(
+        outgoingVisual,
+        { opacity: 0, y: -18, z: -48, scale: 0.94, rotateX: 1.6, duration: 1, force3D: true },
+        at,
+      )
+    }
+    if (incomingCopy) {
+      timeline.to(incomingCopy, { opacity: 1, y: 0, duration: 1 }, at)
+    }
+    if (incomingVisual) {
+      timeline.to(
+        incomingVisual,
+        { opacity: 1, y: 0, z: 0, scale: 1, rotateX: 0, duration: 1, force3D: true },
+        at,
+      )
+    }
+  }
+
+  timeline.to({}, { duration: 1 }, Math.max(0, stateCount - 1))
+  return timeline
 }
 
 function progressForState(index: number, stateCount: number) {
@@ -272,10 +338,10 @@ function applyHysteresis(
   current: number,
   stateCount: number,
   thresholds: number[] | undefined,
+  dead: number,
 ) {
   if (raw === current) return current
 
-  const dead = 0.016
   if (raw > current) {
     const boundary = thresholds?.[current] ?? (current + 1) / stateCount
     return progress >= boundary + dead ? raw : current
@@ -285,10 +351,24 @@ function applyHysteresis(
   return progress <= boundary - dead ? raw : current
 }
 
+function stateProgress(progress: number, releaseRatio: number) {
+  if (releaseRatio <= 0) return progress
+  return Math.min(1, progress / (1 - releaseRatio))
+}
+
 export function usePinnedStory(
   rootRef: RefObject<HTMLElement | null>,
   pinRef: RefObject<HTMLElement | null>,
-  { stateCount, segmentVh = SEGMENT_VH, thresholds, stepOnScroll = false }: Options,
+  {
+    stateCount,
+    segmentVh = SEGMENT_VH,
+    thresholds,
+    stepOnScroll = false,
+    hysteresis = 0.016,
+    releaseVh = 0,
+    lockMs = 0,
+    scrubbed = false,
+  }: Options,
 ) {
   const { scrollTo } = useLenisControl()
   const [activeIndex, setActiveIndex] = useState(0)
@@ -324,7 +404,31 @@ export function usePinnedStory(
 
     media.add(PIN_QUERY, () => {
       let disposeStep: (() => void) | undefined
+      let lockTimer = 0
       const ctx = gsap.context(() => {
+        if (scrubbed) {
+          const timeline = createScrubTimeline(copies, visuals, stateCount)
+          ScrollTrigger.create({
+            trigger: root,
+            pin,
+            start: 'top top',
+            end: () => `+=${Math.round(window.innerHeight * segmentVh * stateCount)}`,
+            pinSpacing: true,
+            scrub: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            animation: timeline,
+            onUpdate: (self) => {
+              const position = self.progress * stateCount
+              const next = Math.min(stateCount - 1, Math.round(Math.min(stateCount - 1, position)))
+              if (next === indexRef.current) return
+              indexRef.current = next
+              setActiveIndex(next)
+            },
+          })
+          return
+        }
+
         copies.forEach((layer, index) => {
           if (index === 0) {
             gsap.set(layer, { opacity: 1, y: 0, visibility: 'visible', pointerEvents: 'auto' })
@@ -355,9 +459,16 @@ export function usePinnedStory(
           })
         })
 
+        const pinDistance = () => window.innerHeight * (segmentVh * stateCount + releaseVh)
+        const releaseRatio = () => {
+          const total = segmentVh * stateCount + releaseVh
+          return total > 0 ? releaseVh / total : 0
+        }
+
         const syncIndex = (progress: number) => {
-          const raw = indexFromProgress(progress, stateCount, thresholds)
-          return applyHysteresis(progress, raw, indexRef.current, stateCount, thresholds)
+          const mapped = stateProgress(progress, releaseRatio())
+          const raw = indexFromProgress(mapped, stateCount, thresholds)
+          return applyHysteresis(mapped, raw, indexRef.current, stateCount, thresholds, hysteresis)
         }
 
         const goTo = (next: number) => {
@@ -379,36 +490,66 @@ export function usePinnedStory(
           setActiveIndex(next)
         }
 
+        let locked = false
+        let pending: number | null = null
+
+        const commit = (next: number) => {
+          if (next === indexRef.current) {
+            pending = null
+            return
+          }
+          if (lockMs > 0 && locked) {
+            pending = next
+            return
+          }
+
+          goTo(next)
+          if (lockMs <= 0) return
+
+          locked = true
+          window.clearTimeout(lockTimer)
+          lockTimer = window.setTimeout(() => {
+            locked = false
+            if (pending === null || pending === indexRef.current) {
+              pending = null
+              return
+            }
+            const queued = pending
+            pending = null
+            commit(queued)
+          }, lockMs)
+        }
+
         const trigger = ScrollTrigger.create({
           trigger: root,
           pin,
           start: 'top top',
-          end: () => `+=${Math.round(window.innerHeight * segmentVh * stateCount)}`,
+          end: () => `+=${Math.round(pinDistance())}`,
           pinSpacing: true,
           invalidateOnRefresh: true,
           anticipatePin: 1,
           onUpdate: (self) => {
-            goTo(syncIndex(self.progress))
+            commit(syncIndex(self.progress))
           },
           onRefresh: (self) => {
-            goTo(syncIndex(self.progress))
+            commit(syncIndex(self.progress))
           },
         })
 
         if (stepOnScroll) {
           let stepping = false
-          let unlock = 0
+          let stepUnlock = 0
 
           const stepTo = (next: number) => {
             const clamped = Math.max(0, Math.min(stateCount - 1, next))
             if (clamped === indexRef.current && stepping) return
             stepping = true
-            window.clearTimeout(unlock)
+            window.clearTimeout(stepUnlock)
             const progress = progressForState(clamped, stateCount)
             const top = trigger.start + (trigger.end - trigger.start) * progress
             scrollTo(top, { duration: 0.62 })
             goTo(clamped)
-            unlock = window.setTimeout(() => {
+            stepUnlock = window.setTimeout(() => {
               stepping = false
             }, 680)
           }
@@ -447,7 +588,7 @@ export function usePinnedStory(
           disposeStep = () => {
             window.removeEventListener('wheel', onWheel, { capture: true } as AddEventListenerOptions)
             window.removeEventListener('keydown', onKey)
-            window.clearTimeout(unlock)
+            window.clearTimeout(stepUnlock)
           }
         }
       }, root)
@@ -456,6 +597,7 @@ export function usePinnedStory(
 
       return () => {
         disposeStep?.()
+        window.clearTimeout(lockTimer)
         cancelRefresh?.()
         ctx.revert()
       }
@@ -465,7 +607,20 @@ export function usePinnedStory(
       media.revert()
       indexRef.current = 0
     }
-  }, [isPinned, pinRef, rootRef, scrollTo, segmentVh, stateCount, stepOnScroll, thresholdKey])
+  }, [
+    hysteresis,
+    isPinned,
+    lockMs,
+    pinRef,
+    releaseVh,
+    rootRef,
+    scrollTo,
+    segmentVh,
+    stateCount,
+    scrubbed,
+    stepOnScroll,
+    thresholdKey,
+  ])
 
   return { activeIndex, isPinned }
 }

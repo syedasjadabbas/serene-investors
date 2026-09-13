@@ -655,6 +655,23 @@
     transition: visibility 0s linear 0s;
   }
 
+  .pinned-story--scrub .story-copy,
+  .pinned-story--scrub .story-copy-state,
+  .pinned-story--scrub .story-visual,
+  .pinned-story--scrub .story-visual-layer {
+    visibility: visible;
+    pointer-events: none;
+    transition: none;
+  }
+
+  .pinned-story--scrub .story-copy.is-active,
+  .pinned-story--scrub .story-copy-state.is-active,
+  .pinned-story--scrub .story-visual.is-active,
+  .pinned-story--scrub .story-visual-layer.is-active {
+    z-index: 3;
+    pointer-events: none;
+  }
+
   .story-copy,
   .story-copy-state {
     z-index: 2;

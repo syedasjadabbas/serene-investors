@@ -52,7 +52,7 @@ export function SiteHeader({ elevated, menuOpen, onMenuToggle, onMenuClose }: Pr
         <Link
           to="/"
           onClick={goToTop}
-          className="relative z-10 whitespace-nowrap text-[0.62rem] font-semibold tracking-[0.16em] sm:text-[0.72rem]"
+          className="relative z-10 whitespace-nowrap text-[0.875rem] font-semibold tracking-[0.14em] sm:text-[1rem] lg:text-[1.0625rem]"
         >
           {site.name}
         </Link>

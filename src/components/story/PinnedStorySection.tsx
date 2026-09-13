@@ -17,6 +17,10 @@ type Props = {
   segmentVh?: number
   thresholds?: number[]
   stepOnScroll?: boolean
+  hysteresis?: number
+  releaseVh?: number
+  lockMs?: number
+  scrubbed?: boolean
 }
 
 export function PinnedStorySection({
@@ -30,6 +34,10 @@ export function PinnedStorySection({
   segmentVh,
   thresholds,
   stepOnScroll,
+  hysteresis,
+  releaseVh,
+  lockMs,
+  scrubbed,
 }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   const pinRef = useRef<HTMLDivElement>(null)
@@ -38,6 +46,10 @@ export function PinnedStorySection({
     segmentVh,
     thresholds,
     stepOnScroll,
+    hysteresis,
+    releaseVh,
+    lockMs,
+    scrubbed,
   })
 
   usePointerTilt(rootRef, {
@@ -70,7 +82,7 @@ export function PinnedStorySection({
     <section
       ref={rootRef}
       id={id}
-      className={`pinned-story${isPinned ? ' pinned-story--active' : ''} ${className ?? ''}`}
+      className={`pinned-story${isPinned ? ' pinned-story--active' : ''}${scrubbed ? ' pinned-story--scrub' : ''} ${className ?? ''}`}
       aria-labelledby={headingId}
     >
       <div ref={pinRef} className="pinned-story__pin">
