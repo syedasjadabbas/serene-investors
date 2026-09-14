@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "sideEffects": ["**/*.css"],
   "scripts": {
     "dev": "node ./node_modules/vite/bin/vite.js",
     "build": "node ./node_modules/typescript/bin/tsc -b && node ./node_modules/vite/bin/vite.js build",

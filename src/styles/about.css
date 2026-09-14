@@ -1,0 +1,457 @@
+.about-kicker {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about-hero,
+.about-idea,
+.about-contact {
+  overflow: clip;
+}
+
+.about-contact {
+  scroll-margin-top: calc(var(--header-h) + var(--promo-h) + 1.5rem);
+}
+
+.about-hero {
+  padding: 5.25rem 1.25rem 3.25rem;
+}
+
+.about-hero__layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.about-hero__rule {
+  width: 3.25rem;
+  height: 1px;
+  margin-top: 2.25rem;
+  background: var(--line);
+}
+
+.about-hero__media {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg-warm);
+}
+
+.about-hero__media img {
+  display: block;
+  width: 100%;
+  min-height: 22rem;
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+
+.about-idea {
+  padding: 2.5rem 0 0;
+}
+
+.about-idea__layout {
+  padding-inline: 1.25rem;
+  padding-bottom: 3rem;
+}
+
+.about-idea__media {
+  overflow: hidden;
+  background: var(--bg-warm);
+}
+
+.about-idea__media img {
+  display: block;
+  width: 100%;
+  min-height: 16rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+
+.about-paths {
+  padding: 4rem 1.25rem;
+  background: var(--bg-warm);
+}
+
+.about-paths__grid {
+  display: grid;
+  gap: 4.5rem;
+  margin-top: 3rem;
+}
+
+.about-path__scene {
+  position: relative;
+  min-height: 20rem;
+  overflow: visible;
+}
+
+.about-path__media {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.about-path__scene--direct .about-path__media img {
+  display: block;
+  width: 100%;
+  min-height: 22rem;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 28%;
+}
+
+.about-path__scene--funds .about-path__media img {
+  display: block;
+  width: 100%;
+  min-height: 18rem;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.about-path__card {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(20.5rem, 100%);
+  margin: -4.5rem 1rem 0 auto;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--lift);
+}
+
+.about-path__scene--direct .about-path__card {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.about-path__card img {
+  display: block;
+  width: 100%;
+  height: 8.25rem;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.about-path__card-body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.about-path__card:focus-visible,
+.about-step__link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.about-path__copy {
+  margin-top: 2.25rem;
+}
+
+.about-path__points {
+  margin-top: 1.5rem;
+  max-width: 34ch;
+}
+
+.about-path__points li {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.975rem;
+  line-height: 1.5;
+}
+
+.about-path__points li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.about-clarity {
+  padding: 4.5rem 1.25rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.about-clarity__layout {
+  display: grid;
+  gap: 2.75rem;
+}
+
+.about-clarity__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-clarity__item {
+  padding: 1.35rem 0;
+  border-top: 1px solid rgb(247 245 239 / 0.16);
+}
+
+.about-clarity__item:last-child {
+  border-bottom: 1px solid rgb(247 245 239 / 0.16);
+}
+
+.about-clarity__item h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.about-clarity__item p {
+  margin-top: 0.45rem;
+  max-width: 42ch;
+  line-height: 1.7;
+  color: rgb(247 245 239 / 0.74);
+}
+
+.about-experience {
+  padding: 4rem 1.25rem;
+}
+
+.about-experience__list {
+  display: grid;
+  gap: 2.75rem;
+  margin-top: 3rem;
+  padding: 0;
+  list-style: none;
+}
+
+.about-step__link {
+  display: grid;
+  gap: 1.1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.about-step__media {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg-warm);
+}
+
+.about-step__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 35%;
+  transition: transform 0.55s var(--ease-out-quart);
+}
+
+.about-step__link:hover .about-step__media img,
+.about-step__link:focus-visible .about-step__media img {
+  transform: scale(1.04);
+}
+
+.about-step__number {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about-step h3 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.about-step__body {
+  max-width: 36ch;
+  font-size: 0.975rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.about-step__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.about-step__link:hover .about-step__action {
+  color: var(--primary);
+}
+
+.about-close {
+  padding: 5rem 1.25rem 5.5rem;
+  background: var(--soft);
+}
+
+.about-close__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.about-contact {
+  padding: 4.5rem 1.25rem 5.5rem;
+}
+
+.about-contact__layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .about-hero,
+  .about-idea__layout,
+  .about-paths,
+  .about-clarity,
+  .about-experience,
+  .about-close,
+  .about-contact {
+    padding-inline: 2rem;
+  }
+
+  .about-paths__grid {
+    gap: 5rem;
+  }
+
+  .about-experience__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem 1.75rem;
+  }
+
+  .about-close__actions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .about-contact__layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-hero {
+    padding: 6.5rem 2.5rem 3.75rem;
+  }
+
+  .about-idea__layout,
+  .about-paths,
+  .about-clarity,
+  .about-experience,
+  .about-close,
+  .about-contact {
+    padding-inline: 2.5rem;
+  }
+
+  .about-paths,
+  .about-clarity,
+  .about-experience,
+  .about-contact {
+    padding-block: 5.5rem;
+  }
+
+  .about-hero__layout {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    align-items: end;
+    gap: 4.5rem;
+  }
+
+  .about-hero__media img {
+    min-height: 34rem;
+  }
+
+  .about-idea__layout {
+    padding-bottom: 4rem;
+  }
+
+  .about-idea__media img {
+    min-height: 28rem;
+  }
+
+  .about-paths__grid {
+    gap: 7rem;
+  }
+
+  .about-path {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: 4.5rem;
+  }
+
+  .about-path--funds {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .about-path--funds .about-path__scene {
+    order: 2;
+  }
+
+  .about-path__copy {
+    margin-top: 0;
+  }
+
+  .about-path__scene--direct .about-path__card {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.5rem;
+    margin: 0;
+  }
+
+  .about-path__scene--funds .about-path__card {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.5rem;
+    margin: 0;
+  }
+
+  .about-path__scene--direct .about-path__media img {
+    min-height: 36rem;
+  }
+
+  .about-path__scene--funds .about-path__media img {
+    min-height: 28rem;
+  }
+
+  .about-clarity__layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    gap: 5rem;
+  }
+
+  .about-experience__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem 1.75rem;
+  }
+
+  .about-step h3 {
+    font-size: 1.55rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .about-experience__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .about-step h3 {
+    font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+  .about-step__link:hover .about-step__media img,
+  .about-step__link:focus-visible .about-step__media img {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-step__media img {
+    transition: none;
+  }
+}

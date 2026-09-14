@@ -1,6 +1,7 @@
-import { useRef } from 'react'
-import type { Property } from '@/types'
-import { formatPercent, formatSampleAmount, formatStatus } from '@/lib/format'
+import { useMemo, useRef } from 'react'
+import type { Property, StatItem } from '@/types'
+import { formatPercent, formatPropertyMeta, formatSampleAmount, formatStatus } from '@/lib/format'
+import { useCountUp } from '@/hooks/useCountUp'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
 
 type Props = {
@@ -11,38 +12,78 @@ export function PropertyKeyNumbers({ property }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   useSectionReveal(rootRef)
 
-  const items = [
-    { id: 'yield', label: 'Sample yield', value: formatPercent(property.sampleYieldPct) },
-    {
-      id: 'minimum',
-      label: 'Sample minimum',
-      value: formatSampleAmount(property.sampleMinInvestment),
-    },
-    { id: 'value', label: 'Sample property value', value: property.sampleValueLabel },
-    { id: 'status', label: 'Status', value: formatStatus(property.status) },
+  const stats = useMemo<StatItem[]>(
+    () => [
+      {
+        id: 'detail-yield',
+        label: 'Sample yield',
+        value: formatPercent(property.sampleYieldPct),
+        amount: property.sampleYieldPct,
+        suffix: '%',
+        decimals: 1,
+      },
+      {
+        id: 'detail-minimum',
+        label: 'Sample minimum',
+        value: formatSampleAmount(property.sampleMinInvestment),
+        amount: property.sampleMinInvestment,
+        prefix: '$',
+        grouping: true,
+      },
+    ],
+    [property.sampleMinInvestment, property.sampleYieldPct],
+  )
+
+  useCountUp(rootRef, stats)
+
+  const facts = [
+    { label: 'Property type', value: property.type },
+    { label: 'Location', value: formatPropertyMeta(property.neighborhood, property.city) },
+    { label: 'Sample status', value: formatStatus(property.status) },
+    { label: 'Completion', value: property.completion },
   ]
 
   return (
     <section
       ref={rootRef}
-      className="overflow-x-clip px-5 pb-12 md:px-8 lg:px-10"
-      aria-label="Sample property figures"
+      className="property-snapshot"
+      aria-labelledby="snapshot-heading"
     >
       <div className="mx-auto max-w-[var(--container-wide)]">
-        <dl className="grid border-t border-line sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              data-reveal-item
-              className="border-t border-line py-6 first:border-t-0 sm:px-6 sm:first:border-t sm:odd:pl-0 lg:border-t-0 lg:border-l lg:first:border-l-0 lg:first:pl-0"
-            >
-              <dt className="text-sm text-muted">{item.label}</dt>
-              <dd className="mt-2 text-2xl font-semibold tracking-[-0.03em] tabular-nums">
-                {item.value}
-              </dd>
+        <h2
+          data-reveal-heading
+          id="snapshot-heading"
+          className="max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance"
+        >
+          The sample figures.
+        </h2>
+
+        <div className="property-snapshot__grid">
+          {stats.map((stat) => (
+            <div key={stat.id} data-reveal-item>
+              <p
+                data-count={stat.id}
+                className="text-[clamp(3rem,6vw,5.2rem)] font-semibold leading-none tracking-[-0.035em] tabular-nums"
+              >
+                {stat.value}
+              </p>
+              <p className="mt-3 text-sm text-muted">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <dl className="property-snapshot__facts">
+          {facts.map((fact) => (
+            <div key={fact.label} data-reveal-item>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
             </div>
           ))}
         </dl>
+
+        <p data-reveal-item className="mt-10 max-w-[46ch] text-sm leading-relaxed text-muted">
+          Illustrative sample only. Returns are not guaranteed.
+        </p>
       </div>
     </section>
   )

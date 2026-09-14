@@ -8,7 +8,9 @@ type Props = {
   filters: CatalogueFilters
   locations: string[]
   resultCount: number
+  isFiltered: boolean
   onChange: <K extends keyof CatalogueFilters>(key: K, value: CatalogueFilters[K]) => void
+  onReset: () => void
 }
 
 const typeOptions: { id: TypeFilter; label: string }[] = [
@@ -39,18 +41,21 @@ const sortOptions: { id: SortKey; label: string }[] = [
   { id: 'minimum', label: 'Minimum investment' },
 ]
 
-export function PropertyFilters({ filters, locations, resultCount, onChange }: Props) {
+export function PropertyFilters({
+  filters,
+  locations,
+  resultCount,
+  isFiltered,
+  onChange,
+  onReset,
+}: Props) {
   const rootRef = useRef<HTMLDivElement>(null)
   useSectionReveal(rootRef, { items: '[data-reveal-item]' })
 
   return (
-    <div ref={rootRef} className="overflow-x-clip px-5 md:px-8 lg:px-10">
-      <div data-reveal-item className="mx-auto max-w-[var(--container-wide)] border-y border-line py-5">
-        <div
-          className="property-chips flex gap-2 overflow-x-auto pb-1"
-          role="group"
-          aria-label="Property type"
-        >
+    <div ref={rootRef} className="property-filters">
+      <div data-reveal-item className="property-filters__panel mx-auto max-w-[var(--container-wide)]">
+        <div className="property-chips" role="group" aria-label="Property type">
           {typeOptions.map((option) => {
             const selected = filters.type === option.id
             return (
@@ -59,10 +64,7 @@ export function PropertyFilters({ filters, locations, resultCount, onChange }: P
                 type="button"
                 aria-pressed={selected}
                 onClick={() => onChange('type', option.id)}
-                className={cn(
-                  'min-h-11 shrink-0 rounded-pill px-4 text-sm transition-colors duration-[var(--duration-fast)]',
-                  selected ? 'bg-accent text-accent-ink' : 'text-ink hover:bg-soft',
-                )}
+                className={cn('property-chip', selected && 'property-chip--active')}
               >
                 {option.label}
               </button>
@@ -70,11 +72,11 @@ export function PropertyFilters({ filters, locations, resultCount, onChange }: P
           })}
         </div>
 
-        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <label className="block">
-            <span className="brand-label text-muted">Location</span>
+        <div className="property-filters__fields">
+          <label className="property-field">
+            <span>Location</span>
             <select
-              className="property-select mt-2 w-full"
+              className={cn('property-select', filters.location !== 'all' && 'property-select--active')}
               value={filters.location}
               onChange={(event) => onChange('location', event.target.value)}
             >
@@ -87,10 +89,10 @@ export function PropertyFilters({ filters, locations, resultCount, onChange }: P
             </select>
           </label>
 
-          <label className="block">
-            <span className="brand-label text-muted">Investment size</span>
+          <label className="property-field">
+            <span>Investment</span>
             <select
-              className="property-select mt-2 w-full"
+              className={cn('property-select', filters.size !== 'all' && 'property-select--active')}
               value={filters.size}
               onChange={(event) => onChange('size', event.target.value as SizeFilter)}
             >
@@ -102,10 +104,10 @@ export function PropertyFilters({ filters, locations, resultCount, onChange }: P
             </select>
           </label>
 
-          <label className="block">
-            <span className="brand-label text-muted">Status</span>
+          <label className="property-field">
+            <span>Status</span>
             <select
-              className="property-select mt-2 w-full"
+              className={cn('property-select', filters.status !== 'all' && 'property-select--active')}
               value={filters.status}
               onChange={(event) => onChange('status', event.target.value as StatusFilter)}
             >
@@ -117,10 +119,10 @@ export function PropertyFilters({ filters, locations, resultCount, onChange }: P
             </select>
           </label>
 
-          <label className="block">
-            <span className="brand-label text-muted">Sort</span>
+          <label className="property-field">
+            <span>Sort</span>
             <select
-              className="property-select mt-2 w-full"
+              className={cn('property-select', filters.sort !== 'featured' && 'property-select--active')}
               value={filters.sort}
               onChange={(event) => onChange('sort', event.target.value as SortKey)}
             >
@@ -133,9 +135,20 @@ export function PropertyFilters({ filters, locations, resultCount, onChange }: P
           </label>
         </div>
 
-        <p className="mt-4 text-sm text-muted" aria-live="polite">
-          {resultCount} sample {resultCount === 1 ? 'property' : 'properties'}
-        </p>
+        <div className="property-filters__meta">
+          <p aria-live="polite">
+            {resultCount} sample {resultCount === 1 ? 'property' : 'properties'}
+          </p>
+          {isFiltered ? (
+            <button type="button" className="property-filters__reset" onClick={onReset}>
+              Reset filters
+            </button>
+          ) : (
+            <span className="property-filters__reset-slot" aria-hidden="true">
+              Reset filters
+            </span>
+          )}
+        </div>
       </div>
     </div>
   )

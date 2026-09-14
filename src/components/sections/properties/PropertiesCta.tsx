@@ -1,6 +1,7 @@
 import { useRef } from 'react'
+import { ArrowRight } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
-import { propertiesCta } from '@/data'
+import { catalogueFeatured, propertiesCta } from '@/data'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
 
 export function PropertiesCta() {
@@ -8,29 +9,31 @@ export function PropertiesCta() {
   useSectionReveal(rootRef)
 
   return (
-    <section
-      ref={rootRef}
-      className="overflow-x-clip px-5 py-16 md:px-8 lg:px-10 lg:py-24"
-      aria-labelledby="properties-cta-heading"
-    >
+    <section ref={rootRef} className="properties-cta" aria-labelledby="properties-cta-heading">
       <div className="mx-auto max-w-[var(--container-wide)]">
+        <p data-reveal-heading className="property-hero__mark">
+          Next step
+        </p>
         <h2
           data-reveal-heading
           id="properties-cta-heading"
-          className="max-w-[14ch] text-[clamp(1.85rem,3vw,2.75rem)] font-semibold leading-[1.12] tracking-[-0.03em]"
+          className="mt-6 max-w-[10ch] text-[clamp(2.4rem,5vw,4.4rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-balance"
         >
           {propertiesCta.heading}
         </h2>
         <p
           data-reveal-heading
-          className="mt-4 max-w-[42ch] text-[0.95rem] leading-relaxed text-muted"
+          className="mt-5 max-w-[38ch] text-[1.05rem] leading-relaxed text-muted text-pretty"
         >
           {propertiesCta.body}
         </p>
-        <div data-reveal-heading className="mt-8 flex flex-wrap items-center gap-3">
-          <ButtonLink to={propertiesCta.primary.href}>{propertiesCta.primary.label}</ButtonLink>
-          <ButtonLink to={propertiesCta.secondary.href} variant="ghost">
-            {propertiesCta.secondary.label}
+        <div data-reveal-heading className="properties-cta__actions">
+          <ButtonLink to={`/properties/${catalogueFeatured.id}`} className="min-h-11 w-full gap-1.5 sm:w-auto">
+            Explore a property
+            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+          </ButtonLink>
+          <ButtonLink to="/how-it-works" variant="ghost" className="min-h-11 w-full sm:w-auto">
+            How it works
           </ButtonLink>
         </div>
       </div>

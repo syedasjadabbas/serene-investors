@@ -52,7 +52,7 @@ export function AuthPage({ title }: Props) {
       {fund ? (
         <p className="mt-4 max-w-prose text-sm">
           Continuing from sample fund{' '}
-          <Link to={`/funds#${fund.id}`} className="font-medium underline underline-offset-2">
+          <Link to={`/funds/${fund.id}`} className="font-medium underline underline-offset-2">
             {fund.name}
           </Link>
           .
@@ -68,10 +68,28 @@ export function AuthPage({ title }: Props) {
             This is a sample interaction on {site.name}. Nothing was sent and no account was created.
           </p>
           <div className="page-actions">
-            <ButtonLink to="/properties">Browse properties</ButtonLink>
-            <ButtonLink to="/funds" variant="ghost">
-              Explore funds
-            </ButtonLink>
+            {property ? (
+              <>
+                <ButtonLink to={`/properties/${property.id}`}>View {property.name}</ButtonLink>
+                <ButtonLink to="/properties" variant="ghost">
+                  Browse properties
+                </ButtonLink>
+              </>
+            ) : fund ? (
+              <>
+                <ButtonLink to={`/funds/${fund.id}`}>View {fund.name}</ButtonLink>
+                <ButtonLink to="/funds" variant="ghost">
+                  Explore funds
+                </ButtonLink>
+              </>
+            ) : (
+              <>
+                <ButtonLink to="/properties">Browse properties</ButtonLink>
+                <ButtonLink to="/funds" variant="ghost">
+                  Explore funds
+                </ButtonLink>
+              </>
+            )}
           </div>
         </div>
       ) : (
@@ -100,7 +118,16 @@ export function AuthPage({ title }: Props) {
           <div className="page-actions">
             <Button type="submit">{isLogin ? 'Enter demo' : 'Create demo account'}</Button>
             {isLogin ? (
-              <ButtonLink to="/get-started" variant="ghost">
+              <ButtonLink
+                to={
+                  property
+                    ? `/get-started?intent=property&id=${property.id}`
+                    : fund
+                      ? `/get-started?intent=fund&id=${fund.id}`
+                      : '/get-started'
+                }
+                variant="ghost"
+              >
                 Get started
               </ButtonLink>
             ) : (

@@ -18,6 +18,13 @@
 @import './styles/forms.css';
 @import './styles/properties.css';
 @import './styles/property-detail.css';
+@import './styles/funds.css';
+@import './styles/fund-detail.css';
+@import './styles/how.css';
+@import './styles/get-started.css';
+@import './styles/learn.css';
+@import './styles/about.css';
+@import './styles/legal.css';
 
 @theme inline {
   --font-sans: 'Mona Sans Variable', 'Mona Sans', ui-sans-serif, system-ui, sans-serif;

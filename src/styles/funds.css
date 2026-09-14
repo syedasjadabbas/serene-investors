@@ -1,0 +1,519 @@
+.funds-hero {
+  padding: 5.25rem 1.25rem 3.25rem;
+}
+
+.funds-hero__layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.funds-hero__rule {
+  width: 3.25rem;
+  height: 1px;
+  margin-top: 2.25rem;
+  background: var(--line);
+}
+
+.funds-hero__scene {
+  position: relative;
+  min-height: 22rem;
+}
+
+.funds-hero__field {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg-warm);
+}
+
+.funds-hero__field img {
+  display: block;
+  width: 100%;
+  min-height: 22rem;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.funds-hero__card {
+  position: relative;
+  z-index: 2;
+  width: min(20.5rem, 100%);
+  margin: -4.5rem 1rem 0 auto;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--lift);
+}
+
+.funds-hero__card img {
+  display: block;
+  width: 100%;
+  height: 8.5rem;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.funds-hero__card-body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.fund-collection {
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.fund-collection__grid {
+  display: grid;
+  gap: 2.25rem;
+}
+
+.fund-collection__notice {
+  max-width: 48ch;
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.fund-card {
+  transform-style: preserve-3d;
+  transition: box-shadow 0.4s var(--ease-out-quart);
+}
+
+.fund-card__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+
+.fund-card__link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.fund-card__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg-warm);
+}
+
+.fund-card__image {
+  transition: transform 0.55s var(--ease-out-quart);
+}
+
+.fund-card__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+
+.fund-card__link:hover .fund-card__image,
+.fund-card__link:focus-visible .fund-card__image {
+  transform: scale(1.05);
+}
+
+.fund-card__badge {
+  position: absolute;
+  left: 0.85rem;
+  top: 0.85rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.fund-card__badge span {
+  color: var(--muted);
+}
+
+.fund-card__body {
+  padding-top: 1.15rem;
+}
+
+.fund-card__body h3 {
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.fund-card__place {
+  margin-top: 0.3rem;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+.fund-card__figures {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 0.9rem;
+  font-size: 0.9375rem;
+}
+
+.fund-card__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.fund-card__link:hover .fund-card__action {
+  color: var(--primary);
+}
+
+.funds-featured {
+  padding: 4rem 1.25rem;
+  background: var(--bg-warm);
+}
+
+.funds-featured__layout {
+  display: grid;
+  gap: 2rem;
+}
+
+.funds-featured__stage {
+  position: relative;
+}
+
+.funds-featured__media {
+  position: relative;
+  isolation: isolate;
+}
+
+.funds-featured__media::before {
+  content: '';
+  position: absolute;
+  inset: 9% -7% -9% 8%;
+  z-index: 0;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.funds-featured__media a {
+  position: relative;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.funds-featured__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.funds-layer {
+  position: relative;
+  z-index: 2;
+  width: min(18.5rem, 100%);
+  margin-top: 1rem;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--lift);
+  cursor: pointer;
+}
+
+.funds-layer img {
+  display: block;
+  width: 100%;
+  height: 7.5rem;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.funds-layer__body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.funds-featured__copy {
+  padding-top: 0.5rem;
+}
+
+.funds-featured__figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.funds-featured__figures dt {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.funds-featured__figures dd {
+  margin-top: 0.3rem;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.funds-breakdown {
+  padding: 4rem 1.25rem;
+}
+
+.funds-breakdown__stats {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.funds-breakdown__rows {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.funds-breakdown__row {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.funds-breakdown__row h3 {
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.funds-breakdown__row > div p,
+.funds-breakdown__row dt {
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.funds-breakdown__row dl {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.funds-breakdown__row dd {
+  margin-top: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.funds-breakdown__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.funds-how {
+  padding: 4rem 1.25rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.funds-how .text-muted,
+.funds-how p[data-reveal-heading] {
+  color: rgb(247 245 239 / 0.74);
+}
+
+.funds-how__steps {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2.75rem;
+}
+
+.funds-how__index {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: rgb(247 245 239 / 0.62);
+}
+
+.funds-how__steps h3 {
+  margin-top: 0.7rem;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.funds-how__steps li p:last-child {
+  margin-top: 0.65rem;
+  max-width: 32ch;
+  line-height: 1.65;
+  color: rgb(247 245 239 / 0.74);
+}
+
+.funds-cta {
+  padding: 5rem 1.25rem 5.5rem;
+  background: var(--soft);
+}
+
+.funds-cta__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .funds-hero,
+  .fund-collection,
+  .funds-featured,
+  .funds-breakdown,
+  .funds-how,
+  .funds-cta {
+    padding-inline: 2rem;
+  }
+
+  .fund-collection__grid,
+  .funds-breakdown__stats,
+  .funds-breakdown__row dl,
+  .funds-how__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .funds-hero__card {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    margin: 0;
+  }
+
+  .funds-featured__media img {
+    aspect-ratio: 5 / 4;
+  }
+
+  .funds-cta__actions {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .funds-hero {
+    padding: 6.5rem 2.5rem 3.75rem;
+  }
+
+  .fund-collection,
+  .funds-featured,
+  .funds-breakdown,
+  .funds-how,
+  .funds-cta {
+    padding-inline: 2.5rem;
+    padding-block: 5.5rem;
+  }
+
+  .funds-hero__layout {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    align-items: end;
+    gap: 4.5rem;
+  }
+
+  .funds-hero__field img {
+    min-height: 34rem;
+  }
+
+  .funds-hero__card {
+    right: 2rem;
+    bottom: 2rem;
+  }
+
+  .fund-card:hover {
+    box-shadow: var(--lift);
+  }
+
+  .fund-collection__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 1.75rem;
+  }
+
+  .funds-featured__layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: center;
+    gap: 4.5rem;
+  }
+
+  .funds-featured__media img {
+    min-height: 36rem;
+    aspect-ratio: 4 / 5;
+  }
+
+  .funds-layer {
+    position: absolute;
+    width: 17.5rem;
+    margin-top: 0;
+  }
+
+  .funds-layer--one {
+    left: -1.25rem;
+    bottom: 2.5rem;
+  }
+
+  .funds-layer--two {
+    right: 1.5rem;
+    top: 2.25rem;
+  }
+
+  .funds-breakdown__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .funds-breakdown__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr) auto;
+    align-items: end;
+    gap: 2rem;
+  }
+
+  .funds-breakdown__row dl {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 0;
+  }
+
+  .funds-breakdown__link {
+    margin-top: 0;
+  }
+
+  .funds-how__steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .funds-featured__media::before {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+  .fund-card__link:hover .fund-card__image,
+  .fund-card__link:focus-visible .fund-card__image {
+    transform: none;
+  }
+
+  .fund-card:hover {
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fund-card__image,
+  .fund-card {
+    transition: none;
+  }
+}

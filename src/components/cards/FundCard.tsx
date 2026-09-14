@@ -1,23 +1,66 @@
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import type { Fund } from '@/types'
-import { formatPercent } from '@/lib/format'
+import { fundSampleStatus, sampleFundMinimum } from '@/data'
+import { formatFundType, formatPercent, formatSampleAmount } from '@/lib/format'
+import { useCardPointerTilt } from '@/hooks/useCardPointerTilt'
 
 type Props = {
   fund: Fund
 }
 
 export function FundCard({ fund }: Props) {
+  const cardRef = useRef<HTMLElement>(null)
+  useCardPointerTilt(cardRef)
+
   return (
-    <article id={fund.id} data-fund-id={fund.id} className="scroll-mt-[calc(var(--header-h)+var(--promo-h)+1.5rem)]">
+    <article
+      ref={cardRef}
+      id={fund.id}
+      data-fund-id={fund.id}
+      data-fund-card
+      className="fund-card scroll-mt-[calc(var(--header-h)+var(--promo-h)+1.5rem)]"
+    >
       <Link
-        to={`/get-started?intent=fund&id=${fund.id}`}
-        aria-label={`Review sample fund ${fund.name}`}
-        className="block rounded-md bg-surface p-4 transition-transform duration-[var(--duration-med)] ease-[var(--ease-out-quart)] hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+        to={`/funds/${fund.id}`}
+        aria-label={`${fund.name}, ${fund.market}, ${fund.propertyCount} sample properties, ${fundSampleStatus}. View fund.`}
+        className="fund-card__link"
       >
-        <p className="text-sm text-muted">{fund.market}</p>
-        <h3 className="mt-1 text-lg tracking-tight">{fund.name}</h3>
-        <p className="mt-2 text-sm">Sample return {formatPercent(fund.sampleReturnPct)}</p>
-        <p className="mt-3 text-sm font-medium">Continue with this sample fund</p>
+        <div className="fund-card__media">
+          <div className="fund-card__image">
+            <img
+              data-fund-card-image
+              src={fund.image}
+              alt={fund.imageAlt}
+              width={1400}
+              height={1050}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <p className="fund-card__badge">
+            {formatFundType(fund.type)}
+            <span> / {fundSampleStatus}</span>
+          </p>
+        </div>
+
+        <div className="fund-card__body">
+          <h3>{fund.name}</h3>
+          <p className="fund-card__place">
+            {fund.market}
+            <span> · {fund.portfolioLabel}</span>
+          </p>
+          <p className="fund-card__figures">
+            <span>{fund.propertyCount} sample properties</span>
+            <span>Sample yield {formatPercent(fund.sampleReturnPct)}</span>
+            <span>Sample minimum {formatSampleAmount(sampleFundMinimum)}</span>
+          </p>
+          <p className="fund-card__action">
+            View fund
+            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+          </p>
+        </div>
       </Link>
     </article>
   )

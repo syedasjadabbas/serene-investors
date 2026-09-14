@@ -1,34 +1,44 @@
 import { useRef } from 'react'
+import { ArrowRight } from 'lucide-react'
+import type { Property } from '@/types'
 import { ButtonLink } from '@/components/ui/Button'
+import { formatSampleAmount } from '@/lib/format'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
 
-export function PropertyClosingCta() {
+type Props = {
+  property: Property
+}
+
+export function PropertyClosingCta({ property }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   useSectionReveal(rootRef)
 
   return (
-    <section
-      ref={rootRef}
-      className="overflow-x-clip bg-soft px-5 py-16 md:px-8 lg:px-10 lg:py-24"
-      aria-labelledby="closing-heading"
-    >
+    <section ref={rootRef} className="property-close" aria-labelledby="closing-heading">
       <div className="mx-auto max-w-[var(--container-wide)]">
         <h2
           data-reveal-heading
           id="closing-heading"
-          className="max-w-[16ch] text-[clamp(1.85rem,3vw,2.75rem)] font-semibold leading-[1.12] tracking-[-0.03em]"
+          className="max-w-[10ch] text-[clamp(2.4rem,5vw,4.4rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-balance"
         >
-          Ready to explore the collection?
+          Explore the opportunity.
         </h2>
-        <p data-reveal-heading className="mt-4 max-w-[42ch] text-[0.95rem] leading-relaxed text-muted">
-          Browse more sample properties or learn how the platform works.
+        <p data-reveal-heading className="mt-5 text-xl font-medium tracking-tight">
+          {property.name}
         </p>
-        <div data-reveal-heading className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <ButtonLink to="/properties" className="min-h-11 w-full sm:w-auto">
-            View all properties
+        <p data-reveal-heading className="mt-2 text-sm text-muted">
+          Sample minimum {formatSampleAmount(property.sampleMinInvestment)}
+        </p>
+        <div data-reveal-heading className="property-close__actions">
+          <ButtonLink
+            to={`/get-started?intent=property&id=${property.id}`}
+            className="min-h-11 w-full gap-1.5 sm:w-auto"
+          >
+            Invest in this property
+            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
           </ButtonLink>
-          <ButtonLink to="/how-it-works" variant="ghost" className="min-h-11 w-full sm:w-auto">
-            How it works
+          <ButtonLink to="/properties" variant="ghost" className="min-h-11 w-full sm:w-auto">
+            Back to properties
           </ButtonLink>
         </div>
       </div>

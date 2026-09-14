@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import type { OfferingSplit } from '@/types'
-import { fundStageIntro, funds } from '@/data'
+import { fundStageIntro, funds, sampleFundMinimum } from '@/data'
 import { fundStageAssets, fundStageImage } from '@/data/fund-stage-assets'
 import { formatSampleAmount } from '@/lib/format'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
@@ -22,9 +22,6 @@ export function FundStageSection({ offering }: Props) {
     layers: [
       { selector: '[data-offering-media] img', x: 10, y: 7, rotateX: 1.6, rotateY: 2, z: -40, invert: true },
       { selector: '[data-fund-phone]', x: 12, y: 0, rotateX: 2.2, rotateY: 2.8, z: 16 },
-      { selector: '[data-fund-float="0"]', x: 10, y: 0, rotateX: 1.8, rotateY: 2.2, rotateZ: -2 },
-      { selector: '[data-fund-float="1"]', x: 12, y: 0, rotateX: 2, rotateY: 2.4 },
-      { selector: '[data-fund-float="2"]', x: 14, y: 0, rotateX: 2.2, rotateY: 2.8, rotateZ: 1.2 },
     ],
   })
   useFloatingMotion(rootRef, [
@@ -112,7 +109,7 @@ export function FundStageSection({ offering }: Props) {
                   Sample minimum
                 </p>
                 <p className="mt-1 text-3xl font-semibold tabular-nums tracking-tight">
-                  {formatSampleAmount(10000)}
+                  {formatSampleAmount(sampleFundMinimum)}
                 </p>
                 <p className="mt-3 text-sm text-muted">{urban?.portfolioLabel ?? offering.example.detail}</p>
               </div>
@@ -148,7 +145,7 @@ export function FundStageSection({ offering }: Props) {
                   </p>
                   <p className="mt-4 flex items-baseline justify-between gap-4 text-sm">
                     <span className="text-muted">Sample minimum</span>
-                    <span className="font-semibold tabular-nums">{formatSampleAmount(10000)}</span>
+                    <span className="font-semibold tabular-nums">{formatSampleAmount(sampleFundMinimum)}</span>
                   </p>
                   <Link
                     to={`/funds#${fund.id}`}

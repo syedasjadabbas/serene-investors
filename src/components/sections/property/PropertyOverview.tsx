@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import type { Property } from '@/types'
-import { formatPropertyMeta, formatSampleAmount, formatSampleYield, formatStatus } from '@/lib/format'
+import { formatPropertyMeta } from '@/lib/format'
+import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
 
 type Props = {
@@ -9,65 +10,84 @@ type Props = {
 
 export function PropertyOverview({ property }: Props) {
   const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef)
-  const location = formatPropertyMeta(property.neighborhood, property.city)
+  useSectionReveal(rootRef, { media: '[data-story-image]' })
+  useDepthParallax(rootRef, [
+    { selector: '[data-story-image="0"]', yPercent: -5 },
+    { selector: '[data-story-image="1"]', yPercent: 4 },
+  ])
 
-  const specs = [
-    { label: 'Property type', value: property.type },
-    { label: 'Location', value: location },
-    { label: 'Sample property value', value: property.sampleValueLabel },
-    { label: 'Sample minimum', value: formatSampleAmount(property.sampleMinInvestment) },
-    { label: 'Sample yield', value: formatSampleYield(property.sampleYieldPct) },
-    { label: 'Sample status', value: formatStatus(property.status) },
-    { label: 'Units / residences', value: property.unitsLabel },
-    { label: 'Completion', value: property.completion },
-    { label: 'Management', value: property.management },
-  ]
+  const location = formatPropertyMeta(property.neighborhood, property.city)
+  const firstImage = property.gallery[1] ?? property.gallery[0] ?? { src: property.image, alt: property.imageAlt }
+  const secondImage = property.gallery[2] ?? firstImage
+  const lead = property.overview[0] ?? property.description
+  const follow = property.overview[1] ?? property.overview[0] ?? property.description
 
   return (
     <section
       ref={rootRef}
       id="property-overview"
-      className="scroll-mt-[calc(var(--header-h)+var(--promo-h)+1.5rem)] overflow-x-clip px-5 py-16 md:px-8 lg:px-10 lg:py-24"
+      className="property-story"
       aria-labelledby="overview-heading"
     >
       <div className="mx-auto max-w-[var(--container-wide)]">
-        <p data-reveal-heading className="brand-label text-muted">
-          Property overview
-        </p>
-        <h2
-          data-reveal-heading
-          id="overview-heading"
-          className="mt-3 max-w-[14ch] text-[clamp(1.85rem,3vw,2.75rem)] font-semibold leading-[1.12] tracking-[-0.03em]"
-        >
-          Designed around the way people live.
-        </h2>
-
-        <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-20">
-          <div className="max-w-[46ch] space-y-5">
-            {property.overview.map((paragraph) => (
-              <p
-                key={paragraph}
-                data-reveal-item
-                className="text-[0.95rem] leading-relaxed text-muted"
-              >
-                {paragraph}
-              </p>
-            ))}
+        <div className="property-story__row">
+          <figure className="property-story__media m-0">
+            <img
+              data-story-image="0"
+              src={firstImage.src}
+              alt={firstImage.alt}
+              width={1400}
+              height={1050}
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div className="property-story__copy">
+            <h2
+              data-reveal-heading
+              id="overview-heading"
+              className="max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance"
+            >
+              {property.name}
+            </h2>
+            <p data-reveal-item className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed text-pretty">
+              {lead}
+            </p>
+            <p data-reveal-item className="mt-6 text-sm text-muted">
+              {property.type}
+              <span className="text-subtle"> / </span>
+              {location}
+            </p>
+            <p data-reveal-item className="mt-2 text-sm text-muted">
+              {property.areaLabel}
+              {property.beds > 0 ? ` / ${property.beds} bed sample plan` : null}
+            </p>
           </div>
+        </div>
 
-          <dl>
-            {specs.map((spec) => (
-              <div
-                key={spec.label}
-                data-reveal-item
-                className="flex items-baseline justify-between gap-6 border-t border-line py-3.5 first:border-t-0 first:pt-0"
-              >
-                <dt className="text-sm text-muted">{spec.label}</dt>
-                <dd className="text-right text-sm font-medium">{spec.value}</dd>
-              </div>
-            ))}
-          </dl>
+        <div className="property-story__row property-story__row--flip">
+          <div className="property-story__copy">
+            <p data-reveal-item className="max-w-[42ch] text-[1.05rem] leading-relaxed text-pretty">
+              {follow}
+            </p>
+            <p data-reveal-item className="mt-6 text-sm text-muted">
+              {property.unitsLabel}
+            </p>
+            <p data-reveal-item className="mt-2 text-sm text-muted">
+              {property.management}
+            </p>
+          </div>
+          <figure className="property-story__media m-0">
+            <img
+              data-story-image="1"
+              src={secondImage.src}
+              alt={secondImage.alt}
+              width={1400}
+              height={1050}
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
         </div>
       </div>
     </section>

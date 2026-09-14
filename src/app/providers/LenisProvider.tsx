@@ -6,6 +6,7 @@ import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 type ScrollToOptions = {
   immediate?: boolean
   duration?: number
+  offset?: number
 }
 
 type LenisControl = {
@@ -52,6 +53,7 @@ export function LenisProvider({ children }: Props) {
           lenis.scrollTo(target, {
             immediate: options?.immediate ?? options?.duration === undefined,
             duration: options?.duration,
+            offset: options?.offset,
           })
           return
         }
@@ -65,8 +67,11 @@ export function LenisProvider({ children }: Props) {
     registerGsapPlugins()
 
     if (reduced) {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.disable())
-      return
+      const triggers = ScrollTrigger.getAll()
+      triggers.forEach((trigger) => trigger.disable())
+      return () => {
+        triggers.forEach((trigger) => trigger.enable())
+      }
     }
 
     const lenis = new Lenis({

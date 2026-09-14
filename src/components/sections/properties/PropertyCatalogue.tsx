@@ -1,22 +1,30 @@
 import { useRef } from 'react'
 import type { Property } from '@/types'
 import { CatalogueCard } from '@/components/cards/CatalogueCard'
+import { Button } from '@/components/ui/Button'
 import { propertiesNotice } from '@/data'
-import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { useCatalogueTransition } from '@/hooks/useCatalogueTransition'
+import { useDepthParallax } from '@/hooks/useDepthParallax'
 
 type Props = {
   properties: Property[]
+  onReset: () => void
 }
 
-export function PropertyCatalogue({ properties }: Props) {
+export function PropertyCatalogue({ properties, onReset }: Props) {
   const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef, { heading: undefined, media: '[data-reveal-item] img' })
+  const rendered = useCatalogueTransition(rootRef, properties)
+  useDepthParallax(
+    rootRef,
+    [{ selector: '[data-catalogue-image]', yPercent: 4 }],
+    rendered.map((item) => item.id).join('|'),
+  )
 
   return (
     <section
       ref={rootRef}
       id="property-collection"
-      className="scroll-mt-[calc(var(--header-h)+var(--promo-h)+1.5rem)] overflow-x-clip px-5 py-12 md:px-8 lg:px-10 lg:py-16"
+      className="property-catalogue"
       aria-labelledby="collection-heading"
     >
       <div className="mx-auto max-w-[var(--container-wide)]">
@@ -24,21 +32,28 @@ export function PropertyCatalogue({ properties }: Props) {
           Sample property collection
         </h2>
 
-        {properties.length === 0 ? (
-          <p className="max-w-[40ch] text-[0.95rem] leading-relaxed text-muted">
-            No sample properties match these filters. Try another combination.
-          </p>
+        {rendered.length === 0 ? (
+          <div className="property-catalogue__empty">
+            <p className="property-hero__mark">No matches</p>
+            <h3>No sample properties match.</h3>
+            <p>
+              Nothing in the current collection fits these filters. Reset to see every sample listing
+              again.
+            </p>
+            <Button type="button" onClick={onReset} className="min-h-11">
+              Reset filters
+            </Button>
+          </div>
         ) : (
-          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-14">
-            {properties.map((property) => (
+          <div className="property-catalogue__grid">
+            {rendered.map((property) => (
               <CatalogueCard key={property.id} property={property} />
             ))}
           </div>
         )}
 
-        <aside className="mt-14 max-w-[52ch] border-t border-line pt-6">
-          <p className="brand-label text-muted">{propertiesNotice.eyebrow}</p>
-          <p className="mt-3 text-sm leading-relaxed text-muted">{propertiesNotice.body}</p>
+        <aside className="property-catalogue__notice">
+          <p>{propertiesNotice.body}</p>
         </aside>
       </div>
     </section>

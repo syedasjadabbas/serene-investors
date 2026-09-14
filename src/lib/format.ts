@@ -1,4 +1,4 @@
-import type { PropertyStatus } from '@/types'
+import type { FundType, PropertyStatus } from '@/types'
 
 export function formatPercent(value: number) {
   return `${value.toFixed(1)}%`
@@ -29,6 +29,12 @@ export function formatSampleMinimum(amount: number) {
 
 export function formatSampleYield(value: number) {
   return `Sample yield ${formatPercent(value)}`
+}
+
+export function formatFundType(type: FundType) {
+  if (type === 'residential') return 'Residential'
+  if (type === 'commercial') return 'Commercial'
+  return 'Mixed'
 }
 
 type StatFormat = {

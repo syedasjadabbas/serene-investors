@@ -10,10 +10,11 @@ export type ParallaxLayer = {
 export function useDepthParallax(
   rootRef: RefObject<HTMLElement | null>,
   layers: ParallaxLayer[],
+  refreshKey = '',
 ) {
   const layersRef = useRef(layers)
   layersRef.current = layers
-  const key = layers.map((layer) => `${layer.selector}:${layer.yPercent ?? 4}`).join('|')
+  const key = `${refreshKey}|${layers.map((layer) => `${layer.selector}:${layer.yPercent ?? 4}`).join('|')}`
 
   useLayoutEffect(() => {
     const root = rootRef.current

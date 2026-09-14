@@ -15,6 +15,14 @@ export type CatalogueFilters = {
   sort: SortKey
 }
 
+export const DEFAULT_CATALOGUE_FILTERS: CatalogueFilters = {
+  type: 'all',
+  location: 'all',
+  size: 'all',
+  status: 'all',
+  sort: 'featured',
+}
+
 const featuredOrder = [
   'courtyard-residences',
   'cedar-court',
@@ -33,13 +41,7 @@ function matchesSize(amount: number, size: SizeFilter) {
 }
 
 export function useCatalogue(items: Property[]) {
-  const [filters, setFilters] = useState<CatalogueFilters>({
-    type: 'all',
-    location: 'all',
-    size: 'all',
-    status: 'all',
-    sort: 'featured',
-  })
+  const [filters, setFilters] = useState<CatalogueFilters>(DEFAULT_CATALOGUE_FILTERS)
 
   const locations = useMemo(() => {
     return [...new Set(items.map((item) => item.neighborhood))].sort()
@@ -67,5 +69,16 @@ export function useCatalogue(items: Property[]) {
     setFilters((current) => ({ ...current, [key]: value }))
   }
 
-  return { filters, locations, update, visible }
+  function reset() {
+    setFilters(DEFAULT_CATALOGUE_FILTERS)
+  }
+
+  const isFiltered =
+    filters.type !== DEFAULT_CATALOGUE_FILTERS.type ||
+    filters.location !== DEFAULT_CATALOGUE_FILTERS.location ||
+    filters.size !== DEFAULT_CATALOGUE_FILTERS.size ||
+    filters.status !== DEFAULT_CATALOGUE_FILTERS.status ||
+    filters.sort !== DEFAULT_CATALOGUE_FILTERS.sort
+
+  return { filters, isFiltered, locations, reset, update, visible }
 }

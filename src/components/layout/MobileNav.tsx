@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { primaryNav, utilityNav } from '@/data'
 import { useFocusTrap } from '@/hooks/useFocusTrap'
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
@@ -22,6 +22,7 @@ export function MobileNav({ open, onClose }: Props) {
 
   const start = utilityNav.find((item) => item.id === 'start')
   const login = utilityNav.find((item) => item.id === 'login')
+  const location = useLocation()
 
   return (
     <div
@@ -34,23 +35,34 @@ export function MobileNav({ open, onClose }: Props) {
     >
       <nav className="mx-auto flex h-full max-w-[var(--container-wide)] flex-col px-5 py-8 md:px-8">
         <ul className="flex flex-col gap-1">
-          {primaryNav.map((item) => (
-            <li key={item.id}>
-              <Link
-                to={item.href}
-                onClick={onClose}
-                className="flex items-center gap-2 py-3 text-2xl tracking-tight"
-              >
-                {item.label}
-                {item.badge ? <Badge>{item.badge}</Badge> : null}
-              </Link>
-            </li>
-          ))}
+          {primaryNav.map((item) => {
+            const current =
+              location.pathname === item.href ||
+              (item.href !== '/' && location.pathname.startsWith(`${item.href}/`))
+            return (
+              <li key={item.id}>
+                <Link
+                  to={item.href}
+                  onClick={onClose}
+                  aria-current={current ? 'page' : undefined}
+                  className="flex items-center gap-2 py-3 text-2xl tracking-tight"
+                >
+                  {item.label}
+                  {item.badge ? <Badge>{item.badge}</Badge> : null}
+                </Link>
+              </li>
+            )
+          })}
         </ul>
 
         <div className="mt-auto flex flex-col gap-3 pb-6">
           {login ? (
-            <Link to={login.href} onClick={onClose} className="inline-flex min-h-11 items-center text-sm">
+            <Link
+              to={login.href}
+              onClick={onClose}
+              aria-current={location.pathname === login.href ? 'page' : undefined}
+              className="inline-flex min-h-11 items-center text-sm"
+            >
               {login.label}
             </Link>
           ) : null}

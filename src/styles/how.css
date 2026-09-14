@@ -1,0 +1,765 @@
+.how-kicker {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.how-hero {
+  padding: 5.25rem 1.25rem 3.25rem;
+}
+
+.how-hero__layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.how-hero__rule {
+  width: 3.25rem;
+  height: 1px;
+  margin-top: 2.25rem;
+  background: var(--line);
+}
+
+.how-hero__scene {
+  position: relative;
+  min-height: 22rem;
+}
+
+.how-hero__media {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg-warm);
+}
+
+.how-hero__media img {
+  display: block;
+  width: 100%;
+  min-height: 22rem;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.how-hero__card:focus-visible,
+.how-choose__card:focus-visible,
+.how-track__float:focus-visible,
+.how-receive__card:focus-visible,
+.how-track__list a:focus-visible,
+.how-faq__item summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.how-hero__card {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(20.5rem, 100%);
+  margin: -4.5rem 1rem 0 auto;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--lift);
+}
+
+.how-hero__card img {
+  display: block;
+  width: 100%;
+  height: 8.25rem;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.how-hero__card > div {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.how-journey {
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.how-journey__pin {
+  position: relative;
+}
+
+.how-journey__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.how-journey__copy-stage,
+.how-journey__visual-stage {
+  display: contents;
+}
+
+.how-journey__copy,
+.how-journey__visual {
+  position: static;
+  order: var(--how-order, 0);
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.how-journey__visual {
+  margin-bottom: 2.5rem;
+}
+
+.how-journey__visual:last-of-type {
+  margin-bottom: 0;
+}
+
+.how-journey__number {
+  margin-top: 1.1rem;
+  font-size: clamp(3.2rem, 6vw, 5rem);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.how-journey__heading {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.65rem;
+  font-size: clamp(2.4rem, 4.6vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.how-journey__heading span:last-child {
+  margin-top: 0.08em;
+  font-size: 0.62em;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.how-journey__body {
+  margin-top: 1.35rem;
+  max-width: 34ch;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.how-journey__note {
+  display: inline-block;
+  margin-top: 1.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--soft);
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--soft-ink);
+}
+
+.how-journey__steps,
+.how-journey__progress-track {
+  display: none;
+}
+
+.how-choose,
+.how-receive {
+  position: relative;
+  min-height: 22rem;
+}
+
+.how-choose img[data-how-choose-image],
+.how-receive > img {
+  display: block;
+  width: 100%;
+  min-height: 22rem;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 28%;
+  border-radius: var(--radius-md);
+}
+
+.how-choose__card {
+  display: block;
+  margin-top: 1rem;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--lift);
+}
+
+.how-choose__card--fund {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.how-choose__card--fund img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 7.5rem;
+  object-fit: cover;
+}
+
+.how-choose__card--property,
+.how-choose__card--fund > div {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.how-choose__name {
+  margin-top: 0.45rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.how-choose__meta,
+.how-choose__figures {
+  margin-top: 0.3rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.how-choose__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.how-invest {
+  padding: 1.6rem 1.4rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--lift);
+}
+
+.how-invest__amount {
+  margin-top: 0.85rem;
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.how-invest__label {
+  margin-top: 0.45rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.how-invest__alloc {
+  height: 3px;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--soft);
+}
+
+.how-invest__bar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  background: var(--primary);
+}
+
+.how-invest__pick {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.how-invest__pick img {
+  display: block;
+  width: 100%;
+  height: 4.25rem;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.how-invest__pick-name {
+  margin-top: 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.how-invest__link,
+.how-invest__alt a,
+.how-faq a,
+.how-faq__more a {
+  font-weight: 500;
+  color: var(--ink);
+  text-underline-offset: 0.18em;
+}
+
+.how-invest__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+}
+
+.how-invest__alt {
+  margin-top: 1.1rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.how-invest__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.how-invest__meta dt {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.how-invest__meta dd {
+  margin-top: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.how-invest__note {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.how-track {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+}
+
+.how-track__phone {
+  width: min(20.5rem, 100%);
+  margin-inline: auto;
+}
+
+.how-track__screen {
+  padding: 0.5rem 1rem 1.15rem;
+}
+
+.how-track__brand {
+  margin-top: 1.1rem;
+  color: var(--muted);
+}
+
+.how-track__title {
+  margin-top: 1.1rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.how-track__count,
+.how-track__value-label,
+.how-track__float-meta {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.how-track__value-label {
+  margin-top: 1.15rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.how-track__value,
+.how-track__float-value {
+  margin-top: 0.25rem;
+  font-size: 1.85rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.how-track__list {
+  margin-top: 1.15rem;
+  border-top: 1px solid var(--line);
+}
+
+.how-track__list a {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.how-track__list img {
+  display: block;
+  width: 100%;
+  height: 2.65rem;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.how-track__list p:last-child {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.how-track__float {
+  display: block;
+  width: min(16.5rem, 100%);
+  margin-inline: auto;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--lift);
+}
+
+.how-receive__card {
+  display: block;
+  width: min(18.5rem, 100%);
+  margin: -4rem 0 0 auto;
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--lift);
+}
+
+.how-receive__property {
+  margin-top: 0.7rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.how-receive__amount {
+  margin-top: 0.85rem;
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.how-receive__meta,
+.how-receive__note {
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.how-summary {
+  padding: 4rem 1.25rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.how-summary p[data-reveal-heading] {
+  color: rgb(247 245 239 / 0.74);
+}
+
+.how-summary__list {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2.75rem;
+}
+
+.how-summary__index {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: rgb(247 245 239 / 0.62);
+}
+
+.how-summary__list h3 {
+  margin-top: 0.7rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.how-summary__list li p:last-child {
+  margin-top: 0.6rem;
+  max-width: 28ch;
+  line-height: 1.65;
+  color: rgb(247 245 239 / 0.74);
+}
+
+.how-faq {
+  padding: 4rem 1.25rem;
+}
+
+.how-faq__list {
+  margin-top: 2.75rem;
+  max-width: 46rem;
+}
+
+.how-faq__item {
+  border-top: 1px solid var(--line);
+}
+
+.how-faq__item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1.2rem 1.75rem 1.2rem 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+
+.how-faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.how-faq__item summary::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 1.55rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  transform: rotate(45deg);
+}
+
+.how-faq__item[open] summary::after {
+  top: 1.7rem;
+  transform: rotate(225deg);
+}
+
+.how-faq__item p {
+  max-width: 46ch;
+  padding: 0 0 1.35rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.how-faq__more {
+  margin-top: 2rem;
+  max-width: 46ch;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.how-cta {
+  padding: 5rem 1.25rem 5.5rem;
+  background: var(--soft);
+}
+
+.how-cta__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .how-hero,
+  .how-journey,
+  .how-summary,
+  .how-faq,
+  .how-cta {
+    padding-inline: 2rem;
+  }
+
+  .how-hero__card {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    margin: 0;
+  }
+
+  .how-summary__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .how-cta__actions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .how-choose img[data-how-choose-image],
+  .how-receive > img {
+    aspect-ratio: 5 / 4;
+    min-height: 28rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .how-hero {
+    padding: 6.5rem 2.5rem 3.75rem;
+  }
+
+  .how-journey,
+  .how-summary,
+  .how-faq,
+  .how-cta {
+    padding-inline: 2.5rem;
+  }
+
+  .how-summary,
+  .how-faq {
+    padding-block: 5.5rem;
+  }
+
+  .how-hero__layout {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    align-items: end;
+    gap: 4.5rem;
+  }
+
+  .how-hero__media img {
+    min-height: 34rem;
+  }
+
+  .how-journey--pinned {
+    padding-block: 0;
+  }
+
+  .how-journey--pinned .how-journey__pin {
+    box-sizing: border-box;
+    display: flex;
+    min-height: 100dvh;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 5.5rem 4rem;
+  }
+
+  .how-journey--pinned .how-journey__grid {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
+    align-items: center;
+    gap: 4.5rem;
+  }
+
+  .how-journey--pinned .how-journey__copy-stage,
+  .how-journey--pinned .how-journey__visual-stage {
+    position: relative;
+    display: block;
+    min-height: 36rem;
+  }
+
+  .how-journey--pinned .how-journey__copy,
+  .how-journey--pinned .how-journey__visual {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .how-journey--pinned .how-journey__steps {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--subtle);
+  }
+
+  .how-journey--pinned .how-journey__steps .is-active {
+    color: var(--ink);
+  }
+
+  .how-journey--pinned .how-journey__progress-track {
+    display: block;
+    height: 1px;
+    margin-top: 0.85rem;
+    overflow: hidden;
+    background: var(--line);
+  }
+
+  .how-journey--pinned .how-journey__progress {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: var(--primary);
+  }
+
+  .how-choose__card--property {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 2;
+    width: min(18.5rem, calc(100% - 2.5rem));
+    margin-top: 0;
+  }
+
+  .how-choose__card--fund {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.25rem;
+    z-index: 2;
+    width: min(19rem, calc(100% - 3rem));
+    margin-top: 0;
+  }
+
+  .how-track {
+    min-height: 36rem;
+  }
+
+  .how-track__phone {
+    margin-inline: 0;
+  }
+
+  .how-track__float {
+    position: absolute;
+    margin: 0;
+  }
+
+  .how-track__float--value {
+    right: 0;
+    top: 1.5rem;
+  }
+
+  .how-track__float--holding {
+    right: 1rem;
+    bottom: 2.5rem;
+  }
+
+  .how-receive__card {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.5rem;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-faq__item summary::after {
+    transition: none;
+  }
+}

@@ -19,7 +19,7 @@ export function HeroVisual() {
         />
 
         <Link
-          to="/properties/cedar-court"
+          to="/properties/courtyard-residences"
           data-hero-card="property"
           data-depth="mid"
           aria-label={`View sample listing for ${listing.place}`}

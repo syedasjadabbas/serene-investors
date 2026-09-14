@@ -8,6 +8,8 @@ export type {
   PropertyType,
 } from './property'
 export type { Fund, FundType } from './fund'
+export type { LearnGuide } from './learn'
+export type { LegalDoc, LegalParagraph, LegalSection } from './legal'
 export type {
   AppAction,
   AppDownloadContent,

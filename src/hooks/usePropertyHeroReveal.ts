@@ -15,15 +15,15 @@ export function usePropertyHeroReveal(rootRef: RefObject<HTMLElement | null>) {
     const copy = root.querySelectorAll('[data-property-hero-copy]')
 
     const ctx = gsap.context(() => {
-      gsap.set(media, { opacity: 0, scale: 1.03 })
-      gsap.set(copy, { opacity: 0, y: 14 })
+      gsap.set(media, { opacity: 0, scale: 1.05 })
+      gsap.set(copy, { opacity: 0, y: 18 })
 
       const timeline = gsap.timeline()
       timeline
         .to(media, {
           opacity: 1,
           scale: 1,
-          duration: 0.75,
+          duration: 1.05,
           ease: 'power3.out',
         })
         .to(
@@ -31,11 +31,11 @@ export function usePropertyHeroReveal(rootRef: RefObject<HTMLElement | null>) {
           {
             opacity: 1,
             y: 0,
-            duration: 0.5,
+            duration: 0.58,
             stagger: 0.07,
             ease: 'power4.out',
           },
-          '-=0.4',
+          '-=0.55',
         )
     }, root)
 

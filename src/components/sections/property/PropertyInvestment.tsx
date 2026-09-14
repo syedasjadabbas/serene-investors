@@ -1,112 +1,113 @@
-import { useRef } from 'react'
-import type { Property } from '@/types'
+import { useMemo, useRef } from 'react'
+import type { Property, StatItem } from '@/types'
+import { useCountUp } from '@/hooks/useCountUp'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
 
 type Props = {
   property: Property
 }
 
+function parseAmount(value: string) {
+  const numeric = Number(value.replace(/[^0-9.]/g, ''))
+  return Number.isFinite(numeric) ? numeric : 0
+}
+
 export function PropertyInvestment({ property }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   useSectionReveal(rootRef)
   const example = property.investmentExample
-  const componentTotal = example.rental.amount + example.valueChange.amount
-  const parts = [example.rental, example.valueChange]
+
+  const stats = useMemo<StatItem[]>(() => {
+    const rateAmount = parseAmount(example.rate.value)
+    return [
+      {
+        id: 'breakdown-amount',
+        label: example.amountNote,
+        value: example.amountLabel,
+        amount: parseAmount(example.amountLabel),
+        prefix: '$',
+        grouping: true,
+      },
+      {
+        id: 'breakdown-rent',
+        label: example.rental.label,
+        value: example.rental.value,
+        amount: example.rental.amount,
+        prefix: '+$',
+        grouping: true,
+      },
+      {
+        id: 'breakdown-value',
+        label: example.valueChange.label,
+        value: example.valueChange.value,
+        amount: example.valueChange.amount,
+        prefix: '+$',
+        grouping: true,
+      },
+      {
+        id: 'breakdown-total',
+        label: example.total.label,
+        value: example.total.value,
+        amount: parseAmount(example.total.value),
+        prefix: '+$',
+        grouping: true,
+      },
+      {
+        id: 'breakdown-rate',
+        label: example.rate.label,
+        value: example.rate.value,
+        amount: rateAmount,
+        suffix: '%',
+        decimals: 1,
+      },
+    ]
+  }, [example])
+
+  useCountUp(rootRef, stats)
+
+  const [principal, ...rest] = stats
 
   return (
     <section
       ref={rootRef}
-      className="overflow-x-clip bg-bg-warm px-5 py-16 md:px-8 lg:px-10 lg:py-24"
+      className="property-breakdown"
       aria-labelledby="investment-heading"
     >
-      <div className="mx-auto max-w-[var(--container-wide)] lg:grid lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
-        <div>
-          <p data-reveal-heading className="brand-label text-muted">
-            Sample investment
-          </p>
-          <h2
-            data-reveal-heading
-            id="investment-heading"
-            className="mt-3 max-w-[14ch] text-[clamp(1.85rem,3vw,2.75rem)] font-semibold leading-[1.12] tracking-[-0.03em]"
-          >
-            See how the numbers are structured.
-          </h2>
-        </div>
+      <div className="mx-auto max-w-[var(--container-wide)]">
+        <h2
+          data-reveal-heading
+          id="investment-heading"
+          className="max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance"
+        >
+          How the sample is structured.
+        </h2>
 
-        <div className="mt-10 lg:mt-1">
-          <p data-reveal-item className="text-[clamp(2.25rem,4vw,3.25rem)] font-semibold leading-none tracking-[-0.03em] tabular-nums">
-            {example.amountLabel}
-          </p>
-          <p data-reveal-item className="mt-2 text-sm text-muted">
-            {example.amountNote}
-          </p>
-
-          <div data-reveal-item className="mt-8 border-t border-line pt-8">
-            <p className="text-center text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">
-              Investment
+        {principal ? (
+          <div data-reveal-item className="property-breakdown__lead">
+            <p
+              data-count={principal.id}
+              className="text-[clamp(3.2rem,6.4vw,5.4rem)] font-semibold leading-none tracking-[-0.035em] tabular-nums"
+            >
+              {principal.value}
             </p>
-            <div className="return-flow__rule" aria-hidden="true" />
-            <div className="flex items-end gap-2">
-              {parts.map((item) => (
-                <div
-                  key={item.label}
-                  className="min-w-0"
-                  style={{ flexGrow: Math.max((item.amount / componentTotal) * 100, 18), flexBasis: 0 }}
-                >
-                  <div
-                    className={
-                      item.label.includes('rental')
-                        ? 'return-flow__bar return-flow__bar--rent'
-                        : 'return-flow__bar return-flow__bar--value'
-                    }
-                  />
-                  <p className="mt-3 text-sm text-muted">{item.label}</p>
-                  <p className="mt-1 text-lg font-semibold tabular-nums tracking-tight text-primary">
-                    {item.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <div className="return-flow__rule" aria-hidden="true" />
-            <p className="text-center text-[11px] font-medium uppercase tracking-[0.12em] text-subtle">
-              Illustrative outcome
-            </p>
+            <p className="mt-3 text-sm text-muted">{principal.label}</p>
           </div>
+        ) : null}
 
-          <ul className="mt-8 border-t border-line">
-            {parts.map((item) => (
-              <li
-                key={`${item.label}-row`}
-                data-reveal-item
-                className="flex items-baseline justify-between gap-6 border-b border-line py-4"
-              >
-                <span className="text-[0.95rem] text-muted">{item.label}</span>
-                <span className="text-lg font-semibold tabular-nums tracking-tight text-primary">
-                  {item.value}
-                </span>
-              </li>
-            ))}
-          </ul>
-
-          <div data-reveal-item className="border-b border-line py-5">
-            <div className="flex items-baseline justify-between gap-6">
-              <span className="text-[0.95rem] font-medium">{example.total.label}</span>
-              <span className="text-xl font-semibold tabular-nums tracking-tight text-accent">
-                {example.total.value}
-              </span>
+        <dl className="property-breakdown__rows">
+          {rest.map((stat) => (
+            <div key={stat.id} data-reveal-item>
+              <dt>{stat.label}</dt>
+              <dd data-count={stat.id} className="tabular-nums">
+                {stat.value}
+              </dd>
             </div>
-            <div className="mt-4 flex items-baseline justify-between gap-6">
-              <span className="text-[0.95rem] font-medium">{example.rate.label}</span>
-              <span className="text-xl font-semibold tabular-nums tracking-tight text-accent">
-                {example.rate.value}
-              </span>
-            </div>
-          </div>
+          ))}
+        </dl>
 
-          <p data-reveal-item className="mt-6 max-w-[46ch] text-sm leading-relaxed text-muted">
-            {example.disclaimer}
-          </p>
-        </div>
+        <p data-reveal-item className="mt-10 max-w-[48ch] text-sm leading-relaxed text-muted">
+          {example.disclaimer}
+        </p>
       </div>
     </section>
   )

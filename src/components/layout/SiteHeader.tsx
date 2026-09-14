@@ -64,22 +64,29 @@ export function SiteHeader({ elevated, menuOpen, onMenuToggle, onMenuClose }: Pr
           className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex"
           aria-label="Primary"
         >
-          {primaryNav.map((item) => (
-            <Link
-              key={item.id}
-              to={item.href}
-              className="site-nav-link inline-flex items-center gap-1.5 text-sm text-ink transition-colors duration-[var(--duration-fast)] hover:text-primary"
-            >
-              {item.label}
-              {item.badge ? <Badge>{item.badge}</Badge> : null}
-            </Link>
-          ))}
+          {primaryNav.map((item) => {
+            const current =
+              location.pathname === item.href ||
+              (item.href !== '/' && location.pathname.startsWith(`${item.href}/`))
+            return (
+              <Link
+                key={item.id}
+                to={item.href}
+                aria-current={current ? 'page' : undefined}
+                className="site-nav-link inline-flex items-center gap-1.5 text-sm text-ink transition-colors duration-[var(--duration-fast)] hover:text-primary"
+              >
+                {item.label}
+                {item.badge ? <Badge>{item.badge}</Badge> : null}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="relative z-10 flex items-center gap-5">
           {login ? (
             <Link
               to={login.href}
+              aria-current={location.pathname === login.href ? 'page' : undefined}
               className="site-nav-link max-lg:hidden text-sm text-ink transition-colors duration-[var(--duration-fast)] hover:text-primary"
             >
               {login.label}

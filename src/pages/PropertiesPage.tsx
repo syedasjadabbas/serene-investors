@@ -22,9 +22,11 @@ export function PropertiesPage() {
         filters={catalogue.filters}
         locations={catalogue.locations}
         resultCount={catalogue.visible.length}
+        isFiltered={catalogue.isFiltered}
         onChange={catalogue.update}
+        onReset={catalogue.reset}
       />
-      <PropertyCatalogue properties={catalogue.visible} />
+      <PropertyCatalogue properties={catalogue.visible} onReset={catalogue.reset} />
       <FeaturedPropertyBand />
       <PropertiesCta />
     </>

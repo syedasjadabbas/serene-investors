@@ -8,9 +8,47 @@ export {
   propertiesIntro,
   propertiesNotice,
 } from './properties'
-export { funds } from './funds'
+export {
+  catalogueFeaturedFund,
+  fundSampleStatus,
+  funds,
+  fundsBreakdownIntro,
+  fundsCta,
+  fundsFeaturedBand,
+  fundsHowIntro,
+  fundsHowSteps,
+  fundsIntro,
+  fundsNotice,
+  sampleFundMinimum,
+} from './funds'
+export { featuredLearnGuide, getLearnGuide, learnCta, learnDisclaimer, learnGuides, learnIntro } from './learn'
+export { getLegalDoc, legalDocs, legalFrame, legalIndex } from './legal'
+export {
+  aboutClarity,
+  aboutClose,
+  aboutContact,
+  aboutExperience,
+  aboutIdea,
+  aboutIntro,
+  aboutPaths,
+} from './about'
+export {
+  getStartedIntro,
+  getStartedOnboarding,
+  getStartedOptions,
+  getStartedTrust,
+  sampleOnboardingAmounts,
+} from './get-started'
 export { footerColumns, primaryNav, utilityNav } from './navigation'
-export { howItWorksIntro, howItWorksSteps, howItWorksStory } from './how-it-works'
+export {
+  howItWorksIntro,
+  howItWorksSteps,
+  howItWorksStory,
+  howPageCta,
+  howPageFaq,
+  howPageJourney,
+  howPageSummary,
+} from './how-it-works'
 export { valueStory, valueStoryIntro } from './value-story'
 export { platformStats, platformStatsIntro, returnStats } from './stats'
 export { returnsIllustration } from './returns'

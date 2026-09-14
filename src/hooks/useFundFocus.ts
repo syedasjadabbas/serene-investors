@@ -17,7 +17,10 @@ const ACTIVE_ZINDEX = 30
 const INACTIVE_ZINDEX = 1
 const DEPTH_DURATION = 0.65
 
-export function useFundFocus(rootRef: RefObject<HTMLElement | null>) {
+export function useFundFocus(
+  rootRef: RefObject<HTMLElement | null>,
+  cardSelector = '[data-fund-float]',
+) {
   useLayoutEffect(() => {
     const root = rootRef.current
     if (!root) return
@@ -28,7 +31,7 @@ export function useFundFocus(rootRef: RefObject<HTMLElement | null>) {
     media.add(DEPTH_QUERY, () => {
       const ctx = gsap.context(() => {
         const stage = root.querySelector<HTMLElement>('[data-depth-stage]')
-        const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-fund-float]'))
+        const cards = Array.from(root.querySelectorAll<HTMLElement>(cardSelector))
         if (!stage || cards.length === 0) return
 
         stage.style.overflow = 'visible'
@@ -108,7 +111,7 @@ export function useFundFocus(rootRef: RefObject<HTMLElement | null>) {
           const target = event.target
           if (!(target instanceof Element)) return
           if (target.closest('a')) return
-          const card = target.closest<HTMLElement>('[data-fund-float]')
+          const card = target.closest<HTMLElement>(cardSelector)
           if (!card || !stage.contains(card)) return
           const index = cards.indexOf(card)
           if (index < 0) return
@@ -166,5 +169,5 @@ export function useFundFocus(rootRef: RefObject<HTMLElement | null>) {
     })
 
     return () => media.revert()
-  }, [rootRef])
+  }, [cardSelector, rootRef])
 }
