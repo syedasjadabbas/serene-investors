@@ -217,7 +217,7 @@ export function Navbar() {
 
       {/* 2. 1:1 Stake Header Bar */}
       <header className="relative w-full border-b border-black/[0.06] bg-white transition-all shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
+        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-8">
           
           {/* ================= LEFT GROUP: LOGO + NAV LINKS ================= */}
           <div className="flex items-center">
@@ -397,7 +397,7 @@ export function Navbar() {
           </div>
 
           {/* ================= RIGHT GROUP: LANGUAGE + LOGIN + SIGN UP ================= */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             
             {/* 1. Language Selector Pill Button */}
             <div className="relative">
@@ -405,11 +405,12 @@ export function Navbar() {
                 type="button"
                 onClick={() => setLangMenuOpen(!langMenuOpen)}
                 aria-expanded={langMenuOpen}
-                className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 sm:px-3.5 py-2 text-[13.5px] font-semibold text-[#0D1117] hover:border-gray-300 hover:bg-gray-50/60 transition-all cursor-pointer shadow-2xs active:scale-98"
+                className="flex items-center gap-1.5 sm:gap-2 rounded-xl border border-gray-200 bg-white px-2.5 sm:px-3.5 py-2 min-h-[44px] text-[13px] sm:text-[13.5px] font-semibold text-[#0D1117] hover:border-gray-300 hover:bg-gray-50/60 transition-all cursor-pointer shadow-2xs active:scale-98"
               >
                 {/* Emerald Green Globe Icon matching screenshot */}
                 <Globe size={16} strokeWidth={2.2} className="text-[#00A663]" />
-                <span>{selectedLang}</span>
+                <span className="hidden sm:inline">{selectedLang}</span>
+                <span className="sm:hidden">{selectedLang === 'English' ? 'EN' : 'AR'}</span>
                 <ChevronDown
                   size={13}
                   strokeWidth={2.2}
@@ -456,7 +457,7 @@ export function Navbar() {
               <div className="flex items-center gap-2.5">
                 <Link
                   href="/dashboard"
-                  className="hidden md:inline-flex items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-[#0D1117] hover:border-gray-300 hover:bg-gray-50 transition-all shadow-2xs active:scale-98"
+                  className="hidden md:inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-[#0D1117] hover:border-gray-300 hover:bg-gray-50 transition-all shadow-2xs active:scale-98"
                 >
                   <span>Dashboard</span>
                 </Link>
@@ -467,7 +468,7 @@ export function Navbar() {
                 {/* 2. Login Button */}
                 <Link
                   href="/login"
-                  className="flex items-center justify-center rounded-xl border border-gray-200 bg-white px-4 sm:px-5 py-2 text-[13.5px] font-semibold text-[#0D1117] hover:border-gray-300 hover:bg-gray-50 transition-all shadow-2xs active:scale-98"
+                  className="hidden md:flex min-h-[44px] items-center justify-center rounded-xl border border-gray-200 bg-white px-4 sm:px-5 py-2 text-[13.5px] font-semibold text-[#0D1117] hover:border-gray-300 hover:bg-gray-50 transition-all shadow-2xs active:scale-98"
                 >
                   Login
                 </Link>
@@ -475,7 +476,7 @@ export function Navbar() {
                 {/* 3. Sign Up Button */}
                 <Link
                   href="/signup"
-                  className="flex items-center justify-center rounded-xl bg-[#0D1117] px-4.5 sm:px-5 py-2 text-[13.5px] font-semibold text-white hover:bg-gray-900 transition-all shadow-xs active:scale-98"
+                  className="hidden md:flex min-h-[44px] items-center justify-center rounded-xl bg-[#0D1117] px-4.5 sm:px-5 py-2 text-[13.5px] font-semibold text-white hover:bg-gray-900 transition-all shadow-xs active:scale-98"
                 >
                   Sign up
                 </Link>
@@ -486,7 +487,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex size-9 items-center justify-center rounded-xl border border-gray-200 text-gray-700 lg:hidden hover:bg-gray-50 active:scale-95 ml-1"
+              className="flex size-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-gray-200 text-gray-700 lg:hidden hover:bg-gray-50 active:scale-95 ml-1 cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -578,7 +579,7 @@ export function Navbar() {
                   <Link
                     href="/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full block text-center py-2.5 rounded-xl bg-[#00A663] text-sm font-bold text-white hover:bg-[#008f55] transition-colors shadow-xs"
+                    className="w-full min-h-[44px] flex items-center justify-center text-center py-2.5 rounded-xl bg-[#00A663] text-sm font-bold text-white hover:bg-[#008f55] transition-colors shadow-xs active:scale-[0.99]"
                   >
                     Portfolio / Dashboard
                   </Link>
@@ -588,7 +589,7 @@ export function Navbar() {
                       setMobileMenuOpen(false)
                       logout()
                     }}
-                    className="w-full text-center py-2 rounded-xl border border-red-200 text-xs font-bold text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                    className="w-full min-h-[44px] flex items-center justify-center text-center py-2 rounded-xl border border-red-200 text-xs font-bold text-red-600 hover:bg-red-50 transition-colors cursor-pointer active:scale-[0.99]"
                   >
                     Log out
                   </button>
@@ -598,14 +599,14 @@ export function Navbar() {
                   <Link
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-center py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-900 hover:bg-gray-50"
+                    className="w-full min-h-[44px] flex items-center justify-center text-center py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-900 hover:bg-gray-50 active:scale-[0.99] transition-all"
                   >
                     Login
                   </Link>
                   <Link
                     href="/signup"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-center py-2.5 rounded-xl bg-[#0D1117] text-sm font-semibold text-white hover:bg-gray-900"
+                    className="w-full min-h-[44px] flex items-center justify-center text-center py-2.5 rounded-xl bg-[#0D1117] text-sm font-semibold text-white hover:bg-gray-900 active:scale-[0.99] transition-all shadow-xs"
                   >
                     Sign up
                   </Link>

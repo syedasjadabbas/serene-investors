@@ -26,7 +26,7 @@ export function AppShellClient({ children }: Props) {
   }, [pathname])
 
   return (
-    <div className="min-h-[100dvh] bg-bg text-ink">
+    <div className="min-h-[100dvh] bg-bg text-ink overflow-x-hidden w-full max-w-full flex flex-col">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
@@ -36,7 +36,7 @@ export function AppShellClient({ children }: Props) {
       {/* 1:1 Stake Top Notification Banner & Sticky Navigation Bar */}
       <Navbar />
 
-      <main id="main" tabIndex={-1}>
+      <main id="main" tabIndex={-1} className="w-full max-w-full overflow-x-hidden flex-1">
         {children}
       </main>
       <StakeFooterComplete />

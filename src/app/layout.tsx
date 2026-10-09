@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="overflow-x-hidden w-full max-w-full">
+      <body className="overflow-x-hidden w-full max-w-full antialiased">
         <AppProviders>
           <AppShellClient>{children}</AppShellClient>
         </AppProviders>

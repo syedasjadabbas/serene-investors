@@ -374,25 +374,25 @@ export function RewardsTiers() {
         {/* =========================================================================
             INFINITE HORIZONTAL MARQUEE AUTO-SCROLLING ROW
             ========================================================================= */}
-        <div className="overflow-hidden relative w-full py-12">
+        <div className="overflow-hidden relative w-full py-8 sm:py-12">
           {/* Left Gradient Fade Mask */}
           <div
-            className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#F7F5EF] to-transparent z-20 pointer-events-none"
+            className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 lg:w-24 bg-gradient-to-r from-[#F7F5EF] to-transparent z-20 pointer-events-none"
             aria-hidden="true"
           />
 
           {/* Right Gradient Fade Mask */}
           <div
-            className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#F7F5EF] to-transparent z-20 pointer-events-none"
+            className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 lg:w-24 bg-gradient-to-l from-[#F7F5EF] to-transparent z-20 pointer-events-none"
             aria-hidden="true"
           />
 
           {/* Animated Continuous Marquee Track */}
-          <div className="flex gap-6 items-center animate-marquee select-none">
+          <div className="flex gap-4 sm:gap-6 items-center animate-marquee select-none hover:[animation-play-state:paused] active:[animation-play-state:paused]">
             {MARQUEE_TIERS.map((tier, index) => (
               <div
                 key={`${tier.id}-${index}`}
-                className="w-[290px] sm:w-[310px] h-[615px] sm:h-[630px] shrink-0 rounded-[44px] bg-[#12161A] p-[6px] shadow-xl border border-white/10 flex flex-col transition-transform duration-300 hover:scale-[1.01]"
+                className="w-[240px] sm:w-[280px] lg:w-[310px] h-[550px] sm:h-[590px] lg:h-[630px] shrink-0 rounded-[44px] bg-[#12161A] p-[5px] sm:p-[6px] shadow-xl border border-white/10 flex flex-col transition-transform duration-300 hover:scale-[1.01]"
               >
                 {/* Screen Canvas */}
                 <div className="relative h-full w-full overflow-hidden rounded-[38px] bg-white flex flex-col justify-between">

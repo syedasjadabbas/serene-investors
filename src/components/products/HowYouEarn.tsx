@@ -21,19 +21,19 @@ export function HowYouEarn() {
   return (
     <section
       id="how-you-earn"
-      className="relative overflow-hidden bg-white py-24 px-6 lg:px-12 border-b border-black/[0.08]"
+      className="relative overflow-hidden bg-white py-16 sm:py-24 px-4 sm:px-6 lg:px-12 border-b border-black/[0.08]"
       aria-label="How Investors Make Money"
     >
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-7xl mx-auto py-4 sm:py-8">
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
-          <p className="text-sm sm:text-base font-semibold text-[#00A663] mb-3 sm:mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-24">
+          <p className="text-sm sm:text-base font-semibold text-[#00A663] mb-2 sm:mb-4">
             It’s your money, grow it
           </p>
-          <h2 className="font-heading text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-[-0.03em] text-[#0D1117] leading-[1.12] mb-5 sm:mb-7">
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-[56px] font-extrabold tracking-[-0.03em] text-[#0D1117] leading-[1.12] mb-4 sm:mb-6">
             So, how do I make money?
           </h2>
-          <p className="font-heading text-xl sm:text-2xl lg:text-[28px] font-semibold text-[#0D1117] tracking-tight leading-snug sm:leading-relaxed max-w-2xl mx-auto">
+          <p className="font-heading text-lg sm:text-xl lg:text-[26px] font-semibold text-[#0D1117] tracking-tight leading-snug sm:leading-relaxed max-w-2xl mx-auto">
             Join <span className="text-[#00A663]">2M+</span> other real estate{' '}
             <br className="hidden sm:inline" />
             investors who made <span className="text-[#00A663]">10.2%</span> in 2025
@@ -41,23 +41,23 @@ export function HowYouEarn() {
         </div>
 
         {/* 3 STACKED HORIZONTAL SHOWCASE ROWS */}
-        <div className="space-y-28 sm:space-y-36">
+        <div className="space-y-20 sm:space-y-36">
 
           {/* =========================================================================
               ROW 1: Passive Income
               Left: Phone Wallet with Green Circle | Right: Editorial Text & Large Stats
               ========================================================================= */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column (Phone with Green Circle Backdrop - Straight Front-Facing View) */}
             <div className="lg:col-span-6 flex items-center justify-center relative py-6 sm:py-8 select-none">
               {/* Backdrop Circle */}
               <div
-                className="absolute h-[380px] w-[380px] sm:h-[440px] sm:w-[440px] rounded-full bg-[#52D48E] -z-10 shadow-lg left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                className="absolute h-[280px] w-[280px] sm:h-[360px] sm:w-[360px] lg:h-[440px] lg:w-[440px] rounded-full bg-[#52D48E] -z-10 shadow-lg left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                 aria-hidden="true"
               />
 
               {/* Phone Chassis (Realistic Steel Gray Titanium Frame matching reference picture) */}
-              <div className="relative w-[280px] sm:w-[295px] aspect-[9/18.5] rounded-[50px] bg-gradient-to-br from-[#3b4350] via-[#20252d] to-[#29303a] p-[4px] shadow-[0_32px_75px_-15px_rgba(0,0,0,0.42),0_12px_28px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.14)] border border-[#485362]/80 select-none">
+              <div className="relative w-[260px] min-[390px]:w-[270px] sm:w-[295px] aspect-[9/18.5] rounded-[50px] bg-gradient-to-br from-[#3b4350] via-[#20252d] to-[#29303a] p-[4px] shadow-[0_32px_75px_-15px_rgba(0,0,0,0.42),0_12px_28px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.14)] border border-[#485362]/80 select-none">
                 {/* Outer Metallic Chamfer Highlight */}
                 <div className="pointer-events-none absolute inset-0 rounded-[49px] ring-1 ring-inset ring-white/15" aria-hidden="true" />
 
@@ -271,7 +271,7 @@ export function HowYouEarn() {
 
             {/* Right Column (Editorial & Stats) */}
             <div className="lg:col-span-6 space-y-6">
-              <h3 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0D1117] leading-[1.12]">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0D1117] leading-tight">
                 Earn consistent passive income
               </h3>
 
@@ -280,9 +280,9 @@ export function HowYouEarn() {
               </p>
 
               {/* Stats Row */}
-              <div className="flex gap-12 pt-6">
+              <div className="grid grid-cols-2 gap-4 sm:gap-8 pt-6">
                 <div>
-                  <p className="text-3xl font-extrabold text-[#0D1117] tracking-tight">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-[#0D1117] tracking-tight">
                     AED 90.5M+
                   </p>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 font-medium">
@@ -290,7 +290,7 @@ export function HowYouEarn() {
                   </p>
                 </div>
                 <div>
-                  <p className="text-3xl font-extrabold text-[#0D1117] tracking-tight">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-[#0D1117] tracking-tight">
                     5.30<span className="text-[#00A663]">%</span>
                   </p>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 font-medium">
@@ -305,7 +305,7 @@ export function HowYouEarn() {
               ROW 2: Capital Appreciation
               Left: Editorial Text & Large Stats | Right: Phone with Circle Backdrop
               ========================================================================= */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left: Editorial text */}
             <div className="lg:col-span-6 space-y-6 order-2 lg:order-1">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[#E8F8F0] px-3.5 py-1 text-xs font-bold text-[#00A663]">
@@ -313,7 +313,7 @@ export function HowYouEarn() {
                 EQUITY COMPOUNDING
               </span>
 
-              <h3 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0D1117] leading-tight">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0D1117] leading-tight">
                 Long term capital appreciation
               </h3>
 
@@ -322,9 +322,9 @@ export function HowYouEarn() {
               </p>
 
               {/* Large Stat Blocks */}
-              <div className="grid grid-cols-2 gap-6 pt-4 border-t border-black/[0.08]">
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-4 border-t border-black/[0.08]">
                 <div>
-                  <p className="font-mono text-3xl sm:text-4xl font-black text-[#0D1117] tracking-tight">
+                  <p className="font-mono text-2xl sm:text-3xl font-black text-[#0D1117] tracking-tight">
                     600+
                   </p>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 font-medium">
@@ -332,7 +332,7 @@ export function HowYouEarn() {
                   </p>
                 </div>
                 <div>
-                  <p className="font-mono text-3xl sm:text-4xl font-black text-[#00A663] tracking-tight">
+                  <p className="font-mono text-2xl sm:text-3xl font-black text-[#00A663] tracking-tight">
                     5.40%
                   </p>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 font-medium">
@@ -346,13 +346,13 @@ export function HowYouEarn() {
             <div className="lg:col-span-6 flex justify-center relative order-1 lg:order-2">
               {/* Solid Light-Green Circle Backdrop */}
               <div
-                className="w-[330px] h-[330px] sm:w-[410px] sm:h-[410px] rounded-full bg-[#52D88A] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 pointer-events-none"
+                className="w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] lg:w-[410px] lg:h-[410px] rounded-full bg-[#52D88A] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 pointer-events-none"
                 aria-hidden="true"
               />
 
               <DeviceFrame
                 aspectRatio="aspect-[9/17.5]"
-                className="max-w-[280px] sm:max-w-[290px] shadow-[0_25px_65px_-15px_rgba(11,53,40,0.3)]"
+                className="w-[260px] min-[390px]:w-[270px] sm:w-[290px] shadow-[0_25px_65px_-15px_rgba(11,53,40,0.3)]"
               >
                 <div className="flex-1 bg-white p-4 flex flex-col justify-between">
                   <div className="space-y-3">
@@ -425,18 +425,18 @@ export function HowYouEarn() {
               ROW 3: Liquidity
               Left: Phone Property Listing | Right: Editorial Text & Large Stats
               ========================================================================= */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left: DeviceFrame displaying property listing screen with Green Circle */}
             <div className="lg:col-span-6 flex justify-center relative">
               {/* Solid Light-Green Circle Backdrop */}
               <div
-                className="w-[330px] h-[330px] sm:w-[410px] sm:h-[410px] rounded-full bg-[#52D88A] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 pointer-events-none"
+                className="w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] lg:w-[410px] lg:h-[410px] rounded-full bg-[#52D88A] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 pointer-events-none"
                 aria-hidden="true"
               />
 
               <DeviceFrame
                 aspectRatio="aspect-[9/17.5]"
-                className="max-w-[280px] sm:max-w-[290px] shadow-[0_25px_65px_-15px_rgba(11,53,40,0.3)]"
+                className="w-[260px] min-[390px]:w-[270px] sm:w-[290px] shadow-[0_25px_65px_-15px_rgba(11,53,40,0.3)]"
               >
                 <div className="flex-1 bg-white p-4 flex flex-col justify-between">
                   <div className="space-y-3">
@@ -511,7 +511,7 @@ export function HowYouEarn() {
                 FLEXIBLE LIQUIDITY
               </span>
 
-              <h3 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0D1117] leading-tight">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0D1117] leading-tight">
                 Liquidity, when you need it most
               </h3>
 
@@ -520,9 +520,9 @@ export function HowYouEarn() {
               </p>
 
               {/* Large Stat Blocks */}
-              <div className="grid grid-cols-2 gap-6 pt-4 border-t border-black/[0.08]">
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-4 border-t border-black/[0.08]">
                 <div>
-                  <p className="font-mono text-3xl sm:text-4xl font-black text-[#0D1117] tracking-tight">
+                  <p className="font-mono text-2xl sm:text-3xl font-black text-[#0D1117] tracking-tight">
                     38+
                   </p>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 font-medium">
@@ -530,7 +530,7 @@ export function HowYouEarn() {
                   </p>
                 </div>
                 <div>
-                  <p className="font-mono text-3xl sm:text-4xl font-black text-[#00A663] tracking-tight">
+                  <p className="font-mono text-2xl sm:text-3xl font-black text-[#00A663] tracking-tight">
                     AED 33M+
                   </p>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 font-medium">

@@ -214,28 +214,30 @@ export function InteractiveJourney() {
   // Smooth scroll handler on manual click
   const scrollToStep = (index: number) => {
     setActiveStep(index)
-    const el = stepRefs.current[index]
-    if (el) {
-      el.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      const el = stepRefs.current[index]
+      if (el) {
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+      }
     }
   }
 
   return (
     <section
       id="how-it-works"
-      className="relative bg-[#F7F8F9] pt-20 sm:pt-28 pb-20 lg:pb-28 border-b border-black/[0.06] select-none"
+      className="relative bg-[#F7F8F9] pt-16 sm:pt-28 pb-16 lg:pb-28 border-b border-black/[0.06] select-none overflow-hidden"
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         
         {/* Top Centered Header (Exact Match to User Image) */}
-        <div className="text-center max-w-4xl mx-auto mb-16 sm:mb-24">
-          <p className="text-base sm:text-lg lg:text-xl font-medium text-[#00A663] mb-3 sm:mb-4">
+        <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-20">
+          <p className="text-sm sm:text-base lg:text-xl font-medium text-[#00A663] mb-2 sm:mb-4">
             How it works
           </p>
-          <h2 className="text-3xl sm:text-5xl lg:text-[62px] font-extrabold tracking-tight text-[#0F172A] leading-[1.12] text-balance">
+          <h2 className="text-3xl sm:text-4xl lg:text-[62px] font-extrabold tracking-tight text-[#0F172A] leading-[1.12] text-balance">
             Build a diversified real
             <br />
             estate portfolio easily
@@ -245,8 +247,8 @@ export function InteractiveJourney() {
         </div>
 
         {/* Step Navigation Pill Selector */}
-        <div className="flex justify-center mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/[0.04] p-1.5 border border-black/[0.05] shadow-2xs backdrop-blur-md">
+        <div className="w-full overflow-x-auto no-scrollbar flex justify-start sm:justify-center mb-8 sm:mb-16 px-1 py-1">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/[0.04] p-1.5 border border-black/[0.05] shadow-2xs backdrop-blur-md shrink-0">
             {steps.map((step, idx) => {
               const isActive = activeStep === idx
               return (
@@ -254,7 +256,7 @@ export function InteractiveJourney() {
                   key={step.id}
                   type="button"
                   onClick={() => scrollToStep(idx)}
-                  className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
+                  className={`min-h-[40px] px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer shrink-0 ${
                     isActive
                       ? 'bg-white text-[#0F172A] shadow-sm scale-105'
                       : 'text-gray-500 hover:text-[#0F172A]'
@@ -268,13 +270,64 @@ export function InteractiveJourney() {
           </div>
         </div>
 
-        {/* 2-Column Scrollytelling Grid: Left Typography, Right Sticky Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start relative">
+        {/* Mobile Editorial Card for active step (< lg) */}
+        <div className="lg:hidden flex flex-col space-y-4 mb-6 text-center px-2">
+          <p className="text-sm font-bold text-[#00A663] tracking-tight">{steps[activeStep].kicker}</p>
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] leading-tight">
+            {steps[activeStep].headline}
+          </h3>
+          <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-md mx-auto">
+            {steps[activeStep].description}
+          </p>
+          {steps[activeStep].type === 'invest' && (
+            <div className="pt-2 flex items-center justify-center gap-5">
+              <VisaLogo />
+              <MastercardLogo />
+              <ApplePayLogo />
+            </div>
+          )}
+          {steps[activeStep].type === 'browse' && (
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <div className="flex items-center gap-2 bg-black text-white px-3.5 py-2 rounded-xl shadow-md border border-black">
+                <svg className="size-5 fill-current" viewBox="0 0 170 170">
+                  <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.69-7.85-12.01-14.42-6-9.13-10.74-19.46-14.23-30.99-3.48-11.53-5.23-22.37-5.23-32.52 0-14.79 3.73-26.83 11.19-36.13 7.46-9.3 16.71-14.07 27.75-14.3 4.9.11 10.14 1.34 15.73 3.69 5.58 2.35 9.53 3.58 11.83 3.69 1.74 0 5.8-1.29 12.18-3.86 6.39-2.58 11.93-3.72 16.63-3.43 12.83 1.09 23.01 5.92 30.54 14.51-11.1 6.74-16.53 16.21-16.31 28.4.22 9.57 3.84 17.56 10.87 23.97 7.03 6.41 15.34 10.14 24.94 11.19-2.07 6.31-4.79 12.89-8.17 19.71zM119.22 33.04c0-7.39 2.66-14.46 7.99-21.21 5.33-6.74 12.01-11.03 20.04-12.83 1.2 7.72-.98 15.12-6.53 22.2-5.55 7.07-12.72 11.36-21.5 11.84z" />
+                </svg>
+                <div className="text-left leading-none">
+                  <span className="block text-[8.5px] text-gray-300 uppercase tracking-tight">Download on the</span>
+                  <span className="block text-xs font-bold text-white tracking-tight mt-0.5">App Store</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 bg-black text-white px-3.5 py-2 rounded-xl shadow-md border border-black">
+                <svg className="size-4.5" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M3.6 1.4L13.7 11.5L3.6 21.6c-.3-.2-.6-.6-.6-1.1V2.5c0-.5.3-.9.6-1.1z" />
+                  <path fill="#34A853" d="M17.1 8.1L13.7 11.5L3.6 1.4C3.9 1.2 4.4 1.1 5 1.4l12.1 6.7z" />
+                  <path fill="#EA4335" d="M17.1 14.9L5 21.6c-.6.3-1.1.2-1.4 0l10.1-10.1l3.4 3.4z" />
+                  <path fill="#FBBC05" d="M20.5 10.4l-3.4-1.9l-3.4 3l3.4 3l3.4-1.9c.8-.5.8-1.7 0-2.2z" />
+                </svg>
+                <div className="text-left leading-none">
+                  <span className="block text-[8.5px] text-gray-300 uppercase tracking-tight">GET IT ON</span>
+                  <span className="block text-xs font-bold text-white tracking-tight mt-0.5">Google Play</span>
+                </div>
+              </div>
+            </div>
+          )}
+          {steps[activeStep].type === 'earn' && (
+            <div className="pt-2 flex justify-center">
+              <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0F172A] bg-white px-3.5 py-1.5 rounded-full border border-black/5 shadow-2xs">
+                <span className="text-[#00A663]"><Wallet size={16} strokeWidth={2.4} /></span>
+                <span>Paid directly to your Stake wallet</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 2-Column Scrollytelling Grid: Left Typography (Desktop), Right Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start relative">
           
           {/* =========================================================================
-              LEFT COLUMN: Exact Typography, Spacing, and Badges per Image
+              LEFT COLUMN: Exact Typography, Spacing, and Badges per Image (Desktop Only)
               ========================================================================= */}
-          <div className="lg:col-span-5 flex flex-col space-y-32 lg:space-y-48 py-6">
+          <div className="hidden lg:flex lg:col-span-5 flex-col space-y-32 lg:space-y-48 py-6">
             {steps.map((step, index) => {
               const isActive = activeStep === index
 
@@ -372,11 +425,11 @@ export function InteractiveJourney() {
           {/* =========================================================================
               RIGHT COLUMN: Sticky Rounded Card Container with Realistic Mockup & Stickers
               ========================================================================= */}
-          <div className="lg:col-span-7 sticky top-10 lg:top-14 h-[calc(100vh-5rem)] flex items-center justify-center">
+          <div className="col-span-12 lg:col-span-7 lg:sticky lg:top-24 h-auto lg:h-[calc(100vh-6rem)] flex flex-col items-center justify-center">
             
             {/* Dynamic Card Container whose background color & size matches user screenshot with refined proportions */}
             <div
-              className={`w-full max-w-[540px] lg:max-w-[565px] h-[470px] sm:h-[500px] lg:h-[515px] rounded-[2rem] sm:rounded-[2.5rem] p-0 relative shadow-2xl overflow-hidden transition-colors duration-700 select-none flex justify-center items-start pt-7 sm:pt-9 ${
+              className={`w-full max-w-[480px] lg:max-w-[565px] h-[380px] sm:h-[440px] lg:h-[515px] rounded-[1.75rem] sm:rounded-[2.5rem] p-0 relative shadow-2xl overflow-hidden transition-colors duration-700 select-none flex justify-center items-start pt-5 sm:pt-7 lg:pt-9 ${
                 activeStep === 0
                   ? 'bg-[#0E1726]' // 1st Image: Deep Dark Navy
                   : activeStep === 1
@@ -398,12 +451,12 @@ export function InteractiveJourney() {
                 <div className="w-full h-full relative flex justify-center items-start animate-in fade-in zoom-in-95 duration-500">
                   
                   {/* Sticker 1: Green Shopping Cart Circle (Top Left) */}
-                  <div className="absolute top-5 left-3 sm:left-5 z-30 size-16 sm:size-18 rounded-full bg-[#00D084] text-white flex items-center justify-center shadow-2xl transition-transform hover:scale-105">
-                    <ShoppingCart size={28} strokeWidth={2.4} />
+                  <div className="absolute top-3 sm:top-5 left-3 sm:left-5 z-30 size-12 sm:size-16 rounded-full bg-[#00D084] text-white flex items-center justify-center shadow-2xl transition-transform hover:scale-105">
+                    <ShoppingCart size={22} className="sm:size-7" strokeWidth={2.4} />
                   </div>
 
                   {/* Sticker 2: Circular Dubai Marina Cityscape Badge (Top Right) */}
-                  <div className="absolute top-4 right-3 sm:right-5 z-10 size-26 sm:size-30 rounded-full border-4 border-white shadow-2xl overflow-hidden">
+                  <div className="absolute top-3 sm:top-4 right-3 sm:right-5 z-10 size-20 sm:size-28 rounded-full border-2 sm:border-4 border-white shadow-2xl overflow-hidden">
                     <img
                       src="/images/journey/dubai-marina.jpg"
                       alt="Dubai Marina"
@@ -412,14 +465,14 @@ export function InteractiveJourney() {
                   </div>
 
                   {/* Phone Mockup (Half-screen cut off at bottom of card - Steel Gray Titanium Frame) */}
-                  <div className="w-[245px] sm:w-[255px] lg:w-[265px] h-[540px] sm:h-[580px] lg:h-[600px] rounded-t-[46px] bg-gradient-to-br from-[#3b4350] via-[#20252d] to-[#29303a] p-[3.5px] shadow-[0_28px_60px_-12px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.14)] relative z-20 border border-[#485362]/80 shrink-0">
-                    <div className="h-full rounded-t-[42px] overflow-hidden bg-white relative flex flex-col text-[#0F172A] pb-3">
+                  <div className="w-[230px] min-[390px]:w-[245px] sm:w-[255px] lg:w-[265px] h-[500px] sm:h-[580px] lg:h-[600px] rounded-t-[40px] sm:rounded-t-[46px] bg-gradient-to-br from-[#3b4350] via-[#20252d] to-[#29303a] p-[3.5px] shadow-[0_28px_60px_-12px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.14)] relative z-20 border border-[#485362]/80 shrink-0">
+                    <div className="h-full rounded-t-[38px] sm:rounded-t-[42px] overflow-hidden bg-white relative flex flex-col text-[#0F172A] pb-3">
                       
                       {/* Top Status Bar & Dynamic Island */}
                       <PhoneTopBar className="bg-white" />
 
                       {/* Phone Main Media (Waterfront yachts / apartments) */}
-                      <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-gray-100">
+                      <div className="relative h-44 sm:h-52 w-full overflow-hidden bg-gray-100">
                         <img
                           src="/images/journey/dubai-marina.jpg"
                           alt="Marina luxury residence"
@@ -439,7 +492,7 @@ export function InteractiveJourney() {
                       </div>
 
                       {/* Floating AED 500 Invest Glass Card (Center/Bottom Overlay) */}
-                      <div className="absolute bottom-46 sm:bottom-52 left-2.5 right-2.5 z-30 rounded-2xl bg-white/95 backdrop-blur-md border border-white shadow-xl p-2.5 flex items-center justify-between">
+                      <div className="absolute bottom-36 sm:bottom-46 lg:bottom-52 left-2 right-2 sm:left-2.5 sm:right-2.5 z-30 rounded-xl sm:rounded-2xl bg-white/95 backdrop-blur-md border border-white shadow-xl p-2 sm:p-2.5 flex items-center justify-between">
                         <div className="flex items-center gap-1.5 min-w-0">
                           <UaeFlagIcon />
                           <div className="truncate">
@@ -491,8 +544,8 @@ export function InteractiveJourney() {
               {activeStep === 1 && (
                 <div className="w-full h-full relative flex justify-center items-start animate-in fade-in zoom-in-95 duration-500">
                   
-                  {/* Sticker 1: Tilted Skyscraper Photo (Left, -14deg) */}
-                  <div className="absolute top-1/4 -left-2 sm:left-1 z-10 -rotate-[14deg] border-4 border-white rounded-2xl shadow-2xl overflow-hidden w-26 sm:w-30 h-32 sm:h-38 bg-white">
+                  {/* Sticker 1: Tilted Skyscraper Photo (Left, -12deg) */}
+                  <div className="absolute top-1/4 left-1 sm:left-2 z-10 -rotate-[12deg] border-2 sm:border-4 border-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden w-20 sm:w-26 lg:w-30 h-26 sm:h-32 lg:h-38 bg-white">
                     <img
                       src="/images/journey/residential.jpg"
                       alt="Modern Skyscrapers"
@@ -500,8 +553,8 @@ export function InteractiveJourney() {
                     />
                   </div>
 
-                  {/* Sticker 2: Tilted Ferris Wheel Architecture Photo (Top Right, +14deg) */}
-                  <div className="absolute top-5 right-2 sm:right-5 z-10 rotate-[14deg] border-4 border-white rounded-2xl shadow-2xl overflow-hidden w-26 sm:w-30 h-32 sm:h-38 bg-white">
+                  {/* Sticker 2: Tilted Ferris Wheel Architecture Photo (Top Right, +12deg) */}
+                  <div className="absolute top-3 sm:top-5 right-1 sm:right-4 z-10 rotate-[12deg] border-2 sm:border-4 border-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden w-20 sm:w-26 lg:w-30 h-26 sm:h-32 lg:h-38 bg-white">
                     <img
                       src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=400&q=80"
                       alt="Dubai Architecture"
@@ -510,7 +563,7 @@ export function InteractiveJourney() {
                   </div>
 
                   {/* Sticker 3: Burj Al Arab in turquoise ocean (Bottom Right, +4deg) */}
-                  <div className="absolute bottom-6 right-2 sm:right-4 z-30 rotate-[4deg] border-4 border-white rounded-2xl shadow-2xl overflow-hidden w-28 sm:w-34 h-28 sm:h-34 bg-white">
+                  <div className="absolute bottom-4 sm:bottom-6 right-1 sm:right-3 z-30 rotate-[4deg] border-2 sm:border-4 border-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden w-22 sm:w-28 lg:w-34 h-22 sm:h-28 lg:h-34 bg-white">
                     <img
                       src="/images/journey/burj-al-arab.jpg"
                       alt="Burj Al Arab"
@@ -519,7 +572,7 @@ export function InteractiveJourney() {
                   </div>
 
                   {/* Phone Mockup (Exact half-screen size cut off at bottom of green card) */}
-                  <div className="w-[245px] sm:w-[255px] lg:w-[265px] h-[540px] sm:h-[580px] lg:h-[600px] rounded-t-[44px] bg-[#161a20] p-[3px] shadow-2xl relative z-20 border border-[#374151]/80 shrink-0">
+                  <div className="w-[230px] min-[390px]:w-[245px] sm:w-[255px] lg:w-[265px] h-[500px] sm:h-[580px] lg:h-[600px] rounded-t-[40px] sm:rounded-t-[44px] bg-[#161a20] p-[3px] shadow-2xl relative z-20 border border-[#374151]/80 shrink-0">
                     <div className="h-full rounded-t-[41px] overflow-hidden bg-white relative flex flex-col text-[#0F172A]">
                       
                       {/* Top Status Bar & Dynamic Island */}
@@ -599,13 +652,13 @@ export function InteractiveJourney() {
                 <div className="w-full h-full relative flex justify-center items-start animate-in fade-in zoom-in-95 duration-500">
                   
                   {/* Floating Notification 1: Stake Rent Paid Notification (Top) */}
-                  <div className="absolute top-20 left-3 right-3 sm:left-5 sm:right-5 z-30 rounded-2xl bg-white shadow-2xl border border-black/5 p-3.5 flex items-center gap-3">
-                    <div className="size-10 rounded-xl bg-[#0F172A] text-white flex items-center justify-center shrink-0 relative shadow-sm">
+                  <div className="absolute top-14 sm:top-20 left-2 right-2 sm:left-4 sm:right-4 z-30 rounded-xl sm:rounded-2xl bg-white shadow-2xl border border-black/5 p-2.5 sm:p-3.5 flex items-center gap-2.5 sm:gap-3">
+                    <div className="size-9 sm:size-10 rounded-xl bg-[#0F172A] text-white flex items-center justify-center shrink-0 relative shadow-sm">
                       <span className="font-black text-sm text-[#00A663]">k</span>
                       <span className="size-2 rounded-full bg-pink-500 absolute top-1 right-1" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+                      <p className="text-[9px] sm:text-[10px] font-bold tracking-wider text-gray-400 uppercase">
                         Stake
                       </p>
                       <p className="text-xs sm:text-sm font-extrabold text-[#0F172A] leading-snug truncate">
@@ -615,30 +668,30 @@ export function InteractiveJourney() {
                   </div>
 
                   {/* Floating Card 2: All Time Returns (Bottom) */}
-                  <div className="absolute bottom-10 left-3 right-3 sm:left-5 sm:right-5 z-30 rounded-2xl bg-white shadow-2xl border border-black/5 p-4 sm:p-5">
+                  <div className="absolute bottom-4 sm:bottom-8 lg:bottom-10 left-2 right-2 sm:left-4 sm:right-4 z-30 rounded-xl sm:rounded-2xl bg-white shadow-2xl border border-black/5 p-3 sm:p-4.5 lg:p-5">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-gray-500">
+                      <span className="text-[11px] sm:text-xs font-semibold text-gray-500">
                         All time returns
                       </span>
                     </div>
-                    <div className="mt-1 flex items-center gap-2.5">
-                      <p className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight">
+                    <div className="mt-1 flex items-center gap-2 sm:gap-2.5">
+                      <p className="text-xl sm:text-2xl lg:text-3xl font-black text-[#0F172A] tracking-tight">
                         AED 89,000
                       </p>
-                      <span className="rounded-full bg-[#D1FAE5] px-2.5 py-0.5 text-xs font-bold text-[#059669]">
+                      <span className="rounded-full bg-[#D1FAE5] px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-xs font-bold text-[#059669]">
                         30.8%
                       </span>
                     </div>
 
                     {/* Dual-color Progress Bar: 75% Green, 25% Yellow */}
-                    <div className="mt-3.5 h-2.5 w-full rounded-full bg-gray-100 flex overflow-hidden">
+                    <div className="mt-2.5 sm:mt-3.5 h-2 sm:h-2.5 w-full rounded-full bg-gray-100 flex overflow-hidden">
                       <div className="h-full w-[75%] bg-[#00A663]" />
                       <div className="h-full w-[25%] bg-[#FBBF24]" />
                     </div>
                   </div>
 
                   {/* Phone Mockup (Half-screen cut off at bottom of card) */}
-                  <div className="w-[245px] sm:w-[255px] lg:w-[265px] h-[540px] sm:h-[580px] lg:h-[600px] rounded-t-[44px] bg-[#161a20] p-[3px] shadow-2xl relative z-10 border border-[#374151]/80 shrink-0">
+                  <div className="w-[230px] min-[390px]:w-[245px] sm:w-[255px] lg:w-[265px] h-[500px] sm:h-[580px] lg:h-[600px] rounded-t-[40px] sm:rounded-t-[44px] bg-[#161a20] p-[3px] shadow-2xl relative z-10 border border-[#374151]/80 shrink-0">
                     <div className="h-full rounded-t-[41px] overflow-hidden bg-white relative flex flex-col text-[#0F172A]">
                       
                       {/* Top Status Bar & Dynamic Island */}
@@ -684,8 +737,8 @@ export function InteractiveJourney() {
               {activeStep === 3 && (
                 <div className="w-full h-full relative flex justify-center items-start animate-in fade-in zoom-in-95 duration-500">
                   
-                  {/* Sticker 1: Tilted Palm Jumeirah Aerial Photo (Left, -14deg) */}
-                  <div className="absolute top-1/4 -left-2 sm:left-1 z-10 -rotate-[14deg] border-4 border-white rounded-2xl shadow-2xl overflow-hidden w-26 sm:w-30 h-32 sm:h-38 bg-white">
+                  {/* Sticker 1: Tilted Palm Jumeirah Aerial Photo (Left, -12deg) */}
+                  <div className="absolute top-1/4 left-1 sm:left-2 z-10 -rotate-[12deg] border-2 sm:border-4 border-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden w-20 sm:w-26 lg:w-30 h-26 sm:h-32 lg:h-38 bg-white">
                     <img
                       src="/images/journey/palm-aerial.jpg"
                       alt="Palm Jumeirah"
@@ -694,7 +747,7 @@ export function InteractiveJourney() {
                   </div>
 
                   {/* Sticker 2: Tilted Pool Towers Photo (Top Right, +12deg) */}
-                  <div className="absolute top-5 right-2 sm:right-5 z-10 rotate-[12deg] border-4 border-white rounded-2xl shadow-2xl overflow-hidden w-26 sm:w-30 h-32 sm:h-38 bg-white">
+                  <div className="absolute top-3 sm:top-5 right-1 sm:right-4 z-10 rotate-[12deg] border-2 sm:border-4 border-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden w-20 sm:w-26 lg:w-30 h-26 sm:h-32 lg:h-38 bg-white">
                     <img
                       src="/images/journey/tower-pool.jpg"
                       alt="Towers and pool"
@@ -703,12 +756,12 @@ export function InteractiveJourney() {
                   </div>
 
                   {/* Sticker 3: Green Circular Price Tag Badge (Bottom Right) */}
-                  <div className="absolute bottom-6 right-2 sm:right-4 z-30 size-16 sm:size-18 rounded-full bg-[#00D084] text-white flex items-center justify-center shadow-2xl transition-transform hover:scale-105">
-                    <Tag size={28} strokeWidth={2.4} className="-rotate-12" />
+                  <div className="absolute bottom-4 sm:bottom-6 right-2 sm:right-4 z-30 size-12 sm:size-16 rounded-full bg-[#00D084] text-white flex items-center justify-center shadow-2xl transition-transform hover:scale-105">
+                    <Tag size={20} strokeWidth={2.4} className="sm:size-7 -rotate-12" />
                   </div>
 
                   {/* Phone Mockup (Half-screen cut off at bottom of card) */}
-                  <div className="w-[245px] sm:w-[255px] lg:w-[265px] h-[540px] sm:h-[580px] lg:h-[600px] rounded-t-[44px] bg-[#161a20] p-[3px] shadow-2xl relative z-20 border border-[#374151]/80 shrink-0">
+                  <div className="w-[230px] min-[390px]:w-[245px] sm:w-[255px] lg:w-[265px] h-[500px] sm:h-[580px] lg:h-[600px] rounded-t-[40px] sm:rounded-t-[44px] bg-[#161a20] p-[3px] shadow-2xl relative z-20 border border-[#374151]/80 shrink-0">
                     <div className="h-full rounded-t-[41px] overflow-hidden bg-white relative flex flex-col text-[#0F172A]">
                       
                       {/* Top Status Bar & Dynamic Island */}
@@ -786,6 +839,39 @@ export function InteractiveJourney() {
                 </div>
               )}
 
+            </div>
+
+            {/* Mobile Touch Stepper Controls (< lg) */}
+            <div className="lg:hidden w-full max-w-[480px] flex items-center justify-between pt-4 px-2">
+              <button
+                type="button"
+                disabled={activeStep === 0}
+                onClick={() => scrollToStep(Math.max(0, activeStep - 1))}
+                className="px-4 py-2 min-h-[44px] rounded-xl text-xs font-bold text-gray-700 bg-white border border-gray-200 disabled:opacity-40 disabled:pointer-events-none cursor-pointer"
+              >
+                &larr; Previous
+              </button>
+              <div className="flex items-center gap-1.5">
+                {steps.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => scrollToStep(i)}
+                    className={`size-2.5 rounded-full transition-all cursor-pointer ${
+                      activeStep === i ? 'w-6 bg-[#00A663]' : 'bg-gray-300'
+                    }`}
+                    aria-label={`Go to step ${i + 1}`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                disabled={activeStep === steps.length - 1}
+                onClick={() => scrollToStep(Math.min(steps.length - 1, activeStep + 1))}
+                className="px-4 py-2 min-h-[44px] rounded-xl text-xs font-bold text-white bg-[#00A663] disabled:opacity-40 disabled:pointer-events-none cursor-pointer"
+              >
+                Next &rarr;
+              </button>
             </div>
           </div>
 

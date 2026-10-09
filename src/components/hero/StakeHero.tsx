@@ -63,7 +63,7 @@ export function StakeHero() {
             </div>
 
             {/* Display Headline */}
-            <h1 className="mt-6 text-4xl sm:text-6xl lg:text-[4.25rem] font-extrabold tracking-tight text-[#0D1117] leading-[1.08]">
+            <h1 className="mt-6 text-3xl sm:text-4xl lg:text-6xl tracking-tight font-extrabold text-[#0D1117] leading-[1.08]">
               Build your wealth through{' '}
               <span className="text-[#00A663]">real estate</span>
             </h1>
@@ -74,8 +74,8 @@ export function StakeHero() {
             </p>
 
             {/* App Store Buttons */}
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <button className="flex items-center gap-2.5 rounded-xl bg-black px-4 py-2.5 text-white transition-opacity hover:opacity-85 shadow-md">
+            <div className="mt-8 flex flex-wrap items-center justify-start gap-3">
+              <button className="flex min-h-[44px] items-center gap-2.5 rounded-xl bg-black px-4 py-2.5 text-white transition-opacity hover:opacity-85 shadow-md">
                 <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.76 1.05-1.83.93-2.9-.9.04-2 .6-2.65 1.36-.57.65-1.07 1.73-.93 2.78 1.01.08 2.02-.48 2.65-1.24z"/>
                 </svg>
@@ -85,7 +85,7 @@ export function StakeHero() {
                 </div>
               </button>
 
-              <button className="flex items-center gap-2.5 rounded-xl bg-black px-4 py-2.5 text-white transition-opacity hover:opacity-85 shadow-md">
+              <button className="flex min-h-[44px] items-center gap-2.5 rounded-xl bg-black px-4 py-2.5 text-white transition-opacity hover:opacity-85 shadow-md">
                 <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
                   <path d="M3.609 1.814L13.792 12 3.61 22.186c-.198-.18-.323-.448-.323-.755V2.569c0-.307.125-.575.322-.755zM15.207 13.414l2.122 2.122-11.96 6.834 9.838-8.956zm2.122-2.828l-2.122 2.121-9.838-8.956 11.96 6.835zm.707.707l3.664 2.094c.645.368.645.969 0 1.337l-3.664 2.094-1.768-1.768 1.768-1.757z"/>
                 </svg>
@@ -98,11 +98,11 @@ export function StakeHero() {
           </div>
 
           {/* ================= RIGHT 3-PHONE TILTED CLUSTER ================= */}
-          <div className="relative lg:col-span-6 h-[580px] lg:h-[640px] w-full select-none">
+          <div className="relative lg:col-span-6 h-[440px] sm:h-[480px] lg:h-[640px] w-full select-none overflow-hidden lg:overflow-visible">
             <div className="absolute inset-0 w-full h-full">
 
               {/* --- PHONE 1: TOP-LEFT / BACK LAYER (Property Detail) --- */}
-              <div className="absolute -top-6 left-6 lg:left-4 w-[245px] lg:w-[265px] h-[480px] -rotate-[16deg] rounded-[50px] bg-gradient-to-br from-[#4b5563] via-[#202630] to-[#333d4b] p-[4px] shadow-[0_32px_75px_-15px_rgba(0,0,0,0.45),0_12px_28px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.16)] border border-[#4f5c6e] z-10 opacity-95 transition-transform duration-300 hover:-rotate-[13deg] select-none">
+              <div className="hidden lg:block absolute -top-6 left-6 lg:left-4 w-[245px] lg:w-[265px] h-[480px] -rotate-[16deg] rounded-[50px] bg-gradient-to-br from-[#4b5563] via-[#202630] to-[#333d4b] p-[4px] shadow-[0_32px_75px_-15px_rgba(0,0,0,0.45),0_12px_28px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.16)] border border-[#4f5c6e] z-10 opacity-95 transition-transform duration-300 hover:-rotate-[13deg] select-none">
                 {/* Outer Metallic Chamfer Highlight */}
                 <div className="pointer-events-none absolute inset-0 rounded-[49px] ring-1 ring-inset ring-white/18" aria-hidden="true" />
 
@@ -222,7 +222,7 @@ export function StakeHero() {
               </div>
 
               {/* --- FLOATING OVERLAY: POLAROID BADGE --- */}
-              <div className="absolute top-[6%] left-[200px] lg:left-[225px] z-30 -rotate-[10deg] rounded-2xl bg-white p-2 shadow-2xl border border-black/5 flex flex-col items-center w-[105px] text-center transition-transform hover:scale-105">
+              <div className="hidden lg:flex absolute top-[6%] left-[200px] lg:left-[225px] z-30 -rotate-[10deg] rounded-2xl bg-white p-2 shadow-2xl border border-black/5 flex-col items-center w-[105px] text-center transition-transform hover:scale-105">
                 <div
                   className="h-12 w-full rounded-lg bg-cover bg-center mb-1"
                   style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=400&q=80")' }}
@@ -232,7 +232,7 @@ export function StakeHero() {
               </div>
 
               {/* --- PHONE 2: FRONT-RIGHT (Main Portfolio Screen) --- */}
-              <div className="absolute top-2 right-2 lg:right-2 w-[255px] lg:w-[275px] h-[510px] -rotate-[16deg] rounded-[50px] bg-gradient-to-br from-[#4b5563] via-[#202630] to-[#333d4b] p-[4px] shadow-[0_34px_80px_-15px_rgba(0,0,0,0.48),0_12px_28px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.18)] border border-[#4f5c6e] z-20 transition-transform duration-300 hover:-rotate-[13deg] select-none">
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-2 w-[270px] sm:w-[300px] lg:w-[275px] h-[500px] sm:h-[510px] rotate-0 lg:-rotate-[16deg] rounded-[50px] bg-gradient-to-br from-[#4b5563] via-[#202630] to-[#333d4b] p-[4px] shadow-[0_34px_80px_-15px_rgba(0,0,0,0.48),0_12px_28px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.18)] border border-[#4f5c6e] z-20 transition-transform duration-300 hover:-rotate-[13deg] select-none">
                 {/* Outer Metallic Chamfer Highlight */}
                 <div className="pointer-events-none absolute inset-0 rounded-[49px] ring-1 ring-inset ring-white/18" aria-hidden="true" />
 
@@ -335,7 +335,7 @@ export function StakeHero() {
 
               {/* --- PHONE 3: BOTTOM-CENTER (Foreground Sharp Screen with Bottom Fade-Out Mask) --- */}
               <div 
-                className="absolute top-[310px] lg:top-[330px] left-[130px] lg:left-[155px] w-[245px] lg:w-[265px] h-[440px] -rotate-[16deg] rounded-[50px] bg-gradient-to-br from-[#4b5563] via-[#202630] to-[#333d4b] p-[4px] shadow-[0_32px_75px_-15px_rgba(0,0,0,0.45),0_12px_28px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.16)] border border-[#4f5c6e] z-30 opacity-100 select-none"
+                className="hidden lg:block absolute top-[310px] lg:top-[330px] left-[130px] lg:left-[155px] w-[245px] lg:w-[265px] h-[440px] -rotate-[16deg] rounded-[50px] bg-gradient-to-br from-[#4b5563] via-[#202630] to-[#333d4b] p-[4px] shadow-[0_32px_75px_-15px_rgba(0,0,0,0.45),0_12px_28px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.16)] border border-[#4f5c6e] z-30 opacity-100 select-none"
                 style={{
                   WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 28%, rgba(0,0,0,0) 65%)',
                   maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 28%, rgba(0,0,0,0) 65%)',
@@ -417,19 +417,19 @@ export function StakeHero() {
               </div>
 
               {/* Bottom Edge Fade-Out Mask matching Stake reference */}
-              <div className="absolute -bottom-2 left-0 right-0 h-48 lg:h-60 bg-gradient-to-t from-[#F7F5EF] via-[#F7F5EF]/90 to-transparent pointer-events-none z-35" />
+              <div className="hidden lg:block absolute -bottom-2 left-0 right-0 h-48 lg:h-60 bg-gradient-to-t from-[#F7F5EF] via-[#F7F5EF]/90 to-transparent pointer-events-none z-35" />
 
               {/* --- FLOATING OVERLAY: RENT NOTIFICATION BADGE --- */}
               {/* Positioned tilted across Phone 3 matching exact Stake reference */}
-              <div className="absolute top-[385px] lg:top-[410px] left-[75px] lg:left-[100px] z-40 -rotate-[16deg] bg-white/95 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-2xl border border-black/5 flex items-center gap-3 transition-transform hover:scale-105">
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-xs rotate-0 lg:-rotate-[16deg] lg:top-[410px] lg:left-[100px] lg:bottom-auto lg:translate-x-0 lg:w-auto z-40 bg-white/95 backdrop-blur-md rounded-2xl px-3.5 sm:px-4 py-2 sm:py-2.5 shadow-2xl border border-black/5 flex items-center gap-3 transition-transform hover:scale-105">
                 {/* Stake App Icon simulation with pink accent */}
-                <div className="size-8 rounded-xl bg-[#0D1117] flex items-center justify-center text-white relative shadow-xs">
+                <div className="size-8 rounded-xl bg-[#0D1117] flex items-center justify-center text-white relative shadow-xs shrink-0">
                   <span className="font-mono text-xs font-black text-emerald-400">k</span>
                   <span className="size-1.5 rounded-full bg-pink-500 absolute top-1 right-1" />
                 </div>
-                <div className="text-left">
+                <div className="text-left min-w-0">
                   <div className="text-[8px] text-gray-400 font-bold uppercase tracking-wider">Stake • Just now</div>
-                  <div className="text-[10.5px] font-extrabold text-gray-900 leading-tight">
+                  <div className="text-[10.5px] font-extrabold text-gray-900 leading-tight truncate sm:whitespace-normal">
                     You&apos;ve been paid <span className="text-[#00A663]">AED 18,550</span> in rent
                   </div>
                 </div>
