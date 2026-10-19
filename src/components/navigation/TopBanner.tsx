@@ -56,7 +56,7 @@ export function TopBanner({ onDismissChange }: Props) {
         {/* Centered Message */}
         <div className="mx-auto flex items-center justify-center text-xs sm:text-[13px] font-medium tracking-tight text-[#F7F5EF]/95 leading-snug">
           <span>
-            Our highest yielding opportunity to-date is live now on Stake Saudi!{' '}
+            Our highest yielding opportunity to-date is live now on Serene Investors Saudi!{' '}
             <Link
               href="/register"
               className="font-semibold text-emerald-300 underline underline-offset-2 transition-colors hover:text-white"

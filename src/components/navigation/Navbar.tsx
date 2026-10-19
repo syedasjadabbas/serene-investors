@@ -25,24 +25,20 @@ import { useAuth } from '@/context/AuthContext'
 import { UserProfileDropdown } from '@/components/layout/UserProfileDropdown'
 
 /* =========================================================================
-   STAKE OFFICIAL LOGO COMPONENT
-   1:1 match to Stake brand wordmark with emerald accent on 'k'
+   SERENE INVESTORS OFFICIAL LOGO COMPONENT
    ========================================================================= */
 export function StakeLogo({ className = '' }: { className?: string }) {
   return (
-    <Link href="/" aria-label="Stake Home" className={`inline-flex items-center select-none group ${className}`}>
-      <span className="font-heading text-[27px] font-black tracking-[-0.035em] text-[#0D1117] leading-none flex items-center">
-        <span>sta</span>
-        <span className="relative inline-flex items-center">
-          <span className="text-[#0D1117]">k</span>
-          {/* Stake signature emerald green diagonal accent on lower leg of 'k' */}
-          <span className="absolute bottom-[2.5px] -right-[1.5px] w-[5.5px] h-[3.8px] bg-[#00A663] rounded-[1px] transform rotate-[18deg] group-hover:scale-110 transition-transform" />
-        </span>
-        <span>e</span>
+    <Link href="/" aria-label="Serene Investors Home" className={`inline-flex items-center select-none group ${className}`}>
+      <span className="font-heading text-[24px] font-black tracking-[-0.035em] text-[#0D1117] leading-none flex items-center">
+        <span>serene</span>
+        <span className="text-[#00A663] ml-1.5 font-extrabold">investors</span>
+        <span className="size-1.5 rounded-full bg-[#00A663] ml-1 mb-0.5 group-hover:scale-125 transition-transform" />
       </span>
     </Link>
   )
 }
+export const SereneLogo = StakeLogo
 
 /* =========================================================================
    NAVIGATION DROPDOWN DATA

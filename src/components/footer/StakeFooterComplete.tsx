@@ -515,7 +515,7 @@ export function StakeFooterComplete() {
           <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400">
             {/* Left: Copyright and links separated by pipes */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <span>&copy; {new Date().getFullYear()} Stake. All rights reserved.</span>
+              <span>&copy; {new Date().getFullYear()} Serene Investors. All rights reserved.</span>
               <span className="text-slate-600">|</span>
               <Link href="/legal/terms" className="hover:text-white transition-colors">
                 Terms of use

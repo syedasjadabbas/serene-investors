@@ -70,7 +70,7 @@ export function StakeHero() {
 
             {/* Subtitle */}
             <p className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-[#4B5563]">
-              Join thousands of people globally earning passive income from investing in curated residential and commercial real estate with Stake, from just USD 150
+              Join thousands of people globally earning passive income from investing in curated residential and commercial real estate with Serene Investors, from just USD 150
             </p>
 
             {/* App Store Buttons */}

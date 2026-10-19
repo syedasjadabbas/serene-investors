@@ -1,8 +1,8 @@
 export const site = {
-  name: 'Stake',
+  name: 'Serene Investors',
   tagline: 'Invest in Dubai and Saudi Arabia Real Estate.',
   disclaimer:
-    'Stake (Stake MENA Limited) is regulated by the Dubai Financial Services Authority (DFSA) and CMA FinTech Lab framework in Saudi Arabia.',
+    'Serene Investors is regulated by the Dubai Financial Services Authority (DFSA) and CMA FinTech Lab framework in Saudi Arabia.',
 } as const
 
 export const footerIntro = {
@@ -12,6 +12,6 @@ export const footerIntro = {
     label: 'Explore properties',
     href: '/properties',
   },
-  copyright: '© 2026 Stake (Stake MENA Limited)',
+  copyright: '© 2026 Serene Investors',
   note: 'All property investments are subject to market risks. Client funds are segregated in regulated Tier-1 custodian accounts.',
 } as const
