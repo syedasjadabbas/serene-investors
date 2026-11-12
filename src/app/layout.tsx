@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
-import { AppProviders } from './providers/AppProviders'
-import { AppShellClient } from '@/components/layout/AppShellClient'
+import { AppProviders } from '@/global/providers/AppProviders'
+import { AppShellClient } from '@/global/components/layout/AppShellClient'
 import './globals.css'
 
 export const metadata: Metadata = {

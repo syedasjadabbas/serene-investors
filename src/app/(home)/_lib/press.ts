@@ -1,0 +1,60 @@
+import type { PressLogo } from '@/global/types/content'
+
+export const pressLogos: PressLogo[] = [
+  {
+    id: 'techcrunch',
+    name: 'TechCrunch',
+    src: '',
+    quote: 'Democratizing access to institutional real estate through fractional ownership.',
+    date: 'TechCrunch Disrupt',
+    href: '/learn',
+  },
+  {
+    id: 'arab-news',
+    name: 'Arab News',
+    src: '',
+    quote: 'Bridging international investors with prime UK real estate opportunities.',
+    date: 'Global Business',
+    href: '/learn',
+  },
+  {
+    id: 'financial-times',
+    name: 'Financial Times',
+    src: '',
+    quote: 'A transparent institutional model for modern fractional property syndication.',
+    date: 'FT Wealth Review',
+    href: '/learn',
+  },
+  {
+    id: 'time',
+    name: 'TIME',
+    src: '',
+    quote: 'Recognized among leading innovations in accessible wealth creation.',
+    date: 'Best Inventions',
+    href: '/learn',
+  },
+  {
+    id: 'forbes',
+    name: 'Forbes',
+    src: '',
+    quote: 'The gold standard in digital prime real estate wealth allocation.',
+    date: 'Forbes Finance',
+    href: '/learn',
+  },
+  {
+    id: 'cnn',
+    name: 'CNN',
+    src: '',
+    quote: 'Transforming how a global generation builds real estate equity.',
+    date: 'CNN Business',
+    href: '/learn',
+  },
+  {
+    id: 'bloomberg',
+    name: 'Bloomberg',
+    src: '',
+    quote: 'Institutional-grade real estate assets made accessible to private wealth investors.',
+    date: 'Bloomberg Markets',
+    href: '/learn',
+  },
+]

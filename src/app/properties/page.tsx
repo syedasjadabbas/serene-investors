@@ -1,6 +1,6 @@
 'use client'
 
-import { PropertiesPage } from '@/views/PropertiesPage'
+import { PropertiesPage } from './_components/PropertiesPage'
 
 export default function Page() {
   return <PropertiesPage />

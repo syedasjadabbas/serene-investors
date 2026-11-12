@@ -1,6 +1,6 @@
 'use client'
 
-import { FundDetailPage } from '@/views/FundDetailPage'
+import { FundDetailPage } from '../_components/FundDetailPage'
 
 export default function Page() {
   return <FundDetailPage />

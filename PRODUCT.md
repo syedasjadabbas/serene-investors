@@ -25,7 +25,7 @@ A measured share of a named building, shown like a catalogue, not a yield promis
 - Primary CTA: Get started. Secondary CTA: Browse properties.
 - The line a visitor remembers after 10 seconds: Own a measured share of a building.
 - Belief ladder: the product is understandable; the listings are comparable; rent and exit are explained in plain words; risk is visible; starting is small.
-- Proof on hand: invented sample listings, sample stats, and sample stories in `src/data`. No real testimonials, licences, or partner marks yet.
+- Proof on hand: invented sample listings, sample stats, and sample stories in `src/global/data` and each feature's `_lib`. No real testimonials, licences, or partner marks yet.
 
 ## Brand Personality
 

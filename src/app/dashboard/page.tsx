@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DashboardPage } from '@/views/DashboardPage'
+import { DashboardPage } from './_components/DashboardPage'
 
 export const metadata: Metadata = {
   title: 'Investor Dashboard & Portfolio | SERENE INVESTORS',

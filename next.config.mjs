@@ -1,6 +1,6 @@
 // Serene Investors lives inside the Serene Heights Group site at /serene-investors (Next.js Multi-Zones):
 // sereneheightsgroup.com/serene-investors/* is rewritten by the group site to this deployment.
-// Set NEXT_PUBLIC_BASE_PATH="" to run at the root instead. See src/lib/asset.ts for paths Next
+// Set NEXT_PUBLIC_BASE_PATH="" to run at the root instead. See src/global/lib/asset.ts for paths Next
 // does not prefix on its own (plain <img>, plain <a>, fetch).
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '/serene-investors'
 

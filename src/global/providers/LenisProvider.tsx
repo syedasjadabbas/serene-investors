@@ -1,0 +1,104 @@
+'use client'
+
+import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from 'react'
+import Lenis from 'lenis'
+import { gsap, registerGsapPlugins, ScrollTrigger } from '@/global/lib/gsap'
+import { usePrefersReducedMotion } from '@/global/hooks/usePrefersReducedMotion'
+
+type ScrollToOptions = {
+  immediate?: boolean
+  duration?: number
+  offset?: number
+}
+
+type LenisControl = {
+  stop: () => void
+  start: () => void
+  scrollTo: (target: number | string | HTMLElement, options?: ScrollToOptions) => void
+}
+
+function scrollWindowTo(target: number | string | HTMLElement) {
+  if (typeof target === 'number') {
+    window.scrollTo({ top: target, left: 0, behavior: 'auto' })
+    return
+  }
+
+  const node = typeof target === 'string' ? document.querySelector(target) : target
+  node?.scrollIntoView({ behavior: 'auto', block: 'start' })
+}
+
+const LenisControlContext = createContext<LenisControl>({
+  stop: () => undefined,
+  start: () => undefined,
+  scrollTo: scrollWindowTo,
+})
+
+export function useLenisControl() {
+  return useContext(LenisControlContext)
+}
+
+type Props = {
+  children: ReactNode
+}
+
+export function LenisProvider({ children }: Props) {
+  const reduced = usePrefersReducedMotion()
+  const lenisRef = useRef<Lenis | null>(null)
+
+  const control = useMemo<LenisControl>(
+    () => ({
+      stop: () => lenisRef.current?.stop(),
+      start: () => lenisRef.current?.start(),
+      scrollTo: (target, options) => {
+        const lenis = lenisRef.current
+        if (lenis) {
+          lenis.scrollTo(target, {
+            immediate: options?.immediate ?? options?.duration === undefined,
+            duration: options?.duration,
+            offset: options?.offset,
+          })
+          return
+        }
+        scrollWindowTo(target)
+      },
+    }),
+    [],
+  )
+
+  useEffect(() => {
+    registerGsapPlugins()
+
+    if (reduced) {
+      const triggers = ScrollTrigger.getAll()
+      triggers.forEach((trigger) => trigger.disable())
+      return () => {
+        triggers.forEach((trigger) => trigger.enable())
+      }
+    }
+
+    const lenis = new Lenis({
+      autoRaf: false,
+      lerp: 0.1,
+    })
+
+    lenisRef.current = lenis
+    lenis.scrollTo(0, { immediate: true })
+    lenis.on('scroll', ScrollTrigger.update)
+
+    const onTick = (time: number) => {
+      lenis.raf(time * 1000)
+    }
+
+    gsap.ticker.add(onTick)
+    gsap.ticker.lagSmoothing(0)
+
+    return () => {
+      gsap.ticker.remove(onTick)
+      gsap.ticker.lagSmoothing(500, 33)
+      lenis.destroy()
+      lenisRef.current = null
+    }
+  }, [reduced])
+
+  return <LenisControlContext.Provider value={control}>{children}</LenisControlContext.Provider>
+}

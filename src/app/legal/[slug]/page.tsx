@@ -1,6 +1,6 @@
 'use client'
 
-import { LegalPage } from '@/views/LegalPage'
+import { LegalPage } from '../_components/LegalPage'
 
 export default function Page() {
   return <LegalPage />
