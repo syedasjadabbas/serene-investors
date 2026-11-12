@@ -58,7 +58,7 @@ export function TopBanner({ onDismissChange }: Props) {
           <span>
             Our highest yielding opportunity to-date is live now on Serene Investors Saudi!{' '}
             <Link
-              href="/register"
+              href="/signup"
               className="font-semibold text-emerald-300 underline underline-offset-2 transition-colors hover:text-white"
             >
               Invest now &rarr;
