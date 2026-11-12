@@ -1,5 +1,6 @@
 import type { ImgHTMLAttributes } from 'react'
 import { cn } from '@/lib/cn'
+import { withBase } from '@/lib/asset'
 
 export interface ImageProps
   extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt' | 'width' | 'height'> {
@@ -31,7 +32,7 @@ export function Image({
 }: ImageProps) {
   return (
     <img
-      src={src}
+      src={withBase(src)}
       alt={alt}
       width={fill ? undefined : width}
       height={fill ? undefined : height}

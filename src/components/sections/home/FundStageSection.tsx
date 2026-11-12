@@ -8,6 +8,7 @@ import { fundStageIntro, funds, sampleFundMinimum } from '@/data'
 import { fundStageAssets, fundStageImage } from '@/data/fund-stage-assets'
 import { formatSampleAmount } from '@/lib/format'
 import { useOfferingsReveal } from '@/hooks/useOfferingsReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   offering: OfferingSplit
@@ -73,7 +74,7 @@ export function FundStageSection({ offering }: Props) {
         <div data-reveal-item data-depth-stage className="relative min-h-[28rem] lg:min-h-[40rem] overflow-visible">
           <div data-offering-media data-depth="back" className="absolute inset-0 z-0 overflow-hidden rounded-2xl pointer-events-none">
             <img
-              src={fundStageAssets.field.src}
+              src={withBase(fundStageAssets.field.src)}
               alt=""
               width={1600}
               height={900}
@@ -105,7 +106,7 @@ export function FundStageSection({ offering }: Props) {
               </div>
               <img
                 className="block w-full h-[11.5rem] mt-3 object-cover object-[50%_40%]"
-                src={fundStageAssets['urban-living-fund'].src}
+                src={withBase(fundStageAssets['urban-living-fund'].src)}
                 alt=""
                 width={900}
                 height={1200}
@@ -149,7 +150,7 @@ export function FundStageSection({ offering }: Props) {
               >
                 <img
                   className="block w-full h-[7.5rem] object-cover object-[50%_40%] pointer-events-none"
-                  src={image.src}
+                  src={withBase(image.src)}
                   alt={image.alt}
                   width={720}
                   height={540}

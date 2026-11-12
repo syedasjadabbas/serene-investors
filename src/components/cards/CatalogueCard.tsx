@@ -6,6 +6,7 @@ import { ArrowRight, MapPin } from 'lucide-react'
 import type { Property } from '@/types'
 import { formatPropertyMeta } from '@/lib/format'
 import { useCardPointerTilt } from '@/hooks/useCardPointerTilt'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   property: Property
@@ -99,7 +100,7 @@ export function CatalogueCard({ property }: Props) {
         <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-bg-warm">
           <img
             data-catalogue-image
-            src={property.image}
+            src={withBase(property.image)}
             alt={property.imageAlt}
             width={1600}
             height={1000}

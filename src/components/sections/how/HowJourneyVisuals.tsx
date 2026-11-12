@@ -11,6 +11,7 @@ import {
 } from '@/data'
 import { storyAssets, storyHoldingThumb } from '@/data/story-assets'
 import { formatPercent, formatSampleAmount } from '@/lib/format'
+import { withBase } from '@/lib/asset'
 
 function requireCedar() {
   const cedar = properties.find((item) => item.id === 'cedar-court')
@@ -44,7 +45,7 @@ export function HowPageChooseVisual() {
       <img
         data-how-choose-image
         data-depth="back"
-        src={storyAssets.choose.src}
+        src={withBase(storyAssets.choose.src)}
         alt={storyAssets.choose.alt}
         width={1400}
         height={1867}
@@ -76,7 +77,7 @@ export function HowPageChooseVisual() {
         data-depth="front"
         aria-label={`View sample fund ${fund.name}`}
       >
-        <img src={fund.image} alt="" width={640} height={400} className="block w-full h-full min-h-[7.5rem] object-cover" />
+        <img src={withBase(fund.image)} alt="" width={640} height={400} className="block w-full h-full min-h-[7.5rem] object-cover" />
         <div className="p-4 text-ink">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Sample fund</p>
           <p className="mt-1 text-base font-semibold tracking-tight text-ink group-hover:text-primary transition-colors">{fund.name}</p>
@@ -114,7 +115,7 @@ export function HowPageInvestVisual() {
       </div>
 
       <div data-how-invest-bit className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4 items-center mt-6 p-3 rounded-xl bg-soft/50 border border-black/5">
-        <img src={storyAssets.choose.src} alt="" width={160} height={120} className="block w-full h-[4.25rem] object-cover rounded-lg" />
+        <img src={withBase(storyAssets.choose.src)} alt="" width={160} height={120} className="block w-full h-[4.25rem] object-cover rounded-lg" />
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Selected sample</p>
           <p className="mt-1 text-base font-semibold tracking-tight text-ink">{cedar.name}</p>
@@ -169,7 +170,7 @@ export function HowPageTrackVisual() {
               return (
                 <li key={holding.id} className="border-b border-line">
                   <Link href={`/properties/${holding.id}`} className="group grid grid-cols-[3.5rem_minmax(0,1fr)] gap-3 items-center py-2.5">
-                    <img src={thumb.src} alt="" width={72} height={54} className="block w-full h-11 object-cover rounded-md" />
+                    <img src={withBase(thumb.src)} alt="" width={72} height={54} className="block w-full h-11 object-cover rounded-md" />
                     <div>
                       <p className="text-sm font-medium text-ink group-hover:text-primary transition-colors">{holding.name}</p>
                       <p className="text-xs text-muted">{holding.meta}</p>
@@ -216,7 +217,7 @@ export function HowPageReceiveVisual() {
     <div className="relative min-h-[22rem]">
       <img
         data-depth="back"
-        src={storyAssets.receive.src}
+        src={withBase(storyAssets.receive.src)}
         alt={storyAssets.receive.alt}
         width={1400}
         height={1867}

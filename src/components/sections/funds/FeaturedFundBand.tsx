@@ -16,6 +16,7 @@ import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { useFundFocus } from '@/hooks/useFundFocus'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function FeaturedFundBand() {
   const rootRef = useRef<HTMLElement>(null)
@@ -43,7 +44,7 @@ export function FeaturedFundBand() {
             >
               <img
                 data-featured-fund-image
-                src={catalogueFeaturedFund.image}
+                src={withBase(catalogueFeaturedFund.image)}
                 alt={catalogueFeaturedFund.imageAlt}
                 width={1400}
                 height={1750}
@@ -62,7 +63,7 @@ export function FeaturedFundBand() {
                 index === 0 ? 'lg:left-[-1.25rem] lg:bottom-10' : 'lg:right-6 lg:top-9'
               }`}
             >
-              <img src={fund.image} alt={fund.imageAlt} width={720} height={540} loading="lazy" className="block w-full h-[7.5rem] object-cover object-[50%_40%]" />
+              <img src={withBase(fund.image)} alt={fund.imageAlt} width={720} height={540} loading="lazy" className="block w-full h-[7.5rem] object-cover object-[50%_40%]" />
               <div className="p-4 sm:p-5 text-ink">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Sample fund</p>
                 <p className="mt-2 text-lg font-medium tracking-tight text-ink">{fund.name}</p>

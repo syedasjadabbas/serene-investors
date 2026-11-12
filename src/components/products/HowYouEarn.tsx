@@ -16,6 +16,7 @@ import {
   User,
 } from 'lucide-react'
 import { DeviceFrame } from '@/components/common/DeviceFrame'
+import { withBase } from '@/lib/asset'
 
 export function HowYouEarn() {
   return (
@@ -204,7 +205,7 @@ export function HowYouEarn() {
                       <div className="flex items-center justify-between py-1">
                         <div className="flex items-center gap-2">
                           <div className="size-8 rounded-full overflow-hidden shrink-0 border border-black/5 bg-gray-100 flex items-center justify-center">
-                            <img src="/images/journey/dubai-marina.jpg" alt="Park Tower" className="w-full h-full object-cover" />
+                            <img src={withBase("/images/journey/dubai-marina.jpg")} alt="Park Tower" className="w-full h-full object-cover" />
                           </div>
                           <div>
                             <p className="text-[10.5px] font-bold text-gray-900 leading-tight">1 bed in Park Tower</p>

@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Play } from 'lucide-react'
 import type { Testimonial } from '@/types'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { gsap, registerGsapPlugins } from '@/lib/gsap'
+import { withBase } from '@/lib/asset'
 
 type ViewProps = {
   item: Testimonial
@@ -87,7 +88,7 @@ export function TestimonialSlide({ item, active }: SlideProps) {
           className="story-portrait depth-lift m-0 relative overflow-hidden rounded-3xl group cursor-pointer"
         >
           <img
-            src={item.image}
+            src={withBase(item.image)}
             alt={item.imageAlt}
             width={900}
             height={1120}
@@ -184,7 +185,7 @@ export function TestimonialView({ item, index, total, onPrev, onNext }: ViewProp
         className="story-portrait depth-lift m-0 relative overflow-hidden rounded-3xl group cursor-pointer"
       >
         <img
-          src={item.image}
+          src={withBase(item.image)}
           alt={item.imageAlt}
           width={900}
           height={1120}

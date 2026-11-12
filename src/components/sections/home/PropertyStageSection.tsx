@@ -8,6 +8,7 @@ import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { useFloatingMotion } from '@/hooks/useFloatingMotion'
 import { useOfferingsReveal } from '@/hooks/useOfferingsReveal'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   offering: OfferingSplit
@@ -56,7 +57,7 @@ export function PropertyStageSection({ offering }: Props) {
         <div data-reveal-item data-depth-stage className="relative mt-12 min-h-[32rem] pb-8 lg:mt-16 lg:min-h-[42rem] lg:pb-10">
           <figure data-offering-media data-depth="back" className="m-0">
             <img
-              src={offering.image}
+              src={withBase(offering.image)}
               alt={offering.imageAlt}
               width={2000}
               height={1400}

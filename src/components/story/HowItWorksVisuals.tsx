@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { appDownload, properties } from '@/data'
 import { storyAssets, storyHoldingThumb } from '@/data/story-assets'
 import { formatPercent, formatSampleAmount } from '@/lib/format'
+import { withBase } from '@/lib/asset'
 
 function requireCedar() {
   const cedar = properties.find((item) => item.id === 'cedar-court')
@@ -34,7 +35,7 @@ export function HowItWorksChooseVisual() {
       <img
         className="story-visual-state__image"
         data-depth="back"
-        src={storyAssets.choose.src}
+        src={withBase(storyAssets.choose.src)}
         alt={storyAssets.choose.alt}
         width={1400}
         height={1867}
@@ -77,7 +78,7 @@ export function HowItWorksInvestVisual() {
 
       <div className="story-invest__property" data-depth="front">
         <img
-          src={storyAssets.choose.src}
+          src={withBase(storyAssets.choose.src)}
           alt=""
           width={160}
           height={120}
@@ -122,7 +123,7 @@ export function HowItWorksTrackVisual() {
               const thumb = storyHoldingThumb(holding.id)
               return (
                 <li key={holding.id}>
-                  <img src={thumb.src} alt="" width={72} height={54} />
+                  <img src={withBase(thumb.src)} alt="" width={72} height={54} />
                   <div>
                     <p>{holding.name}</p>
                     <p>{holding.meta}</p>
@@ -154,7 +155,7 @@ export function HowItWorksReceiveVisual() {
       <img
         className="story-visual-state__image"
         data-depth="back"
-        src={storyAssets.receive.src}
+        src={withBase(storyAssets.receive.src)}
         alt={storyAssets.receive.alt}
         width={1400}
         height={1867}

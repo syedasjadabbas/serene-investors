@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { aboutExperience } from '@/data'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function AboutExperience() {
   const rootRef = useRef<HTMLElement>(null)
@@ -38,7 +39,7 @@ export function AboutExperience() {
                 <figure className="about-step__media m-0 overflow-hidden rounded-xl mb-5 aspect-[4/3] bg-bg-warm">
                   <img
                     data-about-step-image
-                    src={step.image.src}
+                    src={withBase(step.image.src)}
                     alt={step.image.alt}
                     width={1200}
                     height={900}

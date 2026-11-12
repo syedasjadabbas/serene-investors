@@ -11,6 +11,7 @@ import { useAuth } from '@/context/AuthContext'
 import { funds, properties, site } from '@/data'
 import { usePageMeta } from '@/hooks/usePageMeta'
 import { cn } from '@/lib/cn'
+import { withBase } from '@/lib/asset'
 
 export function SignupPage() {
   const router = useRouter()
@@ -76,7 +77,7 @@ export function SignupPage() {
     setIsSendingOtp(true)
 
     try {
-      const res = await fetch('/api/auth/send-otp', {
+      const res = await fetch(withBase('/api/auth/send-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

@@ -3,6 +3,7 @@ import { aboutIntro } from '@/data'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function AboutHero() {
   const rootRef = useRef<HTMLElement>(null)
@@ -38,7 +39,7 @@ export function AboutHero() {
         <figure data-reveal-item data-depth-stage className="about-hero__media m-0 overflow-hidden rounded-2xl bg-bg-warm">
           <img
             data-about-hero-image
-            src={aboutIntro.image.src}
+            src={withBase(aboutIntro.image.src)}
             alt={aboutIntro.image.alt}
             width={2000}
             height={1200}

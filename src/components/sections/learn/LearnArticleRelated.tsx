@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import type { LearnGuide } from '@/types'
 import { useRelatedGuides } from '@/hooks/useRelatedGuides'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   guide: LearnGuide
@@ -36,7 +37,7 @@ export function LearnArticleRelated({ guide }: Props) {
               >
                 <div className="m-0 overflow-hidden rounded-xl mb-5 aspect-[4/3] bg-bg-warm">
                   <img
-                    src={item.image}
+                    src={withBase(item.image)}
                     alt={item.imageAlt}
                     width={900}
                     height={675}

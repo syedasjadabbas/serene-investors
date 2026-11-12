@@ -6,6 +6,7 @@ import { ArrowRight, MapPin } from 'lucide-react'
 import type { Fund } from '@/types'
 import { formatFundType } from '@/lib/format'
 import { useCardPointerTilt } from '@/hooks/useCardPointerTilt'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   fund: Fund
@@ -81,7 +82,7 @@ export function FundCard({ fund }: Props) {
         <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-bg-warm">
           <img
             data-fund-card-image
-            src={fund.image}
+            src={withBase(fund.image)}
             alt={fund.imageAlt}
             width={1600}
             height={1000}

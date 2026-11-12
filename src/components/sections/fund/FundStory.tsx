@@ -3,6 +3,7 @@ import type { Fund } from '@/types'
 import { formatFundType } from '@/lib/format'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   fund: Fund
@@ -19,7 +20,7 @@ export function FundStory({ fund }: Props) {
         <figure className="fund-story__media m-0">
           <img
             data-fund-story-image
-            src={fund.image}
+            src={withBase(fund.image)}
             alt={fund.imageAlt}
             width={1400}
             height={1050}

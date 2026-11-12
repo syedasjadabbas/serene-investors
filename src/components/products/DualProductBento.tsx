@@ -15,6 +15,7 @@ import {
   Zap,
   Tag,
 } from 'lucide-react'
+import { withBase } from '@/lib/asset'
 
 export function DualProductBento() {
   const [isPlayingVideo, setIsPlayingVideo] = useState(false)
@@ -100,7 +101,7 @@ export function DualProductBento() {
                 <div className="absolute right-0 sm:right-3 lg:right-5 top-16 sm:top-20 z-20 w-36 sm:w-42 rounded-2xl bg-white p-2.5 sm:p-3 shadow-2xl rotate-[8deg] border border-black/5 transition-transform hover:rotate-0 duration-300">
                   <div className="relative h-20 sm:h-22 w-full rounded-xl overflow-hidden mb-1.5 bg-gray-100">
                     <img
-                      src="/images/journey/residential.jpg"
+                      src={withBase("/images/journey/residential.jpg")}
                       alt="Boulevard Point, Downtown Dubai"
                       className="h-full w-full object-cover"
                     />
@@ -120,7 +121,7 @@ export function DualProductBento() {
                 <div className="absolute -left-5 sm:-left-3 bottom-0 sm:bottom-2 z-20 w-36 sm:w-42 rounded-2xl bg-white p-2.5 sm:p-3 shadow-2xl -rotate-[14deg] border border-black/5 transition-transform hover:rotate-0 duration-300">
                   <div className="relative h-20 sm:h-22 w-full rounded-xl overflow-hidden mb-1.5 bg-gray-100">
                     <img
-                      src="/images/journey/dubai-marina.jpg"
+                      src={withBase("/images/journey/dubai-marina.jpg")}
                       alt="Marina Gate, Dubai Marina"
                       className="h-full w-full object-cover"
                     />
@@ -184,7 +185,7 @@ export function DualProductBento() {
                     {/* Hero Property Photo Container */}
                     <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-gray-100">
                       <img
-                        src="/images/journey/dubai-marina.jpg"
+                        src={withBase("/images/journey/dubai-marina.jpg")}
                         alt="Park Islands, Dubai Marina"
                         className="h-full w-full object-cover"
                       />
@@ -576,7 +577,7 @@ export function DualProductBento() {
                   {/* Circular Property Image */}
                   <div className="size-12 sm:size-13 rounded-full overflow-hidden shrink-0 ring-1 ring-black/5 bg-gray-100">
                     <img
-                      src="/images/journey/residential.jpg"
+                      src={withBase("/images/journey/residential.jpg")}
                       alt="Building 8, City Walk"
                       className="size-full object-cover"
                     />

@@ -6,6 +6,7 @@ import { featuredLearnGuide } from '@/data'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function LearnFeatured() {
   const rootRef = useRef<HTMLElement>(null)
@@ -28,7 +29,7 @@ export function LearnFeatured() {
           <Link href={`/learn/${guide.slug}`} aria-label={`Read guide: ${guide.title}`}>
             <img
               data-learn-featured-image
-              src={guide.image}
+              src={withBase(guide.image)}
               alt={guide.imageAlt}
               width={1400}
               height={1750}

@@ -9,6 +9,7 @@ import { formatSampleAmount } from '@/lib/format'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function FundsHero() {
   const rootRef = useRef<HTMLElement>(null)
@@ -52,7 +53,7 @@ export function FundsHero() {
             <img
               data-funds-hero-image
               data-funds-hero-field
-              src={fundStageAssets.field.src}
+              src={withBase(fundStageAssets.field.src)}
               alt={fundStageAssets.field.alt}
               width={1600}
               height={900}
@@ -68,7 +69,7 @@ export function FundsHero() {
           >
             <img
               data-funds-hero-image
-              src={catalogueFeaturedFund.image}
+              src={withBase(catalogueFeaturedFund.image)}
               alt={catalogueFeaturedFund.imageAlt}
               width={900}
               height={675}

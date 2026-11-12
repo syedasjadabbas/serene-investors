@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { learnCta } from '@/data'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function LearnCta() {
   const rootRef = useRef<HTMLElement>(null)
@@ -94,7 +95,7 @@ export function LearnCta() {
               {/* Property Image & Badges */}
               <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden bg-gray-100 shadow-2xs">
                 <img
-                  src="/images/properties/boulevard-point-hero.jpg"
+                  src={withBase("/images/properties/boulevard-point-hero.jpg")}
                   alt="Boulevard Point, Downtown Dubai"
                   className="h-full w-full object-cover"
                 />

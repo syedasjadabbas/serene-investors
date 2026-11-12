@@ -5,6 +5,7 @@ import type { LearnGuide } from '@/types'
 import { learnGuides } from '@/data'
 import { useCardPointerTilt } from '@/hooks/useCardPointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 function ResourceCard({ guide }: { guide: LearnGuide }) {
   const cardRef = useRef<HTMLElement>(null)
@@ -19,7 +20,7 @@ function ResourceCard({ guide }: { guide: LearnGuide }) {
     >
       <Link href={`/learn/${guide.slug}`} className="block text-ink" aria-label={`${guide.title}. Read guide.`}>
         <div className="m-0 overflow-hidden rounded-xl mb-5 aspect-[4/3] bg-bg-warm">
-          <img src={guide.image} alt={guide.imageAlt} width={900} height={675} loading="lazy" decoding="async" className="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <img src={withBase(guide.image)} alt={guide.imageAlt} width={900} height={675} loading="lazy" decoding="async" className="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
         </div>
         <span className="text-xs font-mono font-bold px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full inline-block mb-3">
           {guide.category}

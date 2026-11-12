@@ -23,6 +23,7 @@ import { Button, ButtonLink } from '@/components/ui/Button'
 import { useAuth } from '@/context/AuthContext'
 import { getInitials } from '@/components/layout/UserProfileDropdown'
 import { cn } from '@/lib/cn'
+import { withBase } from '@/lib/asset'
 
 type Tab = 'holdings' | 'distributions' | 'documents'
 
@@ -351,7 +352,7 @@ export function DashboardPage() {
                 <div>
                   <div className="relative overflow-hidden rounded-xl bg-bg-warm">
                     <img
-                      src={holding.image}
+                      src={withBase(holding.image)}
                       alt={holding.name}
                       className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />

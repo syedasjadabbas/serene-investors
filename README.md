@@ -14,6 +14,20 @@ npm run dev
 npm run build
 ```
 
+## Inside the Serene Heights Group site (`/serene-investors`)
+
+The site is built with `basePath: "/serene-investors"` so it can live at
+**sereneheightsgroup.com/serene-investors** while staying its own repo and Vercel project
+(Next.js Multi-Zones). The group site rewrites `/serene-investors` and `/serene-investors/:path*`
+to this deployment (`INVESTORS_ORIGIN` in the group site's Vercel settings).
+
+- `<Link>`, the router and `_next` assets get the prefix automatically.
+- Plain `<img>` sources, plain internal `<a>` links and `fetch('/api/…')` go through `withBase()` in
+  `src/lib/asset.ts` — use it for any new root-relative path.
+- On this app's own domain, `/` redirects to `/serene-investors`.
+- Set `NEXT_PUBLIC_BASE_PATH=` (empty) to run at the root again.
+- OTP sign-in emails need `RESEND_API_KEY` (see `.env.example`).
+
 ## Docs
 
 - `PRODUCT.md` - who it is for and what it claims

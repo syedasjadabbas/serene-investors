@@ -3,6 +3,7 @@ import { Link } from '@/components/ui/Link'
 import { BackerMark } from '@/components/cards/BackerMark'
 import { backerGroups, backersIntro } from '@/data'
 import { useBackersReveal } from '@/hooks/useBackersReveal'
+import { withBase } from '@/lib/asset'
 
 export function BackersSection() {
   const rootRef = useRef<HTMLElement>(null)
@@ -34,7 +35,7 @@ export function BackersSection() {
         <div className="mt-10 grid gap-7 md:mt-[3.25rem] lg:mt-[3.75rem] lg:grid-cols-[minmax(16rem,0.82fr)_minmax(0,1.18fr)] lg:items-stretch lg:gap-0 lg:overflow-hidden lg:rounded-2xl lg:border lg:border-line lg:bg-surface">
           <figure className="m-0 overflow-hidden rounded-2xl lg:min-h-full lg:rounded-none" data-community-media>
             <img
-              src={backersIntro.image.src}
+              src={withBase(backersIntro.image.src)}
               alt={backersIntro.image.alt}
               width={900}
               height={1200}

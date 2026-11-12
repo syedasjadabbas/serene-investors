@@ -7,6 +7,7 @@ import { formatPercent, formatPropertyMeta, formatSampleAmount, formatStatus } f
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function FeaturedPropertyBand() {
   const rootRef = useRef<HTMLElement>(null)
@@ -31,7 +32,7 @@ export function FeaturedPropertyBand() {
           >
             <img
               data-featured-property-image
-              src={catalogueFeatured.image}
+              src={withBase(catalogueFeatured.image)}
               alt={catalogueFeatured.imageAlt}
               width={1400}
               height={1750}

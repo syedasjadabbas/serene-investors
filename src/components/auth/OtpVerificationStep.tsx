@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react'
 import { ArrowLeft, CheckCircle2, Lock } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   email: string
@@ -81,7 +82,7 @@ export function OtpVerificationStep({
     setError('')
 
     try {
-      const res = await fetch('/api/auth/verify-otp', {
+      const res = await fetch(withBase('/api/auth/verify-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, code }),
@@ -108,7 +109,7 @@ export function OtpVerificationStep({
     setResendStatus('idle')
 
     try {
-      const res = await fetch('/api/auth/send-otp', {
+      const res = await fetch(withBase('/api/auth/send-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

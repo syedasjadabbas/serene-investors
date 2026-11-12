@@ -20,6 +20,7 @@ import {
   ShieldCheck,
   TrendingUp,
 } from 'lucide-react'
+import { withBase } from '@/lib/asset'
 
 // Authentic iPhone Top Status Bar & Centered Dynamic Island
 function PhoneTopBar({
@@ -397,7 +398,7 @@ export function InteractiveJourney() {
                   {/* Floating Photo Sticker 1: Modern Skyscraper / Residential (Top Left, Tilted -10deg) */}
                   <div className="absolute top-10 sm:top-14 left-2 sm:left-4 z-10 -rotate-[10deg] border-2 sm:border-[3px] border-white rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden w-22 sm:w-28 lg:w-32 h-28 sm:h-36 lg:h-40 bg-white transition-transform hover:scale-105 hover:rotate-0 duration-300">
                     <img
-                      src="/images/journey/residential.jpg"
+                      src={withBase("/images/journey/residential.jpg")}
                       alt="Prime Modern Skyscraper"
                       className="size-full object-cover"
                     />
@@ -411,7 +412,7 @@ export function InteractiveJourney() {
                   {/* Floating Photo Sticker 2: Burj Al Arab in turquoise ocean (Top Right, Tilted +12deg) */}
                   <div className="absolute top-6 sm:top-8 right-2 sm:right-4 z-10 rotate-[12deg] border-2 sm:border-[3px] border-white rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden w-22 sm:w-28 lg:w-32 h-28 sm:h-36 lg:h-40 bg-white transition-transform hover:scale-105 hover:rotate-0 duration-300">
                     <img
-                      src="/images/journey/burj-al-arab.jpg"
+                      src={withBase("/images/journey/burj-al-arab.jpg")}
                       alt="Burj Al Arab, Dubai"
                       className="size-full object-cover"
                     />
@@ -425,7 +426,7 @@ export function InteractiveJourney() {
                   {/* Floating Photo Sticker 3: Palm Jumeirah Aerial Photo (Bottom Right, Tilted +4deg) */}
                   <div className="absolute bottom-6 sm:bottom-8 right-2 sm:right-4 z-30 rotate-[4deg] border-2 sm:border-[3px] border-white rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden w-24 sm:w-30 lg:w-34 h-24 sm:h-30 lg:h-34 bg-white transition-transform hover:scale-105 hover:rotate-0 duration-300">
                     <img
-                      src="/images/journey/palm-aerial.jpg"
+                      src={withBase("/images/journey/palm-aerial.jpg")}
                       alt="Palm Jumeirah Aerial"
                       className="size-full object-cover"
                     />
@@ -484,7 +485,7 @@ export function InteractiveJourney() {
                         <div className="mt-2.5 rounded-2xl border border-gray-200/80 overflow-hidden shadow-xs bg-white">
                           <div className="relative h-36 sm:h-40 w-full overflow-hidden bg-gray-100">
                             <img
-                              src="/images/journey/dubai-marina.jpg"
+                              src={withBase("/images/journey/dubai-marina.jpg")}
                               alt="Marina Gate, Dubai Marina"
                               className="size-full object-cover hover:scale-105 transition-transform duration-500"
                             />
@@ -540,7 +541,7 @@ export function InteractiveJourney() {
                         {/* Secondary Property Peek Card at Bottom */}
                         <div className="mt-2 rounded-xl border border-gray-100 bg-gray-50/80 p-2 flex items-center gap-2">
                           <img
-                            src="/images/properties/boulevard-point-hero.jpg"
+                            src={withBase("/images/properties/boulevard-point-hero.jpg")}
                             alt="Boulevard Point"
                             className="size-9 rounded-lg object-cover shrink-0"
                           />
@@ -572,7 +573,7 @@ export function InteractiveJourney() {
                   {/* Sticker 2: Circular Dubai Marina Cityscape Badge (Top Right) */}
                   <div className="absolute top-4 sm:top-5 right-3 sm:right-6 z-10 size-20 sm:size-24 rounded-full border-3 sm:border-4 border-white shadow-2xl overflow-hidden">
                     <img
-                      src="/images/journey/dubai-marina.jpg"
+                      src={withBase("/images/journey/dubai-marina.jpg")}
                       alt="Dubai Marina"
                       className="size-full object-cover"
                     />
@@ -587,7 +588,7 @@ export function InteractiveJourney() {
                       {/* Property Hero Media */}
                       <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-gray-100">
                         <img
-                          src="/images/journey/dubai-marina.jpg"
+                          src={withBase("/images/journey/dubai-marina.jpg")}
                           alt="Marina luxury residence"
                           className="size-full object-cover"
                         />
@@ -734,7 +735,7 @@ export function InteractiveJourney() {
                   {/* Sticker 1: Palm Jumeirah Aerial Photo (Left, Tilted -12deg) */}
                   <div className="absolute top-12 sm:top-16 left-2 sm:left-4 z-10 -rotate-[12deg] border-2 sm:border-3 border-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden w-22 sm:w-28 h-26 sm:h-34 bg-white">
                     <img
-                      src="/images/journey/palm-aerial.jpg"
+                      src={withBase("/images/journey/palm-aerial.jpg")}
                       alt="Palm Jumeirah"
                       className="size-full object-cover"
                     />
@@ -743,7 +744,7 @@ export function InteractiveJourney() {
                   {/* Sticker 2: Resort Towers and Pool Photo (Right, Tilted +12deg) */}
                   <div className="absolute top-6 sm:top-8 right-2 sm:right-4 z-10 rotate-[12deg] border-2 sm:border-3 border-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden w-22 sm:w-28 h-26 sm:h-34 bg-white">
                     <img
-                      src="/images/journey/tower-pool.jpg"
+                      src={withBase("/images/journey/tower-pool.jpg")}
                       alt="Towers and pool"
                       className="size-full object-cover"
                     />
@@ -777,7 +778,7 @@ export function InteractiveJourney() {
                         {/* Commercial Media: Hittin Plaza */}
                         <div className="mt-2 relative h-32 w-full rounded-2xl overflow-hidden shadow-xs">
                           <img
-                            src="/images/journey/hittin.jpg"
+                            src={withBase("/images/journey/hittin.jpg")}
                             alt="HITTIN Plaza"
                             className="size-full object-cover"
                           />

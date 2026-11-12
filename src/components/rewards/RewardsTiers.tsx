@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
+import { withBase } from '@/lib/asset'
 
 interface BenefitItem {
   iconType: 'journey' | 'share' | 'fees' | 'reinvest' | 'unlocked' | 'funds'
@@ -333,7 +334,7 @@ export function RewardsTiers() {
 
           <div className="mt-7 sm:mt-8 flex justify-center">
             <a
-              href="/rewards"
+              href={withBase("/rewards")}
               className="inline-flex items-center justify-center rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white px-7 py-3 text-sm font-semibold shadow-xs transition-all active:scale-95"
             >
               Learn about Rewards
@@ -538,7 +539,7 @@ export function RewardsTiers() {
                               </p>
                               {b.hasLearnMore && (
                                 <a
-                                  href="/rewards"
+                                  href={withBase("/rewards")}
                                   className="inline-flex items-center text-[9px] font-bold text-[#00A663] hover:underline mt-0.5"
                                 >
                                   Learn more &rsaquo;

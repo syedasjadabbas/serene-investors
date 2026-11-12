@@ -3,6 +3,7 @@ import type { LearnGuide } from '@/types'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   guide: LearnGuide
@@ -42,7 +43,7 @@ export function LearnArticleHero({ guide }: Props) {
       <figure data-reveal-item data-depth-stage className="learn-article-hero__media max-w-7xl mx-auto m-0 overflow-hidden rounded-2xl">
         <img
           data-learn-article-image
-          src={guide.image}
+          src={withBase(guide.image)}
           alt={guide.imageAlt}
           width={1600}
           height={1000}

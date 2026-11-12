@@ -3,6 +3,7 @@ import type { Property } from '@/types'
 import { formatPropertyMeta, formatStatus } from '@/lib/format'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { usePropertyExperience } from '@/hooks/usePropertyExperience'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   property: Property
@@ -38,7 +39,7 @@ export function PropertyExperience({ property }: Props) {
         <img
           key={current.src}
           data-experience-image
-          src={current.src}
+          src={withBase(current.src)}
           alt={current.alt}
           width={1800}
           height={1200}
@@ -66,7 +67,7 @@ export function PropertyExperience({ property }: Props) {
               className="property-experience__thumb"
               onClick={() => setActive(index)}
             >
-              <img src={image.src} alt="" width={280} height={210} loading="lazy" decoding="async" />
+              <img src={withBase(image.src)} alt="" width={280} height={210} loading="lazy" decoding="async" />
             </button>
           ))}
         </div>

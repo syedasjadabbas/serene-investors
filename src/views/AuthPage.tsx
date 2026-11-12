@@ -10,6 +10,7 @@ import { Container } from '@/components/ui/Container'
 import { useAuth } from '@/context/AuthContext'
 import { funds, properties, site } from '@/data'
 import { usePageMeta } from '@/hooks/usePageMeta'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   title: string
@@ -65,7 +66,7 @@ export function AuthPage({ title }: Props) {
     setSendOtpError('')
 
     try {
-      const res = await fetch('/api/auth/send-otp', {
+      const res = await fetch(withBase('/api/auth/send-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: targetEmail }),

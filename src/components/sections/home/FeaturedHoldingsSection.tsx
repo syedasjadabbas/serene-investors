@@ -9,6 +9,7 @@ import { formatPropertyMeta, formatSampleAmount, formatPercent, formatStatus } f
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { useHoldingsDepth } from '@/hooks/useHoldingsDepth'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   properties: Property[]
@@ -55,7 +56,7 @@ export function FeaturedHoldingsSection({ properties }: Props) {
             <img
               data-holding-image="featured"
               data-depth="back"
-              src={featured.image}
+              src={withBase(featured.image)}
               alt={featured.imageAlt}
               width={1600}
               height={2000}
@@ -121,7 +122,7 @@ export function FeaturedHoldingsSection({ properties }: Props) {
                 <div className="relative overflow-hidden">
                   <img
                     data-holding-image
-                    src={property.image}
+                    src={withBase(property.image)}
                     alt={property.imageAlt}
                     width={900}
                     height={1120}

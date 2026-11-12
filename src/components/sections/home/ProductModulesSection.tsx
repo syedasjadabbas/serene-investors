@@ -3,6 +3,7 @@
 import { Building2, Layers, Play, CheckCircle2, Tag } from 'lucide-react'
 import { Link } from '@/components/ui/Link'
 import { PhoneFrame } from '@/components/ui/mockups/PhoneFrame'
+import { withBase } from '@/lib/asset'
 
 const STATS = [
   { prefix: '2', suffix: 'M+', label: 'Registered users' },
@@ -296,7 +297,7 @@ export function ProductModulesSection() {
                 {/* Circular Property Image */}
                 <div className="size-12 sm:size-13 rounded-full overflow-hidden shrink-0 ring-1 ring-black/5 bg-gray-100">
                   <img
-                    src="/images/journey/residential.jpg"
+                    src={withBase("/images/journey/residential.jpg")}
                     alt="Building 8, City Walk"
                     className="size-full object-cover"
                   />

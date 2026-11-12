@@ -1,5 +1,6 @@
 import { Link } from '@/components/ui/Link'
 import type { AppDownloadContent } from '@/types'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   content: AppDownloadContent
@@ -61,7 +62,7 @@ export function AppMockup({ content }: Props) {
             <p className="mt-4 text-sm text-muted">{content.featured.eyebrow}</p>
           </div>
           <img
-            src={content.featured.image}
+            src={withBase(content.featured.image)}
             alt=""
             width={900}
             height={720}

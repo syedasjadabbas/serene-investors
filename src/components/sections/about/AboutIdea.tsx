@@ -3,6 +3,7 @@ import { aboutIdea } from '@/data'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function AboutIdea() {
   const rootRef = useRef<HTMLElement>(null)
@@ -33,7 +34,7 @@ export function AboutIdea() {
       <figure data-reveal-item data-depth-stage className="about-idea__media max-w-7xl mx-auto m-0 overflow-hidden rounded-2xl">
         <img
           data-about-idea-image
-          src={aboutIdea.image.src}
+          src={withBase(aboutIdea.image.src)}
           alt={aboutIdea.image.alt}
           width={1600}
           height={1000}

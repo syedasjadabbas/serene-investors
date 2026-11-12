@@ -3,6 +3,7 @@ import { appDownload, longTermValue, returnsIllustration } from '@/data'
 import { storyAssets, storyHoldingThumb } from '@/data/story-assets'
 import { DEPTH_QUERY } from '@/lib/motion'
 import { gsap, registerGsapPlugins } from '@/lib/gsap'
+import { withBase } from '@/lib/asset'
 
 export function ValueReceiveVisual() {
   const rental = returnsIllustration.components.find((item) => item.id === 'rental')
@@ -12,7 +13,7 @@ export function ValueReceiveVisual() {
       <img
         className="story-visual-state__image"
         data-depth="back"
-        src={storyAssets.valueWalk.src}
+        src={withBase(storyAssets.valueWalk.src)}
         alt={storyAssets.valueWalk.alt}
         width={1400}
         height={1867}
@@ -96,7 +97,7 @@ export function ValueBuildVisual() {
         className="story-build__field"
         data-build-field
         data-depth="back"
-        src={storyAssets.choose.src}
+        src={withBase(storyAssets.choose.src)}
         alt=""
         width={1400}
         height={1867}
@@ -108,7 +109,7 @@ export function ValueBuildVisual() {
           <div className="story-build__plate" aria-hidden="true" />
           <article className="story-canvas story-statement" data-build-panel data-depth="mid">
           <header className="story-statement__head" data-build-head data-depth="front">
-            <img src={storyAssets.choose.src} alt="" width={72} height={54} />
+            <img src={withBase(storyAssets.choose.src)} alt="" width={72} height={54} />
             <div>
               <p className="story-overlay__kicker">{returnsIllustration.figureLabel}</p>
               <p className="story-statement__property">{returnsIllustration.propertyName}</p>
@@ -171,7 +172,7 @@ export function ValueGrowVisual() {
         className="story-grow__backdrop"
         data-depth="back"
         data-grow-layer="backdrop"
-        src={storyAssets.grow.src}
+        src={withBase(storyAssets.grow.src)}
         alt={storyAssets.grow.alt}
         width={1400}
         height={1867}
@@ -189,7 +190,7 @@ export function ValueGrowVisual() {
               const thumb = storyHoldingThumb(holding.id)
               return (
                 <li key={holding.id}>
-                  <img src={thumb.src} alt="" width={72} height={54} />
+                  <img src={withBase(thumb.src)} alt="" width={72} height={54} />
                   <div>
                     <p>{holding.name}</p>
                     <p>{holding.meta}</p>

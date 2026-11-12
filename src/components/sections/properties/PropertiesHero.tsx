@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { withBase } from '@/lib/asset'
 
 // 3D Coin Graphic Component for Passive Rental Income Card
 function Coin({ className = '' }: { className?: string }) {
@@ -217,7 +218,7 @@ export function PropertiesHero() {
                     {/* Property Photo & Overlay Buttons */}
                     <div className="relative aspect-[16/11.5] w-full overflow-hidden bg-gray-100">
                       <img
-                        src="/images/properties/boulevard-point-hero.jpg"
+                        src={withBase("/images/properties/boulevard-point-hero.jpg")}
                         alt="Boulevard Point, Downtown Dubai"
                         className="h-full w-full object-cover"
                       />
@@ -478,7 +479,7 @@ export function PropertiesHero() {
                   {/* Photo of Marina Tower */}
                   <div className="relative aspect-[16/11.5] w-full overflow-hidden rounded-xl bg-gray-100">
                     <img
-                      src="/images/properties/marina-tower.jpg"
+                      src={withBase("/images/properties/marina-tower.jpg")}
                       alt="Marina Tower, Dubai Marina"
                       className="h-full w-full object-cover"
                     />
@@ -584,7 +585,7 @@ export function PropertiesHero() {
                   {/* Circular Property Image */}
                   <div className="size-12 sm:size-13 rounded-full overflow-hidden shrink-0 ring-1 ring-black/5 bg-gray-100">
                     <img
-                      src="/images/journey/residential.jpg"
+                      src={withBase("/images/journey/residential.jpg")}
                       alt="Building 8, City Walk"
                       className="size-full object-cover"
                     />

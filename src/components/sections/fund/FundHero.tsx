@@ -7,6 +7,7 @@ import { formatFundType, formatPercent, formatSampleAmount } from '@/lib/format'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   fund: Fund
@@ -25,7 +26,7 @@ export function FundHero({ fund }: Props) {
       <figure className="fund-hero__media m-0" data-depth-stage>
         <img
           data-fund-hero-image
-          src={fund.image}
+          src={withBase(fund.image)}
           alt={fund.imageAlt}
           width={1600}
           height={2000}

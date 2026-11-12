@@ -7,6 +7,7 @@ import { trustIntro, trustRecord } from '@/data'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useTrustReveal } from '@/hooks/useTrustReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   items: TrustItem[]
@@ -59,7 +60,7 @@ export function TrustSection({ items }: Props) {
           <div className="relative overflow-visible">
             <figure data-trust-media data-depth="back" className="m-0">
               <img
-                src={trustIntro.image.src}
+                src={withBase(trustIntro.image.src)}
                 alt={trustIntro.image.alt}
                 width={2000}
                 height={1200}

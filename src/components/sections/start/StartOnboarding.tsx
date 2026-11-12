@@ -13,6 +13,7 @@ import { useGetStarted } from '@/hooks/useGetStarted'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
 import { gsap, registerGsapPlugins } from '@/lib/gsap'
+import { withBase } from '@/lib/asset'
 
 function ListingSummary({
   listing,
@@ -25,7 +26,7 @@ function ListingSummary({
     const fund = listing.fund
     return (
       <article className="start-summary">
-        <img src={fund.image} alt={fund.imageAlt} width={900} height={675} />
+        <img src={withBase(fund.image)} alt={fund.imageAlt} width={900} height={675} />
         <div>
           <p className="start-kicker">Sample fund</p>
           <h3>{fund.name}</h3>
@@ -59,7 +60,7 @@ function ListingSummary({
   const property = listing.property
   return (
     <article className="start-summary">
-      <img src={property.image} alt={property.imageAlt} width={900} height={1125} />
+      <img src={withBase(property.image)} alt={property.imageAlt} width={900} height={1125} />
       <div>
         <p className="start-kicker">Sample property</p>
         <h3>{property.name}</h3>

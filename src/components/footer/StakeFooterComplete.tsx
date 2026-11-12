@@ -6,6 +6,7 @@ import {
   Apple,
   Play,
 } from 'lucide-react'
+import { withBase } from '@/lib/asset'
 
 export function StakeFooterComplete() {
   return (
@@ -119,7 +120,7 @@ export function StakeFooterComplete() {
               <div className="absolute left-[-8px] sm:left-[-12px] lg:left-0 top-[35%] sm:top-[38%] z-30 w-34 sm:w-38 lg:w-40 rounded-2xl bg-white p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] border border-slate-100 rotate-[8deg] transition-transform hover:rotate-0 duration-200">
                 <div className="h-20 sm:h-22 w-full rounded-xl overflow-hidden bg-slate-100">
                   <img
-                    src="/images/journey/dubai-marina.jpg"
+                    src={withBase("/images/journey/dubai-marina.jpg")}
                     alt="Marina Gate 1, Dubai Marina"
                     className="h-full w-full object-cover"
                   />
@@ -136,7 +137,7 @@ export function StakeFooterComplete() {
               <div className="absolute right-[-10px] sm:right-[-6px] lg:right-[-4px] bottom-[-10px] sm:bottom-[-8px] z-30 w-34 sm:w-38 lg:w-40 rounded-2xl bg-white p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] border border-slate-100 rotate-[10deg] transition-transform hover:rotate-0 duration-200">
                 <div className="h-20 sm:h-22 w-full rounded-xl overflow-hidden bg-slate-100">
                   <img
-                    src="/images/journey/residential.jpg"
+                    src={withBase("/images/journey/residential.jpg")}
                     alt="Boulevard Point, Downtown Dubai"
                     className="h-full w-full object-cover"
                   />
@@ -516,6 +517,11 @@ export function StakeFooterComplete() {
             {/* Left: Copyright and links separated by pipes */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span>&copy; {new Date().getFullYear()} Serene Investors. All rights reserved.</span>
+              <span className="text-slate-600">|</span>
+              {/* Plain <a>: the group site sits outside this app's base path ("/" is the group home). */}
+              <a href={process.env.NEXT_PUBLIC_GROUP_URL || '/'} className="hover:text-white transition-colors">
+                Serene Heights Group
+              </a>
               <span className="text-slate-600">|</span>
               <Link href="/legal/terms" className="hover:text-white transition-colors">
                 Terms of use

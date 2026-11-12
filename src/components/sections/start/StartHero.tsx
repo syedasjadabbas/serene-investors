@@ -7,6 +7,7 @@ import { formatPercent, formatSampleAmount } from '@/lib/format'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function StartHero() {
   const rootRef = useRef<HTMLElement>(null)
@@ -50,7 +51,7 @@ export function StartHero() {
           <figure className="start-hero__media m-0">
             <img
               data-start-hero-image
-              src={storyAssets.choose.src}
+              src={withBase(storyAssets.choose.src)}
               alt={storyAssets.choose.alt}
               width={1400}
               height={1867}

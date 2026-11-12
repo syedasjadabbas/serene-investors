@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { getStartedOptions } from '@/data'
 import { useCardPointerTilt } from '@/hooks/useCardPointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 function StartOptionCard({
   title,
@@ -30,7 +31,7 @@ function StartOptionCard({
         <div className="relative overflow-hidden rounded-xl bg-bg-warm">
           <div className="overflow-hidden">
             <img
-              src={image}
+              src={withBase(image)}
               alt={imageAlt}
               width={1400}
               height={1050}

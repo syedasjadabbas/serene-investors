@@ -9,6 +9,7 @@ import { formatPercent, formatSampleAmount } from '@/lib/format'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function HowHero() {
   const rootRef = useRef<HTMLElement>(null)
@@ -55,7 +56,7 @@ export function HowHero() {
           <figure className="m-0 overflow-hidden rounded-2xl bg-bg-warm">
             <img
               data-how-hero-image
-              src={howItWorksIntro.image.src}
+              src={withBase(howItWorksIntro.image.src)}
               alt={howItWorksIntro.image.alt}
               width={2000}
               height={1200}
@@ -72,7 +73,7 @@ export function HowHero() {
               className="group block relative z-10 w-[min(20.5rem,100%)] -mt-16 mr-4 ml-auto md:absolute md:right-5 md:bottom-5 md:m-0 lg:right-8 lg:bottom-8 overflow-hidden rounded-2xl bg-surface shadow-xl hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.03] hover:z-50 transition-all duration-300 border border-black/5"
               aria-label={`View sample listing for ${cedar.name}`}
             >
-              <img src={storyAssets.choose.src} alt="" width={720} height={480} className="block w-full h-[8.25rem] object-cover object-[50%_30%]" />
+              <img src={withBase(storyAssets.choose.src)} alt="" width={720} height={480} className="block w-full h-[8.25rem] object-cover object-[50%_30%]" />
               <div className="p-4 sm:p-5 text-ink">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Sample property</p>
                 <p className="mt-2 text-lg font-medium tracking-tight text-ink group-hover:text-primary transition-colors">{cedar.name}</p>

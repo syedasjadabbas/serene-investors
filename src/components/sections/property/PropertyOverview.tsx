@@ -3,6 +3,7 @@ import type { Property } from '@/types'
 import { formatPropertyMeta } from '@/lib/format'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   property: Property
@@ -34,7 +35,7 @@ export function PropertyOverview({ property }: Props) {
           <figure className="property-story__media m-0">
             <img
               data-story-image="0"
-              src={firstImage.src}
+              src={withBase(firstImage.src)}
               alt={firstImage.alt}
               width={1400}
               height={1050}
@@ -80,7 +81,7 @@ export function PropertyOverview({ property }: Props) {
           <figure className="property-story__media m-0">
             <img
               data-story-image="1"
-              src={secondImage.src}
+              src={withBase(secondImage.src)}
               alt={secondImage.alt}
               width={1400}
               height={1050}

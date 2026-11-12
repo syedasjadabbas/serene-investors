@@ -7,6 +7,7 @@ import { funds, sampleFundMinimum } from '@/data'
 import { formatPercent, formatSampleAmount } from '@/lib/format'
 import { useRelatedFunds } from '@/hooks/useRelatedFunds'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   fund: Fund
@@ -40,7 +41,7 @@ export function FundRelated({ fund }: Props) {
               >
                 <div className="overflow-hidden rounded-xl bg-bg-warm">
                   <img
-                    src={item.image}
+                    src={withBase(item.image)}
                     alt={item.imageAlt}
                     width={900}
                     height={675}

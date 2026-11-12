@@ -6,6 +6,7 @@ import { formatPercent, formatPropertyMeta, formatSampleAmount } from '@/lib/for
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { usePropertyHeroReveal } from '@/hooks/usePropertyHeroReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   property: Property
@@ -26,7 +27,7 @@ export function PropertyHero({ property }: Props) {
       <figure className="property-hero__media m-0" data-depth-stage>
         <img
           data-property-hero-image
-          src={property.image}
+          src={withBase(property.image)}
           alt={property.imageAlt}
           width={1600}
           height={2000}

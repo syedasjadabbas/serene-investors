@@ -7,6 +7,7 @@ import { formatPercent, formatSampleAmount, formatSampleYield } from '@/lib/form
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 function DirectPath() {
   const rootRef = useRef<HTMLElement>(null)
@@ -29,7 +30,7 @@ function DirectPath() {
           <img
             data-about-path-image
             data-about-direct-image
-            src={direct.image.src}
+            src={withBase(direct.image.src)}
             alt={direct.image.alt}
             width={1400}
             height={1750}
@@ -99,7 +100,7 @@ function FundsPath() {
           <img
             data-about-path-image
             data-about-fund-image
-            src={funds.image.src}
+            src={withBase(funds.image.src)}
             alt={funds.image.alt}
             width={1600}
             height={900}
@@ -114,7 +115,7 @@ function FundsPath() {
           aria-label={`View sample fund ${funds.listing.name}`}
         >
           <img
-            src={funds.listing.image}
+            src={withBase(funds.listing.image)}
             alt={funds.listing.imageAlt}
             width={720}
             height={480}

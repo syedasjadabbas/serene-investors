@@ -5,6 +5,7 @@ import { properties } from '@/data'
 import { formatPropertyMeta, formatSampleYield } from '@/lib/format'
 import { useRelatedProperties } from '@/hooks/useRelatedProperties'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 type Props = {
   property: Property
@@ -41,7 +42,7 @@ export function PropertyRelated({ property }: Props) {
                 >
                   <div className="property-related__media">
                     <img
-                      src={item.image}
+                      src={withBase(item.image)}
                       alt={item.imageAlt}
                       width={900}
                       height={1125}

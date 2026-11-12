@@ -2,7 +2,14 @@ import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { setOtp } from '@/lib/otpStore'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Created on first use: constructing Resend without a key throws, which used to fail `next build`
+// whenever RESEND_API_KEY was not set. A missing key is now reported like any other send failure.
+let resend: Resend | null = null
+function getResend(): Resend {
+  if (!process.env.RESEND_API_KEY) throw new Error('RESEND_API_KEY is not set — email not sent')
+  resend ??= new Resend(process.env.RESEND_API_KEY)
+  return resend
+}
 
 function generateOtp(): string {
   return Math.floor(100000 + Math.random() * 900000).toString()
@@ -95,7 +102,7 @@ export async function POST(request: Request) {
     // Dispatch email via Resend
     let resendError = null
     try {
-      const result = await resend.emails.send({
+      const result = await getResend().emails.send({
         from: 'Serene Investors <onboarding@resend.dev>',
         to: [email],
         subject: 'Your Serene Investors Verification Code',

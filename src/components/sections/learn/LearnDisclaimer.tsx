@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { howPageFaq, learnDisclaimer } from '@/data'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function LearnDisclaimer() {
   const rootRef = useRef<HTMLElement>(null)
@@ -88,7 +89,7 @@ export function LearnDisclaimer() {
               {/* Property Snapshot with Overlay Badges */}
               <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden bg-black/20 border border-white/10 shadow-inner">
                 <img
-                  src="/images/journey/dubai-marina.jpg"
+                  src={withBase("/images/journey/dubai-marina.jpg")}
                   alt="Dubai Marina verified prime asset"
                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 />

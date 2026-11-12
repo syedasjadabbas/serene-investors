@@ -4,6 +4,7 @@ import { storyAssets } from '@/data/story-assets'
 import { useDepthParallax } from '@/hooks/useDepthParallax'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { useSectionReveal } from '@/hooks/useSectionReveal'
+import { withBase } from '@/lib/asset'
 
 export function LearnHero() {
   const rootRef = useRef<HTMLElement>(null)
@@ -39,7 +40,7 @@ export function LearnHero() {
         <figure data-reveal-item data-depth-stage className="learn-hero__media m-0 overflow-hidden rounded-2xl bg-bg-warm">
           <img
             data-learn-hero-image
-            src={storyAssets.grow.src}
+            src={withBase(storyAssets.grow.src)}
             alt={storyAssets.grow.alt}
             width={1600}
             height={1200}
