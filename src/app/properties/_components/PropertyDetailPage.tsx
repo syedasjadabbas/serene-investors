@@ -1,7 +1,6 @@
 import { useLayoutEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { PropertyClosingCta } from './PropertyClosingCta'
-import { PropertyExperience } from './PropertyExperience'
 import { PropertyFeatures } from './PropertyFeatures'
 import { PropertyHero } from './PropertyHero'
 import { PropertyInvestment } from './PropertyInvestment'
@@ -38,16 +37,15 @@ export function PropertyDetailPage() {
   }
 
   return (
-    <div key={property.id} className="property-detail">
+    <div key={property.id}>
       <PropertyHero property={property} />
-      <PropertyExperience property={property} />
       <PropertyKeyNumbers property={property} />
       <PropertyOverview property={property} />
       <PropertyInvestment property={property} />
       <PropertyFeatures property={property} />
       <PropertyRecord property={property} />
-      <PropertyClosingCta property={property} />
       <PropertyRelated property={property} />
+      <PropertyClosingCta property={property} />
     </div>
   )
 }

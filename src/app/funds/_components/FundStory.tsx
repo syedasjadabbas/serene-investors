@@ -1,53 +1,41 @@
-import { useRef } from 'react'
-import type { Fund } from '@/global/types/fund'
-import { formatFundType } from '@/global/lib/format'
-import { useDepthParallax } from '@/global/hooks/useDepthParallax'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
+import { Eyebrow, PageSection } from '@/global/components/page/PageSection'
 import { withBase } from '@/global/lib/asset'
+import { formatFundType } from '@/global/lib/format'
+import type { Fund } from '@/global/types/fund'
 
 type Props = {
   fund: Fund
 }
 
 export function FundStory({ fund }: Props) {
-  const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef, { media: '[data-fund-story-image]' })
-  useDepthParallax(rootRef, [{ selector: '[data-fund-story-image]', yPercent: 5 }])
-
   return (
-    <section ref={rootRef} className="fund-story" aria-labelledby="fund-story-heading">
-      <div className="fund-story__layout mx-auto max-w-[var(--container-wide)]">
-        <figure className="fund-story__media m-0">
+    <PageSection labelledBy="fund-story-heading">
+      <article className="grid gap-6 rounded-[24px] bg-white p-4 sm:p-5 md:grid-cols-2">
+        <div className="relative min-h-[260px] overflow-hidden rounded-[16px] bg-sx-sand sm:min-h-[360px]">
           <img
-            data-fund-story-image
             src={withBase(fund.image)}
             alt={fund.imageAlt}
             width={1400}
             height={1050}
             loading="lazy"
             decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
           />
-        </figure>
-
-        <div>
-          <h2
-            data-reveal-heading
-            id="fund-story-heading"
-            className="max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance"
-          >
-            {fund.name}
+        </div>
+        <div className="flex flex-col justify-center gap-4 p-4 sm:p-8 lg:p-12">
+          <Eyebrow tone="sand">About the fund</Eyebrow>
+          <h2 id="fund-story-heading" className="font-heading text-3xl font-bold leading-[1.08] tracking-[-0.025em] sm:text-4xl">
+            One theme, one allocation.
           </h2>
-          <p data-reveal-item className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed text-pretty">
-            {fund.name} is presented as a {fund.portfolioLabel.toLowerCase()} across {fund.market.toLowerCase()}
-            . The sample collection holds {fund.propertyCount} sample properties under one allocation.
+          <p className="max-w-md text-base leading-relaxed text-sx-ink/65">
+            {fund.name} is presented as a {fund.portfolioLabel.toLowerCase()} across {fund.market.toLowerCase()}. The sample
+            collection holds {fund.propertyCount} sample properties under one allocation.
           </p>
-          <p data-reveal-item className="mt-6 text-sm text-muted">
-            {formatFundType(fund.type)}
-            <span className="text-subtle"> / </span>
-            {fund.market}
+          <p className="text-sm text-sx-ink/50">
+            {formatFundType(fund.type)} · {fund.market}
           </p>
         </div>
-      </div>
-    </section>
+      </article>
+    </PageSection>
   )
 }

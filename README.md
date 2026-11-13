@@ -61,6 +61,27 @@ Rules:
   `AppError(status, message)`.
 - Config comes only from `server/config/env.ts`.
 
+## Inner page kit
+
+Every inner page is built from `src/global/components/page/` so pages look like one site:
+
+| Component | Use |
+| --- | --- |
+| `PageHero` | Top of every page; renders its only `h1`. `tone="light"` (centred title on paper) or `"dark"` (rounded panel, optional photo). `highlight` colours one word. |
+| `PageSection` | A band with standard padding and a 1240px column. `tone` paper/white/dark, `width` narrow for reading, `pad` to join two bands. |
+| `SectionHeading` | Eyebrow pill + `h2` + supporting text at the top of a section. |
+| `Card`, `Eyebrow`, `Highlighted` | Rounded content card, small pill label, accent-word helper. |
+| `StatCards` | Row of big-number cards. |
+| `StepRow` | "Step 01" text beside an image or visual in one rounded card; alternate `reverse` and `tone`. |
+| `FeatureCards` | Icon + title + text grid. |
+| `FaqAccordion` | Accessible question list. |
+| `CtaBand` | Closing call to action; end pages with one. |
+
+Buttons that lead somewhere are `PillLink` (`global/components/ui`). Colours come from the `sx-*`
+Tailwind tokens in `globals.css` (`sx-ink`, `sx-card`, `sx-paper`, `sx-brand`, `sx-mint`,
+`sx-forest`, `sx-sand`); don't write hex values in components. `cn()` only joins strings, so don't
+pass a class to override a conflicting one — add a prop instead.
+
 ## Inside the Serene Heights Group site (`/serene-investors`)
 
 The site is built with `basePath: "/serene-investors"` so it can live at

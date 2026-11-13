@@ -1,36 +1,36 @@
 :root {
-  /* Stake / Serene Design System Tokens */
+  /* Serene design tokens. The redesign palette also lives in @theme as sx-* (globals.css). */
   --stake-green: #00a663;
   --stake-forest: #0b3528;
-  --stake-mint: #e8f8f0;
-  --slate-hero: #0d1117;
-  --slate-dark: #111827;
-  --muted-dark: #4b5563;
-  --muted-light: #64748b;
-  --dark-section: #060d17;
-  --dark-footer: #0b131f;
+  --stake-mint: #dff5e9;
+  --slate-hero: #0e100f;
+  --slate-dark: #1a1c1b;
+  --muted-dark: #4f5652;
+  --muted-light: #6b716d;
+  --dark-section: #0e100f;
+  --dark-footer: #0e100f;
   --border-light: rgba(0, 0, 0, 0.08);
   --border-dark: rgba(255, 255, 255, 0.1);
 
   /* Semantic palette */
-  --bg: #f7f5ef;
-  --bg-warm: #efede5;
+  --bg: #f3f3ef;
+  --bg-warm: #e9e9e3;
   --surface: #ffffff;
-  --ink: #182019;
-  --muted: #5d665e;
-  --subtle: #8a918b;
+  --ink: #0e100f;
+  --muted: #5b625d;
+  --subtle: #8b928d;
   --primary: #00a663;
   --primary-ink: #ffffff;
   --accent: #0b3528;
-  --accent-ink: #f7f5ef;
-  --soft: #e8f8f0;
+  --accent-ink: #f3f3ef;
+  --soft: #dff5e9;
   --soft-ink: #0b3528;
-  --line: #d9ddd7;
+  --line: #e3e4df;
   --danger: #7a4036;
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
   --radius-pill: 999px;
 
   --space-1: 0.25rem;
@@ -69,8 +69,8 @@
 
   --container: 72rem;
   --container-wide: 80rem;
-  --header-h: 4.25rem;
-  --promo-h-open: 2.5rem;
+  --header-h: 5.5rem; /* fixed floating navbar: 4rem bar + 1rem top gap + air */
+  --promo-h-open: 0rem; /* no announcement bar in the redesign */
   --promo-h: var(--promo-h-open);
   --lift: 0 4px 12px rgb(24 32 25 / 0.08);
   --lift-deep: 0 18px 40px rgb(24 32 25 / 0.14);
@@ -82,7 +82,7 @@
   --depth-hover: 28px;
 
   --z-dropdown: 20;
-  --z-sticky: 100000;
+  --z-sticky: 900; /* below the navbar (1000) and its menu (999) */
   --z-modal-backdrop: 100010;
   --z-modal: 100020;
   --z-toast: 100030;

@@ -1,13 +1,13 @@
 import { useLayoutEffect } from 'react'
 import { useParams } from 'next/navigation'
+import { CtaBand } from '@/global/components/page/CtaBand'
+import { usePageMeta } from '@/global/hooks/usePageMeta'
+import { ScrollTrigger } from '@/global/lib/gsap'
+import { getLearnGuide } from '../_lib/learn'
 import { LearnArticleBody } from './LearnArticleBody'
-import { LearnArticleClose } from './LearnArticleClose'
 import { LearnArticleHero } from './LearnArticleHero'
 import { LearnArticleRelated } from './LearnArticleRelated'
 import { LearnNotFound } from './LearnNotFound'
-import { getLearnGuide } from '../_lib/learn'
-import { usePageMeta } from '@/global/hooks/usePageMeta'
-import { ScrollTrigger } from '@/global/lib/gsap'
 
 export function LearnArticlePage() {
   const params = useParams<{ slug: string }>()
@@ -33,11 +33,21 @@ export function LearnArticlePage() {
   }
 
   return (
-    <article key={guide.slug} className="learn-article">
+    <article key={guide.slug}>
       <LearnArticleHero guide={guide} />
       <LearnArticleBody guide={guide} />
       <LearnArticleRelated guide={guide} />
-      <LearnArticleClose />
+      <CtaBand
+        title="Continue on the platform."
+        highlight="platform"
+        body="Open a sample catalogue, or return to the four-step demonstration."
+        actions={[
+          { label: 'Explore properties', href: '/properties' },
+          { label: 'Explore funds', href: '/funds' },
+          { label: 'How it works', href: '/how-it-works' },
+        ]}
+        image={{ src: '/images/journey/dubai-marina.jpg', alt: 'Dubai Marina towers along the water' }}
+      />
     </article>
   )
 }

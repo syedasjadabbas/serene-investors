@@ -6,15 +6,6 @@ export type NavItem = {
   children?: NavItem[]
 }
 
-export type PressLogo = {
-  id: string
-  name: string
-  src: string
-  quote?: string
-  date?: string
-  href?: string
-}
-
 export type StatItem = {
   id: string
   value: string
@@ -41,12 +32,6 @@ export type StoryState = {
   number?: string
   subtitle?: string
   note?: string
-}
-
-export type TrustItem = {
-  id: string
-  title: string
-  body: string
 }
 
 export type HeroListingCard = {

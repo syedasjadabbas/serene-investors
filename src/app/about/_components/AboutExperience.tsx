@@ -1,67 +1,51 @@
-import { useRef } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { aboutExperience } from '../_lib/about'
-import { useDepthParallax } from '@/global/hooks/useDepthParallax'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
+import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
+import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
 import { withBase } from '@/global/lib/asset'
+import { aboutExperience } from '../_lib/about'
 
 export function AboutExperience() {
-  const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef, { items: '[data-about-step]', media: '[data-about-step-image]', depth: true })
-  useDepthParallax(rootRef, [{ selector: '[data-about-step-image]', yPercent: 4 }])
-
   return (
-    <section ref={rootRef} className="about-experience py-20 px-6" aria-labelledby="about-experience-heading">
-      <div className="mx-auto max-w-7xl">
-        <h2
-          data-reveal-heading
-          id="about-experience-heading"
-          className="max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance text-ink"
-        >
-          {aboutExperience.heading}
-        </h2>
-        <p
-          data-reveal-heading
-          className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed text-muted text-pretty"
-        >
-          {aboutExperience.body}
-        </p>
-
-        <ol className="about-experience__list grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 list-none p-0 m-0">
-          {aboutExperience.steps.map((step) => (
-            <li key={step.id} data-about-step className="about-step">
-              <Link
-                href={step.href}
-                className="group block p-6 rounded-2xl bg-surface border border-line shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-ink"
-                aria-label={`${step.title}. ${step.cta}.`}
-              >
-                <figure className="about-step__media m-0 overflow-hidden rounded-xl mb-5 aspect-[4/3] bg-bg-warm">
-                  <img
-                    data-about-step-image
-                    src={withBase(step.image.src)}
-                    alt={step.image.alt}
-                    width={1200}
-                    height={900}
-                    loading="lazy"
-                    decoding="async"
-                    className="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </figure>
-                <span className="text-xs font-mono font-bold px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full inline-block mb-3">
-                  {step.number}
-                </span>
-                <h3 className="text-xl font-semibold mb-2 text-ink group-hover:text-primary transition-colors">{step.title}</h3>
-                <p className="text-sm text-muted leading-relaxed mb-4">{step.body}</p>
-                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink group-hover:text-primary transition-colors">
+    <PageSection tone="white" labelledBy="about-experience-heading">
+      <SectionHeading
+        id="about-experience-heading"
+        eyebrow="The journey"
+        title={aboutExperience.heading}
+        highlight="connects"
+        body={aboutExperience.body}
+      />
+      <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {aboutExperience.steps.map((step) => (
+          <li key={step.id}>
+            <Link
+              href={step.href}
+              aria-label={`${step.title}. ${step.cta}.`}
+              className="group flex h-full flex-col overflow-hidden rounded-[20px] bg-sx-paper text-sx-ink transition-colors hover:bg-sx-sand"
+            >
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={withBase(step.image.src)}
+                  alt={step.image.alt}
+                  width={1200}
+                  height={900}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
+                <span className="inline-flex w-fit rounded-full bg-sx-mint px-3 py-1 text-xs font-semibold text-sx-ink">Step {step.number}</span>
+                <h3 className="font-heading text-xl font-semibold tracking-[-0.015em]">{step.title}</h3>
+                <p className="text-sm leading-relaxed text-sx-ink/65">{step.body}</p>
+                <span className="mt-auto flex items-center justify-between gap-3 pt-2 text-sm font-semibold">
                   {step.cta}
-                  <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
+                  <ArrowCircle tone="dark" size="sm" />
                 </span>
-              </Link>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </PageSection>
   )
 }

@@ -40,9 +40,22 @@ function sampleRecord(code: string): PropertyDocumentation {
   }
 }
 
+// Local building photos (public/images), rotated per listing so galleries differ.
+const GALLERY_POOL = [
+  '/images/journey/residential.jpg',
+  '/images/story/direct-cedar-court.png',
+  '/images/journey/tower-pool.jpg',
+  '/images/story/receive-cedar-court.png',
+  '/images/properties/marina-tower.jpg',
+  '/images/story/value-cedar-walk.png',
+  '/images/properties/boulevard-point-hero.jpg',
+  '/images/story/grow-townhouses.png',
+]
+
 function sampleGallery(id: string, alts: string[]): PropertyImage[] {
+  const offset = [...id].reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % GALLERY_POOL.length
   return alts.map((alt, index) => ({
-    src: `https://picsum.photos/seed/serene-${id}-g${index}/1400/1050`,
+    src: GALLERY_POOL[(offset + index) % GALLERY_POOL.length],
     alt,
   }))
 }
@@ -135,7 +148,7 @@ export const properties: Property[] = [
     neighborhood: 'Harbor District',
     city: 'Lisbon',
     type: 'Residential',
-    image: 'https://picsum.photos/seed/serene-cedar-court/1400/1750',
+    image: '/images/story/choose-cedar-court.png',
     imageAlt: 'Pale apartment blocks around a planted inner court',
     beds: 2,
     areaLabel: '86 m2',
@@ -160,7 +173,7 @@ export const properties: Property[] = [
     features: residentialFeatures,
     gallery: [
       {
-        src: 'https://picsum.photos/seed/serene-cedar-court/1600/1200',
+        src: '/images/story/choose-cedar-court.png',
         alt: 'Pale apartment blocks around a planted inner court',
       },
       ...sampleGallery('cedar-court', [
@@ -179,7 +192,7 @@ export const properties: Property[] = [
     neighborhood: 'North Quarter',
     city: 'Porto',
     type: 'Residential',
-    image: 'https://picsum.photos/seed/serene-pines-loft/1400/1750',
+    image: '/images/story/pines-loft.png',
     imageAlt: 'A narrow loft building above a quay',
     beds: 1,
     areaLabel: '54 m2',
@@ -203,7 +216,7 @@ export const properties: Property[] = [
     features: residentialFeatures,
     gallery: [
       {
-        src: 'https://picsum.photos/seed/serene-pines-loft/1600/1200',
+        src: '/images/story/pines-loft.png',
         alt: 'A narrow loft building above a quay',
       },
       ...sampleGallery('pines-loft', [
@@ -265,7 +278,7 @@ export const properties: Property[] = [
     neighborhood: 'Garden Reach',
     city: 'Porto',
     type: 'Hospitality',
-    image: 'https://picsum.photos/seed/serene-linden-house/1400/1750',
+    image: '/images/story/grow-townhouses.png',
     imageAlt: 'A pale guest house set among linden trees',
     beds: 8,
     areaLabel: '420 m2',
@@ -296,7 +309,7 @@ export const properties: Property[] = [
     ],
     gallery: [
       {
-        src: 'https://picsum.photos/seed/serene-linden-house/1600/1200',
+        src: '/images/story/grow-townhouses.png',
         alt: 'A pale guest house set among linden trees',
       },
       ...sampleGallery('linden-house', [
@@ -315,7 +328,7 @@ export const properties: Property[] = [
     neighborhood: 'Market Row',
     city: 'Rotterdam',
     type: 'Commercial',
-    image: 'https://picsum.photos/seed/serene-copper-yard/1400/1750',
+    image: '/images/story/value-cedar-walk.png',
     imageAlt: 'A brick commercial yard with tall workshop windows',
     beds: 0,
     areaLabel: '260 m2',
@@ -346,7 +359,7 @@ export const properties: Property[] = [
     ],
     gallery: [
       {
-        src: 'https://picsum.photos/seed/serene-copper-yard/1600/1200',
+        src: '/images/story/value-cedar-walk.png',
         alt: 'A brick commercial yard with tall workshop windows',
       },
       ...sampleGallery('copper-yard', [
@@ -365,7 +378,7 @@ export const properties: Property[] = [
     neighborhood: 'North Gate',
     city: 'Rotterdam',
     type: 'Residential',
-    image: 'https://picsum.photos/seed/serene-kiln-yard/1400/1750',
+    image: '/images/journey/residential.jpg',
     imageAlt: 'A brick warehouse converted to dwellings',
     beds: 2,
     areaLabel: '79 m2',
@@ -388,7 +401,7 @@ export const properties: Property[] = [
     features: residentialFeatures,
     gallery: [
       {
-        src: 'https://picsum.photos/seed/serene-kiln-yard/1600/1200',
+        src: '/images/journey/residential.jpg',
         alt: 'A brick warehouse converted to dwellings',
       },
       ...sampleGallery('kiln-yard', [

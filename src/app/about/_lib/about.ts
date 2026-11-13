@@ -4,7 +4,6 @@ import { howItWorksIntro } from '@/global/data/how-it-works'
 import { properties } from '@/global/data/properties'
 import { footerIntro, site } from '@/global/data/site'
 import { storyAssets } from '@/global/data/story-assets'
-import { trustIntro, trustItems } from './trust'
 
 function requireProperty(id: string) {
   const match = properties.find((item) => item.id === id)
@@ -64,7 +63,7 @@ export const aboutPaths = {
 } as const
 
 export const aboutClarity = {
-  heading: trustIntro.heading,
+  heading: 'Property information, presented clearly.',
   body: 'Serene Investors presents property information, sample figures, and portfolio details in one place so a visitor knows what they are reviewing before taking the next step. Nothing is hidden behind a live yield promise.',
   points: [
     {
@@ -75,8 +74,7 @@ export const aboutClarity = {
     {
       id: 'format',
       title: 'Information in one format',
-      body: trustItems.find((item) => item.id === 'information')?.body
-        ?? 'Show sample property details, costs, status, and investment information in a consistent format.',
+      body: 'Show sample property details, costs, status, and investment information in a consistent format.',
     },
     {
       id: 'claims',

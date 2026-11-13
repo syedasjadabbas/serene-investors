@@ -1,12 +1,14 @@
-import { useRef, useState, type FormEvent } from 'react'
-import { Button, ButtonLink } from '@/global/components/ui/Button'
+import { useState, type FormEvent } from 'react'
+import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
+import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
+import { PillLink } from '@/global/components/ui/PillLink'
 import { aboutContact } from '../_lib/about'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
+
+const FIELD =
+  'mt-2 block w-full rounded-[14px] border border-sx-ink/10 bg-sx-paper px-4 py-3 text-base text-sx-ink outline-none transition-colors placeholder:text-sx-ink/40 focus-visible:border-sx-brand focus-visible:ring-2 focus-visible:ring-sx-brand/30'
 
 export function AboutContact() {
-  const rootRef = useRef<HTMLElement>(null)
   const [submitted, setSubmitted] = useState(false)
-  useSectionReveal(rootRef)
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -14,81 +16,45 @@ export function AboutContact() {
   }
 
   return (
-    <section
-      ref={rootRef}
-      id="contact"
-      className="about-contact py-20 px-6"
-      aria-labelledby="contact-heading"
-    >
-      <div className="about-contact__layout max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        <div>
-          <h2
-            data-reveal-heading
-            id="contact-heading"
-            className="max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance text-ink"
-          >
-            {aboutContact.heading}
-          </h2>
-          <p
-            data-reveal-heading
-            className="mt-5 max-w-[40ch] text-[1.05rem] leading-relaxed text-muted text-pretty"
-          >
-            {aboutContact.body}
-          </p>
-        </div>
+    <PageSection id="contact" labelledBy="contact-heading" className="scroll-mt-24">
+      <div className="grid gap-10 md:grid-cols-[1fr_1.2fr] md:items-start">
+        <SectionHeading id="contact-heading" eyebrow="Contact" title={aboutContact.heading} body={aboutContact.body} />
 
-        <div data-reveal-item className="p-8 rounded-2xl bg-surface border border-line shadow-sm max-w-xl w-full">
+        <div className="rounded-[20px] bg-white p-6 sm:p-8">
           {submitted ? (
-            <div className="demo-confirm" role="status">
-              <p className="font-semibold text-lg tracking-tight text-ink">{aboutContact.confirmHeading}</p>
-              <p className="mt-2 text-sm text-muted">{aboutContact.confirmBody}</p>
-              <div className="page-actions mt-6">
-                <ButtonLink href="/get-started" className="min-h-11">
-                  Get started
-                </ButtonLink>
+            <div role="status" className="flex flex-col gap-3">
+              <p className="font-heading text-xl font-semibold tracking-[-0.015em] text-sx-ink">{aboutContact.confirmHeading}</p>
+              <p className="text-base text-sx-ink/65">{aboutContact.confirmBody}</p>
+              <div className="mt-3">
+                <PillLink href="/get-started">Get started</PillLink>
               </div>
             </div>
           ) : (
-            <form onSubmit={onSubmit} className="space-y-5">
-              <label className="block text-sm font-medium text-ink">
-                <span>Name</span>
-                <input
-                  type="text"
-                  name="name"
-                  autoComplete="name"
-                  required
-                  className="mt-1.5 block w-full px-4 py-2.5 rounded-xl border border-line bg-bg text-ink focus:outline-none focus:ring-2 focus:ring-primary"
-                />
+            <form onSubmit={onSubmit} className="flex flex-col gap-5">
+              <label className="block text-sm font-semibold text-sx-ink">
+                Name
+                <input type="text" name="name" autoComplete="name" required className={FIELD} />
               </label>
-              <label className="block text-sm font-medium text-ink">
-                <span>Email</span>
-                <input
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  className="mt-1.5 block w-full px-4 py-2.5 rounded-xl border border-line bg-bg text-ink focus:outline-none focus:ring-2 focus:ring-primary"
-                />
+              <label className="block text-sm font-semibold text-sx-ink">
+                Email
+                <input type="email" name="email" autoComplete="email" required className={FIELD} />
               </label>
-              <label className="block text-sm font-medium text-ink">
-                <span>Message</span>
-                <textarea
-                  name="message"
-                  required
-                  rows={4}
-                  className="mt-1.5 block w-full px-4 py-2.5 rounded-xl border border-line bg-bg text-ink focus:outline-none focus:ring-2 focus:ring-primary"
-                />
+              <label className="block text-sm font-semibold text-sx-ink">
+                Message
+                <textarea name="message" required rows={4} className={FIELD} />
               </label>
-              <p className="text-xs text-muted">Sample interaction only.</p>
-              <div className="page-actions pt-2">
-                <Button type="submit" className="min-h-11 w-full sm:w-auto">
-                  Send demo inquiry
-                </Button>
-              </div>
+              <p className="text-xs text-sx-ink/50">Sample interaction only.</p>
+              <button
+                type="submit"
+                className="group inline-flex w-full items-center justify-between gap-5 rounded-full bg-sx-ink py-1.5 pl-6 pr-1.5 text-sm font-semibold text-white transition-colors hover:bg-sx-forest sm:w-fit sm:text-base"
+              >
+                Send demo inquiry
+                <ArrowCircle tone="mint" size="sm" />
+              </button>
             </form>
           )}
         </div>
       </div>
-    </section>
+    </PageSection>
   )
 }

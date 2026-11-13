@@ -1,200 +1,123 @@
-import { useRef } from 'react'
+import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { ButtonLink } from '@/global/components/ui/Button'
-import { aboutPaths } from '../_lib/about'
+import { Check } from 'lucide-react'
+import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
+import { StepRow } from '@/global/components/page/StepRow'
+import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
+import { PillLink } from '@/global/components/ui/PillLink'
 import { sampleFundMinimum } from '@/global/data/funds'
-import { formatPercent, formatSampleAmount, formatSampleYield } from '@/global/lib/format'
-import { useDepthParallax } from '@/global/hooks/useDepthParallax'
-import { usePointerTilt } from '@/global/hooks/usePointerTilt'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
 import { withBase } from '@/global/lib/asset'
+import { formatPercent, formatSampleAmount, formatSampleYield } from '@/global/lib/format'
+import { aboutPaths } from '../_lib/about'
 
-function DirectPath() {
-  const rootRef = useRef<HTMLElement>(null)
-  const { direct } = aboutPaths
-  usePointerTilt(rootRef, {
-    layers: [
-      { selector: '[data-about-direct-image]', x: 8, y: 5, rotateX: 1.3, rotateY: 1.6, invert: true },
-      { selector: '[data-about-direct-card]', x: 10, y: 0, rotateX: 1.8, rotateY: 2.2, z: 22 },
-    ],
-  })
-  useDepthParallax(rootRef, [
-    { selector: '[data-about-direct-image]', yPercent: 5 },
-    { selector: '[data-about-direct-card]', yPercent: -4 },
-  ])
-
+function Points({ body, points }: { body: string; points: readonly string[] }) {
   return (
-    <article ref={rootRef} data-about-path className="about-path">
-      <div data-depth-stage className="about-path__scene about-path__scene--direct">
-        <figure className="about-path__media m-0">
-          <img
-            data-about-path-image
-            data-about-direct-image
-            src={withBase(direct.image.src)}
-            alt={direct.image.alt}
-            width={1400}
-            height={1750}
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-        <Link
-          href={`/properties/${direct.listing.id}`}
-          data-about-direct-card
-          className="about-path__card"
-          aria-label={`View sample listing for ${direct.listing.name}`}
-        >
-          <p className="about-kicker">Sample listing</p>
-          <p className="mt-2 text-lg font-medium tracking-tight">{direct.listing.name}</p>
-          <p className="mt-1 text-sm text-muted">
-            {formatSampleYield(direct.listing.sampleYieldPct)} · From{' '}
-            {formatSampleAmount(direct.listing.sampleMinInvestment)}
-          </p>
-          <span className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium">
-            View property
-            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-          </span>
-        </Link>
-      </div>
-
-      <div className="about-path__copy">
-        <p className="about-kicker">{direct.label}</p>
-        <h3 className="mt-3 max-w-[12ch] text-[clamp(1.7rem,2.6vw,2.35rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-balance">
-          {direct.title}
-        </h3>
-        <p className="mt-4 max-w-[36ch] leading-relaxed text-muted text-pretty">{direct.body}</p>
-        <ul className="about-path__points">
-          {direct.points.map((point) => (
-            <li key={point}>{point}</li>
-          ))}
-        </ul>
-        <div className="mt-7">
-          <ButtonLink href={direct.href} className="min-h-11 gap-1.5">
-            {direct.cta}
-            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-          </ButtonLink>
-        </div>
-      </div>
-    </article>
+    <>
+      <p>{body}</p>
+      <ul className="mt-5 flex flex-col gap-2.5">
+        {points.map((point) => (
+          <li key={point} className="flex items-start gap-2.5 text-sx-ink/80">
+            <Check size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-sx-brand" />
+            {point}
+          </li>
+        ))}
+      </ul>
+    </>
   )
 }
 
-function FundsPath() {
-  const rootRef = useRef<HTMLElement>(null)
-  const { funds } = aboutPaths
-  usePointerTilt(rootRef, {
-    layers: [
-      { selector: '[data-about-fund-image]', x: 8, y: 5, rotateX: 1.3, rotateY: 1.6, invert: true },
-      { selector: '[data-about-fund-card]', x: 11, y: 0, rotateX: 1.8, rotateY: 2.2, z: 24 },
-    ],
-  })
-  useDepthParallax(rootRef, [
-    { selector: '[data-about-fund-image]', yPercent: 5 },
-    { selector: '[data-about-fund-card]', yPercent: -4 },
-  ])
-
+/** Photo filling the StepRow frame with a small sample listing card pinned to its bottom edge. */
+function ListingVisual({ image, children }: { image: { src: string; alt: string }; children: ReactNode }) {
   return (
-    <article ref={rootRef} data-about-path className="about-path about-path--funds">
-      <div data-depth-stage className="about-path__scene about-path__scene--funds">
-        <figure className="about-path__media m-0">
-          <img
-            data-about-path-image
-            data-about-fund-image
-            src={withBase(funds.image.src)}
-            alt={funds.image.alt}
-            width={1600}
-            height={900}
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-        <Link
-          href={`/funds/${funds.listing.id}`}
-          data-about-fund-card
-          className="about-path__card"
-          aria-label={`View sample fund ${funds.listing.name}`}
-        >
-          <img
-            src={withBase(funds.listing.image)}
-            alt={funds.listing.imageAlt}
-            width={720}
-            height={480}
-            loading="lazy"
-            decoding="async"
-          />
-          <div className="about-path__card-body">
-            <p className="about-kicker">Sample fund</p>
-            <p className="mt-2 text-lg font-medium tracking-tight">{funds.listing.name}</p>
-            <p className="mt-1 text-sm text-muted">
-              {funds.listing.market} · {funds.listing.propertyCount} sample properties
-            </p>
-            <p className="mt-3 flex items-baseline justify-between gap-4 text-sm">
-              <span className="text-muted">Sample yield</span>
-              <span className="font-semibold tabular-nums">
-                {formatPercent(funds.listing.sampleReturnPct)}
-              </span>
-            </p>
-            <p className="mt-1 flex items-baseline justify-between gap-4 text-sm">
-              <span className="text-muted">Sample minimum</span>
-              <span className="font-semibold tabular-nums">{formatSampleAmount(sampleFundMinimum)}</span>
-            </p>
-            <span className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium">
-              View fund
-              <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-            </span>
-          </div>
-        </Link>
-      </div>
+    <>
+      <img
+        src={withBase(image.src)}
+        alt={image.alt}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-x-3 bottom-3 sm:inset-x-auto sm:left-4 sm:bottom-4 sm:w-[300px]">{children}</div>
+    </>
+  )
+}
 
-      <div className="about-path__copy">
-        <p className="about-kicker">{funds.label}</p>
-        <h3 className="mt-3 max-w-[14ch] text-[clamp(1.7rem,2.6vw,2.35rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-balance">
-          {funds.title}
-        </h3>
-        <p className="mt-4 max-w-[36ch] leading-relaxed text-muted text-pretty">{funds.body}</p>
-        <ul className="about-path__points">
-          {funds.points.map((point) => (
-            <li key={point}>{point}</li>
-          ))}
-        </ul>
-        <div className="mt-7">
-          <ButtonLink href={funds.href} className="min-h-11 gap-1.5">
-            {funds.cta}
-            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-          </ButtonLink>
-        </div>
-      </div>
-    </article>
+function ListingCard({ href, label, kicker, name, lines }: { href: string; label: string; kicker: string; name: string; lines: ReactNode }) {
+  return (
+    <Link href={href} aria-label={label} className="group flex items-center justify-between gap-4 rounded-[16px] bg-white p-4 text-sx-ink">
+      <span className="flex min-w-0 flex-col gap-1">
+        <span className="text-xs font-semibold text-sx-brand">{kicker}</span>
+        <span className="font-heading text-lg font-semibold leading-snug tracking-[-0.01em]">{name}</span>
+        <span className="text-sm text-sx-ink/60">{lines}</span>
+      </span>
+      <ArrowCircle tone="dark" size="sm" />
+    </Link>
   )
 }
 
 export function AboutPaths() {
-  const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef, { items: '[data-about-path]', media: '[data-about-path-image]', depth: true })
+  const { direct, funds } = aboutPaths
 
   return (
-    <section ref={rootRef} className="about-paths py-20 px-6" aria-labelledby="about-paths-heading">
-      <div className="mx-auto max-w-7xl">
-        <h2
-          data-reveal-heading
-          id="about-paths-heading"
-          className="max-w-[14ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance text-ink"
-        >
-          {aboutPaths.heading}
-        </h2>
-        <p
-          data-reveal-heading
-          className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed text-muted text-pretty"
-        >
-          {aboutPaths.body}
-        </p>
-
-        <div className="about-paths__grid grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
-          <DirectPath />
-          <FundsPath />
-        </div>
+    <PageSection labelledBy="about-paths-heading">
+      <SectionHeading id="about-paths-heading" eyebrow="Two ways in" title={aboutPaths.heading} highlight="browse" body={aboutPaths.body} align="center" />
+      <div className="mt-12 flex flex-col gap-6">
+        <StepRow
+          id="about-path-direct"
+          step={direct.label}
+          title={direct.title}
+          body={<Points body={direct.body} points={direct.points} />}
+          action={
+            <div className="mt-2">
+              <PillLink href={direct.href}>{direct.cta}</PillLink>
+            </div>
+          }
+          visual={
+            <ListingVisual image={direct.image}>
+              <ListingCard
+                href={`/properties/${direct.listing.id}`}
+                label={`View sample listing for ${direct.listing.name}`}
+                kicker="Sample listing"
+                name={direct.listing.name}
+                lines={
+                  <>
+                    {formatSampleYield(direct.listing.sampleYieldPct)} · From {formatSampleAmount(direct.listing.sampleMinInvestment)}
+                  </>
+                }
+              />
+            </ListingVisual>
+          }
+        />
+        <StepRow
+          id="about-path-funds"
+          step={funds.label}
+          title={funds.title}
+          body={<Points body={funds.body} points={funds.points} />}
+          reverse
+          action={
+            <div className="mt-2">
+              <PillLink href={funds.href}>{funds.cta}</PillLink>
+            </div>
+          }
+          visual={
+            <ListingVisual image={funds.image}>
+              <ListingCard
+                href={`/funds/${funds.listing.id}`}
+                label={`View sample fund ${funds.listing.name}`}
+                kicker="Sample fund"
+                name={funds.listing.name}
+                lines={
+                  <>
+                    {funds.listing.market} · {funds.listing.propertyCount} sample properties
+                    <br />
+                    Sample yield {formatPercent(funds.listing.sampleReturnPct)} · Sample minimum {formatSampleAmount(sampleFundMinimum)}
+                  </>
+                }
+              />
+            </ListingVisual>
+          }
+        />
       </div>
-    </section>
+    </PageSection>
   )
 }

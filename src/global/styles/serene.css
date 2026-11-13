@@ -1,0 +1,85 @@
+/* Serene redesign: shared motion and surfaces. Colours live in @theme (globals.css) as sx-*. */
+
+@keyframes sx-kenburns {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes sx-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes sx-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sx-kenburns {
+  animation: sx-kenburns 14s ease-out both;
+}
+
+.sx-marquee {
+  display: flex;
+  width: max-content;
+  animation: sx-marquee 38s linear infinite;
+}
+
+.sx-marquee:hover {
+  animation-play-state: paused;
+}
+
+.sx-menu-in {
+  animation: sx-menu-in 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Horizontal card rails: snap, hidden scrollbar. */
+.sx-rail {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.sx-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.sx-rail > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Giant outlined wordmark in the footer. */
+.sx-wordmark {
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.12);
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-kenburns,
+  .sx-marquee,
+  .sx-menu-in {
+    animation: none;
+  }
+}

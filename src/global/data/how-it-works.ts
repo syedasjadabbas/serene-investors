@@ -2,8 +2,8 @@ import type { StoryState } from '@/global/types/content'
 
 export const howItWorksIntro = {
   eyebrow: 'How it works',
-  heading: 'Real estate investing in 3 simple steps.',
-  body: 'Review vetted institutional assets, allocate from £500, and earn automated quarterly rental dividends with complete Land Registry transparency.',
+  heading: 'Real estate investing in four steps.',
+  body: 'Choose a vetted property or fund, invest from AED 500, track your holding and receive your share of the rent every quarter.',
   image: {
     src: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=2000&h=1200&q=80',
     alt: 'A low house at dusk, pool in the foreground, warm rooms lit from inside',
@@ -52,18 +52,18 @@ export const howPageJourney: StoryState[] = [
 export const howPageSummary = [
   {
     id: 'summary-browse',
-    title: 'Browse Institutional Assets',
-    body: 'Review vetted prime residential and commercial opportunities with comprehensive financial models, valuation reports, and verified legal deeds.',
+    title: 'Browse vetted listings',
+    body: 'Compare properties and funds side by side, with the figures and documents for each listing on its own page.',
   },
   {
     id: 'summary-acquire',
-    title: 'Acquire Fractional Shares',
-    body: 'Start investing from £500. Secure digital title ownership with transparent pricing and zero hidden transaction fees.',
+    title: 'Buy shares',
+    body: 'Start from AED 500 and add more over time. Fees are shown on each listing before you invest.',
   },
   {
     id: 'summary-receive',
-    title: 'Receive Quarterly Cash Dividends',
-    body: 'Collect passive rental income directly into your investor wallet with quarterly distributions and capital appreciation on exit.',
+    title: 'Receive your rent',
+    body: 'Your share of the rent is paid every quarter, and your share of any sale proceeds when the building is sold.',
   },
 ] as const
 

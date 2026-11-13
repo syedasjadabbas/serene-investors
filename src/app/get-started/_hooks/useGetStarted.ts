@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import type { Fund } from '@/global/types/fund'
 import type { Property } from '@/global/types/property'
@@ -38,6 +38,10 @@ function closestSampleAmount(minimum: number): SampleAmount {
   })
 }
 
+/**
+ * Sample onboarding state. Initial interest and amount come from `?intent=property|fund&id=...`;
+ * the page remounts the onboarding (via `key`) when that query changes, which resets this state.
+ */
 export function useGetStarted() {
   const params = useSearchParams()
   const intent = params?.get('intent')
@@ -55,27 +59,6 @@ export function useGetStarted() {
     if (queryProperty) return closestSampleAmount(queryProperty.sampleMinInvestment)
     return null
   })
-
-  useEffect(() => {
-    if (queryFund) {
-      setInterest('fund')
-      setAmount(closestSampleAmount(sampleFundMinimum))
-      setStep(0)
-      setCompleted(false)
-      return
-    }
-    if (queryProperty) {
-      setInterest('property')
-      setAmount(closestSampleAmount(queryProperty.sampleMinInvestment))
-      setStep(0)
-      setCompleted(false)
-      return
-    }
-    setInterest(null)
-    setAmount(null)
-    setStep(0)
-    setCompleted(false)
-  }, [intent, relatedId, queryFund, queryProperty])
 
   const sampleProperty: Property = queryProperty ?? defaultProperty
   const sampleFund: Fund = queryFund ?? defaultFund

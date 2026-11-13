@@ -1,17 +1,13 @@
-import { useRef } from 'react'
-import type { Fund } from '@/global/types/fund'
+import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
 import { fundSampleStatus, sampleFundMinimum } from '@/global/data/funds'
 import { formatFundType, formatPercent, formatSampleAmount } from '@/global/lib/format'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
+import type { Fund } from '@/global/types/fund'
 
 type Props = {
   fund: Fund
 }
 
 export function FundHoldings({ fund }: Props) {
-  const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef)
-
   const rows = [
     { label: 'Sample properties', value: String(fund.propertyCount) },
     { label: 'Investment theme', value: fund.portfolioLabel },
@@ -23,32 +19,24 @@ export function FundHoldings({ fund }: Props) {
   ]
 
   return (
-    <section ref={rootRef} className="fund-holdings" aria-labelledby="fund-holdings-heading">
-      <div className="mx-auto max-w-[var(--container-wide)]">
-        <h2
-          data-reveal-heading
+    <PageSection tone="white" labelledBy="fund-holdings-heading">
+      <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-16">
+        <SectionHeading
           id="fund-holdings-heading"
-          className="max-w-[14ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance"
-        >
-          What this sample fund contains.
-        </h2>
-        <p
-          data-reveal-heading
-          className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed text-muted text-pretty"
-        >
-          Only the published demonstration fields are listed here. Individual sample buildings are
-          not assigned to this fund in the current catalogue.
-        </p>
-
-        <dl className="fund-holdings__rows">
+          eyebrow="Fund details"
+          title="What this sample fund contains."
+          highlight="contains"
+          body="Only the published demonstration fields are listed here. Individual sample buildings are not assigned to this fund in the current catalogue."
+        />
+        <dl className="flex flex-col gap-2">
           {rows.map((row) => (
-            <div key={row.label} data-reveal-item>
-              <dt>{row.label}</dt>
-              <dd>{row.value}</dd>
+            <div key={row.label} className="flex items-baseline justify-between gap-6 rounded-[16px] bg-sx-paper px-5 py-4">
+              <dt className="text-sm text-sx-ink/60">{row.label}</dt>
+              <dd className="text-right font-semibold tabular-nums text-sx-ink">{row.value}</dd>
             </div>
           ))}
         </dl>
       </div>
-    </section>
+    </PageSection>
   )
 }

@@ -1,96 +1,59 @@
-import { useRef } from 'react'
 import type { Property } from '@/global/types/property'
+import { Card, PageSection, SectionHeading } from '@/global/components/page/PageSection'
 import { formatPropertyMeta } from '@/global/lib/format'
-import { useDepthParallax } from '@/global/hooks/useDepthParallax'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
-import { withBase } from '@/global/lib/asset'
 
-type Props = {
-  property: Property
-}
+export function PropertyOverview({ property }: { property: Property }) {
+  const paragraphs = property.overview.length > 0 ? property.overview : [property.description]
+  const [lead, ...rest] = paragraphs
 
-export function PropertyOverview({ property }: Props) {
-  const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef, { media: '[data-story-image]' })
-  useDepthParallax(rootRef, [
-    { selector: '[data-story-image="0"]', yPercent: -5 },
-    { selector: '[data-story-image="1"]', yPercent: 4 },
-  ])
-
-  const location = formatPropertyMeta(property.neighborhood, property.city)
-  const firstImage = property.gallery[1] ?? property.gallery[0] ?? { src: property.image, alt: property.imageAlt }
-  const secondImage = property.gallery[2] ?? firstImage
-  const lead = property.overview[0] ?? property.description
-  const follow = property.overview[1] ?? property.overview[0] ?? property.description
+  const facts = [
+    { label: 'Property type', value: property.type },
+    { label: 'Location', value: formatPropertyMeta(property.neighborhood, property.city) },
+    { label: 'Size', value: property.beds > 0 ? `${property.areaLabel} · ${property.beds} bed sample plan` : property.areaLabel },
+    { label: 'Units', value: property.unitsLabel },
+    { label: 'Completion', value: property.completion },
+    { label: 'Management', value: property.management },
+    { label: 'Occupancy', value: property.occupancyLabel },
+    { label: 'Sample value', value: property.sampleValueLabel },
+  ]
 
   return (
-    <section
-      ref={rootRef}
-      id="property-overview"
-      className="property-story"
-      aria-labelledby="overview-heading"
-    >
-      <div className="mx-auto max-w-[var(--container-wide)]">
-        <div className="property-story__row">
-          <figure className="property-story__media m-0">
-            <img
-              data-story-image="0"
-              src={withBase(firstImage.src)}
-              alt={firstImage.alt}
-              width={1400}
-              height={1050}
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-          <div className="property-story__copy">
-            <h2
-              data-reveal-heading
-              id="overview-heading"
-              className="max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance"
-            >
-              {property.name}
-            </h2>
-            <p data-reveal-item className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed text-pretty">
-              {lead}
+    <PageSection id="property-overview" labelledBy="overview-heading">
+      <div className="grid gap-10 lg:grid-cols-[3fr_2fr] lg:gap-16">
+        <div>
+          <SectionHeading id="overview-heading" eyebrow="Overview" title={`About ${property.name}`} body={lead} />
+          {rest.map((paragraph) => (
+            <p key={paragraph} className="mt-4 max-w-2xl text-base leading-relaxed text-sx-ink/65 sm:text-lg">
+              {paragraph}
             </p>
-            <p data-reveal-item className="mt-6 text-sm text-muted">
-              {property.type}
-              <span className="text-subtle"> / </span>
-              {location}
-            </p>
-            <p data-reveal-item className="mt-2 text-sm text-muted">
-              {property.areaLabel}
-              {property.beds > 0 ? ` / ${property.beds} bed sample plan` : null}
-            </p>
-          </div>
+          ))}
+
+          {property.features.length > 0 && (
+            <>
+              <h3 className="mt-10 text-sm font-semibold text-sx-ink">Highlights</h3>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {property.features.map((feature) => (
+                  <li key={feature.id} className="rounded-full bg-white px-4 py-2 text-sm font-medium text-sx-ink">
+                    {feature.title}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
 
-        <div className="property-story__row property-story__row--flip">
-          <div className="property-story__copy">
-            <p data-reveal-item className="max-w-[42ch] text-[1.05rem] leading-relaxed text-pretty">
-              {follow}
-            </p>
-            <p data-reveal-item className="mt-6 text-sm text-muted">
-              {property.unitsLabel}
-            </p>
-            <p data-reveal-item className="mt-2 text-sm text-muted">
-              {property.management}
-            </p>
-          </div>
-          <figure className="property-story__media m-0">
-            <img
-              data-story-image="1"
-              src={withBase(secondImage.src)}
-              alt={secondImage.alt}
-              width={1400}
-              height={1050}
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-        </div>
+        <Card className="h-fit">
+          <h3 className="font-heading text-xl font-bold tracking-[-0.015em]">Key facts</h3>
+          <dl className="mt-4 divide-y divide-sx-ink/10">
+            {facts.map((fact) => (
+              <div key={fact.label} className="flex items-baseline justify-between gap-4 py-3">
+                <dt className="text-sm text-sx-ink/60">{fact.label}</dt>
+                <dd className="text-right text-sm font-semibold">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </Card>
       </div>
-    </section>
+    </PageSection>
   )
 }

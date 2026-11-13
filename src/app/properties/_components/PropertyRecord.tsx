@@ -1,60 +1,36 @@
-import { useRef } from 'react'
 import type { Property } from '@/global/types/property'
-import { formatPropertyMeta } from '@/global/lib/format'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
+import { Card, PageSection, SectionHeading } from '@/global/components/page/PageSection'
 
-type Props = {
-  property: Property
-}
-
-export function PropertyRecord({ property }: Props) {
-  const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef)
-  const location = formatPropertyMeta(property.neighborhood, property.city)
+export function PropertyRecord({ property }: { property: Property }) {
   const record = property.documentation
+  const rows = [
+    { label: record.recordLabel, value: record.recordValue },
+    { label: record.ownershipLabel, value: record.ownershipValue },
+    { label: record.documentsLabel, value: record.documentsValue },
+    { label: record.statusLabel, value: record.statusValue },
+  ]
 
   return (
-    <section ref={rootRef} className="property-place" aria-labelledby="place-heading">
-      <div className="property-place__panel mx-auto max-w-[var(--container-wide)]">
-        <div>
-          <h2
-            data-reveal-heading
-            id="place-heading"
-            className="text-[clamp(2.4rem,5vw,4.4rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-balance"
-          >
-            {property.city}
-          </h2>
-          <p data-reveal-item className="mt-4 text-xl font-medium tracking-tight">
-            {property.neighborhood}
-          </p>
-          <p data-reveal-item className="mt-6 max-w-[36ch] text-[1.05rem] leading-relaxed text-pretty">
-            {property.description}
-          </p>
-        </div>
-
-        <dl className="property-place__facts">
-          <div data-reveal-item>
-            <dt>Location</dt>
-            <dd>{location}</dd>
-          </div>
-          <div data-reveal-item>
-            <dt>Property type</dt>
-            <dd>{property.type}</dd>
-          </div>
-          <div data-reveal-item>
-            <dt>Units</dt>
-            <dd>{property.unitsLabel}</dd>
-          </div>
-          <div data-reveal-item>
-            <dt>{record.recordLabel}</dt>
-            <dd>{record.recordValue}</dd>
-          </div>
-        </dl>
-
-        <p data-reveal-item className="property-place__note">
-          {record.note}
-        </p>
+    <PageSection labelledBy="record-heading" tone="white">
+      <div className="grid gap-10 md:grid-cols-2 md:items-start">
+        <SectionHeading
+          id="record-heading"
+          eyebrow="Property record"
+          title={property.city}
+          body={`${property.neighborhood}. The ownership and documentation behind this sample listing.`}
+        />
+        <Card tone="paper">
+          <dl className="grid gap-3 sm:grid-cols-2">
+            {rows.map((row) => (
+              <div key={row.label} className="rounded-[14px] bg-white p-4">
+                <dt className="text-xs font-semibold text-sx-ink/55">{row.label}</dt>
+                <dd className="mt-1 text-base font-semibold text-sx-ink">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-4 text-xs leading-relaxed text-sx-ink/55">{record.note}</p>
+        </Card>
       </div>
-    </section>
+    </PageSection>
   )
 }

@@ -1,15 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import {
-  ChevronDown,
-  LayoutDashboard,
-  LogOut,
-  Settings,
-  ShieldCheck,
-} from 'lucide-react'
+import { Building2, ChevronDown, Gift, LayoutDashboard, LogOut, Settings, ShieldCheck, type LucideIcon } from 'lucide-react'
 import { useAuth, type User } from '@/global/stores/auth'
 import { cn } from '@/global/lib/cn'
 
@@ -24,35 +18,52 @@ type Props = {
   user: User
 }
 
+const LINKS: { href: string; label: string; icon: LucideIcon }[] = [
+  { href: '/dashboard', label: 'Portfolio dashboard', icon: LayoutDashboard },
+  { href: '/properties', label: 'Explore properties', icon: Building2 },
+  { href: '/rewards', label: 'Serene Rewards', icon: Gift },
+  { href: '/about#contact', label: 'Account settings', icon: Settings },
+]
+
+/** Navbar account button. Opens a panel (disclosure pattern) with account links and log out. */
 export function UserProfileDropdown({ user }: Props) {
   const router = useRouter()
   const { logout } = useAuth()
   const [open, setOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const panelId = useId()
 
   const initials = getInitials(user.name)
   const isInstitutional = user.investorType === 'institutional'
   const badgeLabel = isInstitutional ? 'Institutional Investor' : 'Individual Investor'
 
-  // Close menu on click outside or escape key
+  // Close on click outside, on Escape (returning focus to the button) and when focus leaves the menu.
   useEffect(() => {
     if (!open) return
 
-    function handleClickOutside(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setOpen(false)
-      }
+    function handlePointerDown(e: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) setOpen(false)
     }
 
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape') {
+        setOpen(false)
+        buttonRef.current?.focus()
+      }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
+    function handleFocusIn(e: FocusEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) setOpen(false)
+    }
+
+    document.addEventListener('mousedown', handlePointerDown)
     document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('focusin', handleFocusIn)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('mousedown', handlePointerDown)
       document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('focusin', handleFocusIn)
     }
   }, [open])
 
@@ -63,123 +74,77 @@ export function UserProfileDropdown({ user }: Props) {
   }
 
   return (
-    <div ref={menuRef} className="relative">
-      {/* Profile Trigger Pill */}
+    <div ref={wrapperRef} className="relative">
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
-        aria-haspopup="menu"
+        aria-controls={panelId}
+        aria-label={`Account menu for ${user.name}`}
         className={cn(
-          'flex items-center gap-2 rounded-xl border px-2.5 py-1.5 text-left transition-all duration-200 cursor-pointer shadow-2xs active:scale-[0.98]',
-          open
-            ? 'border-[#00A663] bg-[#E8F8F0]/30 ring-2 ring-[#00A663]/20'
-            : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/80',
+          'flex items-center gap-2 rounded-full py-1 pl-1 pr-3 text-left transition-colors',
+          open ? 'bg-sx-sand' : 'bg-sx-paper hover:bg-sx-sand',
         )}
       >
-        <span className="flex size-7 items-center justify-center rounded-lg bg-[#00A663] font-mono text-xs font-bold text-white shadow-xs shrink-0">
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-sx-forest font-heading text-xs font-bold text-sx-mint">
           {initials}
         </span>
-        <div className="flex flex-col min-w-0 pr-1">
-          <span className="max-w-[110px] truncate text-xs font-bold leading-tight text-[#0D1117] sm:max-w-[130px]">
-            {user.name}
-          </span>
-          <span className="text-[10px] leading-tight text-gray-500 font-medium truncate">
-            {isInstitutional ? 'Institutional' : 'Individual'}
-          </span>
-        </div>
-        <ChevronDown
-          size={13}
-          className={cn(
-            'text-gray-400 transition-transform duration-200 shrink-0',
-            open && 'rotate-180 text-[#00A663]',
-          )}
-        />
+        <span className="flex min-w-0 flex-col pr-0.5">
+          <span className="max-w-[110px] truncate text-xs font-semibold leading-tight text-sx-ink sm:max-w-[130px]">{user.name}</span>
+          <span className="truncate text-[11px] leading-tight text-sx-ink/55">{isInstitutional ? 'Institutional' : 'Individual'}</span>
+        </span>
+        <ChevronDown size={14} aria-hidden="true" className={cn('shrink-0 text-sx-ink/50 transition-transform duration-200', open && 'rotate-180')} />
       </button>
 
-      {/* Dropdown Menu */}
-      {open && (
-        <div
-          role="menu"
-          aria-label="User account menu"
-          className="absolute right-0 top-[calc(100%+0.5rem)] z-50 w-72 origin-top-right rounded-2xl border border-black/[0.08] bg-white p-2 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-150"
-        >
-          {/* User Header Details */}
-          <div className="flex items-start gap-3 rounded-xl bg-gray-50 p-3 border border-gray-100">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#00A663] font-mono text-sm font-bold text-white shadow-xs">
-              {initials}
+      <div
+        id={panelId}
+        hidden={!open}
+        className="absolute left-0 top-[calc(100%+0.75rem)] z-50 w-72 max-w-[calc(100vw-2rem)] rounded-[20px] bg-white p-2 text-sx-ink shadow-[0_12px_40px_rgba(0,0,0,0.14)]"
+      >
+        <div className="flex items-start gap-3 rounded-[14px] bg-sx-paper p-3">
+          <span
+            aria-hidden="true"
+            className="flex size-10 shrink-0 items-center justify-center rounded-full bg-sx-forest font-heading text-sm font-bold text-sx-mint"
+          >
+            {initials}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold">{user.name}</p>
+            <p className="truncate text-xs text-sx-ink/55">{user.email}</p>
+            <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-sx-mint px-2 py-0.5 text-[11px] font-semibold text-sx-ink">
+              <ShieldCheck size={12} aria-hidden="true" />
+              {badgeLabel}
             </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-bold text-gray-900">{user.name}</p>
-              <p className="truncate text-xs text-gray-500">{user.email}</p>
-              <div className="mt-1.5 flex items-center gap-1.5">
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#E8F8F0] px-2 py-0.5 text-[10px] font-bold text-[#00A663]">
-                  <ShieldCheck size={11} />
-                  {badgeLabel}
-                </span>
-              </div>
-            </div>
           </div>
+        </div>
 
-          <div className="my-1.5 h-px bg-gray-100" />
+        <ul className="my-2 flex flex-col gap-0.5">
+          {LINKS.map(({ href, label, icon: Icon }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 rounded-[12px] px-3 py-2.5 text-sm font-medium transition-colors hover:bg-sx-paper"
+              >
+                <Icon size={16} aria-hidden="true" className="text-sx-brand" />
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
 
-          {/* Navigation Items */}
-          <div className="flex flex-col gap-0.5">
-            <Link
-              href="/dashboard"
-              onClick={() => setOpen(false)}
-              role="menuitem"
-              className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-gray-800 transition-colors hover:bg-gray-50 hover:text-[#00A663]"
-            >
-              <LayoutDashboard size={15} className="text-gray-500" />
-              <span>Portfolio / Dashboard</span>
-            </Link>
-
-            <Link
-              href="/properties"
-              onClick={() => setOpen(false)}
-              role="menuitem"
-              className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-gray-800 transition-colors hover:bg-gray-50 hover:text-[#00A663]"
-            >
-              <span className="text-sm">🏢</span>
-              <span>Explore Properties</span>
-            </Link>
-
-            <Link
-              href="/rewards"
-              onClick={() => setOpen(false)}
-              role="menuitem"
-              className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-gray-800 transition-colors hover:bg-gray-50 hover:text-[#00A663]"
-            >
-              <span className="text-sm">🎁</span>
-              <span>Stake Rewards</span>
-            </Link>
-
-            <Link
-              href="/about#contact"
-              onClick={() => setOpen(false)}
-              role="menuitem"
-              className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-gray-800 transition-colors hover:bg-gray-50 hover:text-[#00A663]"
-            >
-              <Settings size={15} className="text-gray-500" />
-              <span>Account Settings</span>
-            </Link>
-          </div>
-
-          <div className="my-1.5 h-px bg-gray-100" />
-
-          {/* Logout Action */}
+        <div className="border-t border-sx-ink/[0.08] pt-2">
           <button
             type="button"
             onClick={handleLogout}
-            role="menuitem"
-            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold text-red-600 transition-colors hover:bg-red-50 cursor-pointer text-left"
+            className="flex w-full items-center gap-3 rounded-[12px] px-3 py-2.5 text-left text-sm font-semibold text-red-700 transition-colors hover:bg-red-50"
           >
-            <LogOut size={15} />
-            <span>Log out</span>
+            <LogOut size={16} aria-hidden="true" />
+            Log out
           </button>
         </div>
-      )}
+      </div>
     </div>
   )
 }

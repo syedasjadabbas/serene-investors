@@ -1,87 +1,58 @@
-import { useRef } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { getStartedIntro } from '../_lib/get-started'
+import { PageHero } from '@/global/components/page/PageHero'
+import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
 import { properties } from '@/global/data/properties'
 import { storyAssets } from '@/global/data/story-assets'
-import { formatPercent, formatSampleAmount } from '@/global/lib/format'
-import { useDepthParallax } from '@/global/hooks/useDepthParallax'
-import { usePointerTilt } from '@/global/hooks/usePointerTilt'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
 import { withBase } from '@/global/lib/asset'
+import { formatPercent, formatSampleAmount } from '@/global/lib/format'
+import { getStartedIntro } from '../_lib/get-started'
+
+const cedar = properties.find((item) => item.id === 'cedar-court')
+
+function HeroMedia() {
+  return (
+    <div className="relative bg-sx-sand">
+      <img
+        src={withBase(storyAssets.choose.src)}
+        alt={storyAssets.choose.alt}
+        width={1400}
+        height={1867}
+        loading="eager"
+        fetchPriority="high"
+        className="block aspect-[4/3] w-full object-cover object-[50%_35%] sm:aspect-[16/7]"
+      />
+      {cedar ? (
+        <Link
+          href={`/properties/${cedar.id}`}
+          aria-label={`View sample listing for ${cedar.name}`}
+          className="group relative -mt-16 mx-3 mb-3 flex items-center justify-between gap-4 rounded-[20px] bg-white p-5 text-sx-ink sm:absolute sm:bottom-6 sm:right-6 sm:m-0 sm:w-[340px]"
+        >
+          <span className="flex min-w-0 flex-col gap-1">
+            <span className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-brand">Sample property</span>
+            <span className="font-heading text-lg font-bold tracking-[-0.015em]">{cedar.name}</span>
+            <span className="text-sm text-sx-ink/60">
+              Sample yield {formatPercent(cedar.sampleYieldPct)} · From {formatSampleAmount(cedar.sampleMinInvestment)}
+            </span>
+          </span>
+          <ArrowCircle tone="brand" />
+        </Link>
+      ) : null}
+    </div>
+  )
+}
 
 export function StartHero() {
-  const rootRef = useRef<HTMLElement>(null)
-  const cedar = properties.find((item) => item.id === 'cedar-court')
-  useSectionReveal(rootRef, { media: '[data-start-hero-image]' })
-  usePointerTilt(rootRef, {
-    layers: [
-      { selector: '[data-start-hero-image]', x: 10, y: 6, rotateX: 1.4, rotateY: 1.8, invert: true },
-      { selector: '[data-start-hero-card]', x: 12, y: 0, rotateX: 2, rotateY: 2.4, z: 22 },
-    ],
-  })
-  useDepthParallax(rootRef, [
-    { selector: '[data-start-hero-image]', yPercent: 6 },
-    { selector: '[data-start-hero-card]', yPercent: -5 },
-  ])
-
   return (
-    <section ref={rootRef} className="start-hero" aria-labelledby="start-heading">
-      <div className="start-hero__layout mx-auto max-w-[var(--container-wide)]">
-        <div className="start-hero__copy">
-          <p data-reveal-heading className="property-hero__mark">
-            Illustrative sample
-          </p>
-          <h1
-            data-reveal-heading
-            id="start-heading"
-            className="mt-6 max-w-[10ch] text-[clamp(2.6rem,5.4vw,4.6rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-balance"
-          >
-            {getStartedIntro.heading}
-          </h1>
-          <p
-            data-reveal-heading
-            className="mt-5 max-w-[40ch] text-[1.05rem] leading-relaxed text-muted text-pretty"
-          >
-            {getStartedIntro.body}
-          </p>
-          <div data-reveal-heading className="start-hero__rule" />
-        </div>
-
-        <div data-reveal-item data-depth-stage className="start-hero__scene">
-          <figure className="start-hero__media m-0">
-            <img
-              data-start-hero-image
-              src={withBase(storyAssets.choose.src)}
-              alt={storyAssets.choose.alt}
-              width={1400}
-              height={1867}
-              loading="eager"
-              fetchPriority="high"
-            />
-          </figure>
-
-          {cedar ? (
-            <Link
-              href={`/properties/${cedar.id}`}
-              data-start-hero-card
-              className="start-hero__card"
-              aria-label={`View sample listing for ${cedar.name}`}
-            >
-              <p className="start-kicker">Sample property</p>
-              <p className="mt-2 text-lg font-medium tracking-tight">{cedar.name}</p>
-              <p className="mt-1 text-sm text-muted">
-                Sample yield {formatPercent(cedar.sampleYieldPct)} · From{' '}
-                {formatSampleAmount(cedar.sampleMinInvestment)}
-              </p>
-              <span className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium">
-                View property
-                <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-              </span>
-            </Link>
-          ) : null}
-        </div>
-      </div>
-    </section>
+    <PageHero
+      eyebrow="Illustrative sample"
+      title={getStartedIntro.heading}
+      highlight="exploring"
+      body={getStartedIntro.body}
+      actions={[
+        { label: 'Walk the demo', href: '#start-onboard' },
+        { label: 'Browse properties', href: '/properties' },
+      ]}
+      media={<HeroMedia />}
+    />
   )
 }

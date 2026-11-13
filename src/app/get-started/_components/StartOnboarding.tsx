@@ -1,99 +1,136 @@
 import { useLayoutEffect, useRef } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { Button, ButtonLink } from '@/global/components/ui/Button'
-import { getStartedOnboarding, sampleOnboardingAmounts } from '../_lib/get-started'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { Eyebrow, PageSection, SectionHeading } from '@/global/components/page/PageSection'
+import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
+import { PillLink } from '@/global/components/ui/PillLink'
 import { sampleFundMinimum } from '@/global/data/funds'
-import { formatPercent, formatPropertyMeta, formatSampleAmount } from '@/global/lib/format'
-import { cn } from '@/global/lib/cn'
-import { useGetStarted } from '../_hooks/useGetStarted'
 import { usePrefersReducedMotion } from '@/global/hooks/usePrefersReducedMotion'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
-import { gsap, registerGsapPlugins } from '@/global/lib/gsap'
 import { withBase } from '@/global/lib/asset'
+import { cn } from '@/global/lib/cn'
+import { formatPercent, formatPropertyMeta, formatSampleAmount } from '@/global/lib/format'
+import { gsap, registerGsapPlugins } from '@/global/lib/gsap'
+import { useGetStarted } from '../_hooks/useGetStarted'
+import { getStartedOnboarding, sampleOnboardingAmounts } from '../_lib/get-started'
 
-function ListingSummary({
-  listing,
-  amount,
-}: {
-  listing: ReturnType<typeof useGetStarted>['listing']
-  amount: number
-}) {
-  if (listing.kind === 'fund') {
-    const fund = listing.fund
-    return (
-      <article className="start-summary">
-        <img src={withBase(fund.image)} alt={fund.imageAlt} width={900} height={675} />
-        <div>
-          <p className="start-kicker">Sample fund</p>
-          <h3>{fund.name}</h3>
-          <p>
-            {fund.market} · {fund.portfolioLabel} · {fund.propertyCount} sample properties
-          </p>
-          <dl>
-            <div>
-              <dt>Sample yield</dt>
-              <dd>{formatPercent(fund.sampleReturnPct)}</dd>
-            </div>
-            <div>
-              <dt>Sample fund minimum</dt>
-              <dd>{formatSampleAmount(sampleFundMinimum)}</dd>
-            </div>
-            <div>
-              <dt>Your sample amount</dt>
-              <dd>{formatSampleAmount(amount)}</dd>
-            </div>
-          </dl>
-          <Link href={`/funds/${fund.id}`} className="start-summary__link">
-            View fund
-            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-          </Link>
-          <p className="start-summary__note">Illustrative sample only. This does not place an investment.</p>
-        </div>
-      </article>
-    )
-  }
+type Listing = ReturnType<typeof useGetStarted>['listing']
 
-  const property = listing.property
+const BUTTON = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors sm:text-base disabled:cursor-not-allowed disabled:opacity-40'
+
+function ListingSummary({ listing, amount }: { listing: Listing; amount: number }) {
+  const isFund = listing.kind === 'fund'
+  const item = isFund
+    ? {
+        kicker: 'Sample fund',
+        name: listing.fund.name,
+        meta: `${listing.fund.market} · ${listing.fund.portfolioLabel} · ${listing.fund.propertyCount} sample properties`,
+        image: listing.fund.image,
+        imageAlt: listing.fund.imageAlt,
+        yieldPct: listing.fund.sampleReturnPct,
+        minimumLabel: 'Sample fund minimum',
+        minimum: sampleFundMinimum,
+        href: `/funds/${listing.fund.id}`,
+        linkLabel: 'View fund',
+      }
+    : {
+        kicker: 'Sample property',
+        name: listing.property.name,
+        meta: `${formatPropertyMeta(listing.property.neighborhood, listing.property.city)} · ${listing.property.type}`,
+        image: listing.property.image,
+        imageAlt: listing.property.imageAlt,
+        yieldPct: listing.property.sampleYieldPct,
+        minimumLabel: 'Sample listing minimum',
+        minimum: listing.property.sampleMinInvestment,
+        href: `/properties/${listing.property.id}`,
+        linkLabel: 'View property',
+      }
+
+  const figures = [
+    { label: 'Sample yield', value: formatPercent(item.yieldPct) },
+    { label: item.minimumLabel, value: formatSampleAmount(item.minimum) },
+    { label: 'Your sample amount', value: formatSampleAmount(amount) },
+  ]
+
   return (
-    <article className="start-summary">
-      <img src={withBase(property.image)} alt={property.imageAlt} width={900} height={1125} />
-      <div>
-        <p className="start-kicker">Sample property</p>
-        <h3>{property.name}</h3>
-        <p>
-          {formatPropertyMeta(property.neighborhood, property.city)} · {property.type}
-        </p>
-        <dl>
-          <div>
-            <dt>Sample yield</dt>
-            <dd>{formatPercent(property.sampleYieldPct)}</dd>
-          </div>
-          <div>
-            <dt>Sample listing minimum</dt>
-            <dd>{formatSampleAmount(property.sampleMinInvestment)}</dd>
-          </div>
-          <div>
-            <dt>Your sample amount</dt>
-            <dd>{formatSampleAmount(amount)}</dd>
-          </div>
+    <article className="grid gap-5 rounded-[20px] bg-white p-3 text-sx-ink sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)] sm:p-4">
+      <div className="relative min-h-[180px] overflow-hidden rounded-[14px] bg-sx-sand">
+        <img
+          src={withBase(item.image)}
+          alt={item.imageAlt}
+          width={900}
+          height={675}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      </div>
+      <div className="flex flex-col gap-4 p-2 sm:p-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-brand">{item.kicker}</p>
+          <h4 className="mt-1 font-heading text-2xl font-bold tracking-[-0.02em]">{item.name}</h4>
+          <p className="mt-1 text-sm text-sx-ink/60">{item.meta}</p>
+        </div>
+        <dl className="grid gap-2 sm:grid-cols-3">
+          {figures.map((figure) => (
+            <div key={figure.label} className="flex items-baseline justify-between gap-3 rounded-[12px] bg-sx-paper px-4 py-3 sm:flex-col sm:items-start sm:gap-1">
+              <dt className="text-xs text-sx-ink/55">{figure.label}</dt>
+              <dd className="font-heading text-lg font-bold tabular-nums">{figure.value}</dd>
+            </div>
+          ))}
         </dl>
-          <Link href={`/properties/${property.id}`} className="start-summary__link">
-            View property
-            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Link href={item.href} className="group inline-flex items-center gap-3 rounded-full text-sm font-semibold">
+            {item.linkLabel}
+            <ArrowCircle tone="dark" size="sm" />
           </Link>
-          <p className="start-summary__note">Illustrative sample only. This does not place an investment.</p>
+          <p className="text-xs text-sx-ink/50">Illustrative sample only. This does not place an investment.</p>
+        </div>
       </div>
     </article>
   )
 }
 
+function Choice({
+  name,
+  checked,
+  onChange,
+  title,
+  body,
+}: {
+  name: string
+  checked: boolean
+  onChange: () => void
+  title: string
+  body: string
+}) {
+  return (
+    <label
+      className={cn(
+        'flex cursor-pointer items-start justify-between gap-4 rounded-[16px] border-2 bg-white p-5 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-sx-brand',
+        checked ? 'border-sx-brand' : 'border-transparent hover:border-sx-ink/15',
+      )}
+    >
+      <input type="radio" name={name} checked={checked} onChange={onChange} className="sr-only" />
+      <span className="flex flex-col gap-1">
+        <span className="font-heading text-xl font-bold tracking-[-0.015em] text-sx-ink">{title}</span>
+        <span className="text-sm leading-relaxed text-sx-ink/60">{body}</span>
+      </span>
+      <span
+        aria-hidden="true"
+        className={cn(
+          'mt-1 flex size-5 shrink-0 items-center justify-center rounded-full border-2',
+          checked ? 'border-sx-brand' : 'border-sx-ink/25',
+        )}
+      >
+        {checked && <span className="size-2.5 rounded-full bg-sx-brand" />}
+      </span>
+    </label>
+  )
+}
+
 export function StartOnboarding() {
-  const rootRef = useRef<HTMLElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
   const onboard = useGetStarted()
-  useSectionReveal(rootRef)
 
   useLayoutEffect(() => {
     const panel = panelRef.current
@@ -110,139 +147,137 @@ export function StartOnboarding() {
     }
   }, [onboard.completed, onboard.step, reduced])
 
-  const stepCopy = getStartedOnboarding.steps[onboard.step]
+  const steps = getStartedOnboarding.steps
+  const stepCopy = steps[onboard.step]
 
   return (
-    <section ref={rootRef} className="start-onboard" aria-labelledby="start-onboard-heading">
-      <div className="mx-auto max-w-[var(--container-wide)]">
-        <p data-reveal-heading className="start-kicker">
-          {getStartedOnboarding.eyebrow}
-        </p>
-        <h2
-          data-reveal-heading
-          id="start-onboard-heading"
-          className="mt-4 max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance"
-        >
-          {getStartedOnboarding.heading}
-        </h2>
-        <p
-          data-reveal-heading
-          className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed text-muted text-pretty"
-        >
-          {getStartedOnboarding.body}
-        </p>
+    <PageSection id="start-onboard" tone="white" labelledBy="start-onboard-heading" className="scroll-mt-20">
+      <SectionHeading
+        id="start-onboard-heading"
+        eyebrow={getStartedOnboarding.eyebrow}
+        title={getStartedOnboarding.heading}
+        highlight="short demonstration"
+        body={getStartedOnboarding.body}
+      />
 
+      <div className="mt-10 rounded-[24px] bg-sx-paper p-4 sm:mt-12 sm:p-8 lg:p-10">
         {onboard.completed ? (
-          <div ref={panelRef} className="start-onboard__panel" role="status">
-            <p className="property-hero__mark">Illustrative sample</p>
-            <h3 className="start-onboard__confirm">{getStartedOnboarding.confirmHeading}</h3>
-            <p className="start-onboard__confirm-body">{getStartedOnboarding.confirmBody}</p>
-            {onboard.amount ? (
-              <ListingSummary listing={onboard.listing} amount={onboard.amount} />
-            ) : null}
-            <div className="start-onboard__nav">
-              <Button type="button" variant="ghost" onClick={onboard.back}>
+          <div ref={panelRef} role="status" className="flex flex-col gap-6">
+            <div className="flex flex-col items-start gap-3">
+              <Eyebrow>Illustrative sample</Eyebrow>
+              <h3 className="font-heading text-3xl font-bold tracking-[-0.025em] text-sx-ink sm:text-4xl">
+                {getStartedOnboarding.confirmHeading}
+              </h3>
+              <p className="text-base text-sx-ink/65">{getStartedOnboarding.confirmBody}</p>
+            </div>
+            {onboard.amount ? <ListingSummary listing={onboard.listing} amount={onboard.amount} /> : null}
+            <div className="flex flex-wrap items-center gap-3">
+              <button type="button" onClick={onboard.back} className={cn(BUTTON, 'border border-sx-ink/20 text-sx-ink hover:bg-sx-ink/5')}>
+                <ArrowLeft size={16} aria-hidden="true" />
                 Back to review
-              </Button>
-              <ButtonLink href="/signup" className="min-h-11">
-                Create demo account
-              </ButtonLink>
-              <ButtonLink href="/properties" variant="ghost" className="min-h-11">
+              </button>
+              <PillLink href="/signup">Create demo account</PillLink>
+              <PillLink href="/properties" variant="outline">
                 Explore properties
-              </ButtonLink>
-              <ButtonLink href="/funds" variant="ghost" className="min-h-11">
+              </PillLink>
+              <PillLink href="/funds" variant="outline">
                 Explore funds
-              </ButtonLink>
+              </PillLink>
             </div>
           </div>
         ) : (
-          <div className="start-onboard__panel">
-            <ol className="start-progress" aria-label="Sample onboarding progress">
-              {getStartedOnboarding.steps.map((item, index) => (
-                <li
-                  key={item.id}
-                  aria-current={index === onboard.step ? 'step' : undefined}
-                  className={cn(index === onboard.step && 'is-active', index < onboard.step && 'is-done')}
-                >
-                  <span>{item.number}</span>
-                  {item.title}
-                </li>
-              ))}
+          <div className="flex flex-col gap-8">
+            <ol className="grid grid-cols-3 gap-2 sm:gap-3" aria-label="Sample onboarding progress">
+              {steps.map((item, index) => {
+                const done = index < onboard.step
+                const active = index === onboard.step
+                return (
+                  <li key={item.id} aria-current={active ? 'step' : undefined} className="flex flex-col gap-2">
+                    <span
+                      aria-hidden="true"
+                      className={cn('h-1.5 rounded-full', done || active ? 'bg-sx-brand' : 'bg-sx-ink/10')}
+                    />
+                    <span className={cn('text-xs font-semibold sm:text-sm', active ? 'text-sx-ink' : 'text-sx-ink/45')}>
+                      {item.number}
+                      <span className="hidden sm:inline"> · {item.title}</span>
+                      {done && <span className="sr-only"> (completed)</span>}
+                    </span>
+                  </li>
+                )
+              })}
             </ol>
-            <div className="start-progress__track" aria-hidden="true">
-              <span style={{ width: `${((onboard.step + 1) / 3) * 100}%` }} />
-            </div>
 
-            <div ref={panelRef} key={onboard.step}>
-              <h3 className="start-onboard__step-title">
-                <span>{stepCopy?.number}</span>
+            <div ref={panelRef} key={onboard.step} className="flex flex-col gap-5">
+              <h3 className="flex items-center gap-3 font-heading text-2xl font-bold tracking-[-0.02em] text-sx-ink sm:text-3xl">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-sx-ink text-sm text-sx-mint">
+                  {stepCopy?.number}
+                </span>
                 {stepCopy?.title}
               </h3>
 
               {onboard.step === 0 ? (
-                <fieldset className="start-choices">
+                <fieldset>
                   <legend className="sr-only">Choose what interests you</legend>
-                  {getStartedOnboarding.interests.map((item) => (
-                    <label
-                      key={item.id}
-                      className={cn('start-choice', onboard.interest === item.id && 'is-active')}
-                    >
-                      <input
-                        type="radio"
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {getStartedOnboarding.interests.map((item) => (
+                      <Choice
+                        key={item.id}
                         name="start-interest"
-                        value={item.id}
                         checked={onboard.interest === item.id}
                         onChange={() => onboard.chooseInterest(item.id)}
+                        title={item.title}
+                        body={item.body}
                       />
-                      <span className="start-choice__title">{item.title}</span>
-                      <span className="start-choice__body">{item.body}</span>
-                    </label>
-                  ))}
+                    ))}
+                  </div>
                 </fieldset>
               ) : null}
 
               {onboard.step === 1 ? (
-                <fieldset className="start-choices start-choices--amounts">
+                <fieldset>
                   <legend className="sr-only">Choose a sample amount</legend>
-                  <p className="start-onboard__hint">Sample amounts only. These are not live tickets.</p>
-                  {sampleOnboardingAmounts.map((value) => (
-                    <label
-                      key={value}
-                      className={cn('start-choice', onboard.amount === value && 'is-active')}
-                    >
-                      <input
-                        type="radio"
+                  <p className="mb-3 text-sm text-sx-ink/55">Sample amounts only. These are not live tickets.</p>
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {sampleOnboardingAmounts.map((value) => (
+                      <Choice
+                        key={value}
                         name="start-amount"
-                        value={value}
                         checked={onboard.amount === value}
                         onChange={() => onboard.chooseAmount(value)}
+                        title={formatSampleAmount(value)}
+                        body="Sample amount"
                       />
-                      <span className="start-choice__title">{formatSampleAmount(value)}</span>
-                      <span className="start-choice__body">Sample amount</span>
-                    </label>
-                  ))}
+                    ))}
+                  </div>
                 </fieldset>
               ) : null}
 
-              {onboard.step === 2 && onboard.amount ? (
-                <ListingSummary listing={onboard.listing} amount={onboard.amount} />
-              ) : null}
+              {onboard.step === 2 && onboard.amount ? <ListingSummary listing={onboard.listing} amount={onboard.amount} /> : null}
             </div>
 
-            <div className="start-onboard__nav">
-              <Button type="button" variant="ghost" onClick={onboard.back} disabled={onboard.step === 0}>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={onboard.back}
+                disabled={onboard.step === 0}
+                className={cn(BUTTON, 'border border-sx-ink/20 text-sx-ink enabled:hover:bg-sx-ink/5')}
+              >
+                <ArrowLeft size={16} aria-hidden="true" />
                 Back
-              </Button>
-              <Button type="button" onClick={onboard.next} disabled={!onboard.canAdvance} className="min-h-11 gap-1.5">
+              </button>
+              <button
+                type="button"
+                onClick={onboard.next}
+                disabled={!onboard.canAdvance}
+                className={cn(BUTTON, 'bg-sx-ink text-white enabled:hover:bg-sx-forest')}
+              >
                 {onboard.step === 2 ? 'Confirm sample journey' : 'Next'}
-                {onboard.step === 2 ? null : (
-                  <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-                )}
-              </Button>
+                {onboard.step === 2 ? null : <ArrowRight size={16} aria-hidden="true" />}
+              </button>
             </div>
           </div>
         )}
       </div>
-    </section>
+    </PageSection>
   )
 }

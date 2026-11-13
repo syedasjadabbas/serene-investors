@@ -1,114 +1,68 @@
-'use client'
-
-import { useMemo, useRef } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import type { Fund } from '@/global/types/fund'
-import type { StatItem } from '@/global/types/content'
+import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
+import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
 import { fundsBreakdownIntro, sampleFundMinimum } from '@/global/data/funds'
 import { formatFundType, formatPercent, formatSampleAmount } from '@/global/lib/format'
-import { useCountUp } from '@/global/hooks/useCountUp'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
+import type { Fund } from '@/global/types/fund'
 
 type Props = {
   items: Fund[]
 }
 
+/** Side-by-side reading of each fund's published sample figures. */
 export function FundBreakdown({ items }: Props) {
-  const rootRef = useRef<HTMLElement>(null)
-  useSectionReveal(rootRef)
-
-  const stats = useMemo<StatItem[]>(() => {
-    const properties = items.reduce((total, item) => total + item.propertyCount, 0)
-    return [
-      {
-        id: 'funds-count',
-        label: 'Sample funds',
-        value: String(items.length),
-        amount: items.length,
-      },
-      {
-        id: 'funds-properties',
-        label: 'Sample properties across the collection',
-        value: String(properties),
-        amount: properties,
-      },
-      {
-        id: 'funds-minimum',
-        label: 'Sample minimum',
-        value: formatSampleAmount(sampleFundMinimum),
-        amount: sampleFundMinimum,
-        prefix: '$',
-        grouping: true,
-      },
-    ]
-  }, [items])
-
-  useCountUp(rootRef, stats)
-
   return (
-    <section ref={rootRef} className="py-16 md:py-20 lg:py-24 px-5 md:px-8 lg:px-10" aria-labelledby="funds-breakdown-heading">
-      <div className="mx-auto max-w-[var(--container-wide)]">
-        <h2
-          data-reveal-heading
-          id="funds-breakdown-heading"
-          className="max-w-[12ch] text-[clamp(2.1rem,3.8vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-balance text-ink"
-        >
-          {fundsBreakdownIntro.heading}
-        </h2>
-        <p
-          data-reveal-heading
-          className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed text-muted text-pretty"
-        >
-          {fundsBreakdownIntro.body}
-        </p>
+    <PageSection tone="white" labelledBy="funds-breakdown-heading">
+      <SectionHeading
+        id="funds-breakdown-heading"
+        eyebrow="Compare"
+        title={fundsBreakdownIntro.heading}
+        highlight="each sample fund"
+        body={fundsBreakdownIntro.body}
+      />
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mt-10">
-          {stats.map((stat) => (
-            <div key={stat.id} data-reveal-item>
-              <p
-                data-count={stat.id}
-                className="text-[clamp(3rem,6vw,5.2rem)] font-semibold leading-none tracking-[-0.035em] tabular-nums text-ink"
+      <ul className="mt-10 flex flex-col gap-3 sm:mt-12">
+        {items.map((fund) => {
+          const figures = [
+            { label: 'Sample properties', value: String(fund.propertyCount) },
+            { label: 'Sample yield', value: formatPercent(fund.sampleReturnPct) },
+            { label: 'Sample minimum', value: formatSampleAmount(sampleFundMinimum) },
+          ]
+          return (
+            <li key={fund.id}>
+              <article
+                aria-labelledby={`breakdown-${fund.id}`}
+                className="grid gap-5 rounded-[20px] bg-sx-paper p-5 sm:p-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.5fr)_auto] lg:items-center lg:gap-8"
               >
-                {stat.value}
-              </p>
-              <p className="mt-3 text-sm text-muted">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="grid gap-6 mt-12">
-          {items.map((fund) => (
-            <article key={fund.id} data-reveal-item className="pt-6 border-t border-line lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)_auto] lg:items-end lg:gap-8">
-              <div>
-                <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-ink">{fund.name}</h3>
-                <p className="mt-1 text-sm text-muted">
-                  {formatFundType(fund.type)} · {fund.market} · {fund.portfolioLabel}
-                </p>
-              </div>
-              <dl className="grid gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3 lg:mt-0">
                 <div>
-                  <dt className="text-xs text-muted">Sample properties</dt>
-                  <dd className="mt-1 text-xl font-semibold tracking-tight text-ink tabular-nums">{fund.propertyCount}</dd>
+                  <h3 id={`breakdown-${fund.id}`} className="font-heading text-xl font-bold tracking-[-0.015em] sm:text-2xl">
+                    {fund.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-sx-ink/60">
+                    {formatFundType(fund.type)} · {fund.market} · {fund.portfolioLabel}
+                  </p>
                 </div>
-                <div>
-                  <dt className="text-xs text-muted">Sample yield</dt>
-                  <dd className="mt-1 text-xl font-semibold tracking-tight text-ink tabular-nums">{formatPercent(fund.sampleReturnPct)}</dd>
-                </div>
-                <div>
-                  <dt className="text-xs text-muted">Sample minimum</dt>
-                  <dd className="mt-1 text-xl font-semibold tracking-tight text-ink tabular-nums">{formatSampleAmount(sampleFundMinimum)}</dd>
-                </div>
-              </dl>
-              <Link href={`/funds/${fund.id}`} className="group inline-flex items-center gap-1.5 min-h-11 mt-4 lg:mt-0 text-sm font-medium text-ink hover:text-primary transition-colors">
-                View fund
-                <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
-              </Link>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
+                <dl className="grid grid-cols-3 gap-3">
+                  {figures.map((figure) => (
+                    <div key={figure.label}>
+                      <dt className="text-xs text-sx-ink/55">{figure.label}</dt>
+                      <dd className="mt-1 font-heading text-lg font-bold tabular-nums sm:text-xl">{figure.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <Link
+                  href={`/funds/${fund.id}`}
+                  className="group inline-flex w-fit items-center gap-3 rounded-full text-sm font-semibold text-sx-ink"
+                >
+                  View fund
+                  <span className="sr-only">: {fund.name}</span>
+                  <ArrowCircle tone="dark" size="sm" />
+                </Link>
+              </article>
+            </li>
+          )
+        })}
+      </ul>
+    </PageSection>
   )
 }
-

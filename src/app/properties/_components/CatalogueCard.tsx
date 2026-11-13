@@ -1,11 +1,10 @@
 'use client'
 
-import { useRef } from 'react'
-import { Link } from '@/global/components/ui/Link'
-import { ArrowRight, MapPin } from 'lucide-react'
+import Link from 'next/link'
+import { MapPin } from 'lucide-react'
 import type { Property } from '@/global/types/property'
+import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
 import { formatPropertyMeta } from '@/global/lib/format'
-import { useCardPointerTilt } from '@/global/hooks/useCardPointerTilt'
 import { withBase } from '@/global/lib/asset'
 
 type Props = {
@@ -80,113 +79,77 @@ function getPropertyMetrics(property: Property) {
 }
 
 export function CatalogueCard({ property }: Props) {
-  const cardRef = useRef<HTMLElement>(null)
-  useCardPointerTilt(cardRef)
   const location = formatPropertyMeta(property.neighborhood, property.city)
   const metrics = getPropertyMetrics(property)
+  const kpis = [
+    { label: 'Net yield', value: metrics.netYield },
+    { label: '3Y target', value: metrics.targetReturn },
+    { label: 'Occupancy', value: metrics.occupancy },
+  ]
 
   return (
-    <article
-      ref={cardRef}
-      data-catalogue-card
-      className="group relative flex flex-col justify-between rounded-2xl border border-ink/[0.08] bg-surface/90 p-3 shadow-xs transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-ink/20 hover:shadow-xl"
-    >
+    <article data-catalogue-card className="group flex w-full">
       <Link
         href={`/properties/${property.id}`}
         aria-label={`${property.name}, ${location}, ${property.type}, ${metrics.statusPillText}. View property.`}
-        className="flex flex-col h-full rounded-xl text-inherit no-underline focus-visible:outline-2 focus-visible:outline-primary"
+        className="flex w-full flex-col rounded-[20px] bg-white p-3 text-sx-ink transition-transform duration-300 ease-out hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sx-brand"
       >
-        {/* High-resolution 16:10 aspect ratio image container */}
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-bg-warm">
+        <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[14px] bg-sx-paper">
           <img
             data-catalogue-image
             src={withBase(property.image)}
             alt={property.imageAlt}
             width={1600}
-            height={1000}
+            height={1100}
             loading="lazy"
             decoding="async"
             className="block h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-
-          {/* Gentle bottom vignette gradient */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-85" />
-
-          {/* Top-Left Badge: Frosted location pill */}
-          <div className="absolute left-2.5 top-2.5 pointer-events-none z-10">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-ink/[0.08] bg-surface/90 px-2.5 py-1 text-[11px] font-medium text-ink shadow-xs backdrop-blur-md">
-              <MapPin size={11} className="text-primary shrink-0" strokeWidth={2.5} />
-              <span className="truncate max-w-[130px]">{location}</span>
-            </span>
-          </div>
-
-          {/* Top-Right Badge: Live funding status pill with glowing green pulse dot */}
-          <div className="absolute right-2.5 top-2.5 pointer-events-none z-10">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-800/15 bg-surface/90 px-2.5 py-1 text-[11px] font-semibold text-emerald-900 shadow-xs backdrop-blur-md font-mono">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600" />
-              </span>
-              <span>{metrics.statusPillText}</span>
-            </span>
-          </div>
-        </div>
-
-        {/* Sleek 4px Funding Progress Bar */}
-        <div className="mt-3 space-y-1.5 px-0.5">
-          <div className="flex items-center justify-between text-xs">
-            <span className="font-mono text-[11px] font-medium text-ink/75">
-              {metrics.fundingFormatted}
-            </span>
-          </div>
-          <div className="h-1 w-full overflow-hidden rounded-full bg-ink/[0.08]">
-            <div
-              className="h-full rounded-full bg-primary transition-all duration-700 ease-out"
-              style={{ width: `${Math.min(metrics.fundedPct, 100)}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Card Header & Information */}
-        <div className="mt-3 px-0.5">
-          <h3 className="text-lg font-semibold tracking-tight text-ink transition-colors duration-300 group-hover:text-primary">
-            {property.name}
-          </h3>
-          <p className="mt-0.5 text-xs text-muted">
-            {property.type} · {property.beds ? `${property.beds} Bed · ` : ''}{property.areaLabel}
-          </p>
-        </div>
-
-        {/* Institutional 3-Column Split KPI Grid */}
-        <div className="my-3 grid grid-cols-3 divide-x divide-ink/[0.08] rounded-xl border border-ink/[0.08] bg-bg-warm/40 py-2.5 text-center">
-          <div className="px-1 flex flex-col items-center justify-center">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-ink/50">Net Yield</span>
-            <span className="mt-0.5 font-mono text-sm font-bold tabular-nums text-ink">{metrics.netYield}</span>
-          </div>
-          <div className="px-1 flex flex-col items-center justify-center">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-ink/50">3Y Target Return</span>
-            <span className="mt-0.5 font-mono text-sm font-bold tabular-nums text-ink">{metrics.targetReturn}</span>
-          </div>
-          <div className="px-1 flex flex-col items-center justify-center">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-ink/50">Occupancy</span>
-            <span className="mt-0.5 font-mono text-sm font-bold tabular-nums text-ink">{metrics.occupancy}</span>
-          </div>
-        </div>
-
-        {/* Card Footer & Micro-Interactions */}
-        <div className="mt-auto flex items-center justify-between border-t border-ink/[0.06] pt-2.5 px-0.5">
-          <span className="inline-flex items-center rounded-md bg-bg-warm px-2 py-0.5 text-[11px] font-medium text-muted">
-            {metrics.minTicket}
+          <span className="absolute left-3 top-3 inline-flex max-w-[58%] items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-sx-ink">
+            <MapPin size={12} strokeWidth={2.5} aria-hidden="true" className="shrink-0 text-sx-brand" />
+            <span className="truncate">{location}</span>
           </span>
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink transition-colors duration-300 group-hover:text-primary">
-            <span>View property</span>
-            <ArrowRight
-              size={14}
-              strokeWidth={2}
-              aria-hidden="true"
-              className="transition-transform duration-300 group-hover:translate-x-1.5"
-            />
+          <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-sx-ink px-3 py-1 text-xs font-semibold text-white">
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-sx-mint" />
+            {metrics.statusPillText}
           </span>
+        </div>
+
+        <div className="flex flex-1 flex-col gap-4 px-2 pb-2 pt-4">
+          <div>
+            <h3 className="font-heading text-xl font-bold tracking-[-0.02em]">{property.name}</h3>
+            <p className="mt-1 text-sm text-sx-ink/60">
+              {property.type} · {property.beds ? `${property.beds} bed · ` : ''}
+              {property.areaLabel}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs tabular-nums text-sx-ink/60">{metrics.fundingFormatted}</p>
+            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-sx-paper">
+              <div
+                className="h-full rounded-full bg-sx-brand transition-[width] duration-700 ease-out"
+                style={{ width: `${Math.min(metrics.fundedPct, 100)}%` }}
+              />
+            </div>
+          </div>
+
+          <dl className="grid grid-cols-3 rounded-[14px] bg-sx-paper py-3 text-center">
+            {kpis.map((kpi) => (
+              <div key={kpi.label} className="flex flex-col-reverse gap-0.5 px-1">
+                <dt className="text-[11px] font-medium text-sx-ink/55">{kpi.label}</dt>
+                <dd className="font-heading text-base font-bold tabular-nums tracking-[-0.01em]">{kpi.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-auto flex items-center justify-between gap-3">
+            <span className="text-xs font-medium text-sx-ink/60">{metrics.minTicket}</span>
+            <span className="inline-flex items-center gap-2 text-sm font-semibold">
+              View property
+              <ArrowCircle tone="dark" size="sm" />
+            </span>
+          </div>
         </div>
       </Link>
     </article>

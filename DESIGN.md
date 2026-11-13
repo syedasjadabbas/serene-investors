@@ -2,71 +2,79 @@
 
 ## Theme
 
-Warm paper catalogue for a luxury real-estate investment brand. Color lives in a restrained botanical green, not in the surface. Photography of buildings does the atmosphere.
+Confident, editorial real-estate platform. Near-black bands carry the big moments (hero, products,
+footer); a warm light-grey "sheet" carries reading content. Rounded cards everywhere, one green
+accent, building photography for atmosphere.
 
-Scene: a quiet reception in a garden-side residence. Warm light, charcoal ink, one green seal.
+Layout patterns follow prypco.com (floating pill navbar with a full-screen menu, full-bleed hero with a
+floating call-to-action bar, dark product cards, step rows, rounded light sheet over a dark footer).
+Branding, colours, copy and imagery are Serene Investors' own; never copy PRYPCO text, logos or images.
 
-Strategy: Restrained. Green occupies CTAs, yield pills, and active states. About 70% warm white, 20% charcoal and neutrals, 10% green.
+Strategy: about 45% dark, 45% paper/white, 10% green. Green marks CTAs, highlights and active states.
 
-Dials: variance 6, motion 6, density 4.
+## Colours
 
-## Colors
+Tailwind tokens in `src/app/globals.css` (`@theme`). Use these, never hex values in components.
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--bg` | `#F7F5EF` | Page |
-| `--bg-warm` | `#EFEDE5` | Recessed bands |
-| `--surface` | `#FFFFFF` | Cards, header |
-| `--ink` | `#182019` | Headings and body |
-| `--muted` | `#5D665E` | Supporting copy |
-| `--subtle` | `#8A918B` | Captions |
-| `--primary` | `#315C45` | Primary CTA |
-| `--primary-ink` | `#FFFFFF` | Text on primary |
-| `--accent` | `#1F3D2E` | Footer, promo, hover |
-| `--accent-ink` | `#F7F5EF` | Text on accent |
-| `--soft` | `#DCE7DE` | Pills, NEW badge |
-| `--soft-ink` | `#1F3D2E` | Text on soft |
-| `--line` | `#D9DDD7` | Hairlines |
+| `sx-ink` | `#0E100F` | Dark bands, primary text, dark buttons |
+| `sx-card` | `#1A1C1B` | Cards on dark |
+| `sx-card-2` | `#242725` | Hover / nested on dark |
+| `sx-paper` | `#F3F3EF` | Light page background |
+| white | `#FFFFFF` | Cards on paper |
+| `sx-brand` | `#00A663` | Primary accent, CTAs, highlighted words on light |
+| `sx-mint` | `#7EE2B0` | Highlighted words and pills on dark |
+| `sx-forest` | `#0B3528` | Deep green panels (CTA band, What we do) |
+| `sx-sand` | `#EFE3C8` | Secondary accent pills and arrows |
 
-Do not use crimson, neon green, purple, or gradients.
+Older CSS files use `--bg`, `--ink`, `--primary` etc. in `src/global/styles/tokens.css`; those point at
+the same palette. Do not add purple, lime or neon colours, or gradient text.
 
 ## Typography
 
-Family: Mona Sans Variable. One family, weight contrast.
+Plus Jakarta Sans (Google Fonts) for everything; weight does the work.
 
 | Role | Size | Weight | Tracking |
 | --- | --- | --- | --- |
-| Display | `clamp(2.75rem, 6vw, 5.15rem)` | 600 | `-0.03em` |
-| Section | `clamp(2.35rem, 4.1vw, 3.75rem)` | 600 | `-0.03em` |
-| Quote | `clamp(2rem, 4vw, 3.35rem)` | 500 italic | `-0.025em` |
-| Card title | `1.35rem` | 560 | `-0.015em` |
-| Body | `1.0625rem` / `1.7` | 400 | `0` |
-| Label | `0.75rem` | 500 | `0.13em` uppercase |
+| Home hero | `2.4rem` → `4.5rem`, uppercase | 800 | `-0.03em` |
+| Page title (`PageHero`) | `2.5rem` → `4.5rem` | 700 | `-0.035em` |
+| Section (`SectionHeading`) | `1.875rem` → `2.75rem` | 700 | `-0.025em` |
+| Card title | `1.25rem`–`1.875rem` | 600–700 | `-0.015em` |
+| Body | `1rem`–`1.125rem` / relaxed | 400 | `0` |
+| Eyebrow pill | `0.75rem` | 600 | `0` |
 
-Display tracking floor: `-0.04em`. Body measure: 65ch. `text-wrap: balance` on h1-h3.
+`text-balance` on headings. Body copy at 65% opacity of its background's text colour.
 
 ## Layout
 
-Max width 72-80rem. Header 68px. Hero `min-h-[100dvh]`, top padding capped at `pt-24`.
-
-Section rhythm: 4 / 8 / 12 / 16 / 22. Homepage bands use `4rem` / `5.5rem`.
+Content column 1240px (`max-w-[1240px]`), wide bands 1400px, reading 880px. Side gutters 16px on
+phones, 32px from `sm`. Section padding `py-16` / `sm:py-24`. Navbar floats 12–16px from the top;
+inner pages start below it (`pt-24` on `main`).
 
 ## Components
 
-- Buttons: pill. Primary Serene green, secondary dark botanical, ghost charcoal.
-- Cards: 12px radius, white fill, thin neutral border, light lift only.
-- Yield and NEW pills: soft green, dark green text.
-- Header: sticky white bar, tracked wordmark.
-- Footer: dark botanical green, warm type.
+- Navbar: floating rounded bar, logo centred (left on phones), Log in left, Sign up and a dark
+  Menu pill right. Transparent over the home hero, white once scrolled. Menu opens a full-screen
+  dark panel with every page grouped.
+- Buttons: `PillLink`, a pill with a round arrow badge that turns on hover.
+- Cards: `rounded-[20px]`, white on paper or `sx-card` on dark; no borders or heavy shadows.
+- Pills: `rounded-full`, small, mint or sand.
+- Footer: dark, link columns, legal text, giant outlined "serene" wordmark.
+- Inner pages: the kit in `src/global/components/page/` (see README, "Inner page kit").
 
 ## Imagery
 
-Building photography first. No div-built fake app screens. Press marks are typographic.
+Building and city photography from `public/images` (served through `withBase()`). Small UI-style
+visuals (activity rows, allocation bars) are fine inside cards; label any figures as samples.
 
 ## Motion
 
-Lenis for wheel smoothing when motion is allowed. GSAP ScrollTrigger for hero collage drift and section reveals. Reduced motion: native scroll, no pin, no drift.
+Lenis smooth scroll; GSAP ScrollTrigger reveals; the home mission quote fills in word by word; the
+hero photo slowly zooms; the locations strip scrolls. Respect reduced motion: no zoom, marquee or
+scroll-linked effects.
 
 ## Anti-patterns
 
-No Stake branding. No crimson. No neon green. No three identical icon cards. No gradient text. No glass cards.
+No Stake or PRYPCO branding, copy or images. No invented regulators, partners or performance
+figures presented as fact. No hex colours in components. No glass cards or gradient text.

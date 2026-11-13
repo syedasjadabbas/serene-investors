@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react'
-import { ArrowLeft, CheckCircle2, Lock } from 'lucide-react'
-import { Button } from '@/global/components/ui/Button'
+import { useEffect, useRef, useState, type ClipboardEvent, type FormEvent, type KeyboardEvent } from 'react'
+import { ArrowLeft, CheckCircle2 } from 'lucide-react'
 import { ApiError } from '@/global/api/client'
 import { authApi } from '@/global/api/endpoints/authApi'
+import { AuthHeading, FormAlert, SubmitButton, textLinkClass } from './AuthLayout'
 
 type Props = {
   email: string
@@ -13,13 +13,10 @@ type Props = {
   actionLabel?: string
 }
 
-export function OtpVerificationStep({
-  email,
-  onSuccess,
-  onBack,
-  actionLabel = 'Verify & Log in',
-}: Props) {
-  const [digits, setDigits] = useState<string[]>(['', '', '', '', '', ''])
+const EMPTY = ['', '', '', '', '', '']
+
+export function OtpVerificationStep({ email, onSuccess, onBack, actionLabel = 'Verify & Log in' }: Props) {
+  const [digits, setDigits] = useState<string[]>(EMPTY)
   const [error, setError] = useState('')
   const [isVerifying, setIsVerifying] = useState(false)
   const [isResending, setIsResending] = useState(false)
@@ -67,11 +64,12 @@ export function OtpVerificationStep({
       updated[i] = numericOnly[i]
     }
     setDigits(updated)
+    setError('')
     const nextIndex = Math.min(numericOnly.length, 5)
     inputRefs.current[nextIndex]?.focus()
   }
 
-  async function handleSubmit(e?: React.FormEvent) {
+  async function handleSubmit(e?: FormEvent) {
     if (e) e.preventDefault()
     const code = digits.join('')
     if (code.length < 6) {
@@ -105,7 +103,7 @@ export function OtpVerificationStep({
     try {
       await authApi.sendOtp(email)
       setResendStatus('success')
-      setDigits(['', '', '', '', '', ''])
+      setDigits(EMPTY)
       inputRefs.current[0]?.focus()
       setTimeout(() => setResendStatus('idle'), 4000)
     } catch {
@@ -123,34 +121,20 @@ export function OtpVerificationStep({
       <button
         type="button"
         onClick={onBack}
-        className="mb-4 inline-flex items-center gap-1.5 text-xs font-medium text-muted transition-colors hover:text-ink"
+        className="mb-6 inline-flex items-center gap-1.5 rounded-full text-sm font-medium text-sx-ink/60 transition-colors hover:text-sx-ink"
       >
-        <ArrowLeft size={14} />
+        <ArrowLeft size={16} aria-hidden="true" />
         Back
       </button>
 
-      <div className="flex items-center gap-2">
-        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
-          <Lock size={13} />
-        </span>
-        <span className="brand-label text-muted">Two-Factor Authentication</span>
-      </div>
+      <AuthHeading eyebrow="Two-step verification" title="Check your email">
+        Enter the 6-digit code we sent to <span className="font-semibold text-sx-ink">{email || 'your email'}</span>.
+      </AuthHeading>
 
-      <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-        Verify your identity
-      </h2>
-      <p className="mt-2 text-sm leading-relaxed text-muted">
-        Enter the 6-digit verification code sent to{' '}
-        <span className="font-medium text-ink">{email || 'your email'}</span>.
-      </p>
-
-      <form className="mt-6 flex flex-col gap-5" onSubmit={handleSubmit}>
-        {/* 6 Digit Input Slots */}
-        <div>
-          <label className="mb-3 block text-center text-xs font-semibold uppercase tracking-wider text-muted">
-            Security Verification Code
-          </label>
-          <div className="flex items-center justify-center gap-2 sm:gap-3">
+      <form className="mt-8 flex flex-col gap-5" onSubmit={handleSubmit} noValidate>
+        <fieldset>
+          <legend className="mb-3 text-sm font-medium text-sx-ink">Verification code</legend>
+          <div className="grid grid-cols-6 gap-2 sm:gap-3">
             {digits.map((digit, i) => (
               <input
                 key={i}
@@ -160,63 +144,46 @@ export function OtpVerificationStep({
                 type="text"
                 inputMode="numeric"
                 pattern="[0-9]*"
+                autoComplete={i === 0 ? 'one-time-code' : 'off'}
                 maxLength={1}
                 value={digit}
                 onChange={(e) => handleChange(i, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(i, e)}
                 onPaste={handlePaste}
-                className="h-12 w-10 rounded-xl border border-line bg-bg/50 text-center font-mono text-xl font-bold text-ink transition-all focus:border-primary focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/20 sm:h-14 sm:w-12 sm:text-2xl"
-                aria-label={`Digit ${i + 1}`}
+                aria-label={`Digit ${i + 1} of 6`}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? 'otp-error' : undefined}
+                className="h-14 w-full min-w-0 rounded-[12px] bg-sx-paper text-center font-heading text-2xl font-bold text-sx-ink outline-none ring-sx-brand transition-shadow focus:ring-2 aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-red-600"
               />
             ))}
           </div>
+        </fieldset>
+
+        {error && <FormAlert id="otp-error">{error}</FormAlert>}
+
+        {/* Stays rendered (no display:none) so screen readers announce the resend result; collapses its gap when empty. */}
+        <div aria-live="polite" className="empty:-mt-5">
+          {resendStatus === 'success' && (
+            <p className="flex items-center gap-2 rounded-[12px] bg-sx-mint/40 px-4 py-3 text-sm text-sx-forest">
+              <CheckCircle2 size={16} aria-hidden="true" />
+              A new code is on its way to your email.
+            </p>
+          )}
+          {resendStatus === 'error' && (
+            <p className="rounded-[12px] bg-red-50 px-4 py-3 text-sm text-red-700">Failed to send code. Please try again.</p>
+          )}
         </div>
 
-        {error && (
-          <div className="rounded-xl border border-danger/30 bg-danger/10 px-4 py-2.5 text-center text-xs text-danger">
-            {error}
-          </div>
-        )}
+        <SubmitButton busy={isVerifying} busyLabel="Verifying code..." disabled={!isComplete}>
+          {actionLabel}
+        </SubmitButton>
 
-        {resendStatus === 'success' && (
-          <div className="flex items-center justify-center gap-1.5 text-xs text-emerald-700">
-            <CheckCircle2 size={13} />
-            <span>A new verification code has been dispatched to your email.</span>
-          </div>
-        )}
-
-        {resendStatus === 'error' && (
-          <div className="text-center text-xs text-danger">
-            Failed to send code. Please try again.
-          </div>
-        )}
-
-        <Button
-          type="submit"
-          disabled={!isComplete || isVerifying}
-          className="w-full py-3 text-sm font-semibold tracking-wide disabled:opacity-50"
-        >
-          {isVerifying ? (
-            <span className="flex items-center justify-center gap-2">
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-ink border-t-transparent" />
-              Verifying code...
-            </span>
-          ) : (
-            actionLabel
-          )}
-        </Button>
-
-        <div className="flex items-center justify-between text-xs text-muted">
+        <p className="flex flex-wrap items-center justify-between gap-2 text-sm text-sx-ink/60">
           <span>Didn&apos;t receive the code?</span>
-          <button
-            type="button"
-            onClick={handleResend}
-            disabled={isResending}
-            className="font-medium text-primary underline underline-offset-2 transition-colors hover:text-accent disabled:opacity-50"
-          >
+          <button type="button" onClick={handleResend} disabled={isResending} className={`${textLinkClass} disabled:opacity-50`}>
             {isResending ? 'Sending...' : 'Resend code'}
           </button>
-        </div>
+        </p>
       </form>
     </div>
   )

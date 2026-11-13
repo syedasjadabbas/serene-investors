@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { useScrollToHash } from '@/global/hooks/useScrollToHash'
 import { registerGsapPlugins, ScrollTrigger } from '@/global/lib/gsap'
+import { cn } from '@/global/lib/cn'
 import { Navbar } from './Navbar'
 import { ScrollProgressIndicator } from './ScrollProgressIndicator'
 import { SereneFooter } from './SereneFooter'
@@ -13,8 +14,9 @@ type Props = {
 }
 
 export function AppShellClient({ children }: Props) {
-  const sentinelRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
+  // The home hero runs under the floating navbar; every other page starts below it.
+  const isHome = pathname === '/'
   useScrollToHash()
 
   useEffect(() => {
@@ -26,17 +28,14 @@ export function AppShellClient({ children }: Props) {
   }, [pathname])
 
   return (
-    <div className="min-h-[100dvh] bg-bg text-ink overflow-x-clip w-full max-w-full flex flex-col">
+    <div className="flex min-h-[100dvh] w-full max-w-full flex-col overflow-x-clip bg-bg text-ink">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
       <ScrollProgressIndicator />
-      <div ref={sentinelRef} className="h-px" aria-hidden="true" />
-      
-      {/* 1:1 Stake Top Notification Banner & Sticky Navigation Bar */}
-      <Navbar />
+      <Navbar overlay={isHome} />
 
-      <main id="main" tabIndex={-1} className="w-full max-w-full overflow-x-clip flex-1">
+      <main id="main" tabIndex={-1} className={cn('w-full max-w-full flex-1 overflow-x-clip', !isHome && 'pt-24')}>
         {children}
       </main>
       <SereneFooter />

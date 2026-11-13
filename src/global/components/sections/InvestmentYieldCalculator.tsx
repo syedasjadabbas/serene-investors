@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, Calculator, CheckCircle2, TrendingUp, ShieldCheck } from 'lucide-react'
-import { ButtonLink } from '@/global/components/ui/Button'
+import { Calculator, Info, TrendingUp } from 'lucide-react'
+import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
+import { PillLink } from '@/global/components/ui/PillLink'
 import { cn } from '@/global/lib/cn'
 
 type YieldScenario = {
@@ -20,6 +21,26 @@ const scenarios: YieldScenario[] = [
 const amountPresets = [10000, 25000, 50000, 100000, 250000]
 const yearPresets = [3, 5, 7, 10]
 
+const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sx-brand'
+const RANGE_CLASS = cn('mt-4 h-2 w-full cursor-pointer rounded-full accent-sx-brand', FOCUS)
+
+function chipClass(selected: boolean) {
+  return cn(
+    'min-h-9 rounded-full px-3.5 text-xs font-semibold tabular-nums transition-colors',
+    FOCUS,
+    selected ? 'bg-sx-ink text-white' : 'bg-white text-sx-ink hover:bg-sx-sand',
+  )
+}
+
+/** Callers may pass the eyebrow in capitals ("PORTFOLIO MODELING"); the pill reads better in sentence case. */
+function sentenceCase(text: string) {
+  if (text !== text.toUpperCase()) return text
+  const lower = text.toLowerCase()
+  return lower.charAt(0).toUpperCase() + lower.slice(1)
+}
+
+const gbp = (value: number) => `£${Math.round(value).toLocaleString('en-GB')}`
+
 type Props = {
   title?: string
   eyebrow?: string
@@ -28,7 +49,7 @@ type Props = {
 
 export function InvestmentYieldCalculator({
   title = 'Investment & Projected Yield Calculator',
-  eyebrow = 'INSTITUTIONAL MODELING',
+  eyebrow = 'Projection model',
   className,
 }: Props) {
   const [amount, setAmount] = useState<number>(25000)
@@ -52,282 +73,219 @@ export function InvestmentYieldCalculator({
   const rentalRatio = Math.max(1, Math.round((totalRentalIncome / totalEstimatedReturn) * 100))
   const appreciationRatio = Math.max(1, 100 - rentalRatio)
 
+  const yearsLabel = `${years} ${years === 1 ? 'year' : 'years'}`
+
   return (
-    <section
+    <PageSection
       id="yield-calculator"
-      className={cn(
-        'home-band home-band--quiet overflow-x-clip border-y border-line bg-surface/90 py-16 md:py-20 lg:py-24',
-        className,
-      )}
-      aria-labelledby="calculator-heading"
+      labelledBy="calculator-heading"
+      tone="white"
+      className={cn('overflow-x-clip', className)}
     >
-      <div className="mx-auto max-w-[var(--container-wide)] px-5 md:px-8 lg:px-10">
-        {/* Section Header */}
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="home-kicker text-muted">{eyebrow}</p>
-          <h2
-            id="calculator-heading"
-            className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl lg:text-5xl"
-          >
-            {title}
-          </h2>
-          <p className="mt-4 text-base text-muted sm:text-lg">
-            Forecast real quarterly dividend yields and conservative asset appreciation across prime
-            institutional UK property holdings.
-          </p>
-        </div>
+      <SectionHeading
+        id="calculator-heading"
+        eyebrow={sentenceCase(eyebrow)}
+        title={title}
+        body="Estimate rental income and capital growth for an amount and holding period. Illustrative figures only: returns are not guaranteed."
+        align="center"
+        className="[&_h2]:scroll-mt-28"
+      />
 
-        {/* Calculator Main Grid */}
-        <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:gap-10 items-start">
-          {/* Controls Column */}
-          <div className="rounded-2xl border border-ink/[0.08] bg-surface p-6 sm:p-8 shadow-xs lg:col-span-6 xl:col-span-7">
-            {/* Amount Slider */}
-            <div>
-              <div className="flex items-baseline justify-between">
-                <label htmlFor="investment-amount" className="text-sm font-semibold text-ink">
-                  Investment Capital
-                </label>
-                <span className="font-mono text-2xl font-bold tracking-tight text-primary sm:text-3xl">
-                  £{amount.toLocaleString('en-GB')}
-                </span>
-              </div>
-
-              <input
-                id="investment-amount"
-                type="range"
-                min={5000}
-                max={500000}
-                step={2500}
-                value={amount}
-                onChange={(e) => setAmount(Number(e.target.value))}
-                className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-lg bg-bg-warm accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-              />
-
-              {/* Amount Quick Presets */}
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="text-xs text-muted font-medium mr-1">Presets:</span>
-                {amountPresets.map((preset) => (
-                  <button
-                    key={preset}
-                    type="button"
-                    onClick={() => setAmount(preset)}
-                    className={cn(
-                      'rounded-pill px-3 py-1 font-mono text-xs font-medium transition-all cursor-pointer',
-                      amount === preset
-                        ? 'bg-primary text-primary-ink font-semibold shadow-xs'
-                        : 'border border-ink/[0.08] bg-surface hover:bg-bg-warm text-ink',
-                    )}
-                  >
-                    £{(preset / 1000).toFixed(0)}k
-                  </button>
-                ))}
-              </div>
+      <div className="mt-12 grid items-start gap-4 lg:grid-cols-12">
+        {/* Controls */}
+        <div className="rounded-[20px] bg-sx-paper p-5 sm:p-8 lg:col-span-7">
+          <div>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <label htmlFor="investment-amount" className="text-sm font-semibold text-sx-ink">
+                Investment amount
+              </label>
+              <output
+                htmlFor="investment-amount"
+                className="font-heading text-2xl font-bold tabular-nums tracking-[-0.02em] text-sx-ink sm:text-3xl"
+              >
+                {gbp(amount)}
+              </output>
             </div>
-
-            <div className="my-8 h-px bg-line" />
-
-            {/* Holding Period Slider */}
-            <div>
-              <div className="flex items-baseline justify-between">
-                <label htmlFor="holding-years" className="text-sm font-semibold text-ink">
-                  Holding Period
-                </label>
-                <span className="font-mono text-xl font-bold tracking-tight text-ink sm:text-2xl">
-                  {years} {years === 1 ? 'Year' : 'Years'}
-                </span>
-              </div>
-
-              <input
-                id="holding-years"
-                type="range"
-                min={1}
-                max={10}
-                step={1}
-                value={years}
-                onChange={(e) => setYears(Number(e.target.value))}
-                className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-lg bg-bg-warm accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-              />
-
-              {/* Years Quick Presets */}
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="text-xs text-muted font-medium mr-1">Presets:</span>
-                {yearPresets.map((preset) => (
-                  <button
-                    key={preset}
-                    type="button"
-                    onClick={() => setYears(preset)}
-                    className={cn(
-                      'rounded-pill px-3 py-1 font-mono text-xs font-medium transition-all cursor-pointer',
-                      years === preset
-                        ? 'bg-primary text-primary-ink font-semibold shadow-xs'
-                        : 'border border-ink/[0.08] bg-surface hover:bg-bg-warm text-ink',
-                    )}
-                  >
-                    {preset} yrs
-                  </button>
-                ))}
-              </div>
+            <input
+              id="investment-amount"
+              type="range"
+              min={5000}
+              max={500000}
+              step={2500}
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              aria-valuetext={gbp(amount)}
+              className={RANGE_CLASS}
+            />
+            <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Amount presets">
+              {amountPresets.map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  aria-pressed={amount === preset}
+                  onClick={() => setAmount(preset)}
+                  className={chipClass(amount === preset)}
+                >
+                  £{(preset / 1000).toFixed(0)}k
+                </button>
+              ))}
             </div>
+          </div>
 
-            <div className="my-8 h-px bg-line" />
+          <div className="my-7 h-px bg-sx-ink/10" />
 
-            {/* Yield Scenario Selector */}
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-ink">Yield Performance Model</span>
-                <span className="font-mono text-xs font-semibold text-primary">
-                  {selectedScenario.rate}% Net / Yr
-                </span>
-              </div>
+          <div>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <label htmlFor="holding-years" className="text-sm font-semibold text-sx-ink">
+                Holding period
+              </label>
+              <output
+                htmlFor="holding-years"
+                className="font-heading text-xl font-bold tabular-nums tracking-[-0.02em] text-sx-ink sm:text-2xl"
+              >
+                {yearsLabel}
+              </output>
+            </div>
+            <input
+              id="holding-years"
+              type="range"
+              min={1}
+              max={10}
+              step={1}
+              value={years}
+              onChange={(e) => setYears(Number(e.target.value))}
+              aria-valuetext={yearsLabel}
+              className={RANGE_CLASS}
+            />
+            <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Holding period presets">
+              {yearPresets.map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  aria-pressed={years === preset}
+                  onClick={() => setYears(preset)}
+                  className={chipClass(years === preset)}
+                >
+                  {preset} yrs
+                </button>
+              ))}
+            </div>
+          </div>
 
-              <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                {scenarios.map((sc) => (
+          <div className="my-7 h-px bg-sx-ink/10" />
+
+          <div role="group" aria-labelledby="yield-scenario-label">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span id="yield-scenario-label" className="text-sm font-semibold text-sx-ink">
+                Yield scenario
+              </span>
+              <span className="text-xs font-semibold text-sx-brand">{selectedScenario.rate}% net a year</span>
+            </div>
+            <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+              {scenarios.map((sc) => {
+                const selected = selectedScenario.id === sc.id
+                return (
                   <button
                     key={sc.id}
                     type="button"
+                    aria-pressed={selected}
                     onClick={() => setSelectedScenario(sc)}
                     className={cn(
-                      'flex flex-col items-start rounded-xl border p-3 text-left transition-all cursor-pointer',
-                      selectedScenario.id === sc.id
-                        ? 'border-primary bg-primary/[0.06] shadow-xs'
-                        : 'border-ink/[0.08] bg-surface hover:border-ink/20 hover:bg-bg-warm/50',
+                      'flex flex-col items-start rounded-[14px] p-3.5 text-left transition-colors',
+                      FOCUS,
+                      selected ? 'bg-sx-ink text-white' : 'bg-white text-sx-ink hover:bg-sx-sand',
                     )}
                   >
-                    <span className="text-xs font-semibold text-ink">{sc.label}</span>
-                    <span className="mt-1 font-mono text-sm font-bold text-primary">
+                    <span className="text-xs font-semibold">{sc.label}</span>
+                    <span className={cn('mt-1 font-heading text-lg font-bold', selected ? 'text-sx-mint' : 'text-sx-brand')}>
                       {sc.rate}%
                     </span>
                   </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Platform Security Reassurance */}
-            <div className="mt-8 flex items-center gap-3 rounded-xl border border-line bg-bg-warm/60 p-3.5">
-              <ShieldCheck size={20} className="text-primary shrink-0" />
-              <p className="text-xs leading-relaxed text-muted">
-                100% asset-backed fractional shares registered with UK Land Registry title deeds.
-                Distributions deposited quarterly to your verified bank account.
-              </p>
+                )
+              })}
             </div>
           </div>
 
-          {/* Results Summary Column */}
-          <div className="rounded-2xl border border-ink/[0.08] bg-surface p-6 sm:p-8 shadow-lg lg:col-span-6 xl:col-span-5 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between border-b border-line pb-4">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted">
-                  <Calculator size={14} className="text-primary" />
-                  Maturity Forecast
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
-                  <TrendingUp size={12} />
-                  +{totalRoiPct.toFixed(1)}% Total Return
-                </span>
-              </div>
+          <p className="mt-7 flex items-start gap-2.5 text-xs leading-relaxed text-sx-ink/60">
+            <Info size={16} aria-hidden="true" className="mt-px shrink-0 text-sx-brand" />
+            <span>
+              Illustrative estimate. Assumes the selected net yield every year and 4.2% yearly capital growth,
+              compounding. Real income and values can fall as well as rise.
+            </span>
+          </p>
+        </div>
 
-              {/* Big Stat: Total Estimated Return */}
-              <div className="mt-6">
-                <p className="text-xs font-medium text-muted">Total Projected Return ({years} yrs)</p>
-                <p className="mt-1 font-mono text-3xl sm:text-4xl font-extrabold tracking-tight text-ink">
-                  £{Math.round(totalEstimatedReturn).toLocaleString('en-GB')}
-                </p>
-                <p className="mt-1 text-xs text-muted">
-                  Portfolio asset value at exit:{' '}
-                  <strong className="text-ink font-semibold">
-                    £{Math.round(totalPortfolioValue).toLocaleString('en-GB')}
-                  </strong>
-                </p>
-              </div>
-
-              {/* Breakdown Figures */}
-              <div className="mt-6 grid grid-cols-2 gap-4 rounded-xl border border-line bg-bg-warm/50 p-4">
-                <div>
-                  <p className="text-[0.72rem] text-muted uppercase font-medium">Est. Annual Income</p>
-                  <p className="mt-1 font-mono text-lg font-bold text-primary">
-                    £{Math.round(annualRentalIncome).toLocaleString('en-GB')}
-                  </p>
-                  <p className="text-[0.68rem] text-muted">
-                    £{Math.round(monthlyRentalIncome).toLocaleString('en-GB')}/mo
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[0.72rem] text-muted uppercase font-medium">Capital Growth</p>
-                  <p className="mt-1 font-mono text-lg font-bold text-ink">
-                    £{Math.round(projectedAppreciation).toLocaleString('en-GB')}
-                  </p>
-                  <p className="text-[0.68rem] text-muted">+4.2% compound / yr</p>
-                </div>
-              </div>
-
-              {/* Visual Split Bar (Rental Dividends vs Capital Appreciation) */}
-              <div className="mt-6">
-                <div className="flex items-center justify-between text-xs font-semibold text-ink mb-2">
-                  <span>Return Composition</span>
-                  <span className="font-mono text-muted text-[0.7rem]">
-                    Dividends vs Appreciation
-                  </span>
-                </div>
-
-                <div className="h-3 w-full overflow-hidden rounded-full bg-bg-warm flex gap-0.5">
-                  <div
-                    className="h-full bg-primary transition-all duration-500 ease-out"
-                    style={{ width: `${rentalRatio}%` }}
-                    title={`Rental Distributions: ${rentalRatio}%`}
-                  />
-                  <div
-                    className="h-full bg-accent transition-all duration-500 ease-out"
-                    style={{ width: `${appreciationRatio}%` }}
-                    title={`Capital Growth: ${appreciationRatio}%`}
-                  />
-                </div>
-
-                {/* Legend */}
-                <div className="mt-3 flex items-center justify-between text-xs text-muted">
-                  <span className="flex items-center gap-1.5">
-                    <span className="size-2.5 rounded-full bg-primary" />
-                    <span>
-                      Rental Yields:{' '}
-                      <strong className="text-ink">
-                        £{Math.round(totalRentalIncome).toLocaleString('en-GB')}
-                      </strong>{' '}
-                      ({rentalRatio}%)
-                    </span>
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="size-2.5 rounded-full bg-accent" />
-                    <span>
-                      Appreciation:{' '}
-                      <strong className="text-ink">
-                        £{Math.round(projectedAppreciation).toLocaleString('en-GB')}
-                      </strong>{' '}
-                      ({appreciationRatio}%)
-                    </span>
-                  </span>
-                </div>
-              </div>
+        {/* Results */}
+        <div className="flex flex-col justify-between gap-8 rounded-[20px] bg-sx-ink p-5 text-white sm:p-8 lg:col-span-5">
+          <div aria-live="polite">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/60">
+                <Calculator size={14} aria-hidden="true" className="text-sx-mint" />
+                Projection after {yearsLabel}
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-sx-mint px-2.5 py-0.5 text-xs font-semibold text-sx-ink">
+                <TrendingUp size={12} aria-hidden="true" />+{totalRoiPct.toFixed(1)}% total return
+              </span>
             </div>
 
-            {/* CTAs */}
-            <div className="mt-8 pt-6 border-t border-line flex flex-col gap-3">
-              <ButtonLink
-                href={`/get-started?amount=${amount}`}
-                className="w-full min-h-11 gap-2 text-sm shadow-md"
-              >
-                <span>Allocate £{amount.toLocaleString('en-GB')} to this portfolio</span>
-                <ArrowRight size={16} />
-              </ButtonLink>
-              <ButtonLink
-                variant="secondary"
-                href="/properties"
-                className="w-full min-h-11 text-sm text-center"
-              >
-                Browse matching prime properties
-              </ButtonLink>
+            <div className="mt-6">
+              <p className="text-sm text-white/60">Total projected return</p>
+              <p className="mt-1 font-heading text-4xl font-bold tabular-nums tracking-[-0.03em] sm:text-5xl">
+                {gbp(totalEstimatedReturn)}
+              </p>
+              <p className="mt-2 text-sm text-white/60">
+                Asset value at exit: <strong className="font-semibold text-white">{gbp(totalPortfolioValue)}</strong>
+              </p>
             </div>
+
+            <dl className="mt-6 grid grid-cols-2 gap-3">
+              <div className="rounded-[14px] bg-sx-card p-4">
+                <dt className="text-xs text-white/60">Est. annual income</dt>
+                <dd className="mt-1 font-heading text-lg font-bold tabular-nums text-sx-mint">{gbp(annualRentalIncome)}</dd>
+                <dd className="text-xs text-white/50">
+                  {gbp(monthlyRentalIncome)}/mo · {gbp(quarterlyRentalIncome)}/qtr
+                </dd>
+              </div>
+              <div className="rounded-[14px] bg-sx-card p-4">
+                <dt className="text-xs text-white/60">Capital growth</dt>
+                <dd className="mt-1 font-heading text-lg font-bold tabular-nums">{gbp(projectedAppreciation)}</dd>
+                <dd className="text-xs text-white/50">+4.2% compound / yr</dd>
+              </div>
+            </dl>
+
+            <div className="mt-6">
+              <p className="mb-2 text-xs font-semibold text-white/80">Return composition</p>
+              <div className="flex h-3 w-full gap-0.5 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+                <div className="h-full bg-sx-brand transition-all duration-500 ease-out" style={{ width: `${rentalRatio}%` }} />
+                <div className="h-full bg-sx-sand transition-all duration-500 ease-out" style={{ width: `${appreciationRatio}%` }} />
+              </div>
+              <ul className="mt-3 flex flex-col gap-1.5 text-xs text-white/60">
+                <li className="flex items-center gap-2">
+                  <span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-sx-brand" />
+                  <span>
+                    Rental income: <strong className="text-white">{gbp(totalRentalIncome)}</strong> ({rentalRatio}%)
+                  </span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-sx-sand" />
+                  <span>
+                    Appreciation: <strong className="text-white">{gbp(projectedAppreciation)}</strong> ({appreciationRatio}%)
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-white/10 pt-6">
+            <PillLink href={`/get-started?amount=${amount}`} variant="brand" className="w-full">
+              Allocate {gbp(amount)} to this portfolio
+            </PillLink>
+            <PillLink href="/properties" variant="outline" className="w-full">
+              Browse matching properties
+            </PillLink>
           </div>
         </div>
       </div>
-    </section>
+    </PageSection>
   )
 }
