@@ -21,13 +21,13 @@ export function HomeHero() {
     >
       <div className="absolute inset-0 -z-10">
         {reducedMotion ? (
-          <img src={withBase(heroBar.image)} alt="" className="h-full w-full object-cover" fetchPriority="high" />
+          <img src={withBase(heroBar.videoPoster)} alt="" className="h-full w-full object-cover" fetchPriority="high" />
         ) : (
           // Decorative loop; the photo shows as the poster while the video loads.
           <video
             className="h-full w-full object-cover"
             src={withBase(heroBar.video)}
-            poster={withBase(heroBar.image)}
+            poster={withBase(heroBar.videoPoster)}
             autoPlay
             muted
             loop

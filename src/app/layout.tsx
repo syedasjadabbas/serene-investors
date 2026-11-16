@@ -12,6 +12,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="overflow-x-clip w-full max-w-full">
+      <head>
+        {/* Runs before the page paints: a refresh starts at the top (the hero) instead of
+            restoring the old scroll position, unless the URL points at a #section. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if('scrollRestoration' in history)history.scrollRestoration='manual';if(!location.hash)window.scrollTo(0,0);",
+          }}
+        />
+      </head>
       <body className="overflow-x-clip w-full max-w-full antialiased">
         <AppProviders>
           <AppShellClient>{children}</AppShellClient>

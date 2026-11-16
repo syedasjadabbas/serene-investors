@@ -1,8 +1,9 @@
 'use client'
 
-import { useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { Building2, TrendingUp } from 'lucide-react'
-import { useSectionReveal } from '@/global/hooks/useSectionReveal'
+import { usePrefersReducedMotion } from '@/global/hooks/usePrefersReducedMotion'
+import { gsap, registerGsapPlugins } from '@/global/lib/gsap'
 import { withBase } from '@/global/lib/asset'
 import { cn } from '@/global/lib/cn'
 import { story } from '../_lib/home'
@@ -66,17 +67,47 @@ function PhotoPanel({ card }: { card: Card }) {
 
 export function StoryCards() {
   const ref = useRef<HTMLElement>(null)
-  useSectionReveal(ref, { depth: true })
+  const reduced = usePrefersReducedMotion()
+
+  // Stacked cards: each card sticks below the navbar and the next one slides over it, while the
+  // card underneath shrinks and dims slightly, like a deck being dealt.
+  useLayoutEffect(() => {
+    const root = ref.current
+    if (!root || reduced) return
+    registerGsapPlugins()
+    // Phones: cards are taller than the screen, so they scroll normally instead of stacking.
+    const mm = gsap.matchMedia(root)
+    mm.add('(min-width: 768px)', () => {
+      const cards = gsap.utils.toArray<HTMLElement>('[data-stack-card]', root)
+      cards.forEach((card, index) => {
+        const next = cards[index + 1]
+        if (!next) return
+        gsap.to(card, {
+          scale: 0.92,
+          filter: 'brightness(0.75)',
+          ease: 'none',
+          scrollTrigger: { trigger: next, start: 'top bottom', end: 'top 120px', scrub: true },
+        })
+      })
+    })
+    return () => mm.revert()
+  }, [reduced])
 
   return (
     <section ref={ref} aria-label="About Serene Investors" className="px-4 sm:px-8">
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-6">
-        {story.map((card) => (
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-10">
+        {story.map((card, index) => (
           <article
             key={card.id}
-            data-reveal-item
+            data-stack-card
             aria-labelledby={`story-${card.id}`}
-            className={cn('grid gap-6 rounded-[24px] p-4 sm:p-5 md:grid-cols-2', CARD_TONE[card.tone])}
+            // Each later card sticks a little lower so the edge of the one beneath stays visible.
+            style={reduced ? undefined : { top: `${104 + index * 18}px` }}
+            className={cn(
+              'grid origin-top gap-6 rounded-[24px] p-4 shadow-[0_-20px_50px_rgba(0,0,0,0.12)] sm:p-5 md:grid-cols-2 md:min-h-[560px]',
+              !reduced && 'md:sticky',
+              CARD_TONE[card.tone],
+            )}
           >
             <div className="flex flex-col justify-center gap-5 p-4 sm:p-8 lg:p-12">
               <span className={cn('w-fit rounded-full px-3 py-1 text-xs font-semibold', TAG_TONE[card.tone])}>{card.tag}</span>

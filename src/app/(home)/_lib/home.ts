@@ -29,6 +29,8 @@ export const heroBar = {
     { label: 'Explore funds', href: '/funds', tone: 'sand' as const },
   ],
   video: '/videos/hero.mp4',
+  // First frame of the video, so the hero looks the same before and after it starts playing.
+  videoPoster: '/videos/hero-poster.jpg',
   image: '/images/journey/dubai-marina.jpg',
   imageAlt: 'Dubai Marina towers along the water at dusk',
 }

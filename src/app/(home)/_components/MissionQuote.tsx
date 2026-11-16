@@ -31,13 +31,13 @@ export function MissionQuote() {
   }, [reduced])
 
   return (
-    <section ref={ref} aria-labelledby="mission-heading" className="px-4 py-20 sm:px-8 sm:py-32">
+    <section ref={ref} data-bg-shift aria-labelledby="mission-heading" className="px-4 py-20 sm:px-8 sm:py-32">
       <div className="mx-auto grid max-w-[1240px] gap-8 md:grid-cols-[220px_1fr]">
-        <h2 id="mission-heading" className="text-sm font-semibold uppercase tracking-[0.14em] text-sx-ink/60">
+        <h2 id="mission-heading" data-shift-text className="text-sm font-semibold uppercase tracking-[0.14em] opacity-60">
           {mission.label}
         </h2>
         <figure>
-          <blockquote className="font-heading text-3xl font-medium leading-[1.15] tracking-[-0.02em] text-sx-ink sm:text-[2.75rem]">
+          <blockquote data-shift-text className="font-heading text-3xl font-medium leading-[1.15] tracking-[-0.02em] sm:text-[2.75rem]">
             <p>
               “
               {words.map((word, index) => (
