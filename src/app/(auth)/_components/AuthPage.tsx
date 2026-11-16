@@ -108,7 +108,7 @@ export function AuthPage({ title }: Props) {
           actions={
             <>
               <PillLink href={targetHref}>{toHome ? 'Continue to home' : 'Continue to portal'}</PillLink>
-              <p className="text-sm text-sx-ink/55">
+              <p className="text-sm text-sx-ink/60">
                 Taking longer than expected?{' '}
                 <Link href={targetHref} className={textLinkClass}>
                   Continue now

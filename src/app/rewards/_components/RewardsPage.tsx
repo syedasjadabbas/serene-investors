@@ -104,7 +104,7 @@ function TierVisual() {
     <div className="mx-auto w-full max-w-md rounded-t-[30px] bg-white p-6 pb-16 text-left text-sx-ink sm:p-8 sm:pb-20">
       <div className="flex items-center justify-between gap-3">
         <span className="rounded-full bg-sx-sand px-3 py-1 text-xs font-semibold">Sample · Tier 3</span>
-        <span className="text-xs text-sx-ink/50">Invested in 12 months</span>
+        <span className="text-xs text-sx-ink/60">Invested in 12 months</span>
       </div>
       <p className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em]">Pro</p>
       <p className="mt-1 font-heading text-xl font-bold text-sx-brand">AED 50,000+</p>
@@ -118,7 +118,7 @@ function TierVisual() {
         </div>
       </div>
       <div className="mt-5">
-        <div className="flex justify-between text-xs text-sx-ink/55">
+        <div className="flex justify-between text-xs text-sx-ink/60">
           <span>Progress to Elite</span>
           <span>Illustrative</span>
         </div>

@@ -1,6 +1,6 @@
 :root {
   /* Serene design tokens. The redesign palette also lives in @theme as sx-* (globals.css). */
-  --stake-green: #00a663;
+  --stake-green: #007a48;
   --stake-forest: #0b3528;
   --stake-mint: #dff5e9;
   --slate-hero: #0e100f;
@@ -19,7 +19,7 @@
   --ink: #0e100f;
   --muted: #5b625d;
   --subtle: #8b928d;
-  --primary: #00a663;
+  --primary: #007a48;
   --primary-ink: #ffffff;
   --accent: #0b3528;
   --accent-ink: #f3f3ef;

@@ -38,7 +38,7 @@ export function LearnArticleBody({ guide }: { guide: LearnGuide }) {
               </li>
             </ul>
             <nav aria-labelledby="guide-toc-heading" className="border-t border-sx-ink/10 pt-5">
-              <p id="guide-toc-heading" className="px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-sx-ink/50">
+              <p id="guide-toc-heading" className="px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-sx-ink/60">
                 In this guide
               </p>
               <ol className="flex flex-col gap-0.5">

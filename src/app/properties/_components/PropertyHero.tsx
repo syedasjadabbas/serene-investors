@@ -14,7 +14,7 @@ export function PropertyHero({ property }: { property: Property }) {
         back={
           <Link
             href="/properties"
-            className="inline-flex w-fit items-center gap-2 rounded-full text-sm font-semibold text-sx-ink/65 transition-colors hover:text-sx-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sx-brand"
+            className="inline-flex min-h-11 w-fit items-center gap-2 rounded-full text-sm font-semibold text-sx-ink/65 transition-colors hover:text-sx-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sx-brand"
           >
             <ArrowLeft size={16} aria-hidden="true" />
             All properties

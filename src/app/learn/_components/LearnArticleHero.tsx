@@ -14,7 +14,7 @@ export function LearnArticleHero({ guide }: { guide: LearnGuide }) {
       <div className="mx-auto flex max-w-[1240px] flex-col items-start gap-6">
         <Link
           href="/learn"
-          className="inline-flex items-center gap-2 rounded-full text-sm font-semibold text-white/75 transition-colors hover:text-sx-mint focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sx-mint"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full text-sm font-semibold text-white/75 transition-colors hover:text-sx-mint focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sx-mint"
         >
           <ArrowLeft size={16} aria-hidden="true" />
           All guides

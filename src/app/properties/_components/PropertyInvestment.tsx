@@ -111,7 +111,7 @@ export function PropertyInvestment({ property }: { property: Property }) {
           </Card>
         </div>
 
-        <p className="mt-4 max-w-3xl text-xs leading-relaxed text-sx-ink/50">{example.disclaimer}</p>
+        <p className="mt-4 max-w-3xl text-xs leading-relaxed text-sx-ink/60">{example.disclaimer}</p>
       </div>
     </PageSection>
   )

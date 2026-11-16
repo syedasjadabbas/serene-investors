@@ -83,7 +83,7 @@ export function AuthHeading({ eyebrow, title, children }: { eyebrow: string; tit
 }
 
 export const inputClass =
-  'w-full rounded-[12px] bg-sx-paper px-4 py-3 text-base text-sx-ink outline-none ring-sx-brand transition-shadow placeholder:text-sx-ink/40 focus:ring-2 aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-red-600'
+  'w-full rounded-[12px] bg-sx-paper px-4 py-3 text-base text-sx-ink outline-none ring-sx-brand transition-shadow placeholder:text-sx-ink/50 focus:ring-2 aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-red-600'
 
 type FieldProps = InputHTMLAttributes<HTMLInputElement> & {
   id: string
@@ -105,7 +105,7 @@ export function TextField({ id, label, hint, message, messageId, className, ...i
           {label}
         </label>
         {hint && (
-          <span id={hintId} className="text-xs text-sx-ink/50">
+          <span id={hintId} className="text-xs text-sx-ink/60">
             {hint}
           </span>
         )}
@@ -150,7 +150,7 @@ export const textLinkClass = 'font-semibold text-sx-brand underline underline-of
 
 /** Regulatory line at the foot of each auth card. Uses the site-wide disclaimer. */
 export function AuthFootnote() {
-  return <p className="mt-8 border-t border-sx-ink/10 pt-5 text-xs leading-relaxed text-sx-ink/50">{site.disclaimer}</p>
+  return <p className="mt-8 border-t border-sx-ink/10 pt-5 text-xs leading-relaxed text-sx-ink/60">{site.disclaimer}</p>
 }
 
 /** Confirmation shown after sign-in or sign-up, before the automatic redirect. */

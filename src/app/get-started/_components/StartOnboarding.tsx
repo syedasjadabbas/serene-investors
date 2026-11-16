@@ -66,14 +66,14 @@ function ListingSummary({ listing, amount }: { listing: Listing; amount: number 
       </div>
       <div className="flex flex-col gap-4 p-2 sm:p-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/45">{item.kicker}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/60">{item.kicker}</p>
           <h4 className="mt-1 font-heading text-[1.625rem] font-bold leading-tight tracking-[-0.02em]">{item.name}</h4>
           <p className="mt-1 text-sm text-sx-ink/60">{item.meta}</p>
         </div>
         <dl className="grid gap-2 sm:grid-cols-3">
           {figures.map((figure) => (
             <div key={figure.label} className="flex items-baseline justify-between gap-3 rounded-[12px] bg-white px-4 py-3 sm:flex-col sm:items-start sm:gap-1">
-              <dt className="text-xs text-sx-ink/55">{figure.label}</dt>
+              <dt className="text-xs text-sx-ink/60">{figure.label}</dt>
               <dd className="font-heading text-lg font-bold tabular-nums">{figure.value}</dd>
             </div>
           ))}
@@ -83,7 +83,7 @@ function ListingSummary({ listing, amount }: { listing: Listing; amount: number 
             {item.linkLabel}
             <ArrowCircle tone="dark" size="sm" />
           </Link>
-          <p className="text-xs text-sx-ink/50">Illustrative sample only. This does not place an investment.</p>
+          <p className="text-xs text-sx-ink/60">Illustrative sample only. This does not place an investment.</p>
         </div>
       </div>
     </article>
@@ -163,7 +163,7 @@ export function StartOnboarding() {
               return (
                 <li key={item.id} aria-current={active ? 'step' : undefined} className="flex flex-col gap-2">
                   <span aria-hidden="true" className={cn('h-1.5 rounded-full', done || active ? 'bg-sx-brand' : 'bg-sx-ink/10')} />
-                  <span className={cn('text-xs font-semibold sm:text-sm', active ? 'text-sx-ink' : 'text-sx-ink/45')}>
+                  <span className={cn('text-xs font-semibold sm:text-sm', active ? 'text-sx-ink' : 'text-sx-ink/60')}>
                     Step {item.number}
                     <span className="sr-only">: {item.title}</span>
                     {done && <span className="sr-only"> (completed)</span>}
@@ -226,7 +226,7 @@ export function StartOnboarding() {
 
               {onboard.step === 1 ? (
                 <fieldset>
-                  <legend className="mb-3 text-sm text-sx-ink/55">Choose a sample amount. These are not live tickets.</legend>
+                  <legend className="mb-3 text-sm text-sx-ink/60">Choose a sample amount. These are not live tickets.</legend>
                   <div className="grid gap-3 sm:grid-cols-3">
                     {sampleOnboardingAmounts.map((value) => (
                       <Choice

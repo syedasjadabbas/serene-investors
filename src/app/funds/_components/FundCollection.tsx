@@ -22,7 +22,7 @@ export function FundCollection({ items }: { items: Fund[] }) {
         ))}
       </ul>
 
-      <p className="mt-8 max-w-2xl text-sm leading-relaxed text-sx-ink/55">{fundsNotice.body}</p>
+      <p className="mt-8 max-w-2xl text-sm leading-relaxed text-sx-ink/60">{fundsNotice.body}</p>
     </PageSection>
   )
 }

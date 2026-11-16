@@ -41,7 +41,7 @@ export function PropertyCatalogue({ properties, onReset }: Props) {
         </ul>
       )}
 
-      <p className="mt-8 max-w-3xl text-xs leading-relaxed text-sx-ink/50">{propertiesNotice.body}</p>
+      <p className="mt-8 max-w-3xl text-xs leading-relaxed text-sx-ink/60">{propertiesNotice.body}</p>
     </div>
   )
 }

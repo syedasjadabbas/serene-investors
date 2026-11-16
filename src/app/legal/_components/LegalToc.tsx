@@ -8,7 +8,7 @@ export function LegalToc({ doc }: { doc: LegalDoc }) {
 
   return (
     <nav aria-labelledby="legal-toc-heading" className="rounded-[20px] bg-white p-5">
-      <p id="legal-toc-heading" className="px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-sx-ink/50">
+      <p id="legal-toc-heading" className="px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-sx-ink/60">
         On this page
       </p>
       <ol className="flex flex-col gap-0.5">

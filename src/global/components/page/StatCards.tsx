@@ -96,7 +96,7 @@ export function StatCards({ items, tone = 'light', caption, className }: { items
           </li>
         ))}
       </ul>
-      {caption && <p className={cn('mt-3 text-xs', tone === 'dark' ? 'text-white/45' : 'text-sx-ink/45')}>{caption}</p>}
+      {caption && <p className={cn('mt-3 text-xs', tone === 'dark' ? 'text-white/60' : 'text-sx-ink/60')}>{caption}</p>}
     </div>
   )
 }

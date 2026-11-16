@@ -101,7 +101,7 @@ function Holdings() {
           <div className="flex items-start justify-between gap-3 px-1">
             <div>
               <h3 className="font-heading text-xl font-bold tracking-[-0.015em] text-sx-ink">{holding.name}</h3>
-              <p className="text-sm text-sx-ink/55">{holding.location}</p>
+              <p className="text-sm text-sx-ink/60">{holding.location}</p>
             </div>
             <span className="shrink-0 rounded-full bg-sx-paper px-3 py-1 text-xs font-semibold text-sx-forest">
               {holding.yieldPct}% net yield
@@ -131,7 +131,7 @@ function Holdings() {
 function Metric({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
     <div>
-      <dt className="text-sx-ink/55">{label}</dt>
+      <dt className="text-sx-ink/60">{label}</dt>
       <dd className={cn('mt-0.5 font-heading text-base font-bold', accent ? 'text-sx-brand' : 'text-sx-ink')}>{value}</dd>
     </div>
   )
@@ -143,7 +143,7 @@ function Distributions() {
       <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
         <div>
           <h3 className="font-heading text-xl font-bold tracking-[-0.015em] text-sx-ink">Quarterly rental payouts</h3>
-          <p className="text-sm text-sx-ink/55">Every rental distribution paid to date.</p>
+          <p className="text-sm text-sx-ink/60">Every rental distribution paid to date.</p>
         </div>
         <span className="w-fit rounded-full bg-sx-mint px-3 py-1 text-sm font-semibold text-sx-ink">Total paid: {distributionTotal}</span>
       </div>
@@ -151,7 +151,7 @@ function Distributions() {
       <div className="overflow-x-auto">
         <table className="w-full min-w-[680px] text-left text-sm">
           <caption className="sr-only">Sample distribution history</caption>
-          <thead className="bg-sx-paper text-xs font-semibold text-sx-ink/55">
+          <thead className="bg-sx-paper text-xs font-semibold text-sx-ink/60">
             <tr>
               <th scope="col" className="px-5 py-3 sm:px-7">Payment date</th>
               <th scope="col" className="px-5 py-3">Holding</th>
@@ -195,7 +195,7 @@ function Documents({ onDownload }: { onDownload: (title: string) => void }) {
             </span>
             <div className="min-w-0">
               <h3 className="font-heading text-lg font-semibold leading-snug tracking-[-0.01em] text-sx-ink">{doc.title}</h3>
-              <p className="mt-1 text-xs text-sx-ink/50">
+              <p className="mt-1 text-xs text-sx-ink/60">
                 {doc.date} · {doc.type} · {doc.size}
               </p>
             </div>

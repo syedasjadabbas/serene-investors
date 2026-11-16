@@ -20,7 +20,7 @@ type Props = {
 
 const TONE = {
   forest: { shell: 'bg-sx-forest text-white', body: 'text-white/75', accent: 'text-sx-mint', first: 'light', second: 'outline' },
-  brand: { shell: 'bg-sx-brand text-white', body: 'text-white/85', accent: 'text-sx-ink', first: 'dark', second: 'light' },
+  brand: { shell: 'bg-sx-brand text-white', body: 'text-white', accent: 'text-sx-ink', first: 'dark', second: 'light' },
   white: { shell: 'bg-white text-sx-ink', body: 'text-sx-ink/65', accent: 'text-sx-brand', first: 'dark', second: 'brand' },
 } as const
 

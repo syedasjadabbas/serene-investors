@@ -92,9 +92,9 @@ export function UserProfileDropdown({ user }: Props) {
         </span>
         <span className="flex min-w-0 flex-col pr-0.5">
           <span className="max-w-[110px] truncate text-xs font-semibold leading-tight text-sx-ink sm:max-w-[130px]">{user.name}</span>
-          <span className="truncate text-[11px] leading-tight text-sx-ink/55">{isInstitutional ? 'Institutional' : 'Individual'}</span>
+          <span className="truncate text-[11px] leading-tight text-sx-ink/60">{isInstitutional ? 'Institutional' : 'Individual'}</span>
         </span>
-        <ChevronDown size={14} aria-hidden="true" className={cn('shrink-0 text-sx-ink/50 transition-transform duration-200', open && 'rotate-180')} />
+        <ChevronDown size={14} aria-hidden="true" className={cn('shrink-0 text-sx-ink/60 transition-transform duration-200', open && 'rotate-180')} />
       </button>
 
       <div
@@ -111,7 +111,7 @@ export function UserProfileDropdown({ user }: Props) {
           </span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold">{user.name}</p>
-            <p className="truncate text-xs text-sx-ink/55">{user.email}</p>
+            <p className="truncate text-xs text-sx-ink/60">{user.email}</p>
             <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-sx-mint px-2 py-0.5 text-[11px] font-semibold text-sx-ink">
               <ShieldCheck size={12} aria-hidden="true" />
               {badgeLabel}

@@ -124,11 +124,11 @@ export function SignupPage() {
           </p>
           <dl className="mt-5 grid gap-1 rounded-[12px] bg-sx-paper p-4 text-left text-sm">
             <div className="flex justify-between gap-3">
-              <dt className="text-sx-ink/55">Email</dt>
+              <dt className="text-sx-ink/60">Email</dt>
               <dd className="truncate font-medium text-sx-ink">{email}</dd>
             </div>
             <div className="flex justify-between gap-3">
-              <dt className="text-sx-ink/55">Type</dt>
+              <dt className="text-sx-ink/60">Type</dt>
               <dd className="font-medium text-sx-ink">
                 {investorType === 'institutional' ? 'Institutional / Syndicate' : 'Individual / Accredited'}
               </dd>

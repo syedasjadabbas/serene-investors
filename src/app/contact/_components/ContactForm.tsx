@@ -100,7 +100,7 @@ export function ContactForm() {
 
       <fieldset>
         <legend className="text-sm font-semibold text-sx-ink">
-          Phone <span className="font-normal text-sx-ink/55">(optional)</span>
+          Phone <span className="font-normal text-sx-ink/60">(optional)</span>
         </legend>
         <div className="mt-2 grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3">
           <div>

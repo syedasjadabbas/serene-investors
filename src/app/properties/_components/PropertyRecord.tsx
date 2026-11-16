@@ -23,12 +23,12 @@ export function PropertyRecord({ property }: { property: Property }) {
           <dl className="grid gap-3 sm:grid-cols-2">
             {rows.map((row) => (
               <div key={row.label} className="rounded-[14px] bg-sx-paper p-4">
-                <dt className="text-xs font-semibold text-sx-ink/55">{row.label}</dt>
+                <dt className="text-xs font-semibold text-sx-ink/60">{row.label}</dt>
                 <dd className="mt-1 text-base font-semibold text-sx-ink">{row.value}</dd>
               </div>
             ))}
           </dl>
-          <p className="mt-4 text-xs leading-relaxed text-sx-ink/55">{record.note}</p>
+          <p className="mt-4 text-xs leading-relaxed text-sx-ink/60">{record.note}</p>
         </Card>
       </div>
     </PageSection>

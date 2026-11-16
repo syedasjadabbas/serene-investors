@@ -39,7 +39,7 @@ export function ReviewStrip({ tone = 'light', heading }: { tone?: 'light' | 'dar
         <h2 id="testimonials-heading" className={cn('font-heading text-3xl font-bold tracking-[-0.02em] sm:text-4xl', dark ? 'text-white' : 'text-sx-ink')}>
           {heading ?? testimonials.heading}
         </h2>
-        <p className={cn('mt-2 text-sm', dark ? 'text-white/50' : 'text-sx-ink/55')}>{testimonials.note}</p>
+        <p className={cn('mt-2 text-sm', dark ? 'text-white/60' : 'text-sx-ink/60')}>{testimonials.note}</p>
       </div>
 
       {still ? (

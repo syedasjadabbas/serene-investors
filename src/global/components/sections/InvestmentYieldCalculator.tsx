@@ -93,7 +93,7 @@ function CalculatorCard() {
               Investment amount
             </label>
             <div className="flex items-center rounded-[12px] bg-white px-4 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sx-brand">
-              <span aria-hidden="true" className="font-heading text-2xl font-bold text-sx-ink/45">
+              <span aria-hidden="true" className="font-heading text-2xl font-bold text-sx-ink/60">
                 $
               </span>
               <input
@@ -120,9 +120,10 @@ function CalculatorCard() {
               value={amount}
               onChange={(e) => setAmountDraft(e.target.value)}
               aria-valuetext={money(amount)}
-              className={cn('h-2 w-full cursor-pointer rounded-full accent-sx-brand', FOCUS)}
+              // h-6: a taller hit area so the slider is easy to grab on touch screens.
+              className={cn('h-6 w-full cursor-pointer rounded-full accent-sx-brand', FOCUS)}
             />
-            <p id={`${id}-amount-hint`} className="flex justify-between text-xs text-sx-ink/55">
+            <p id={`${id}-amount-hint`} className="flex justify-between text-xs text-sx-ink/60">
               <span>{money(AMOUNT_MIN)}</span>
               <span>{money(AMOUNT_MAX)}</span>
             </p>
@@ -242,7 +243,7 @@ function CalculatorCard() {
                     <div className="w-full bg-sx-forest transition-[height] duration-500 ease-out" style={{ height: `${(bar.growth / bar.total) * 100}%` }} />
                     <div className="w-full flex-1 bg-sx-brand" />
                   </div>
-                  <span className="text-[11px] font-medium tabular-nums text-sx-ink/55">Y{bar.year}</span>
+                  <span className="text-[11px] font-medium tabular-nums text-sx-ink/60">Y{bar.year}</span>
                 </div>
               ))}
             </div>

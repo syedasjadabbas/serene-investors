@@ -35,7 +35,7 @@ function ActivityVisual() {
                 <Box size={15} className="text-sx-brand" aria-label="shares" />
               </span>
             </span>
-            <span className="block truncate text-[15px] text-sx-ink/75">{row.action}</span>
+            <span className="block text-[15px] leading-snug text-sx-ink/75">{row.action}</span>
           </span>
         </li>
       ))}
@@ -70,7 +70,7 @@ function FundTilesVisual() {
               <span className="font-heading text-4xl font-extrabold leading-none tracking-[-0.04em]">{tile.yield}</span>
               <span className="text-right text-xs leading-tight">
                 <span className="block font-semibold">{tile.name}</span>
-                <span className="text-sx-ink/55">Sample yield</span>
+                <span className="text-sx-ink/60">Sample yield</span>
               </span>
             </span>
             <span className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/60">
@@ -151,7 +151,8 @@ export function ProductCards() {
           {products.heading[0]} <span className="text-white/55">{products.heading[1]}</span>
         </h2>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
+        {/* Three across only from lg: at tablet width the cards were too narrow for their visuals. */}
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {products.cards.map((card) => {
             const id = card.id as CardId
             const style = CARD[id]
@@ -178,7 +179,7 @@ export function ProductCards() {
             )
           })}
         </div>
-        <p className="mt-4 text-xs text-white/40">{products.note}</p>
+        <p className="mt-4 text-xs text-white/60">{products.note}</p>
       </div>
     </section>
   )

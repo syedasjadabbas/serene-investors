@@ -56,7 +56,7 @@ export function CatalogueCard({ property }: { property: Property }) {
 
         <div className="flex flex-1 flex-col gap-5 p-5 sm:p-7">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-sx-ink/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-sx-ink/60">
               {property.neighborhood}, {property.city} <span aria-hidden="true">✦</span> {property.type}
             </p>
             <h3 className="mt-2 font-heading text-[1.625rem] font-bold leading-tight tracking-[-0.02em]">{property.name}</h3>

@@ -41,7 +41,7 @@ function FaqAnswer({ faq, feedback, onFeedback }: { faq: FaqEntry; feedback?: Fe
         ) : (
           <span />
         )}
-        <div role="group" aria-label="Was this answer helpful?" className="flex items-center gap-2 text-xs text-sx-ink/55">
+        <div role="group" aria-label="Was this answer helpful?" className="flex items-center gap-2 text-xs text-sx-ink/60">
           <span aria-hidden="true">Was this helpful?</span>
           {(['yes', 'no'] as const).map((value) => {
             const Icon = value === 'yes' ? ThumbsUp : ThumbsDown
@@ -130,14 +130,14 @@ export function FaqPage() {
               Search questions
             </label>
             <div className="relative">
-              <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-sx-ink/40" />
+              <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-sx-ink/60" />
               <input
                 id={searchId}
                 type="search"
                 placeholder="Search questions, e.g. minimum investment"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/40 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
+                className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/50 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
               />
               {searchQuery && (
                 <button
@@ -151,7 +151,7 @@ export function FaqPage() {
               )}
             </div>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm">
-              <span className="text-sx-ink/55">Popular:</span>
+              <span className="text-sx-ink/60">Popular:</span>
               {popularSearches.map((chip) => (
                 <button
                   key={chip.label}
@@ -205,7 +205,7 @@ export function FaqPage() {
           <h2 id="faq-results-heading" className="font-heading text-2xl font-bold tracking-[-0.02em] text-sx-ink">
             {activeLabel}
           </h2>
-          <p aria-live="polite" className="shrink-0 text-sm text-sx-ink/55">
+          <p aria-live="polite" className="shrink-0 text-sm text-sx-ink/60">
             {filteredFaqs.length} {filteredFaqs.length === 1 ? 'result' : 'results'}
           </p>
         </div>
@@ -213,7 +213,7 @@ export function FaqPage() {
         <div className="mt-6">
           {filteredFaqs.length === 0 ? (
             <div className="flex flex-col items-center gap-3 rounded-[20px] bg-white p-10 text-center">
-              <span className="flex size-12 items-center justify-center rounded-full bg-sx-paper text-sx-ink/50">
+              <span className="flex size-12 items-center justify-center rounded-full bg-sx-paper text-sx-ink/60">
                 <Search size={20} aria-hidden="true" />
               </span>
               <h3 className="font-heading text-xl font-semibold text-sx-ink">No answers match “{searchQuery}”</h3>

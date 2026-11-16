@@ -29,7 +29,7 @@ export function LearnGuideCard({ guide, id }: Props) {
           />
         </div>
         <div className="flex flex-1 flex-col gap-3 px-3">
-          <p className="text-sm text-sx-ink/55">
+          <p className="text-sm text-sx-ink/60">
             <span className="font-semibold text-sx-brand">{guide.category}</span>
             <span aria-hidden="true"> · </span>
             <time dateTime={date.iso}>{date.label}</time>

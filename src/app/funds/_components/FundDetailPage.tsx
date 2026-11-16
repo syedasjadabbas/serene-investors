@@ -66,7 +66,7 @@ function FundInfo({ fund }: { fund: Fund }) {
               </div>
             ))}
           </dl>
-          <p className="text-xs leading-relaxed text-sx-ink/45">Illustrative sample only. Returns are not guaranteed.</p>
+          <p className="text-xs leading-relaxed text-sx-ink/60">Illustrative sample only. Returns are not guaranteed.</p>
         </article>
       </div>
     </PageSection>

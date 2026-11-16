@@ -21,9 +21,9 @@ export function FundsHeroVisual() {
         <div className="absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-[16px] bg-white p-2.5 text-left text-sx-ink sm:inset-x-auto sm:bottom-5 sm:left-5 sm:w-[340px]">
           <img src={withBase(fund.image)} alt="" width={160} height={160} loading="eager" className="size-14 shrink-0 rounded-[10px] object-cover" />
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-sx-ink/45">Sample fund</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-sx-ink/60">Sample fund</p>
             <p className="truncate font-heading text-base font-bold">{fund.name}</p>
-            <p className="truncate text-xs text-sx-ink/60">
+            <p className="text-xs leading-relaxed text-sx-ink/60">
               {fund.propertyCount} properties · {formatPercent(fund.sampleReturnPct)} sample yield · from {formatSampleAmount(sampleFundMinimum)}
             </p>
           </div>

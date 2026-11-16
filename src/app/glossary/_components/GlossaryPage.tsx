@@ -37,7 +37,7 @@ function TermCard({ item, copied, onCopy, onTag }: { item: GlossaryItem; copied:
         <div className="flex items-start gap-2.5 rounded-[14px] bg-sx-paper p-4">
           <Info size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-sx-brand" />
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/50">Formula · standard</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/60">Formula · standard</p>
             <p className="mt-1 font-mono text-sm font-semibold leading-snug text-sx-ink">{item.formulaOrRule}</p>
           </div>
         </div>
@@ -58,7 +58,7 @@ function TermCard({ item, copied, onCopy, onTag }: { item: GlossaryItem; copied:
               type="button"
               onClick={() => onTag(tag)}
               aria-label={`Search for ${tag}`}
-              className="rounded-full bg-sx-paper px-2.5 py-1 text-xs font-medium text-sx-ink/65 transition-colors hover:bg-sx-sand hover:text-sx-ink"
+              className="inline-flex min-h-8 items-center rounded-full bg-sx-paper px-3 py-1.5 text-xs font-medium text-sx-ink/65 transition-colors hover:bg-sx-sand hover:text-sx-ink"
             >
               #{tag}
             </button>
@@ -139,14 +139,14 @@ export function GlossaryPage() {
               Search the glossary
             </label>
             <div className="relative">
-              <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-sx-ink/40" />
+              <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-sx-ink/60" />
               <input
                 id={searchId}
                 type="search"
                 placeholder="Search terms, e.g. IRR, SPV, yield"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
-                className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/40 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
+                className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/50 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
               />
               {search && (
                 <button
@@ -219,14 +219,14 @@ export function GlossaryPage() {
               )
             })}
           </div>
-          <p aria-live="polite" className="text-sm text-sx-ink/55">
+          <p aria-live="polite" className="text-sm text-sx-ink/60">
             Showing <span className="font-semibold text-sx-ink">{filtered.length}</span> of {glossaryTerms.length} terms
           </p>
         </div>
 
         {filtered.length === 0 ? (
           <div className="mt-8 flex flex-col items-center gap-3 rounded-[20px] bg-white p-10 text-center">
-            <span className="flex size-12 items-center justify-center rounded-full bg-sx-paper text-sx-ink/50">
+            <span className="flex size-12 items-center justify-center rounded-full bg-sx-paper text-sx-ink/60">
               <Search size={20} aria-hidden="true" />
             </span>
             <h3 className="font-heading text-xl font-semibold text-sx-ink">

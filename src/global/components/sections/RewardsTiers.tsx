@@ -138,7 +138,7 @@ export function RewardsTiers({ id = 'reward-tiers' }: { id?: string }) {
         })}
       </ol>
 
-      <p className="mt-4 text-xs text-sx-ink/45">
+      <p className="mt-4 text-xs text-sx-ink/60">
         Illustrative tiers and amounts for demonstration. Tier benefits apply once your qualifying investment total is verified.
       </p>
     </PageSection>

@@ -63,7 +63,7 @@ function ListingsMedia() {
         {[...ecosystem.listings, ...ecosystem.listings].map((item, index) => (
           <li key={`${item.name}-${index}`} className="w-[120px] shrink-0 rounded-[12px] bg-white p-2 shadow-md" aria-hidden={index >= ecosystem.listings.length}>
             <img src={withBase(item.image)} alt="" loading="lazy" className="aspect-[4/3] w-full rounded-[8px] object-cover" />
-            <p className="mt-2 truncate text-[11px] font-semibold text-sx-ink">{item.name}</p>
+            <p className="mt-2 line-clamp-2 text-[11px] font-semibold leading-tight text-sx-ink">{item.name}</p>
             <p className="text-[10px] text-sx-ink/60">{item.price}</p>
             <div className="mt-1.5 h-1 rounded-full bg-sx-paper">
               <div className="h-1 rounded-full bg-sx-brand" style={{ width: `${item.funded}%` }} />

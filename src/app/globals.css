@@ -42,7 +42,7 @@
   --color-sx-card-2: #242725;
   --color-sx-line: #2e322f;
   --color-sx-paper: #f3f3ef;
-  --color-sx-brand: #00a663;
+  --color-sx-brand: #007a48; /* deepened from #00a663 so white-on-green and green-on-paper pass WCAG AA */
   --color-sx-mint: #7ee2b0;
   --color-sx-forest: #0b3528;
   --color-sx-sand: #efe3c8;

@@ -8,7 +8,7 @@ export function FundNotFound() {
     <div className="pb-16 sm:pb-24">
       <PageHeader
         back={
-          <Link href="/funds" className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-sx-ink/60 hover:text-sx-ink">
+          <Link href="/funds" className="inline-flex min-h-11 w-fit items-center gap-2 text-sm font-semibold text-sx-ink/60 hover:text-sx-ink">
             <ArrowLeft size={16} aria-hidden="true" />
             All funds
           </Link>

@@ -12,7 +12,7 @@ import { marketReports, reportsIntro, type MarketReport } from '../_lib/reports'
 
 function ReportMeta({ report, dark }: { report: MarketReport; dark?: boolean }) {
   return (
-    <p className={cn('flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium', dark ? 'text-white/65' : 'text-sx-ink/55')}>
+    <p className={cn('flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium', dark ? 'text-white/65' : 'text-sx-ink/60')}>
       <span className="inline-flex items-center gap-1.5">
         <Calendar size={13} aria-hidden="true" className={dark ? 'text-sx-mint' : 'text-sx-brand'} />
         {report.date}
@@ -65,7 +65,7 @@ function DownloadButton({ report, dark, requested, onRequest }: { report: Market
           <Download size={14} />
         </span>
       </button>
-      <p role="status" className={cn('text-xs', dark ? 'text-white/65' : 'text-sx-ink/55')}>
+      <p role="status" className={cn('text-xs', dark ? 'text-white/65' : 'text-sx-ink/60')}>
         {requested ? 'Thank you. This sample report is not available to download yet.' : ''}
       </p>
     </div>
@@ -89,7 +89,7 @@ export function MarketReportsPage() {
         title={reportsIntro.heading}
         highlight={reportsIntro.highlight}
         body={reportsIntro.body}
-        aside={<p className="text-sm font-medium text-sx-ink/55">{marketReports.length} sample reports</p>}
+        aside={<p className="text-sm font-medium text-sx-ink/60">{marketReports.length} sample reports</p>}
       />
 
       <PageSection labelledBy="featured-report-heading" pad="none">
@@ -130,7 +130,7 @@ export function MarketReportsPage() {
                   <img src={withBase(report.image.src)} alt={report.image.alt} width={960} height={540} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 </div>
                 <div className="flex flex-1 flex-col gap-3 px-3">
-                  <p className="text-sm text-sx-ink/55">
+                  <p className="text-sm text-sx-ink/60">
                     <span className="font-semibold text-sx-brand">Sample report</span>
                     <span aria-hidden="true"> · </span>
                     {report.date} · {report.pages}
@@ -148,7 +148,7 @@ export function MarketReportsPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-xs text-sx-ink/50">Report figures are illustrative samples, not a forecast or a promise of returns.</p>
+        <p className="mt-6 text-xs text-sx-ink/60">Report figures are illustrative samples, not a forecast or a promise of returns.</p>
       </PageSection>
 
       <CtaBand

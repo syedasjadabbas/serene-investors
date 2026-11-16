@@ -45,7 +45,7 @@ export function FundCard({ fund, headingLevel: Heading = 'h3' }: Props) {
         </div>
 
         <div className="flex flex-1 flex-col px-3 pb-3 pt-5 sm:px-4 sm:pb-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/45">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/60">
             {fund.market} <span aria-hidden="true">✦</span>
             <span className="sr-only">,</span> {formatFundType(fund.type)} fund
           </p>

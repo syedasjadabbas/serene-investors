@@ -23,7 +23,7 @@ Tailwind tokens in `src/app/globals.css` (`@theme`). Use these, never hex values
 | `sx-card-2` | `#242725` | Hover / nested on dark |
 | `sx-paper` | `#F3F3EF` | Light page background |
 | white | `#FFFFFF` | Cards on paper |
-| `sx-brand` | `#00A663` | Primary accent, CTAs, highlighted words on light |
+| `sx-brand` | `#007A48` | Primary accent, CTAs, highlighted words on light |
 | `sx-mint` | `#7EE2B0` | Highlighted words and pills on dark |
 | `sx-forest` | `#0B3528` | Deep green panels (CTA band, What we do) |
 | `sx-sand` | `#EFE3C8` | Secondary accent pills and arrows |

@@ -35,7 +35,7 @@ export function NewsletterCard() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder={newsletter.placeholder}
-            className="rounded-[12px] bg-sx-paper px-4 py-3 text-base text-sx-ink outline-none ring-sx-brand placeholder:text-sx-ink/40 focus:ring-2"
+            className="rounded-[12px] bg-sx-paper px-4 py-3 text-base text-sx-ink outline-none ring-sx-brand placeholder:text-sx-ink/50 focus:ring-2"
           />
           <button
             type="submit"

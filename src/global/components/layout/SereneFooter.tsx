@@ -58,7 +58,7 @@ export function SereneFooter() {
           </div>
         </nav>
 
-        <div className="flex flex-col gap-3 border-t border-white/10 py-8 text-xs leading-relaxed text-white/45">
+        <div className="flex flex-col gap-3 border-t border-white/10 py-8 text-xs leading-relaxed text-white/60">
           <p className="max-w-4xl">{site.disclaimer} {footerIntro.note}</p>
           <p>{footerIntro.copyright}. All rights reserved.</p>
         </div>
