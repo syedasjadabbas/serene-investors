@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Building2 } from 'lucide-react'
 import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
+import { usePrefersReducedMotion } from '@/global/hooks/usePrefersReducedMotion'
 import { withBase } from '@/global/lib/asset'
 import { cn } from '@/global/lib/cn'
 import { heroBar, heroModes } from '../_lib/home'
@@ -11,6 +12,7 @@ import { heroBar, heroModes } from '../_lib/home'
 export function HomeHero() {
   const [modeId, setModeId] = useState(heroModes[0].id)
   const mode = heroModes.find((item) => item.id === modeId) ?? heroModes[0]
+  const reducedMotion = usePrefersReducedMotion()
 
   return (
     <section
@@ -18,12 +20,22 @@ export function HomeHero() {
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-sx-ink text-white"
     >
       <div className="absolute inset-0 -z-10">
-        <img
-          src={withBase(heroBar.image)}
-          alt=""
-          className="sx-kenburns h-full w-full object-cover"
-          fetchPriority="high"
-        />
+        {reducedMotion ? (
+          <img src={withBase(heroBar.image)} alt="" className="h-full w-full object-cover" fetchPriority="high" />
+        ) : (
+          // Decorative loop; the photo shows as the poster while the video loads.
+          <video
+            className="h-full w-full object-cover"
+            src={withBase(heroBar.video)}
+            poster={withBase(heroBar.image)}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-sx-ink/70 via-sx-ink/45 to-sx-ink/85" />
       </div>
 

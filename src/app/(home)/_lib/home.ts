@@ -28,6 +28,7 @@ export const heroBar = {
     { label: 'Browse properties', href: '/properties', tone: 'brand' as const },
     { label: 'Explore funds', href: '/funds', tone: 'sand' as const },
   ],
+  video: '/videos/hero.mp4',
   image: '/images/journey/dubai-marina.jpg',
   imageAlt: 'Dubai Marina towers along the water at dusk',
 }
@@ -66,28 +67,64 @@ export const products = {
       href: '/golden-visa',
     },
   ],
+  note: 'Sample activity and figures for illustration only.',
+  // Sample investors. Stock portraits (Unsplash); names and actions are invented.
   activity: [
-    { initials: 'SA', name: 'Sara', action: 'Bought 12 shares' },
-    { initials: 'OK', name: 'Omar', action: 'Owns 2% of a building' },
-    { initials: 'LM', name: 'Lina', action: 'Received AED 340 in rent' },
+    {
+      name: 'Sara',
+      action: 'Owns 3% of a building',
+      shares: 20,
+      photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&h=160&q=70',
+    },
+    {
+      name: 'Omar',
+      action: 'Earned AED 500 in rent',
+      shares: 90,
+      photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=70',
+    },
+    {
+      name: 'Lina',
+      action: 'Bought 45 shares',
+      shares: 45,
+      photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=160&h=160&q=70',
+    },
   ],
-  allocation: [
-    { label: 'Residential', value: 54 },
-    { label: 'Serviced apartments', value: 28 },
-    { label: 'Townhouses', value: 18 },
+  // Fund "rate cards" shown tilted on the Funds card.
+  fundTiles: [
+    { name: 'Urban Living', yield: '6.8%', tag: 'Residential' },
+    { name: 'Quay Mixed', yield: '7.4%', tag: 'Mixed use' },
+    { name: 'Olive Court', yield: '6.1%', tag: 'Townhouses' },
   ],
+  // Phone portfolio on the Golden Visa card.
+  visa: {
+    total: 'AED 1,740,000',
+    target: 'AED 2,000,000',
+    progress: 87,
+    holdings: [
+      { name: 'Marina Tower', value: 'AED 820,000' },
+      { name: 'Urban Living Fund', value: 'AED 560,000' },
+      { name: 'Palm Residences', value: 'AED 360,000' },
+    ],
+  },
 }
 
 export const ecosystem = {
   heading: 'Everything in one place',
   body: 'From your first share to residency, each step lives in the same account.',
+  // `media` picks the moving visual at the top of each card (see EcosystemCarousel).
   cards: [
-    { title: 'Buy property shares', meta: 'From AED 500', href: '/properties', image: '/images/properties/marina-tower.jpg' },
-    { title: 'Invest in a fund', meta: 'Diversify in one step', href: '/funds', image: '/images/journey/palm-aerial.jpg' },
-    { title: 'Plan your returns', meta: 'Try the calculator', href: '/properties#calculator-heading', image: '/images/journey/tower-pool.jpg' },
-    { title: 'Explore the Golden Visa', meta: 'Check the steps', href: '/golden-visa', image: '/images/journey/burj-al-arab.jpg' },
-    { title: 'Earn rewards', meta: 'See the tiers', href: '/rewards', image: '/images/properties/boulevard-point-hero.jpg' },
-    { title: 'Read market reports', meta: 'Quarterly insights', href: '/market-reports', image: '/images/journey/hittin.jpg' },
+    { title: 'Buy property shares', meta: 'Start from AED 500', href: '/properties', media: 'video', image: '/images/properties/marina-tower.jpg' },
+    { title: 'Invest in a fund', meta: 'Diversify in one step', href: '/funds', media: 'listings', image: '/images/journey/palm-aerial.jpg' },
+    { title: 'Plan your returns', meta: 'Try the calculator', href: '/properties#calculator-heading', media: 'chart', image: '/images/journey/tower-pool.jpg' },
+    { title: 'Get a UAE Golden Visa', meta: 'Check the steps', href: '/golden-visa', media: 'visa', image: '/images/journey/burj-al-arab.jpg' },
+    { title: 'Earn rewards as you grow', meta: 'See the tiers', href: '/rewards', media: 'shares', image: '/images/properties/boulevard-point-hero.jpg' },
+    { title: 'Read market reports', meta: 'Quarterly insights', href: '/market-reports', media: 'photo', image: '/images/journey/dubai-marina.jpg' },
+  ],
+  // Mini listings shown on the fund card.
+  listings: [
+    { name: '2 bed, Dubai Marina', price: 'AED 2,250,000', image: '/images/properties/marina-tower.jpg', funded: 82 },
+    { name: '1 bed, Business Bay', price: 'AED 1,400,000', image: '/images/journey/residential.jpg', funded: 64 },
+    { name: 'Townhouse, Dubai Hills', price: 'AED 2,480,000', image: '/images/story/grow-townhouses.png', funded: 47 },
   ],
 }
 

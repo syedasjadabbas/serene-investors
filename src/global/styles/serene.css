@@ -83,3 +83,131 @@
     animation: none;
   }
 }
+
+/* Product card visuals: gentle bobbing and a bar that fills on load. */
+@keyframes sx-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes sx-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.sx-float {
+  animation: sx-float 4s ease-in-out infinite;
+}
+
+.sx-float-slow {
+  animation: sx-float 6s ease-in-out infinite;
+}
+
+.sx-grow {
+  transform-origin: left;
+  animation: sx-grow 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-float,
+  .sx-float-slow,
+  .sx-grow {
+    animation: none;
+  }
+}
+
+/* Services film strip: the track holds the cards twice and slides by half its width. */
+@keyframes sx-strip {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.sx-strip-track {
+  animation: sx-strip 70s linear infinite;
+}
+
+.sx-strip:hover .sx-strip-track,
+.sx-strip:focus-within .sx-strip-track {
+  animation-play-state: paused;
+}
+
+/* Card media motion. */
+@keyframes sx-pan {
+  from {
+    transform: scale(1.04) translate(0, 0);
+  }
+  to {
+    transform: scale(1.18) translate(-3%, -2%);
+  }
+}
+
+@keyframes sx-bar {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes sx-tile {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  40%,
+  70% {
+    opacity: 1;
+  }
+}
+
+@keyframes sx-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.sx-pan {
+  animation: sx-pan 12s ease-in-out infinite alternate;
+}
+
+.sx-bar {
+  transform-origin: bottom;
+  animation: sx-bar 3.2s ease-in-out infinite;
+}
+
+.sx-tile {
+  animation: sx-tile 5s ease-in-out infinite;
+}
+
+.sx-slide {
+  width: max-content;
+  animation: sx-slide 18s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-strip-track,
+  .sx-pan,
+  .sx-bar,
+  .sx-tile,
+  .sx-slide {
+    animation: none;
+  }
+}
