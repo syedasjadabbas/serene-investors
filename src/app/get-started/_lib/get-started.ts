@@ -1,51 +1,11 @@
-import { fundStageAssets } from '@/global/data/fund-stage-assets'
-import { howItWorksIntro } from '@/global/data/how-it-works'
-import { properties } from '@/global/data/properties'
 import { site } from '@/global/data/site'
-
-function requireById(id: string) {
-  const match = properties.find((item) => item.id === id)
-  if (!match) {
-    throw new Error(`Missing sample record: ${id}`)
-  }
-  return match
-}
-
-const courtyard = requireById('courtyard-residences')
 
 export const sampleOnboardingAmounts = [5000, 10000, 25000] as const
 
 export const getStartedIntro = {
   heading: 'Start exploring.',
-  body: 'This is a demonstration onboarding for SERENE INVESTORS. You can browse sample listings, open fictional funds, or walk a short sample allocation. Nothing here opens an account or places an investment.',
+  body: 'This is a demonstration onboarding for Serene Investors. You can browse sample listings, open fictional funds, or walk a short sample allocation. Nothing here opens an account or places an investment.',
 } as const
-
-export const getStartedOptions = [
-  {
-    id: 'properties',
-    title: 'Explore Properties',
-    body: 'Browse the sample catalogue of named residential buildings.',
-    href: '/properties',
-    image: courtyard.image,
-    imageAlt: courtyard.imageAlt,
-  },
-  {
-    id: 'funds',
-    title: 'Explore Funds',
-    body: 'Open fictional funds gathered around a broader property theme.',
-    href: '/funds',
-    image: fundStageAssets.field.src,
-    imageAlt: fundStageAssets.field.alt,
-  },
-  {
-    id: 'how',
-    title: 'How It Works',
-    body: 'See the four-step demonstration from choose to sample distributions.',
-    href: '/how-it-works',
-    image: howItWorksIntro.image.src,
-    imageAlt: howItWorksIntro.image.alt,
-  },
-] as const
 
 export const getStartedOnboarding = {
   eyebrow: 'Sample onboarding',

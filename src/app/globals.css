@@ -46,6 +46,7 @@
   --color-sx-mint: #7ee2b0;
   --color-sx-forest: #0b3528;
   --color-sx-sand: #efe3c8;
+  --color-sx-tint: #e3f5ec; /* pale mint behind light product heroes */
   --color-sx-muted: #9aa19c;
 
   --radius-sm: var(--radius-sm);

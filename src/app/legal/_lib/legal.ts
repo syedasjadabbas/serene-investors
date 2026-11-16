@@ -25,7 +25,7 @@ const privacy: LegalDoc = {
       id: 'what-this-is',
       title: 'What this page is',
       paragraphs: [
-        'This page belongs to SERENE INVESTORS, a fictional product used for a design study. It describes the demonstration you are looking at. It does not describe a live company, a live account system, or a live data-handling service.',
+        'This page belongs to Serene Investors, a fictional product used for a design study. It describes the demonstration you are looking at. It does not describe a live company, a live account system, or a live data-handling service.',
         'Nothing on this page should be read as a real privacy notice, a registration, or a promise about how a production platform would handle information.',
       ],
     },
@@ -55,9 +55,9 @@ const privacy: LegalDoc = {
             { to: '/login', label: 'login' },
             ', ',
             { to: '/get-started', label: 'get started' },
-            ', and ',
-            { to: '/about#contact', label: 'contact' },
-            ' forms are local demo interactions. Submitting them does not send a message, create an account, store a password, or open a live record.',
+            ' and ',
+            { to: '/contact', label: 'contact' },
+            ' forms are local demo interactions. Submitting them does not create an account, store a password, or open a live record. The contact form only opens a draft email in your own mail app; nothing is sent from this site.',
           ],
         },
         'Those forms exist so a visitor can see how a journey might be presented. They are not a request for personal data, and they are not connected to a production database in this demonstration.',
@@ -100,7 +100,7 @@ const terms: LegalDoc = {
       id: 'fictional-demonstration',
       title: 'A fictional demonstration',
       paragraphs: [
-        'SERENE INVESTORS is a fictional product used for a design study. The buildings, funds, figures, and journeys on this site are demonstration content. They are not a live marketplace and they are not an invitation to send funds.',
+        'Serene Investors is a fictional product used for a design study. The buildings, funds, figures, and journeys on this site are demonstration content. They are not a live marketplace and they are not an invitation to send funds.',
         'These sample terms do not form a contract with a live legal entity. They exist so the demonstration can say, in plain language, what the site is and is not.',
       ],
     },
@@ -176,7 +176,7 @@ const terms: LegalDoc = {
       id: 'intellectual-property',
       title: 'Intellectual property',
       paragraphs: [
-        'The SERENE INVESTORS name, the layout, the sample copy, and the sample listings are part of this design study. They are shown so a visitor can understand the demonstration. They are not a live product identity to be treated as a real investment brand in the market.',
+        'The Serene Investors name, the layout, the sample copy, and the sample listings are part of this design study. They are shown so a visitor can understand the demonstration. They are not a live product identity to be treated as a real investment brand in the market.',
         'Do not copy sample figures out of context and present them as actual performance.',
       ],
     },
@@ -209,7 +209,7 @@ const risks: LegalDoc = {
       id: 'what-this-is',
       title: 'What this page is',
       paragraphs: [
-        'This is a plain-language caution for the SERENE INVESTORS demonstration. It is not a complete legal disclosure, not investment advice, and not a document from a regulator.',
+        'This is a plain-language caution for the Serene Investors demonstration. It is not a complete legal disclosure, not investment advice, and not a document from a regulator.',
         site.disclaimer,
       ],
     },
@@ -242,7 +242,7 @@ const risks: LegalDoc = {
       title: 'Investment products can involve risk',
       paragraphs: [
         'Property investing involves risk, including the possible loss of capital. A person can get back less than they put in. That sentence is part of this demonstration’s caution. It is not a full description of every risk that can attach to a real product.',
-        'Because SERENE INVESTORS is fictional, this page does not list licences, structures, or a live fund document. Those would be invented.',
+        'Because Serene Investors is fictional, this page does not list licences, structures, or a live fund document. Those would be invented.',
       ],
     },
     {

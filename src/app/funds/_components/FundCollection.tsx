@@ -3,11 +3,7 @@ import { fundsNotice } from '@/global/data/funds'
 import type { Fund } from '@/global/types/fund'
 import { FundCard } from './FundCard'
 
-type Props = {
-  items: Fund[]
-}
-
-export function FundCollection({ items }: Props) {
+export function FundCollection({ items }: { items: Fund[] }) {
   return (
     <PageSection id="fund-collection" labelledBy="fund-collection-heading" className="scroll-mt-20">
       <SectionHeading
@@ -18,7 +14,7 @@ export function FundCollection({ items }: Props) {
         body="Each fund gathers several sample properties under one theme, with one sample minimum."
       />
 
-      <ul className="mt-10 grid gap-4 sm:mt-12 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-10 grid gap-4 sm:mt-12 md:grid-cols-2">
         {items.map((fund) => (
           <li key={fund.id}>
             <FundCard fund={fund} />

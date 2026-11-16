@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Calendar, Check, Download, FileText } from 'lucide-react'
 import { CtaBand } from '@/global/components/page/CtaBand'
-import { PageHero } from '@/global/components/page/PageHero'
+import { PageHeader } from '@/global/components/page/PageHeader'
 import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
 import { withBase } from '@/global/lib/asset'
@@ -84,11 +84,17 @@ export function MarketReportsPage() {
 
   return (
     <>
-      <PageHero eyebrow={reportsIntro.eyebrow} title={reportsIntro.heading} highlight={reportsIntro.highlight} body={reportsIntro.body} />
+      <PageHeader
+        eyebrow={reportsIntro.eyebrow}
+        title={reportsIntro.heading}
+        highlight={reportsIntro.highlight}
+        body={reportsIntro.body}
+        aside={<p className="text-sm font-medium text-sx-ink/55">{marketReports.length} sample reports</p>}
+      />
 
       <PageSection labelledBy="featured-report-heading" pad="none">
-        <article className="grid overflow-hidden rounded-[24px] bg-sx-ink text-white md:grid-cols-2">
-          <div className="relative min-h-[260px] sm:min-h-[340px]">
+        <article className="grid gap-3 rounded-[30px] bg-white p-3 text-sx-ink md:grid-cols-[1.1fr_1fr]">
+          <div className="relative min-h-[260px] overflow-hidden rounded-[20px] sm:min-h-[360px] md:min-h-[480px]">
             <img
               src={withBase(featured.image.src)}
               alt={featured.image.alt}
@@ -98,36 +104,43 @@ export function MarketReportsPage() {
               className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
-          <div className="flex flex-col justify-center gap-5 p-6 sm:p-10 lg:p-12">
-            <span className="w-fit rounded-full bg-sx-mint px-3 py-1 text-xs font-semibold text-sx-ink">Latest release</span>
-            <ReportMeta report={featured} dark />
-            <h2 id="featured-report-heading" className="text-balance font-heading text-3xl font-bold leading-[1.08] tracking-[-0.025em] sm:text-4xl">
+          <div className="flex flex-col justify-center gap-5 p-5 sm:p-10 lg:p-12">
+            <p className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="rounded-full bg-sx-ink px-3 py-1 font-semibold text-white">Latest release</span>
+              <span className="rounded-full bg-sx-sand px-3 py-1 font-semibold text-sx-ink">Sample report</span>
+            </p>
+            <ReportMeta report={featured} />
+            <h2 id="featured-report-heading" className="text-balance font-heading text-3xl font-bold leading-[1.08] tracking-[-0.025em] sm:text-[2.5rem]">
               {featured.title}
             </h2>
-            <p className="text-base leading-relaxed text-white/70">{featured.desc}</p>
-            <Highlights items={featured.highlights} dark />
-            <DownloadButton report={featured} dark requested={Boolean(requested[featured.id])} onRequest={() => request(featured.id)} />
+            <p className="text-base leading-relaxed text-sx-ink/65 sm:text-lg">{featured.desc}</p>
+            <Highlights items={featured.highlights} />
+            <DownloadButton report={featured} requested={Boolean(requested[featured.id])} onRequest={() => request(featured.id)} />
           </div>
         </article>
       </PageSection>
 
-      <PageSection labelledBy="reports-heading">
-        <SectionHeading id="reports-heading" title="Earlier reports" highlight="reports" body="Quarterly and thematic research from the Serene Investors team." />
-        <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <PageSection labelledBy="reports-heading" pad="top">
+        <SectionHeading id="reports-heading" title="Earlier reports" body="Quarterly and thematic research notes, presented as samples." />
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {others.map((report) => (
             <li key={report.id}>
-              <article aria-labelledby={`report-${report.id}`} className="flex h-full flex-col overflow-hidden rounded-[20px] bg-white text-sx-ink">
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img src={withBase(report.image.src)} alt={report.image.alt} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+              <article aria-labelledby={`report-${report.id}`} className="flex h-full flex-col gap-5 rounded-[24px] bg-white p-3 pb-6 text-sx-ink">
+                <div className="aspect-video overflow-hidden rounded-[16px] bg-sx-sand">
+                  <img src={withBase(report.image.src)} alt={report.image.alt} width={960} height={540} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 </div>
-                <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
-                  <ReportMeta report={report} />
-                  <h3 id={`report-${report.id}`} className="font-heading text-xl font-semibold leading-snug tracking-[-0.015em]">
+                <div className="flex flex-1 flex-col gap-3 px-3">
+                  <p className="text-sm text-sx-ink/55">
+                    <span className="font-semibold text-sx-brand">Sample report</span>
+                    <span aria-hidden="true"> · </span>
+                    {report.date} · {report.pages}
+                  </p>
+                  <h3 id={`report-${report.id}`} className="text-balance font-heading text-[1.375rem] font-semibold leading-snug tracking-[-0.015em]">
                     {report.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-sx-ink/65">{report.desc}</p>
+                  <p className="text-sm leading-relaxed text-sx-ink/60">{report.desc}</p>
                   <Highlights items={report.highlights} />
-                  <div className="mt-auto pt-2">
+                  <div className="mt-auto pt-3">
                     <DownloadButton report={report} requested={Boolean(requested[report.id])} onRequest={() => request(report.id)} />
                   </div>
                 </div>
@@ -139,14 +152,14 @@ export function MarketReportsPage() {
       </PageSection>
 
       <CtaBand
+        tone="brand"
         title="Invest with data-backed confidence."
         highlight="confidence"
-        body="Serene Investors pairs market research with simple fractional investing in Dubai property."
+        body="Put the research next to the sample listings, or read the guides first."
         actions={[
           { label: 'Explore properties', href: '/properties' },
           { label: 'Read the guides', href: '/learn' },
         ]}
-        image={{ src: '/images/journey/palm-aerial.jpg', alt: 'Aerial view of the Palm Jumeirah' }}
       />
     </>
   )

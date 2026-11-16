@@ -1,155 +1,87 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPin } from 'lucide-react'
-import type { Property } from '@/global/types/property'
+import { PieChart, TrendingUp, Wallet } from 'lucide-react'
+import type { Property, PropertyStatus } from '@/global/types/property'
 import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
-import { formatPropertyMeta } from '@/global/lib/format'
 import { withBase } from '@/global/lib/asset'
+import { cn } from '@/global/lib/cn'
+import { formatPercent, formatSampleAmount, formatStatus } from '@/global/lib/format'
+import { fundedShare } from '../_lib/listing'
 
-type Props = {
-  property: Property
+const STATUS_TEXT: Record<PropertyStatus, string> = {
+  open: 'text-sx-mint',
+  funding: 'text-sx-sand',
+  funded: 'text-white',
+  exited: 'text-sx-muted',
 }
 
-function getPropertyMetrics(property: Property) {
-  // Col 1: Net Yield
-  const netYield =
-    property.id === 'courtyard-residences'
-      ? '6.8%'
-      : property.sampleNetYieldPct
-        ? `${property.sampleNetYieldPct.toFixed(1)}%`
-        : property.sampleYieldPct
-          ? `${property.sampleYieldPct.toFixed(1)}%`
-          : '6.8%'
-
-  // Col 2: 3Y Target Return
-  const targetReturn =
-    property.id === 'courtyard-residences'
-      ? '24.5%'
-      : `${((property.sampleNetYieldPct || property.sampleYieldPct || 6.5) * 3.4).toFixed(1)}%`
-
-  // Col 3: Occupancy
-  const occupancy = property.status === 'exited' ? '100%' : '98%'
-
-  // Funding statistics
-  const targetFundingMap: Record<string, number> = {
-    'courtyard-residences': 1500000,
-    'cedar-court': 1200000,
-    'pines-loft': 850000,
-    'marble-house': 2100000,
-    'linden-house': 1800000,
-    'copper-yard': 1400000,
-    'kiln-yard': 1100000,
-    'azure-horizon-villa': 2400000,
-    'the-glass-pavilion': 1950000,
-  }
-
-  const targetFunding = targetFundingMap[property.id] || 1500000
-  let fundedPct = property.fundedPct ?? (property.status === 'funded' || property.status === 'exited' ? 100 : 92)
-  let fundedAmount = Math.round((targetFunding * fundedPct) / 100)
-
-  if (property.id === 'courtyard-residences') {
-    fundedPct = 92
-    fundedAmount = 1420000
-  }
-
-  const fundingFormatted = `£${fundedAmount.toLocaleString('en-GB')} / £${targetFunding.toLocaleString('en-GB')} funded (${fundedPct}%)`
-
-  const statusPillText =
-    fundedPct === 100
-      ? 'Funded'
-      : property.status === 'exited'
-        ? 'Exited'
-        : `${fundedPct}% Funded`
-
-  const minTicket =
-    property.id === 'courtyard-residences'
-      ? 'From £500 min ticket'
-      : `From £${(property.sampleMinInvestment && property.sampleMinInvestment > 500 ? Math.round(property.sampleMinInvestment / 10) : 500).toLocaleString('en-GB')} min ticket`
-
-  return {
-    netYield,
-    targetReturn,
-    occupancy,
-    fundedPct,
-    fundingFormatted,
-    statusPillText,
-    minTicket,
-  }
-}
-
-export function CatalogueCard({ property }: Props) {
-  const location = formatPropertyMeta(property.neighborhood, property.city)
-  const metrics = getPropertyMetrics(property)
-  const kpis = [
-    { label: 'Net yield', value: metrics.netYield },
-    { label: '3Y target', value: metrics.targetReturn },
-    { label: 'Occupancy', value: metrics.occupancy },
+/**
+ * Listing card: photo across the top, dark status pills top-right, a grey "AREA ✦ TYPE" line, the
+ * name, then label/value rows. Every figure comes from the sample data.
+ */
+export function CatalogueCard({ property }: { property: Property }) {
+  const funded = fundedShare(property)
+  const rows = [
+    { icon: Wallet, label: 'Sample minimum', value: formatSampleAmount(property.sampleMinInvestment) },
+    { icon: TrendingUp, label: 'Sample yield', value: formatPercent(property.sampleYieldPct) },
+    { icon: PieChart, label: 'Funded', value: `${funded}%` },
   ]
 
   return (
     <article data-catalogue-card className="group flex w-full">
       <Link
         href={`/properties/${property.id}`}
-        aria-label={`${property.name}, ${location}, ${property.type}, ${metrics.statusPillText}. View property.`}
-        className="flex w-full flex-col rounded-[20px] bg-white p-3 text-sx-ink transition-transform duration-300 ease-out hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sx-brand"
+        aria-label={`${property.name}, ${property.neighborhood}, ${property.city}. ${property.type}, ${formatStatus(property.status)}. View property.`}
+        className="flex w-full flex-col overflow-hidden rounded-[20px] bg-white text-sx-ink transition-transform duration-300 ease-out hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sx-brand"
       >
-        <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[14px] bg-sx-paper">
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-sx-paper">
           <img
             data-catalogue-image
             src={withBase(property.image)}
             alt={property.imageAlt}
             width={1600}
-            height={1100}
+            height={1000}
             loading="lazy"
             decoding="async"
             className="block h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          <span className="absolute left-3 top-3 inline-flex max-w-[58%] items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-sx-ink">
-            <MapPin size={12} strokeWidth={2.5} aria-hidden="true" className="shrink-0 text-sx-brand" />
-            <span className="truncate">{location}</span>
-          </span>
-          <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-sx-ink px-3 py-1 text-xs font-semibold text-white">
-            <span aria-hidden="true" className="size-1.5 rounded-full bg-sx-mint" />
-            {metrics.statusPillText}
-          </span>
+          <div className="absolute right-3 top-3 flex flex-wrap justify-end gap-1.5 sm:right-4 sm:top-4">
+            <span className={cn('rounded-full bg-sx-ink/85 px-3 py-1 text-xs font-semibold backdrop-blur', STATUS_TEXT[property.status])}>
+              {formatStatus(property.status)}
+            </span>
+            <span className="rounded-full bg-sx-ink/85 px-3 py-1 text-xs font-semibold text-white backdrop-blur">Sample</span>
+          </div>
         </div>
 
-        <div className="flex flex-1 flex-col gap-4 px-2 pb-2 pt-4">
+        <div className="flex flex-1 flex-col gap-5 p-5 sm:p-7">
           <div>
-            <h3 className="font-heading text-xl font-bold tracking-[-0.02em]">{property.name}</h3>
-            <p className="mt-1 text-sm text-sx-ink/60">
-              {property.type} · {property.beds ? `${property.beds} bed · ` : ''}
-              {property.areaLabel}
+            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-sx-ink/45">
+              {property.neighborhood}, {property.city} <span aria-hidden="true">✦</span> {property.type}
             </p>
+            <h3 className="mt-2 font-heading text-[1.625rem] font-bold leading-tight tracking-[-0.02em]">{property.name}</h3>
           </div>
 
-          <div>
-            <p className="text-xs tabular-nums text-sx-ink/60">{metrics.fundingFormatted}</p>
-            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-sx-paper">
-              <div
-                className="h-full rounded-full bg-sx-brand transition-[width] duration-700 ease-out"
-                style={{ width: `${Math.min(metrics.fundedPct, 100)}%` }}
-              />
-            </div>
-          </div>
-
-          <dl className="grid grid-cols-3 rounded-[14px] bg-sx-paper py-3 text-center">
-            {kpis.map((kpi) => (
-              <div key={kpi.label} className="flex flex-col-reverse gap-0.5 px-1">
-                <dt className="text-[11px] font-medium text-sx-ink/55">{kpi.label}</dt>
-                <dd className="font-heading text-base font-bold tabular-nums tracking-[-0.01em]">{kpi.value}</dd>
+          <dl className="flex flex-col divide-y divide-sx-ink/10">
+            {rows.map(({ icon: Icon, label, value }) => (
+              <div key={label} className="flex items-center justify-between gap-4 py-3 first:pt-0">
+                <dt className="flex items-center gap-2.5 text-sm text-sx-ink/60">
+                  <Icon size={16} aria-hidden="true" className="text-sx-brand" />
+                  {label}
+                </dt>
+                <dd className="font-heading text-base font-bold tabular-nums">{value}</dd>
               </div>
             ))}
           </dl>
 
-          <div className="mt-auto flex items-center justify-between gap-3">
-            <span className="text-xs font-medium text-sx-ink/60">{metrics.minTicket}</span>
-            <span className="inline-flex items-center gap-2 text-sm font-semibold">
-              View property
-              <ArrowCircle tone="dark" size="sm" />
-            </span>
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-sx-paper" aria-hidden="true">
+            <div className="h-full rounded-full bg-sx-brand" style={{ width: `${Math.min(funded, 100)}%` }} />
           </div>
+
+          <span className="mt-auto inline-flex items-center justify-between gap-2 text-sm font-semibold">
+            View property
+            <ArrowCircle tone="dark" size="sm" />
+          </span>
         </div>
       </Link>
     </article>

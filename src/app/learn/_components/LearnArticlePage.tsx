@@ -15,9 +15,9 @@ export function LearnArticlePage() {
   const guide = slug ? getLearnGuide(slug) : undefined
 
   usePageMeta(
-    guide ? `SERENE INVESTORS | ${guide.title}` : 'SERENE INVESTORS | Guide not found',
+    guide ? `Serene Investors | ${guide.title}` : 'Serene Investors | Guide not found',
     guide
-      ? `${guide.description} Sample educational content for the SERENE INVESTORS demonstration.`
+      ? `${guide.description} Sample educational content for the Serene Investors demonstration.`
       : 'This sample guide does not exist in the current Learn collection.',
   )
 
@@ -38,15 +38,14 @@ export function LearnArticlePage() {
       <LearnArticleBody guide={guide} />
       <LearnArticleRelated guide={guide} />
       <CtaBand
+        tone="brand"
         title="Continue on the platform."
         highlight="platform"
-        body="Open a sample catalogue, or return to the four-step demonstration."
+        body="Open a sample catalogue, or walk through the four-step demonstration."
         actions={[
           { label: 'Explore properties', href: '/properties' },
-          { label: 'Explore funds', href: '/funds' },
           { label: 'How it works', href: '/how-it-works' },
         ]}
-        image={{ src: '/images/journey/dubai-marina.jpg', alt: 'Dubai Marina towers along the water' }}
       />
     </article>
   )

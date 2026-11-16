@@ -6,11 +6,10 @@ import { HomeFaq } from './HomeFaq'
 import { HomeHero } from './HomeHero'
 import { IntroSplit } from './IntroSplit'
 import { MissionQuote } from './MissionQuote'
-import { Newsletter } from './Newsletter'
 import { ProductCards } from './ProductCards'
 import { LocationsMarquee, StatsGrid } from './StatsGrid'
 import { StoryCards } from './StoryCards'
-import { Testimonials } from './Testimonials'
+import { ReviewStrip } from '@/global/components/sections/ReviewStrip'
 
 export function HomePage() {
   usePageMeta(site.name, site.disclaimer)
@@ -32,9 +31,8 @@ export function HomePage() {
           <StatsGrid />
           <LocationsMarquee />
           <StoryCards />
-          <Testimonials />
+          <ReviewStrip />
           <HomeFaq />
-          <Newsletter />
         </>
       }
     />

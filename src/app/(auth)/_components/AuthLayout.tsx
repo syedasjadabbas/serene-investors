@@ -23,12 +23,12 @@ export function AuthShell({ children, related }: { children: ReactNode; related?
   return (
     <section className="px-4 pb-16 pt-6 sm:px-8 sm:pb-24 sm:pt-10">
       <div className="mx-auto grid max-w-[1240px] gap-4 lg:grid-cols-[minmax(0,480px)_minmax(0,1fr)] lg:justify-center">
-        <div className="mx-auto w-full max-w-[480px] rounded-[20px] bg-white p-6 text-sx-ink sm:p-10">{children}</div>
+        <div className="mx-auto w-full max-w-[480px] rounded-[30px] bg-white p-6 text-sx-ink sm:p-10">{children}</div>
 
         <aside
           aria-label={related ? `Sample ${related.kind} you came from` : undefined}
           aria-hidden={related ? undefined : true}
-          className="relative hidden min-h-[560px] overflow-hidden rounded-[20px] bg-sx-forest lg:block"
+          className="relative hidden min-h-[560px] overflow-hidden rounded-[30px] bg-sx-forest lg:block"
         >
           <img src={withBase(image)} alt={related ? imageAlt : ''} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-sx-ink/85 via-sx-ink/20 to-transparent" />
@@ -76,7 +76,7 @@ export function AuthHeading({ eyebrow, title, children }: { eyebrow: string; tit
   return (
     <div className="flex flex-col items-start gap-3">
       <Eyebrow tone="sand">{eyebrow}</Eyebrow>
-      <h1 className="font-heading text-3xl font-bold leading-[1.05] tracking-[-0.025em] sm:text-4xl">{title}</h1>
+      <h1 className="text-balance font-heading text-4xl font-bold leading-[1.05] tracking-[-0.03em] sm:text-[2.75rem]">{title}</h1>
       {children && <p className="text-base leading-relaxed text-sx-ink/65">{children}</p>}
     </div>
   )

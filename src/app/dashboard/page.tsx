@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { DashboardPage } from './_components/DashboardPage'
 
 export const metadata: Metadata = {
-  title: 'Investor Dashboard & Portfolio | SERENE INVESTORS',
+  title: 'Investor Dashboard & Portfolio | Serene Investors',
   description: 'View your real-time fractional property holdings, quarterly rental dividend history, and tax documentation.',
 }
 

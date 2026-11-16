@@ -6,12 +6,13 @@ import { useRelatedProperties } from '../_hooks/useRelatedProperties'
 import { CatalogueCard } from './CatalogueCard'
 
 export function PropertyRelated({ property }: { property: Property }) {
-  const related = useRelatedProperties(property, properties)
+  // Two big listing cards, matching the two-column collection grid.
+  const related = useRelatedProperties(property, properties, 2)
 
   if (related.length === 0) return null
 
   return (
-    <PageSection labelledBy="related-heading" pad="top">
+    <PageSection labelledBy="related-heading" pad="none">
       <SectionHeading
         id="related-heading"
         eyebrow="Keep exploring"
@@ -22,7 +23,7 @@ export function PropertyRelated({ property }: { property: Property }) {
           </PillLink>
         }
       />
-      <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-10 grid gap-4 md:grid-cols-2 md:gap-5">
         {related.map((item) => (
           <li key={item.id} className="flex">
             <CatalogueCard property={item} />

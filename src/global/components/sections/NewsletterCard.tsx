@@ -2,10 +2,10 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { newsletter } from '../_lib/home'
+import { newsletter } from '@/global/data/newsletter'
 
 /** Sends the visitor to sign-up with their email filled in. There is no separate mailing list yet. */
-export function Newsletter() {
+export function NewsletterCard() {
   const router = useRouter()
   const [email, setEmail] = useState('')
 

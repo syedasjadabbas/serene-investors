@@ -5,17 +5,13 @@ import type { Fund } from '@/global/types/fund'
 import { useRelatedFunds } from '../_hooks/useRelatedFunds'
 import { FundCard } from './FundCard'
 
-type Props = {
-  fund: Fund
-}
-
-export function FundRelated({ fund }: Props) {
+export function FundRelated({ fund }: { fund: Fund }) {
   const related = useRelatedFunds(fund, funds)
 
   if (related.length === 0) return null
 
   return (
-    <PageSection labelledBy="related-funds-heading" pad="top">
+    <PageSection labelledBy="related-funds-heading" pad="none">
       <SectionHeading
         id="related-funds-heading"
         eyebrow="Keep exploring"
@@ -27,8 +23,8 @@ export function FundRelated({ fund }: Props) {
           </PillLink>
         }
       />
-      <ul className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {related.map((item) => (
+      <ul className="mt-10 grid gap-4 md:grid-cols-2">
+        {related.slice(0, 2).map((item) => (
           <li key={item.id}>
             <FundCard fund={item} />
           </li>

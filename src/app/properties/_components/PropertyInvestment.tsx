@@ -65,7 +65,7 @@ export function PropertyInvestment({ property }: { property: Property }) {
   const [principal, ...rest] = stats
 
   return (
-    <PageSection labelledBy="investment-heading" tone="white">
+    <PageSection labelledBy="investment-heading" pad="bottom">
       <div ref={rootRef}>
         <SectionHeading
           id="investment-heading"
@@ -88,7 +88,7 @@ export function PropertyInvestment({ property }: { property: Property }) {
             </Card>
           )}
 
-          <Card tone="paper">
+          <Card>
             <dl className="divide-y divide-sx-ink/10">
               {rest.map((stat, index) => {
                 const last = index === rest.length - 1

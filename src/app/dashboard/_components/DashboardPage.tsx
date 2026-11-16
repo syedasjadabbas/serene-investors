@@ -32,7 +32,7 @@ export function DashboardPage() {
     <>
       {/* Welcome header: the page's only h1. */}
       <section className="px-4 pt-6 sm:px-8 sm:pt-10">
-        <div className="mx-auto flex max-w-[1240px] flex-col gap-8 rounded-[24px] bg-white p-6 text-sx-ink sm:p-10 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mx-auto flex max-w-[1240px] flex-col gap-8 rounded-[30px] bg-white p-6 text-sx-ink sm:p-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex min-w-0 flex-col items-start gap-5">
             <Eyebrow tone="sand">Sample portfolio</Eyebrow>
             <div className="flex min-w-0 items-center gap-4">
@@ -42,7 +42,7 @@ export function DashboardPage() {
               >
                 {getInitials(displayName)}
               </span>
-              <h1 className="min-w-0 break-words font-heading text-3xl font-bold leading-[1.05] tracking-[-0.03em] sm:text-5xl">
+              <h1 className="min-w-0 break-words font-heading text-3xl font-bold leading-[1.05] tracking-[-0.03em] sm:text-[2.75rem]">
                 Welcome back, <span className="text-sx-brand">{firstName}</span>
               </h1>
             </div>

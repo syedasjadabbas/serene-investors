@@ -83,10 +83,11 @@ export function StoryCards() {
         const next = cards[index + 1]
         if (!next) return
         gsap.to(card, {
-          scale: 0.92,
-          filter: 'brightness(0.75)',
+          scale: 0.94,
+          filter: 'brightness(0.88)',
           ease: 'none',
-          scrollTrigger: { trigger: next, start: 'top bottom', end: 'top 120px', scrub: true },
+          // scrub 2.5: the motion trails the scroll by a couple of seconds, so it feels slow and smooth.
+          scrollTrigger: { trigger: next, start: 'top bottom', end: 'top 120px', scrub: 2.5 },
         })
       })
     })
@@ -95,7 +96,7 @@ export function StoryCards() {
 
   return (
     <section ref={ref} aria-label="About Serene Investors" className="px-4 sm:px-8">
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-10">
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-10 md:gap-[85vh]">
         {story.map((card, index) => (
           <article
             key={card.id}

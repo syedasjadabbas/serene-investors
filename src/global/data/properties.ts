@@ -81,18 +81,6 @@ export const propertiesFeaturedBand = {
   propertyId: 'courtyard-residences',
 } as const
 
-export const propertiesCta = {
-  heading: 'Find your next property.',
-  body: 'Explore the collection or start with the basics before reviewing sample opportunities.',
-  primary: { label: 'Explore a property', href: '/properties/courtyard-residences' },
-  secondary: { label: 'How it works', href: '/how-it-works' },
-  image: {
-    src: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&h=1050&q=80',
-    alt: 'Modern architectural villa featuring clean lines, warm evening light, and landscaped reflection pool',
-    badge: 'Featured Property',
-  },
-} as const
-
 /**
  * Sample listings for layout work only.
  * Names, yields, and prices are invented. Do not treat as market data.
@@ -504,7 +492,6 @@ export const properties: Property[] = [
   },
 ]
 
-const homepageFeaturedIds = ['cedar-court', 'pines-loft', 'marble-house'] as const
 
 function requireById(id: string): Property {
   const match = properties.find((item) => item.id === id)
@@ -513,7 +500,5 @@ function requireById(id: string): Property {
   }
   return match
 }
-
-export const featuredProperties = homepageFeaturedIds.map((id) => requireById(id))
 
 export const catalogueFeatured = requireById(propertiesFeaturedBand.propertyId)

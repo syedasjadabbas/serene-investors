@@ -74,8 +74,17 @@ Every inner page is built from `src/global/components/page/` so pages look like 
 | `StatCards` | Row of big-number cards. |
 | `StepRow` | "Step 01" text beside an image or visual in one rounded card; alternate `reverse` and `tone`. |
 | `FeatureCards` | Icon + title + text grid. |
-| `FaqAccordion` | Accessible question list. |
-| `CtaBand` | Closing call to action; end pages with one. |
+| `FaqAccordion` | Accessible question list; answers glide open. |
+| `CtaBand` | Closing call to action. `tone` forest (default), brand (green sign-up band) or white (large card with an inset image). |
+| `PageHeader` | Plain 44px left-aligned title for list, tool and content pages. |
+| `ProductHero` + `HeroCover` | Full-screen pinned hero for product pages; wrap the rest of the page in `HeroCover` so it slides up over it. |
+| `StickySteps` | "Step 01…" texts scrolling beside a pinned image that cross-fades per step. |
+| `FeatureCarousel` | Row of wide text-and-image cards paged with arrows. |
+| `VideoExplainer` | Video or photo card beside rows that open on click. |
+
+Every page ends with the newsletter card, added by the shell (`NewsletterCard`); pages don't render
+their own. `ReviewStrip` (moving sample reviews) is in `global/components/sections`. Which blocks
+each page type uses, and in what order, is in `docs/INNER-PAGE-PATTERNS.md`.
 
 Buttons that lead somewhere are `PillLink` (`global/components/ui`). Colours come from the `sx-*`
 Tailwind tokens in `globals.css` (`sx-ink`, `sx-card`, `sx-paper`, `sx-brand`, `sx-mint`,

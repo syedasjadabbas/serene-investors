@@ -117,7 +117,7 @@ export const ecosystem = {
   cards: [
     { title: 'Buy property shares', meta: 'Start from AED 500', href: '/properties', media: 'video', image: '/images/properties/marina-tower.jpg' },
     { title: 'Invest in a fund', meta: 'Diversify in one step', href: '/funds', media: 'listings', image: '/images/journey/palm-aerial.jpg' },
-    { title: 'Plan your returns', meta: 'Try the calculator', href: '/properties#calculator-heading', media: 'chart', image: '/images/journey/tower-pool.jpg' },
+    { title: 'Plan your returns', meta: 'Try the calculator', href: '/calculator', media: 'chart', image: '/images/journey/tower-pool.jpg' },
     { title: 'Get a UAE Golden Visa', meta: 'Check the steps', href: '/golden-visa', media: 'visa', image: '/images/journey/burj-al-arab.jpg' },
     { title: 'Earn rewards as you grow', meta: 'See the tiers', href: '/rewards', media: 'shares', image: '/images/properties/boulevard-point-hero.jpg' },
     { title: 'Read market reports', meta: 'Quarterly insights', href: '/market-reports', media: 'photo', image: '/images/journey/dubai-marina.jpg' },
@@ -180,18 +180,6 @@ export const story = [
   },
 ]
 
-export const testimonials = {
-  heading: 'What investors tell us',
-  note: 'Sample reviews for illustration.',
-  items: [
-    { name: 'Sample investor, Dubai', quote: 'I bought my first shares in an evening. The documents were all there and the first rent payment arrived when it said it would.' },
-    { name: 'Sample investor, Riyadh', quote: 'Being able to start small and add a few shares every month is exactly what I was looking for.' },
-    { name: 'Sample investor, London', quote: 'I live abroad, so having everything online, from the listing to the quarterly report, makes it workable.' },
-    { name: 'Sample investor, Abu Dhabi', quote: 'The fund option let me spread one amount across several buildings without choosing each one myself.' },
-    { name: 'Sample investor, Jeddah', quote: 'Clear figures, clear fees, and someone answers when I have a question.' },
-  ],
-}
-
 export const homeFaq = {
   heading: 'FAQs',
   body: 'Common questions',
@@ -221,12 +209,25 @@ export const homeFaq = {
       q: 'What are the risks?',
       a: 'Property values and rent can fall, and shares may take time to sell. Read the risk notice before investing and only invest what you can leave invested.',
     },
+    {
+      q: 'How much do I need to start?',
+      a: 'You can buy your first shares from AED 500. There is no maximum, and you can add more shares to a building or fund at any time while it is open.',
+    },
+    {
+      q: 'How are the buildings chosen?',
+      a: 'Each listing is reviewed for location, condition, rental demand and price before it opens. The figures and documents behind that review are on its page.',
+    },
+    {
+      q: 'What fees do I pay?',
+      a: 'Fees are listed on every property and fund page before you invest, so you can see what comes out of the rent and the sale before you commit.',
+    },
+    {
+      q: 'Can property help with a UAE Golden Visa?',
+      a: 'Owning AED 2,000,000 of Dubai property can support a 10-year Golden Visa application. Your shares across several buildings count towards that total.',
+    },
   ],
+  moreNote: 'Still have questions?',
+  moreBody: 'Browse every answer, or send us a message and we will reply.',
+  contact: { label: 'Contact us', href: '/contact' },
 }
 
-export const newsletter = {
-  heading: 'Get new listings first.',
-  body: 'Create a free account to hear about new buildings and funds before they open.',
-  placeholder: 'you@example.com',
-  button: 'Continue',
-}

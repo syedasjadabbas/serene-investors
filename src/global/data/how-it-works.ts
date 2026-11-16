@@ -72,7 +72,7 @@ export const howPageFaq = [
     id: 'what',
     question: 'What is Serene Investors?',
     answer:
-      'SERENE INVESTORS is a fictional product used for a design study. It shows how a visitor might browse named buildings, understand a simple hold cycle, and reach a sample sign-up. The idea the site is built around is: own a measured share of a building.',
+      'Serene Investors is a fictional product used for a design study. It shows how a visitor might browse named buildings, understand a simple hold cycle, and reach a sample sign-up. The idea the site is built around is: own a measured share of a building.',
   },
   {
     id: 'sample',
@@ -102,7 +102,7 @@ export const howPageFaq = [
     id: 'real',
     question: 'Is this a real investment platform?',
     answer:
-      'No. SERENE INVESTORS is a fictional demonstration product. Sample information is not an offer, a solicitation, or a guarantee.',
+      'No. Serene Investors is a fictional demonstration product. Sample information is not an offer, a solicitation, or a guarantee.',
   },
 ] as const
 

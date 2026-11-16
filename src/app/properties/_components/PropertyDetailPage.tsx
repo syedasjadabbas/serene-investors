@@ -19,7 +19,7 @@ export function PropertyDetailPage() {
   const property = properties.find((item) => item.id === slug)
 
   usePageMeta(
-    property ? `SERENE INVESTORS | ${property.name}` : 'SERENE INVESTORS | Property not found',
+    property ? `Serene Investors | ${property.name}` : 'Serene Investors | Property not found',
     property
       ? `Sample listing for ${property.name} in ${property.neighborhood}. All figures are fictional demonstration data.`
       : 'This sample property does not exist in the current collection.',

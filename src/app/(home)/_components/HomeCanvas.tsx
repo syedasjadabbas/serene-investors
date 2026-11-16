@@ -11,7 +11,7 @@ const PAPER = '#f3f3ef'
  * One background behind the whole home page. As the section marked `data-bg-shift` scrolls up
  * to the middle of the screen, the background fades from dark to paper, and any text marked
  * `data-shift-text` fades from white to ink with it, so the dark top flows into the light
- * bottom instead of meeting it at an edge. The bottom is rounded where it sits on the footer.
+ * bottom instead of meeting it at an edge.
  */
 export function HomeCanvas({ dark, light }: { dark: ReactNode; light: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -41,7 +41,7 @@ export function HomeCanvas({ dark, light }: { dark: ReactNode; light: ReactNode 
   }, [reduced])
 
   return (
-    <div ref={ref} className="relative z-[1] -mb-10 rounded-b-[40px] bg-sx-ink">
+    <div ref={ref} className="bg-sx-ink">
       {dark}
       {light}
     </div>

@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import { MapPin } from 'lucide-react'
-import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
+import { Building2, TrendingUp, Wallet } from 'lucide-react'
 import { sampleFundMinimum } from '@/global/data/funds'
 import { withBase } from '@/global/lib/asset'
 import { formatFundType, formatPercent, formatSampleAmount } from '@/global/lib/format'
@@ -12,61 +11,59 @@ type Props = {
   headingLevel?: 'h3' | 'h4'
 }
 
-/** White rounded fund card: photo, name, three sample figures and a "View fund" arrow. */
+/**
+ * Big white listing card: photo on top with dark status pills, a grey "MARKET ✦ TYPE" line, the
+ * fund name and label/value rows with small icons. The whole card links to the fund.
+ */
 export function FundCard({ fund, headingLevel: Heading = 'h3' }: Props) {
-  const figures = [
-    { label: 'Sample yield', value: formatPercent(fund.sampleReturnPct) },
-    { label: 'Properties', value: String(fund.propertyCount) },
-    { label: 'Sample min.', value: formatSampleAmount(sampleFundMinimum) },
+  const rows = [
+    { icon: TrendingUp, label: 'Sample yield', value: formatPercent(fund.sampleReturnPct) },
+    { icon: Building2, label: 'Properties', value: String(fund.propertyCount) },
+    { icon: Wallet, label: 'Sample minimum', value: formatSampleAmount(sampleFundMinimum) },
   ]
 
   return (
-    <article id={fund.id} data-fund-id={fund.id} className="h-full scroll-mt-28">
+    <article id={fund.id} className="h-full scroll-mt-28">
       <Link
         href={`/funds/${fund.id}`}
-        aria-label={`${fund.name}, ${fund.market}, ${fund.propertyCount} sample properties. View fund.`}
-        className="group flex h-full flex-col overflow-hidden rounded-[20px] bg-white text-sx-ink transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(14,16,15,0.35)]"
+        className="group flex h-full flex-col rounded-[20px] bg-white p-2.5 text-sx-ink transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(14,16,15,0.35)] sm:p-3"
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-sx-sand">
+        <div className="relative aspect-[16/11] overflow-hidden rounded-[14px] bg-sx-sand">
           <img
             src={withBase(fund.image)}
             alt={fund.imageAlt}
             width={1200}
-            height={900}
+            height={825}
             loading="lazy"
             decoding="async"
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <span className="absolute left-3 top-3 inline-flex max-w-[calc(100%-1.5rem)] items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-sx-ink">
-            <MapPin size={12} aria-hidden="true" className="shrink-0 text-sx-brand" />
-            <span className="truncate">{fund.market}</span>
-          </span>
-          <span className="absolute right-3 top-3 rounded-full bg-sx-mint px-3 py-1 text-xs font-semibold text-sx-ink">
-            Sample fund
+          <span className="absolute right-3 top-3 flex flex-wrap justify-end gap-1.5">
+            <span className="rounded-full bg-sx-ink px-3 py-1 text-xs font-semibold text-sx-mint">Sample fund</span>
+            <span className="rounded-full bg-sx-ink px-3 py-1 text-xs font-semibold text-sx-sand">{fund.propertyCount} buildings</span>
           </span>
         </div>
 
-        <div className="flex flex-1 flex-col gap-5 p-5 sm:p-6">
-          <div>
-            <p className="text-sm text-sx-ink/55">
-              {formatFundType(fund.type)} · {fund.portfolioLabel}
-            </p>
-            <Heading className="mt-1 font-heading text-2xl font-bold tracking-[-0.02em]">{fund.name}</Heading>
-          </div>
+        <div className="flex flex-1 flex-col px-3 pb-3 pt-5 sm:px-4 sm:pb-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/45">
+            {fund.market} <span aria-hidden="true">✦</span>
+            <span className="sr-only">,</span> {formatFundType(fund.type)} fund
+          </p>
+          <Heading className="mt-2 font-heading text-[1.625rem] font-bold leading-tight tracking-[-0.02em] group-hover:text-sx-forest">
+            {fund.name}
+          </Heading>
 
-          <dl className="grid grid-cols-3 gap-2 rounded-[14px] bg-sx-paper p-3">
-            {figures.map((figure) => (
-              <div key={figure.label} className="flex flex-col gap-1">
-                <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-sx-ink/50">{figure.label}</dt>
-                <dd className="font-heading text-base font-bold tabular-nums sm:text-lg">{figure.value}</dd>
+          <dl className="mt-5 flex flex-col">
+            {rows.map(({ icon: Icon, label, value }) => (
+              <div key={label} className="flex items-center justify-between gap-4 border-t border-sx-ink/10 py-3">
+                <dt className="flex items-center gap-2.5 text-sm text-sx-ink/60">
+                  <Icon size={16} aria-hidden="true" className="text-sx-brand" />
+                  {label}
+                </dt>
+                <dd className="font-semibold tabular-nums">{value}</dd>
               </div>
             ))}
           </dl>
-
-          <span className="mt-auto flex items-center justify-between text-sm font-semibold">
-            View fund
-            <ArrowCircle tone="dark" />
-          </span>
         </div>
       </Link>
     </article>

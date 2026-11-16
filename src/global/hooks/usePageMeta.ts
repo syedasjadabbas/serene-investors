@@ -29,7 +29,15 @@ export function usePageMeta(title: string, description: string) {
     setMeta('twitter:title', title)
     setMeta('twitter:description', description)
 
+    // Next re-renders <title> from the root layout's metadata after hydration and on navigation,
+    // which would put the site-wide title back. Keep this page's title while it is mounted.
+    const observer = new MutationObserver(() => {
+      if (document.title !== title) document.title = title
+    })
+    observer.observe(document.head, { subtree: true, childList: true, characterData: true })
+
     return () => {
+      observer.disconnect()
       document.title = previousTitle
       descriptionMeta?.setAttribute('content', previousDescription)
       setProperty('og:title', previousOgTitle)

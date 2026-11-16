@@ -4,7 +4,7 @@ import { formatStatus } from '@/global/lib/format'
 import { withBase } from '@/global/lib/asset'
 import { cn } from '@/global/lib/cn'
 
-/** Main photo with a row of thumbnails. Used as the media of the property hero. */
+/** Main photo with a row of thumbnails, in one white card under the listing header. */
 export function PropertyGallery({ property }: { property: Property }) {
   const frames = property.gallery.length > 0 ? property.gallery : [{ src: property.image, alt: property.imageAlt }]
   const [active, setActive] = useState(0)
@@ -13,8 +13,8 @@ export function PropertyGallery({ property }: { property: Property }) {
   if (!current) return null
 
   return (
-    <div className="bg-white p-2 sm:p-3">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[18px] bg-sx-paper sm:aspect-[16/8]">
+    <div className="rounded-[30px] bg-white p-2 sm:p-3">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-sx-paper sm:aspect-[16/8]">
         <img
           key={current.src}
           src={withBase(current.src)}

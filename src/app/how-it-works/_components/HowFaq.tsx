@@ -32,8 +32,9 @@ const ITEMS: FaqItem[] = howPageFaq.map((item) => {
 export function HowFaq() {
   return (
     <PageSection labelledBy="how-faq-heading">
-      <div className="grid gap-10 md:grid-cols-[1fr_2fr]">
+      <div className="grid items-start gap-10 md:grid-cols-[1fr_2fr]">
         <SectionHeading
+          className="md:sticky md:top-28"
           id="how-faq-heading"
           eyebrow="FAQ"
           title="Questions, answered plainly."

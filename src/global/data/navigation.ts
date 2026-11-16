@@ -10,7 +10,7 @@ export const menuGroups: NavGroup[] = [
       { label: 'Properties', href: '/properties' },
       { label: 'Funds', href: '/funds', badge: 'New' },
       { label: 'How it works', href: '/how-it-works' },
-      { label: 'Returns calculator', href: '/properties#calculator-heading' },
+      { label: 'Returns calculator', href: '/calculator' },
     ],
   },
   {
@@ -35,6 +35,7 @@ export const menuGroups: NavGroup[] = [
     links: [
       { label: 'About us', href: '/about' },
       { label: 'Get started', href: '/get-started' },
+      { label: 'Contact', href: '/contact' },
     ],
   },
 ]

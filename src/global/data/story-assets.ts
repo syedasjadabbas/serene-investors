@@ -25,12 +25,3 @@ export const storyAssets = {
   },
 } as const
 
-const holdingThumbs: Record<string, { src: string; alt: string }> = {
-  'cedar-court': storyAssets.choose,
-  'pines-loft': storyAssets.pines,
-  'marble-house': storyAssets.marble,
-}
-
-export function storyHoldingThumb(id: string) {
-  return holdingThumbs[id] ?? storyAssets.choose
-}

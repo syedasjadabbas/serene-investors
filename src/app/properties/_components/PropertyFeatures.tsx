@@ -25,7 +25,7 @@ export function PropertyFeatures({ property }: { property: Property }) {
   ]
 
   return (
-    <PageSection labelledBy="features-heading">
+    <PageSection labelledBy="features-heading" pad="bottom">
       <SectionHeading id="features-heading" eyebrow="At a glance" title="Why this listing." align="center" />
       <FeatureCards items={cards} columns={4} className="mt-12" />
     </PageSection>

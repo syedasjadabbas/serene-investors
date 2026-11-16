@@ -32,7 +32,7 @@ export function PropertyCatalogue({ properties, onReset }: Props) {
           </button>
         </div>
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-4 md:grid-cols-2 md:gap-5">
           {rendered.map((property) => (
             <li key={property.id} className="flex">
               <CatalogueCard property={property} />

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { ArrowRight, Check, Search, ThumbsDown, ThumbsUp, X } from 'lucide-react'
 import { CtaBand } from '@/global/components/page/CtaBand'
 import { FaqAccordion, type FaqItem } from '@/global/components/page/FaqAccordion'
-import { PageHero } from '@/global/components/page/PageHero'
+import { PageHeader } from '@/global/components/page/PageHeader'
 import { PageSection } from '@/global/components/page/PageSection'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
 import { cn } from '@/global/lib/cn'
@@ -118,52 +118,59 @@ export function FaqPage() {
 
   return (
     <>
-      <PageHero eyebrow={faqIntro.eyebrow} title={faqIntro.heading} highlight={faqIntro.highlight} body={faqIntro.body}>
-        <div className="mt-4 w-full max-w-2xl" role="search">
-          <label htmlFor={searchId} className="sr-only">
-            Search questions
-          </label>
-          <div className="relative">
-            <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-sx-ink/40" />
-            <input
-              id={searchId}
-              type="search"
-              placeholder="Search questions, e.g. minimum investment"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-              className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/40 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                aria-label="Clear search"
-                className="absolute right-3 top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-sx-paper text-sx-ink transition-colors hover:bg-sx-sand"
-              >
-                <X size={16} aria-hidden="true" />
-              </button>
-            )}
+      <PageHeader
+        align="center"
+        eyebrow={faqIntro.eyebrow}
+        title={faqIntro.heading}
+        highlight={faqIntro.highlight}
+        body={faqIntro.body}
+        aside={
+          <div className="w-[min(42rem,calc(100vw-2rem))]" role="search">
+            <label htmlFor={searchId} className="sr-only">
+              Search questions
+            </label>
+            <div className="relative">
+              <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-sx-ink/40" />
+              <input
+                id={searchId}
+                type="search"
+                placeholder="Search questions, e.g. minimum investment"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/40 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear search"
+                  className="absolute right-3 top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-sx-paper text-sx-ink transition-colors hover:bg-sx-sand"
+                >
+                  <X size={16} aria-hidden="true" />
+                </button>
+              )}
+            </div>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm">
+              <span className="text-sx-ink/55">Popular:</span>
+              {popularSearches.map((chip) => (
+                <button
+                  key={chip.label}
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery(chip.query)
+                    setSelectedCategory('All')
+                  }}
+                  className="rounded-full bg-white px-3.5 py-1.5 font-medium text-sx-ink/75 transition-colors hover:bg-sx-sand hover:text-sx-ink"
+                >
+                  {chip.label}
+                </button>
+              ))}
+            </div>
           </div>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm">
-            <span className="text-sx-ink/55">Popular:</span>
-            {popularSearches.map((chip) => (
-              <button
-                key={chip.label}
-                type="button"
-                onClick={() => {
-                  setSearchQuery(chip.query)
-                  setSelectedCategory('All')
-                }}
-                className="rounded-full bg-white px-3.5 py-1.5 font-medium text-sx-ink/75 transition-colors hover:bg-sx-sand hover:text-sx-ink"
-              >
-                {chip.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </PageHero>
+        }
+      />
 
-      <PageSection width="narrow" pad="bottom" labelledBy="faq-results-heading">
+      <PageSection width="narrow" pad="none" labelledBy="faq-results-heading">
         <div role="group" aria-label="Filter by category" className="flex flex-wrap justify-center gap-2">
           {faqCategories.map((tab) => {
             const Icon = tab.icon
@@ -226,14 +233,14 @@ export function FaqPage() {
       </PageSection>
 
       <CtaBand
-        title="Still have questions about investing?"
-        highlight="investing"
-        body="Browse the properties, read the guides, or send us a message."
+        tone="brand"
+        title="Still have a question?"
+        highlight="question"
+        body="Send us a message and we will reply by email, or read the guides first."
         actions={[
-          { label: 'Browse properties', href: '/properties' },
-          { label: 'Contact us', href: '/about#contact' },
+          { label: 'Contact us', href: '/contact' },
+          { label: 'Read the guides', href: '/learn' },
         ]}
-        image={{ src: '/images/journey/tower-pool.jpg', alt: 'A rooftop pool beside a residential tower in the afternoon sun' }}
       />
     </>
   )

@@ -178,7 +178,7 @@ export function EcosystemCarousel() {
 
       {still ? (
         // Reduced motion: a plain scrollable row.
-        <ul className="sx-rail mt-10 px-4 sm:px-8" aria-label="Serene Investors services">
+        <ul className="sx-rail mt-10 scroll-px-4 px-4 sm:scroll-px-8 sm:px-8" aria-label="Serene Investors services">
           {ecosystem.cards.map((card) => (
             <EcoCard key={card.title} card={card} still />
           ))}

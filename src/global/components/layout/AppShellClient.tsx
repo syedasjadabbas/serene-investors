@@ -8,10 +8,14 @@ import { cn } from '@/global/lib/cn'
 import { Navbar } from './Navbar'
 import { ScrollProgressIndicator } from './ScrollProgressIndicator'
 import { SereneFooter } from './SereneFooter'
+import { NewsletterCard } from '@/global/components/sections/NewsletterCard'
 
 type Props = {
   children: ReactNode
 }
+
+// Account screens end without the newsletter card.
+const NO_NEWSLETTER = ['/login', '/signup', '/dashboard']
 
 export function AppShellClient({ children }: Props) {
   const pathname = usePathname()
@@ -35,8 +39,11 @@ export function AppShellClient({ children }: Props) {
       <ScrollProgressIndicator />
       <Navbar overlay={isHome} />
 
-      <main id="main" tabIndex={-1} className={cn('w-full max-w-full flex-1 overflow-x-clip', !isHome && 'pt-24')}>
-        {children}
+      {/* Every page sits on a light sheet with rounded bottom corners that overlaps the dark
+          footer, and (except account screens) ends with the newsletter card. */}
+      <main id="main" tabIndex={-1} className="relative z-[1] -mb-10 w-full max-w-full flex-1 overflow-x-clip rounded-b-[40px] bg-sx-paper">
+        <div className={cn(!isHome && 'pt-24')}>{children}</div>
+        {!NO_NEWSLETTER.some((path) => pathname.startsWith(path)) && <NewsletterCard />}
       </main>
       <SereneFooter />
     </div>

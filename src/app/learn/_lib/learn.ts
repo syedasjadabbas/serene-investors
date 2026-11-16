@@ -31,7 +31,7 @@ export const learnGuides: LearnGuide[] = [
     related: ['direct-property-vs-funds', 'reading-a-property-snapshot', 'understanding-risk'],
     cta: { label: 'See the four steps', href: '/how-it-works' },
     paragraphs: [
-      'SERENE INVESTORS is built around a simple idea: own a measured share of a building. On this demonstration site, that idea is shown as a short sequence rather than a live account.',
+      'Serene Investors is built around a simple idea: own a measured share of a building. On this demonstration site, that idea is shown as a short sequence rather than a live account.',
       'The published flow has four beats. First you choose a sample property or a diversified fund from the catalogue. Then you select a sample amount to allocate. You can follow the fictional holding from a demonstration account, and you can view sample distributions posted against it.',
       'Those steps are the same demonstration used on the How it works page. Figures attached to each step — yields, minima, portfolio values, and rent notices — are sample data. They are not an offer to invest and they do not describe a live product.',
       'If you want to walk the sequence on the page, open How it works. If you want to look at a named building first, open the property catalogue.',
@@ -49,7 +49,7 @@ export const learnGuides: LearnGuide[] = [
     related: ['direct-property-vs-funds', 'how-property-investing-works', 'understanding-sample-rental-income'],
     cta: { label: 'Explore sample funds', href: '/funds' },
     paragraphs: [
-      'A diversified fund on SERENE INVESTORS is a fictional portfolio. It gathers several sample properties under one idea — a residential theme, a mixed portfolio, or a regional setting — so a visitor can review a broader allocation than a single building.',
+      'A diversified fund on Serene Investors is a fictional portfolio. It gathers several sample properties under one idea — a residential theme, a mixed portfolio, or a regional setting — so a visitor can review a broader allocation than a single building.',
       'Each sample fund shows a name, a market or theme, a sample property count, a sample yield, and a sample minimum. Those fields are the same demonstration data used on the funds catalogue. They are not live fund documents.',
       'The demonstration treats a fund the way it treats a property: you can open the listing, continue into the sample get-started flow, and return to the collection. Nothing in that path opens an account or places an investment.',
       'Direct property remains the other path on the site: one named building at a time, with its own sample yield and sample minimum shown beside the residence.',
@@ -68,7 +68,7 @@ export const learnGuides: LearnGuide[] = [
     cta: { label: 'See sample distributions', href: '/how-it-works' },
     paragraphs: [
       'When the demonstration shows rent, it is labelled as a sample distribution. A receipt-style card may read “Rent posted” against a named sample holding. That figure is invented for the layout. It is not money received, and it is not a forecast.',
-      'The same caution applies wherever rental income appears in a breakdown. Components such as sample rental income and sample value movement are marked as illustrative. Returns are not guaranteed, and the numbers do not represent actual SERENE INVESTORS performance.',
+      'The same caution applies wherever rental income appears in a breakdown. Components such as sample rental income and sample value movement are marked as illustrative. Returns are not guaranteed, and the numbers do not represent actual Serene Investors performance.',
       'The Receive step in How it works exists to show how a distribution could be presented, not to report a payment. If a listing also shows a sample yield, that yield is a labelled catalogue figure for the same demonstration.',
       'Nothing on this page should be read as a rental history, occupancy record, or income guarantee.',
     ],
@@ -124,13 +124,38 @@ export const learnGuides: LearnGuide[] = [
     paragraphs: [
       'The sample key-risks note on this site is plain: property investing involves risk, including the possible loss of capital. That sentence is part of the demonstration’s caution, not a complete legal disclosure.',
       'Every figure you meet — sample yield, sample minimum, sample distribution, sample portfolio value — is invented for design. It is not a performance claim, not a track record, and not a guarantee of any outcome.',
-      'SERENE INVESTORS is a fictional product used for a design study. Sample information is not an offer, a solicitation, or an invitation to send funds. Login and get-started are local demo interactions. They do not store information.',
+      'Serene Investors is a fictional product used for a design study. Sample information is not an offer, a solicitation, or an invitation to send funds. Login and get-started are local demo interactions. They do not store information.',
       'Read the sample risk page if you want the short disclosure in one place. Then return to the catalogues knowing that the buildings and funds are demonstration listings only.',
     ],
   },
 ]
 
-export const featuredLearnGuide = learnGuides[0] as LearnGuide
+/** Guides shown as the tall image cards at the top of the hub. */
+export const featuredLearnGuides = learnGuides.slice(0, 3)
+
+/** Sample publication dates (newest first, in the same order as `learnGuides`). */
+const GUIDE_DATES: Record<string, string> = {
+  'how-property-investing-works': '2026-10-28',
+  'what-is-a-diversified-fund': '2026-10-14',
+  'understanding-sample-rental-income': '2026-09-30',
+  'reading-a-property-snapshot': '2026-09-16',
+  'direct-property-vs-funds': '2026-09-02',
+  'understanding-risk': '2026-08-19',
+}
+
+const DATE_FORMAT = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+
+/** Display date and ISO value for a guide, e.g. { label: '28 Oct 2026', iso: '2026-10-28' }. */
+export function guideDate(guide: LearnGuide) {
+  const iso = GUIDE_DATES[guide.slug] ?? '2026-08-01'
+  return { iso, label: DATE_FORMAT.format(new Date(`${iso}T00:00:00Z`)) }
+}
+
+/** Reading time in minutes at ~200 words a minute. */
+export function guideReadMinutes(guide: LearnGuide) {
+  const words = guide.paragraphs.join(' ').split(/\s+/).length
+  return Math.max(2, Math.round(words / 200))
+}
 
 export function getLearnGuide(slug: string) {
   return learnGuides.find((item) => item.slug === slug)

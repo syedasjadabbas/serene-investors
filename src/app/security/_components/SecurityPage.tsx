@@ -1,91 +1,193 @@
 'use client'
 
-import { FileCheck, Landmark, Lock, Scale } from 'lucide-react'
+import Link from 'next/link'
+import { FileText, KeyRound, Lock, UserCheck } from 'lucide-react'
 import { CtaBand } from '@/global/components/page/CtaBand'
+import { FaqAccordion } from '@/global/components/page/FaqAccordion'
+import { FeatureCarousel } from '@/global/components/page/FeatureCarousel'
 import { FeatureCards } from '@/global/components/page/FeatureCards'
-import { PageHero } from '@/global/components/page/PageHero'
 import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
+import { HeroCover, ProductHero } from '@/global/components/page/ProductHero'
 import { StatCards } from '@/global/components/page/StatCards'
-import { SecurityRegulation } from '@/global/components/sections/SecurityRegulation'
+import { StickySteps } from '@/global/components/page/StickySteps'
+import { ReviewStrip } from '@/global/components/sections/ReviewStrip'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
 
+// Product page, dark tone (docs/INNER-PAGE-PATTERNS.md, pattern A), mirroring Golden Visa.
+// Protections are described in general product terms. Serene Investors does not claim any
+// licence, permit or regulator approval here; regulatory details will be added when published.
+
 const STATS = [
-  { value: 'DFSA', label: 'Regulated in the DIFC, Dubai' },
-  { value: 'CMA', label: 'Saudi Arabia FinTech Lab' },
-  { value: '100%', label: 'SPV title deeds (DLD)' },
-  { value: 'Tier-1', label: 'Segregated custody' },
+  { value: '1:1', label: 'one holding company for each building' },
+  { value: '4 checks', label: 'before a listing goes live' },
+  { value: '2-step', label: 'sign-in with a one-time email code' },
+  { value: 'Separate', label: 'client money, held apart from ours' },
 ]
 
-const PILLARS = [
+const PROTECTIONS = [
   {
-    icon: FileCheck,
-    title: 'Dedicated property SPVs',
-    body: 'Every property is acquired through a separate Special Purpose Vehicle (SPV) registered in the DIFC. You own shares in the SPV, isolated from Serene Investors’ own corporate entity.',
+    title: 'Each building in its own holding company',
+    body: 'Every property sits in its own holding structure. You own shares in that company, kept apart from Serene Investors’ own business.',
+    image: { src: '/images/properties/boulevard-point-hero.jpg', alt: 'A residential tower above a tree-lined boulevard' },
   },
   {
-    icon: Landmark,
-    title: 'Ring-fenced client custody',
-    body: 'Uninvested wallet cash and rental payouts are held in ring-fenced client accounts with tier-1 international banks, never mixed with operating capital.',
+    title: 'Documents for every listing',
+    body: 'Each listing comes with its own documents, from ownership records to the valuation, and your holdings appear in your account.',
+    image: { src: '/images/story/direct-cedar-court.png', alt: 'A low-rise residential building with its document card' },
   },
   {
-    icon: Scale,
-    title: 'Independent RICS appraisals',
-    body: 'Asset values are reviewed each quarter by independent valuers accredited by the Royal Institution of Chartered Surveyors (RICS) for impartial pricing.',
+    title: 'Independent valuations',
+    body: 'Properties are valued by independent valuers before they are listed, so the price you see is not set by us alone.',
+    image: { src: '/images/journey/dubai-marina.jpg', alt: 'Dubai Marina towers along the water' },
   },
   {
-    icon: Lock,
-    title: 'Bank-grade encryption',
-    body: 'Transactions, financial data and identity documents are protected with AES-256 encryption, multi-factor authentication and round-the-clock monitoring.',
+    title: 'Client money held separately',
+    body: 'Uninvested cash and rental payouts are held separately from the money we use to run the company.',
+    image: { src: '/images/journey/tower-pool.jpg', alt: 'A rooftop pool beside a residential tower' },
+  },
+]
+
+const CHECKS = [
+  {
+    step: 'Step 01',
+    title: 'Screen the property',
+    body: 'We look at location, condition, rental demand and the numbers behind the asking price before a property goes any further.',
+    image: { src: '/images/journey/palm-aerial.jpg', alt: 'Aerial view of a coastal residential district' },
+  },
+  {
+    step: 'Step 02',
+    title: 'Get an independent valuation',
+    body: 'An independent valuer assesses the property, and the listing price is checked against that valuation.',
+    image: { src: '/images/properties/marina-tower.jpg', alt: 'A residential tower in Dubai Marina' },
+  },
+  {
+    step: 'Step 03',
+    title: 'Review title and set up the company',
+    body: 'Ownership records are reviewed and the property is placed in its own holding company before shares are offered.',
+    image: { src: '/images/story/marble-house.png', alt: 'A residential building with stone facades' },
+  },
+  {
+    step: 'Step 04',
+    title: 'Publish the documents',
+    body: 'The listing goes live with its documents attached, so you can read them before you invest and find them in your account afterwards.',
+    image: { src: '/images/story/pines-loft.png', alt: 'A residential loft building among pine trees' },
+  },
+]
+
+const ACCOUNT = [
+  { icon: UserCheck, title: 'Identity checks', body: 'We verify who you are before you can invest or withdraw, which helps keep your account and your money in your hands.' },
+  { icon: KeyRound, title: 'One-time sign-in codes', body: 'Signing in asks for a six-digit code sent to your email, as well as your password.' },
+  { icon: Lock, title: 'Encrypted connections', body: 'Everything you send to and from Serene Investors travels over an encrypted connection.' },
+  { icon: FileText, title: 'Regulation', body: 'Regulatory details will be published on this page. Until then, read the risk notice before you invest.' },
+]
+
+const FAQS = [
+  {
+    q: 'What do I own when I invest?',
+    a: 'Shares in the holding company that owns that one building. It is kept apart from Serene Investors’ own business.',
+  },
+  {
+    q: 'Where is my uninvested cash kept?',
+    a: 'Cash waiting to be invested and rental payouts are held separately from the money we use to run the company.',
+  },
+  {
+    q: 'How are properties valued?',
+    a: 'By independent valuers before a property is listed. The valuation is part of the listing’s documents.',
+  },
+  {
+    q: 'Is Serene Investors regulated?',
+    a: (
+      <>
+        Regulatory details will be published on this page. Until then, please read our{' '}
+        <Link href="/legal/risks" className="font-semibold underline underline-offset-4 hover:text-sx-mint">
+          risk notice
+        </Link>{' '}
+        before investing.
+      </>
+    ),
+  },
+  {
+    q: 'Can I lose money?',
+    a: 'Yes. Property values and rental income can go down as well as up, and shares may take time to sell. Only invest what you can afford to leave invested.',
   },
 ]
 
 /** /security (also served at /regulation and /safety). */
 export function SecurityPage() {
   usePageMeta(
-    'Serene Investors | Safety & regulation',
-    'How Serene Investors is regulated and how your property shares, cash and data are protected.',
+    'Serene Investors | Safety & security',
+    'How Serene Investors keeps property shares, cash and personal data protected.',
   )
 
   return (
     <>
-      <PageHero
-        eyebrow="Trust & compliance"
-        title="Safety & regulation."
-        highlight="regulation"
-        body="Your investments are safeguarded by dual regulatory oversight, independent Special Purpose Vehicles (SPVs) and tier-1 bank custody."
+      <ProductHero
+        tone="dark"
+        image={{ src: '/images/journey/dubai-marina.jpg' }}
+        eyebrow="Safety & security"
+        title="Your investment, protected by design."
+        highlight="protected"
+        body="Each building sits in its own holding company, every listing comes with its documents, and your cash is held separately from ours."
         actions={[
-          { label: 'Browse properties', href: '/properties' },
-          { label: 'How we are regulated', href: '#security' },
+          { label: 'How listings are checked', href: '#listing-checks' },
+          { label: 'Read the risk notice', href: '/legal/risks' },
         ]}
       />
 
-      <PageSection label="Regulation at a glance" pad="bottom">
-        <StatCards items={STATS} />
-      </PageSection>
+      <HeroCover tone="dark">
+        <PageSection tone="dark" label="Security at a glance" pad="top">
+          <StatCards items={STATS} tone="dark" caption="How the platform is designed. Illustrative summary." />
+        </PageSection>
 
-      <SecurityRegulation />
+        <section aria-labelledby="security-protections" className="py-16 sm:py-24">
+          <FeatureCarousel heading="How your investment is protected" headingId="security-protections" slides={PROTECTIONS} tone="dark" />
+        </section>
 
-      <PageSection labelledBy="security-pillars">
-        <SectionHeading
-          id="security-pillars"
-          eyebrow="Four pillars of protection"
-          title="How your assets are protected."
-          highlight="protected"
-          align="center"
+        <PageSection tone="dark" id="listing-checks" labelledBy="security-checks">
+          <SectionHeading id="security-checks" eyebrow="Before it goes live" title="How a listing is checked." highlight="checked" tone="dark" />
+          <div className="mt-6">
+            <StickySteps steps={CHECKS} tone="dark" />
+          </div>
+        </PageSection>
+
+        <PageSection tone="dark" labelledBy="security-account">
+          <SectionHeading
+            id="security-account"
+            title="Protecting your account."
+            highlight="your account"
+            body="The everyday safeguards around your sign-in and your data."
+            tone="dark"
+          />
+          <FeatureCards items={ACCOUNT} tone="dark" columns={2} className="mt-10" />
+          <p className="mt-6 text-sm text-white/60">
+            Read the{' '}
+            <Link href="/legal/risks" className="font-semibold text-white underline underline-offset-4 hover:text-sx-mint">
+              risk notice
+            </Link>{' '}
+            for the risks of investing in property.
+          </p>
+        </PageSection>
+
+        <ReviewStrip tone="dark" />
+
+        <PageSection tone="dark" labelledBy="security-faq">
+          <div className="grid items-start gap-10 md:grid-cols-[1fr_2fr]">
+            <SectionHeading id="security-faq" title="FAQs" body="What investors ask about safety." tone="dark" className="md:sticky md:top-28" />
+            <FaqAccordion items={FAQS} tone="dark" />
+          </div>
+        </PageSection>
+
+        <CtaBand
+          title="Invest with peace of mind."
+          highlight="peace of mind"
+          body="Browse properties, read each listing’s documents, and start from AED 500."
+          actions={[
+            { label: 'Browse properties', href: '/properties' },
+            { label: 'Create an account', href: '/signup' },
+          ]}
+          image={{ src: '/images/journey/tower-pool.jpg', alt: 'A rooftop pool beside a residential tower in the afternoon sun' }}
         />
-        <FeatureCards items={PILLARS} columns={2} className="mt-12" />
-      </PageSection>
-
-      <CtaBand
-        title="Invest with peace of mind."
-        highlight="peace of mind"
-        body="Start building an income-generating property portfolio with as little as AED 500 (about USD 136)."
-        actions={[
-          { label: 'Browse properties', href: '/properties' },
-          { label: 'Create an account', href: '/signup' },
-        ]}
-        image={{ src: '/images/journey/tower-pool.jpg', alt: 'A rooftop pool beside a residential tower in the afternoon sun' }}
-      />
+      </HeroCover>
     </>
   )
 }

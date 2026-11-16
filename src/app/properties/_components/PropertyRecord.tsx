@@ -11,7 +11,7 @@ export function PropertyRecord({ property }: { property: Property }) {
   ]
 
   return (
-    <PageSection labelledBy="record-heading" tone="white">
+    <PageSection labelledBy="record-heading" pad="bottom">
       <div className="grid gap-10 md:grid-cols-2 md:items-start">
         <SectionHeading
           id="record-heading"
@@ -19,10 +19,10 @@ export function PropertyRecord({ property }: { property: Property }) {
           title={property.city}
           body={`${property.neighborhood}. The ownership and documentation behind this sample listing.`}
         />
-        <Card tone="paper">
+        <Card>
           <dl className="grid gap-3 sm:grid-cols-2">
             {rows.map((row) => (
-              <div key={row.label} className="rounded-[14px] bg-white p-4">
+              <div key={row.label} className="rounded-[14px] bg-sx-paper p-4">
                 <dt className="text-xs font-semibold text-sx-ink/55">{row.label}</dt>
                 <dd className="mt-1 text-base font-semibold text-sx-ink">{row.value}</dd>
               </div>

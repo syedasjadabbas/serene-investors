@@ -12,7 +12,7 @@ export function PropertyKeyNumbers({ property }: { property: Property }) {
   ]
 
   return (
-    <PageSection label={`${property.name} sample figures`} pad="none">
+    <PageSection label={`${property.name} sample figures`} pad="top">
       <StatCards items={stats} caption="Illustrative sample only. Returns are not guaranteed." />
     </PageSection>
   )

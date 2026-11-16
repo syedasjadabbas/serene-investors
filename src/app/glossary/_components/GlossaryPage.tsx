@@ -3,17 +3,11 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { Building2, Check, Copy, Info, Search, X } from 'lucide-react'
 import { CtaBand } from '@/global/components/page/CtaBand'
-import { PageHero } from '@/global/components/page/PageHero'
+import { PageHeader } from '@/global/components/page/PageHeader'
 import { PageSection } from '@/global/components/page/PageSection'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
 import { cn } from '@/global/lib/cn'
 import { glossaryCategories, glossaryTerms, type GlossaryItem } from '../_lib/glossary'
-
-const RETURN_STACK = [
-  { label: 'Net yield', value: '~6% – 9%', note: 'Rental income' },
-  { label: 'Appreciation', value: '~3% – 6%', note: 'Gain on sale' },
-  { label: 'Target IRR', value: '10% – 14%', note: 'Total return' },
-]
 
 function TermCard({ item, copied, onCopy, onTag }: { item: GlossaryItem; copied: boolean; onCopy: () => void; onTag: (tag: string) => void }) {
   const headingId = `term-${item.id}`
@@ -132,99 +126,75 @@ export function GlossaryPage() {
 
   return (
     <>
-      <PageHero
+      <PageHeader
+        align="center"
         eyebrow="Investor glossary"
         title="Demystify real estate investing."
         highlight="real estate investing"
         body="The formulas, legal ownership structures and regulatory terms behind fractional property investing, in plain language."
-      >
-        <div className="mt-4 w-full max-w-2xl" role="search">
-          <label htmlFor={searchId} className="sr-only">
-            Search the glossary
-          </label>
-          <div className="relative">
-            <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-sx-ink/40" />
-            <input
-              id={searchId}
-              type="search"
-              placeholder="Search terms, e.g. IRR, SPV, yield"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/40 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
-            />
-            {search && (
-              <button
-                type="button"
-                onClick={() => setSearch('')}
-                aria-label="Clear search"
-                className="absolute right-3 top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-sx-paper text-sx-ink transition-colors hover:bg-sx-sand"
-              >
-                <X size={16} aria-hidden="true" />
-              </button>
-            )}
+        aside={
+          <div className="flex w-[min(42rem,calc(100vw-2rem))] flex-col gap-5">
+          <div role="search">
+            <label htmlFor={searchId} className="sr-only">
+              Search the glossary
+            </label>
+            <div className="relative">
+              <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-sx-ink/40" />
+              <input
+                id={searchId}
+                type="search"
+                placeholder="Search terms, e.g. IRR, SPV, yield"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/40 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch('')}
+                  aria-label="Clear search"
+                  className="absolute right-3 top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-sx-paper text-sx-ink transition-colors hover:bg-sx-sand"
+                >
+                  <X size={16} aria-hidden="true" />
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-        <div role="group" aria-label="Filter by category" className="flex flex-wrap justify-center gap-2">
-          {glossaryCategories.map((category) => {
-            const selected = selectedCategory === category
-            return (
-              <button
-                key={category}
-                type="button"
-                aria-pressed={selected}
-                onClick={() => {
-                  setSelectedCategory(category)
-                  setActiveLetter('ALL')
-                }}
-                className={cn(
-                  'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors',
-                  selected ? 'bg-sx-ink text-white' : 'bg-white text-sx-ink/75 hover:bg-sx-sand hover:text-sx-ink',
-                )}
-              >
-                {category}
-                <span
+          <div role="group" aria-label="Filter by category" className="flex flex-wrap justify-center gap-2">
+            {glossaryCategories.map((category) => {
+              const selected = selectedCategory === category
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => {
+                    setSelectedCategory(category)
+                    setActiveLetter('ALL')
+                  }}
                   className={cn(
-                    'rounded-full px-2 py-0.5 text-xs tabular-nums',
-                    selected ? 'bg-white/15 text-white' : 'bg-sx-paper text-sx-ink/60',
+                    'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors',
+                    selected ? 'bg-sx-ink text-white' : 'bg-white text-sx-ink/75 hover:bg-sx-sand hover:text-sx-ink',
                   )}
                 >
-                  {categoryCounts[category] ?? 0}
-                </span>
-              </button>
-            )
-          })}
-        </div>
-      </PageHero>
-
-      <PageSection label="Key concept" pad="none">
-        <div className="grid gap-6 rounded-[24px] bg-sx-forest p-6 text-white sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-          <div className="flex flex-col items-start gap-3">
-            <span className="rounded-full bg-sx-mint px-3 py-1 text-xs font-semibold text-sx-ink">Key concept</span>
-            <h2 className="font-heading text-2xl font-bold tracking-[-0.02em] sm:text-3xl">Net yield vs. capital appreciation vs. IRR</h2>
-            <p className="text-base leading-relaxed text-white/75">
-              Property returns come from two streams: rental income while you hold, and capital appreciation when the property sells.
-              Together they make up the total annualised return, or IRR.
-            </p>
+                  {category}
+                  <span
+                    className={cn(
+                      'rounded-full px-2 py-0.5 text-xs tabular-nums',
+                      selected ? 'bg-white/15 text-white' : 'bg-sx-paper text-sx-ink/60',
+                    )}
+                  >
+                    {categoryCounts[category] ?? 0}
+                  </span>
+                </button>
+              )
+            })}
           </div>
-          <div>
-            <ol className="grid gap-2 sm:grid-cols-3">
-              {RETURN_STACK.map((item, index) => (
-                <li
-                  key={item.label}
-                  className={cn('flex flex-col gap-1 rounded-[16px] p-4', index === 2 ? 'bg-sx-mint text-sx-ink' : 'bg-white/10')}
-                >
-                  <span className={cn('text-xs font-semibold', index === 2 ? 'text-sx-forest' : 'text-sx-mint')}>{item.label}</span>
-                  <span className="font-heading text-2xl font-bold tracking-[-0.02em]">{item.value}</span>
-                  <span className={cn('text-xs', index === 2 ? 'text-sx-ink/70' : 'text-white/60')}>{item.note}</span>
-                </li>
-              ))}
-            </ol>
-            <p className="mt-3 text-xs text-white/50">Illustrative ranges, not a forecast or a promise of returns.</p>
           </div>
-        </div>
-      </PageSection>
+        }
+      />
 
-      <PageSection labelledBy="glossary-terms-heading">
+      <PageSection labelledBy="glossary-terms-heading" pad="none">
         <h2 id="glossary-terms-heading" className="sr-only">
           Terms
         </h2>
@@ -292,14 +262,14 @@ export function GlossaryPage() {
       </PageSection>
 
       <CtaBand
+        tone="brand"
         title="Put what you’ve learned to work."
         highlight="to work"
-        body="Review appraisals, title deeds and projected net yields on the properties listed now."
+        body="Look through the sample listings with the terms fresh in mind, or read the FAQs."
         actions={[
           { label: 'Explore properties', href: '/properties' },
           { label: 'Read the FAQs', href: '/faq' },
         ]}
-        image={{ src: '/images/properties/marina-tower.jpg', alt: 'A residential tower at Dubai Marina' }}
       />
     </>
   )
