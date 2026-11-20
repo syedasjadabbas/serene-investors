@@ -16,6 +16,7 @@ export function getInitials(name?: string): string {
 
 type Props = {
   user: User
+  tone?: 'dark' | 'light'
 }
 
 const LINKS: { href: string; label: string; icon: LucideIcon }[] = [
@@ -27,7 +28,7 @@ const LINKS: { href: string; label: string; icon: LucideIcon }[] = [
 ]
 
 /** Navbar account button. Opens a panel (disclosure pattern) with account links and log out. */
-export function UserProfileDropdown({ user }: Props) {
+export function UserProfileDropdown({ user, tone = 'dark' }: Props) {
   const router = useRouter()
   const { logout } = useAuth()
   const [open, setOpen] = useState(false)
@@ -84,18 +85,41 @@ export function UserProfileDropdown({ user }: Props) {
         aria-controls={panelId}
         aria-label={`Account menu for ${user.name}`}
         className={cn(
-          'flex items-center gap-2 rounded-full py-1 pl-1 pr-3 text-left transition-colors',
-          open ? 'bg-sx-sand' : 'bg-sx-paper hover:bg-sx-sand',
+          'flex h-10 items-center gap-2 rounded-full pl-1 pr-2.5 text-left transition-colors sm:h-11 sm:pl-1.5 sm:pr-3',
+          tone === 'light'
+            ? open
+              ? 'bg-white/25 backdrop-blur-sm'
+              : 'bg-white/15 backdrop-blur-sm hover:bg-white/25'
+            : open
+              ? 'bg-sx-sand'
+              : 'bg-sx-paper hover:bg-sx-sand',
         )}
       >
         <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-sx-forest font-heading text-xs font-bold text-sx-mint">
           {initials}
         </span>
-        <span className="flex min-w-0 flex-col pr-0.5">
-          <span className="max-w-[110px] truncate text-xs font-semibold leading-tight text-sx-ink sm:max-w-[130px]">{user.name}</span>
-          <span className="truncate text-[11px] leading-tight text-sx-ink/60">{isInstitutional ? 'Institutional' : 'Individual'}</span>
+        <span className="hidden min-w-0 flex-col pr-0.5 sm:flex">
+          <span
+            className={cn(
+              'max-w-[110px] truncate text-xs font-semibold leading-tight md:max-w-[130px]',
+              tone === 'light' ? 'text-white' : 'text-sx-ink',
+            )}
+          >
+            {user.name}
+          </span>
+          <span className={cn('truncate text-[11px] leading-tight', tone === 'light' ? 'text-white/75' : 'text-sx-ink/60')}>
+            {isInstitutional ? 'Institutional' : 'Individual'}
+          </span>
         </span>
-        <ChevronDown size={14} aria-hidden="true" className={cn('shrink-0 text-sx-ink/60 transition-transform duration-200', open && 'rotate-180')} />
+        <ChevronDown
+          size={14}
+          aria-hidden="true"
+          className={cn(
+            'shrink-0 transition-transform duration-200',
+            tone === 'light' ? 'text-white/80' : 'text-sx-ink/60',
+            open && 'rotate-180',
+          )}
+        />
       </button>
 
       <div

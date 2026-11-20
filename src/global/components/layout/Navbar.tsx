@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Building2, ChevronDown, LogIn, MessageCircle, User, UserPlus } from 'lucide-react'
 import { menuGroups } from '@/global/data/navigation'
+import { contact } from '@/global/data/serene'
 import { useAuth } from '@/global/stores/auth'
 import { useLenisControl } from '@/global/providers/LenisProvider'
 import { cn } from '@/global/lib/cn'
@@ -12,22 +13,177 @@ import { UserProfileDropdown } from './UserProfileDropdown'
 
 type LogoTone = 'dark' | 'light'
 
-/** `className` sets the size and position; it defaults to 22px. */
-export function SereneLogo({ tone = 'dark', className = 'text-[22px]' }: { tone?: LogoTone; className?: string }) {
+/** `className` sets the size and position; it defaults to 20px. */
+export function SereneLogo({ tone = 'dark', className = 'text-[20px]' }: { tone?: LogoTone; className?: string }) {
   return (
     <Link
       href="/"
       aria-label="Serene Investors home"
-      className={cn('inline-flex select-none items-center whitespace-nowrap font-heading font-extrabold leading-none tracking-[-0.035em]', className)}
+      className={cn(
+        'inline-flex select-none items-center whitespace-nowrap font-heading font-extrabold uppercase leading-none tracking-[-0.03em]',
+        className,
+      )}
     >
-      <span className={tone === 'dark' ? 'text-sx-ink' : 'text-white'}>serene</span>
-      <span className={cn('ml-1', tone === 'dark' ? 'text-sx-brand' : 'text-sx-mint')}>investors</span>
+      <span className={tone === 'dark' ? 'text-sx-ink' : 'text-white'}>SERENE</span>
+      <span className={cn('ml-1.5', tone === 'dark' ? 'text-sx-brand' : 'text-sx-mint')}>INVESTORS</span>
     </Link>
   )
 }
 
+/** Minimal two-bar menu icon (`=`) that morphs into an X when open. */
+function MenuGlyph({ open }: { open: boolean }) {
+  return (
+    <span aria-hidden="true" className="relative flex h-3.5 w-[18px] flex-col justify-center">
+      <span
+        className={cn(
+          'absolute left-0 h-[1.75px] w-full rounded-full bg-current transition-transform duration-200',
+          open ? 'rotate-45' : '-translate-y-[3.5px]',
+        )}
+      />
+      <span
+        className={cn(
+          'absolute left-0 h-[1.75px] w-full rounded-full bg-current transition-transform duration-200',
+          open ? '-rotate-45' : 'translate-y-[3.5px]',
+        )}
+      />
+    </span>
+  )
+}
+
+/** Compact left-side pill for signed-out visitors (Account / quick links). */
+function GuestQuickMenu({ tone = 'dark', onNavigate }: { tone?: LogoTone; onNavigate: () => void }) {
+  const [open, setOpen] = useState(false)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const panelId = useId()
+
+  useEffect(() => {
+    if (!open) return
+
+    function handlePointerDown(e: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) setOpen(false)
+    }
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        buttonRef.current?.focus()
+      }
+    }
+
+    function handleFocusIn(e: FocusEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) setOpen(false)
+    }
+
+    document.addEventListener('mousedown', handlePointerDown)
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('focusin', handleFocusIn)
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown)
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('focusin', handleFocusIn)
+    }
+  }, [open])
+
+  const close = () => {
+    setOpen(false)
+    onNavigate()
+  }
+
+  return (
+    <div ref={wrapperRef} className="relative">
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+        aria-controls={panelId}
+        aria-label="Account and quick links"
+        className={cn(
+          'flex h-10 items-center gap-1 rounded-full px-2.5 transition-colors sm:h-11 sm:gap-1.5 sm:px-3.5',
+          tone === 'light'
+            ? open
+              ? 'bg-white/25 text-white backdrop-blur-sm'
+              : 'bg-white/15 text-white backdrop-blur-sm hover:bg-white/25'
+            : open
+              ? 'bg-sx-sand text-sx-ink'
+              : 'bg-sx-paper text-sx-ink hover:bg-sx-sand',
+        )}
+      >
+        <User size={16} strokeWidth={2} aria-hidden="true" />
+        <ChevronDown
+          size={14}
+          strokeWidth={2.2}
+          aria-hidden="true"
+          className={cn(
+            'transition-transform duration-200',
+            tone === 'light' ? 'text-white/80' : 'text-sx-ink/60',
+            open && 'rotate-180',
+          )}
+        />
+      </button>
+
+      <div
+        id={panelId}
+        hidden={!open}
+        className="absolute left-0 top-[calc(100%+0.75rem)] z-50 w-64 max-w-[calc(100vw-2rem)] rounded-[20px] bg-white p-2 text-sx-ink shadow-[0_12px_40px_rgba(0,0,0,0.14)] ring-1 ring-sx-ink/[0.06]"
+      >
+        <ul className="flex flex-col gap-0.5">
+          <li>
+            <Link
+              href="/login"
+              onClick={close}
+              className="flex items-center gap-3 rounded-[12px] px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-sx-paper"
+            >
+              <LogIn size={16} aria-hidden="true" className="text-sx-brand" />
+              Log in
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/signup"
+              onClick={close}
+              className="flex items-center gap-3 rounded-[12px] px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-sx-paper"
+            >
+              <UserPlus size={16} aria-hidden="true" className="text-sx-brand" />
+              Create an account
+            </Link>
+          </li>
+        </ul>
+
+        <div className="my-1.5 border-t border-sx-ink/[0.08]" />
+
+        <ul className="flex flex-col gap-0.5">
+          <li>
+            <Link
+              href="/properties"
+              onClick={close}
+              className="flex items-center gap-3 rounded-[12px] px-3 py-2.5 text-sm font-medium text-sx-ink/80 transition-colors hover:bg-sx-paper hover:text-sx-ink"
+            >
+              <Building2 size={16} aria-hidden="true" className="text-sx-ink/50" />
+              Projects
+            </Link>
+          </li>
+          <li>
+            <a
+              href={contact.whatsappHref}
+              target="_blank"
+              rel="noreferrer"
+              onClick={close}
+              className="flex items-center gap-3 rounded-[12px] px-3 py-2.5 text-sm font-medium text-sx-ink/80 transition-colors hover:bg-sx-paper hover:text-sx-ink"
+            >
+              <MessageCircle size={16} aria-hidden="true" className="text-sx-ink/50" />
+              WhatsApp {contact.whatsapp}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
 type Props = {
-  /** Start transparent over a full-bleed hero (home page) and turn solid once scrolled. */
+  /** Start transparent over the full-bleed hero (home page) and turn white once scrolled to the next section. */
   overlay?: boolean
 }
 
@@ -41,12 +197,18 @@ export function Navbar({ overlay = false }: Props) {
 
   useEffect(() => {
     if (!overlay) return
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => {
+      // Stay transparent through the full-height hero, then switch to the white bar at the second section.
+      const threshold = Math.max(120, window.innerHeight - 96)
+      setScrolled(window.scrollY >= threshold)
+    }
     const frame = requestAnimationFrame(onScroll)
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
     }
   }, [overlay])
 
@@ -80,43 +242,32 @@ export function Navbar({ overlay = false }: Props) {
         <nav
           aria-label="Main"
           className={cn(
-            'relative mx-auto flex h-16 max-w-[1400px] items-center justify-between rounded-[20px] px-3 transition-[background-color,box-shadow] duration-300 sm:px-4',
-            menuOpen ? 'bg-transparent' : solid ? 'bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]' : 'bg-transparent',
+            'relative mx-auto flex h-16 max-w-[1400px] items-center justify-between rounded-[20px] px-3 transition-[background-color,box-shadow] duration-300 sm:h-[68px] sm:px-3.5',
+            menuOpen
+              ? 'bg-transparent'
+              : solid
+                ? 'bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-sx-ink/[0.06]'
+                : 'bg-transparent',
           )}
         >
-          {/* Phones: logo left, Menu right; log in and account live in the menu. */}
-          <div className="hidden min-w-0 flex-1 items-center sm:flex">
-            {isLoaded && isAuthenticated && user && !menuOpen ? (
-              <UserProfileDropdown user={user} />
-            ) : (
-              <Link
-                href="/login"
-                onClick={close}
-                className={cn(
-                  'rounded-full px-3 py-2 text-sm font-semibold transition-colors',
-                  tone === 'dark' ? 'text-sx-ink hover:bg-sx-paper' : 'text-white hover:bg-white/10',
-                )}
-              >
-                Log in
-              </Link>
-            )}
+          {/* Left: single pill (account dropdown when signed in, compact account/quick pill when signed out). */}
+          <div className="flex shrink-0 items-center sm:min-w-0 sm:flex-1">
+            {!menuOpen &&
+              (isLoaded && isAuthenticated && user ? (
+                <UserProfileDropdown user={user} tone={tone} />
+              ) : (
+                <GuestQuickMenu tone={tone} onNavigate={close} />
+              ))}
           </div>
 
-          <SereneLogo tone={tone} className="pl-2 text-[20px] sm:absolute sm:left-1/2 sm:-translate-x-1/2 sm:pl-0 sm:text-[22px]" />
+          {/* Center: bold wordmark (flex-centered between controls on phones, dead-centred on sm+). */}
+          <SereneLogo
+            tone={tone}
+            className="text-[13px] sm:absolute sm:left-1/2 sm:-translate-x-1/2 sm:text-[20px]"
+          />
 
-          <div className="flex flex-1 items-center justify-end gap-2">
-            {!(isLoaded && isAuthenticated) && (
-              <Link
-                href="/signup"
-                onClick={close}
-                className={cn(
-                  'hidden rounded-full px-4 py-2 text-sm font-semibold transition-colors sm:inline-flex',
-                  tone === 'dark' ? 'bg-sx-brand text-white hover:bg-sx-forest' : 'bg-white/15 text-white hover:bg-white/25',
-                )}
-              >
-                Sign up
-              </Link>
-            )}
+          {/* Right: single pill with minimalist two-bar Menu icon. */}
+          <div className="flex shrink-0 items-center justify-end sm:flex-1">
             <button
               ref={menuButtonRef}
               type="button"
@@ -124,12 +275,14 @@ export function Navbar({ overlay = false }: Props) {
               aria-controls="site-menu"
               onClick={() => setMenuOpen((value) => !value)}
               className={cn(
-                'flex items-center gap-2 rounded-full py-2 pl-4 pr-3 text-sm font-semibold transition-colors',
-                tone === 'dark' ? 'bg-sx-ink text-white hover:bg-sx-forest' : 'bg-white text-sx-ink hover:bg-sx-sand',
+                'flex h-10 items-center gap-2 rounded-full px-3.5 text-xs font-semibold transition-colors sm:h-11 sm:gap-3 sm:px-5 sm:text-sm',
+                tone === 'light'
+                  ? 'bg-white text-sx-ink hover:bg-sx-sand'
+                  : 'bg-sx-ink text-white hover:bg-sx-forest',
               )}
             >
-              {menuOpen ? 'Close' : 'Menu'}
-              {menuOpen ? <X size={18} /> : <Menu size={18} />}
+              <span>{menuOpen ? 'Close' : 'Menu'}</span>
+              <MenuGlyph open={menuOpen} />
             </button>
           </div>
         </nav>
