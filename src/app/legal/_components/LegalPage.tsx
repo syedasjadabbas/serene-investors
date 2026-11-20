@@ -1,25 +1,21 @@
+'use client'
+
 import { useLayoutEffect } from 'react'
-import { useParams } from 'next/navigation'
 import { Eyebrow } from '@/global/components/page/PageSection'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
 import { ScrollTrigger } from '@/global/lib/gsap'
 import { getLegalDoc, legalFrame } from '../_lib/legal'
 import { LegalArticle } from './LegalArticle'
 import { LegalClose } from './LegalClose'
-import { LegalNotFound } from './LegalNotFound'
 import { LegalToc } from './LegalToc'
 
 /** Two columns: title and contents sticky on the left, the document in a white card on the right. */
-export function LegalPage() {
-  const params = useParams<{ slug: string }>()
-  const slug = params?.slug
-  const doc = slug ? getLegalDoc(slug) : undefined
+export function LegalPage({ slug }: { slug: string }) {
+  const doc = getLegalDoc(slug)
 
   usePageMeta(
-    doc ? `Serene Investors | ${doc.title}` : 'Serene Investors | Legal note not found',
-    doc
-      ? `${doc.intro} Serene Investors is a fictional demonstration product.`
-      : 'This sample legal note does not exist in the current demonstration.',
+    doc ? `Serene Investors | ${doc.title}` : 'Serene Investors | Legal',
+    doc ? doc.intro : '',
   )
 
   useLayoutEffect(() => {
@@ -30,7 +26,7 @@ export function LegalPage() {
   }, [slug])
 
   if (!doc) {
-    return <LegalNotFound />
+    return null
   }
 
   return (
@@ -46,6 +42,11 @@ export function LegalPage() {
               {doc.title}
             </h1>
             <p className="text-base leading-relaxed text-sx-ink/60 sm:text-lg">{doc.intro}</p>
+            {doc.updated && (
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/55">
+                Last updated {doc.updated}
+              </p>
+            )}
           </div>
           <LegalToc doc={doc} />
         </header>

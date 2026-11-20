@@ -53,8 +53,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback((userData?: Partial<User>) => {
     const newUser: User = {
-      name: userData?.name?.trim() || 'Yasir Khokhar',
-      email: userData?.email?.trim() || 'investor@serene-investors.com',
+      name: userData?.name?.trim() || 'Sample Investor',
+      email: userData?.email?.trim() || 'sample@example.com',
       avatar: userData?.avatar,
       investorType: userData?.investorType || 'individual',
     }

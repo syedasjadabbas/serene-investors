@@ -1,28 +1,22 @@
 import { useLayoutEffect } from 'react'
 import { useParams } from 'next/navigation'
-import { PropertyClosingCta } from './PropertyClosingCta'
-import { PropertyFeatures } from './PropertyFeatures'
-import { PropertyHero } from './PropertyHero'
-import { PropertyInvestment } from './PropertyInvestment'
-import { PropertyKeyNumbers } from './PropertyKeyNumbers'
-import { PropertyNotFound } from './PropertyNotFound'
-import { PropertyOverview } from './PropertyOverview'
-import { PropertyRecord } from './PropertyRecord'
-import { PropertyRelated } from './PropertyRelated'
-import { properties } from '@/global/data/properties'
+import { projectById } from '@/global/data/serene'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
 import { ScrollTrigger } from '@/global/lib/gsap'
+import { isProjectId } from '../_lib/projects'
+import { LahoreDetail } from './LahoreDetail'
+import { NathiaGaliDetail } from './NathiaGaliDetail'
+import { PropertyNotFound } from './PropertyNotFound'
 
+/** /properties/[slug]: only the two Serene Heights projects exist; anything else shows the not-found state. */
 export function PropertyDetailPage() {
   const params = useParams<{ slug: string }>()
   const slug = params?.slug
-  const property = properties.find((item) => item.id === slug)
+  const project = isProjectId(slug) ? projectById(slug) : undefined
 
   usePageMeta(
-    property ? `Serene Investors | ${property.name}` : 'Serene Investors | Property not found',
-    property
-      ? `Sample listing for ${property.name} in ${property.neighborhood}. All figures are fictional demonstration data.`
-      : 'This sample property does not exist in the current collection.',
+    project ? `Serene Investors | ${project.name}` : 'Serene Investors | Project not found',
+    project ? `${project.name}: ${project.summary}` : 'This Serene Heights project does not exist.',
   )
 
   useLayoutEffect(() => {
@@ -32,20 +26,7 @@ export function PropertyDetailPage() {
     return () => cancelAnimationFrame(frame)
   }, [slug])
 
-  if (!property) {
-    return <PropertyNotFound />
-  }
+  if (!project) return <PropertyNotFound />
 
-  return (
-    <div key={property.id}>
-      <PropertyHero property={property} />
-      <PropertyKeyNumbers property={property} />
-      <PropertyOverview property={property} />
-      <PropertyInvestment property={property} />
-      <PropertyFeatures property={property} />
-      <PropertyRecord property={property} />
-      <PropertyRelated property={property} />
-      <PropertyClosingCta property={property} />
-    </div>
-  )
+  return <div key={project.id}>{project.id === 'nathia-gali' ? <NathiaGaliDetail /> : <LahoreDetail />}</div>
 }

@@ -6,8 +6,8 @@ import { AppShellClient } from '@/global/components/layout/AppShellClient'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Serene Investors | Invest in Dubai and Saudi Arabia Real Estate',
-  description: 'Thousands of investors worldwide use Serene Investors to access income-generating real estate deals in high-growth markets, starting from just USD 136 / AED 500.',
+  title: 'Serene Investors | Invest in Serene Heights Nathia Gali and Lahore',
+  description: 'Own a share of Serene Heights: Smart Property Units from PKR 2 million and hotel apartments in Nathia Gali, and smart property in the Serene Heights Lahore tower.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

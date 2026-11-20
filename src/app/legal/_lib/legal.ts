@@ -1,292 +1,188 @@
-import type { LegalDoc } from '@/global/types/legal'
-import { site } from '@/global/data/site'
+// The three legal pages. Privacy is Serene Heights' own published policy (privacyPolicy in
+// src/global/data/serene.ts, with its updated date). Terms and risks are short plain notes for
+// Serene Investors; they name no legal entities, licences or regulators that are not in serene.ts.
 
-export const legalIndex = [
-  { slug: 'privacy' as const, title: 'Privacy', href: '/legal/privacy' },
-  { slug: 'terms' as const, title: 'Terms', href: '/legal/terms' },
-  { slug: 'risks' as const, title: 'Key risks', href: '/legal/risks' },
+import { company, contact, pricing, privacyPolicy, smartUnit } from '@/global/data/serene'
+
+export type LegalLinkPart = { to: string; label: string }
+export type LegalParagraph = string | { parts: Array<string | LegalLinkPart> }
+
+export type LegalSection = {
+  id: string
+  title: string
+  paragraphs: LegalParagraph[]
+  list?: string[]
+}
+
+export type LegalSlug = 'privacy' | 'terms' | 'risks'
+
+export type LegalDoc = {
+  slug: LegalSlug
+  title: string
+  intro: string
+  updated?: string
+  sections: LegalSection[]
+}
+
+export const legalIndex: { slug: LegalSlug; title: string; href: string }[] = [
+  { slug: 'privacy', title: 'Privacy policy', href: '/legal/privacy' },
+  { slug: 'terms', title: 'Terms of use', href: '/legal/terms' },
+  { slug: 'risks', title: 'Risk notice', href: '/legal/risks' },
 ]
 
+export const legalSlugs = legalIndex.map((item) => item.slug)
+
 export const legalFrame = {
-  label: 'Fictional demonstration product',
+  label: company.name,
   backLabel: 'Back to Serene Investors',
   backHref: '/',
-  relatedHeading: 'Other sample notes',
+  relatedHeading: 'Other legal pages',
 } as const
+
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
 
 const privacy: LegalDoc = {
   slug: 'privacy',
-  title: 'Privacy',
-  navLabel: 'Privacy',
-  intro:
-    'A sample privacy note for this demonstration website. It explains how the demo is meant to be used. It is not a live production privacy policy.',
-  sections: [
-    {
-      id: 'what-this-is',
-      title: 'What this page is',
-      paragraphs: [
-        'This page belongs to Serene Investors, a fictional product used for a design study. It describes the demonstration you are looking at. It does not describe a live company, a live account system, or a live data-handling service.',
-        'Nothing on this page should be read as a real privacy notice, a registration, or a promise about how a production platform would handle information.',
-      ],
-    },
-    {
-      id: 'not-a-live-service',
-      title: 'This is not a live service',
-      paragraphs: [
-        'The site is a catalogue-style demonstration. You can browse sample listings, read sample notes, and try sample forms. It is not a production investment service and it is not set up to run live accounts.',
-        site.disclaimer,
-      ],
-    },
-    {
-      id: 'do-not-submit-sensitive-information',
-      title: 'Do not submit real personal information',
-      paragraphs: [
-        'Please do not enter real sensitive personal information anywhere on this demonstration. That includes real identification numbers, real financial details, real passwords you use elsewhere, or private contact details you would not want in a design study.',
-        'If you try a sample form, treat every field as fictional. Use details you would be comfortable seeing in a local demo only.',
-      ],
-    },
-    {
-      id: 'demo-forms',
-      title: 'How the sample forms work',
-      paragraphs: [
-        {
-          parts: [
-            'The ',
-            { to: '/login', label: 'login' },
-            ', ',
-            { to: '/get-started', label: 'get started' },
-            ' and ',
-            { to: '/contact', label: 'contact' },
-            ' forms are local demo interactions. Submitting them does not create an account, store a password, or open a live record. The contact form only opens a draft email in your own mail app; nothing is sent from this site.',
-          ],
-        },
-        'Those forms exist so a visitor can see how a journey might be presented. They are not a request for personal data, and they are not connected to a production database in this demonstration.',
-      ],
-    },
-    {
-      id: 'what-you-see-in-the-browser',
-      title: 'What you see in the browser',
-      paragraphs: [
-        'This demonstration is a website you view in your browser. Sample listings, sample figures, and sample copy are published as part of the design study. They are not a collection of visitor profiles.',
-        'This page does not describe cookies, analytics vendors, or a production data store, because this is not a live service and those claims would be invented.',
-      ],
-    },
-    {
-      id: 'other-notes',
-      title: 'Other sample notes',
-      paragraphs: [
-        {
-          parts: [
-            'For the fictional nature of the product, read the ',
-            { to: '/legal/terms', label: 'sample terms' },
-            '. For sample figures and the possibility of loss, read the ',
-            { to: '/legal/risks', label: 'key risks' },
-            ' note.',
-          ],
-        },
-      ],
-    },
-  ],
+  title: 'Privacy policy',
+  intro: 'How Serene Heights collects, uses and protects your information when you visit the website or send an enquiry.',
+  updated: privacyPolicy.updated,
+  sections: privacyPolicy.sections.map((section) => ({
+    id: slugify(section.h),
+    title: section.h,
+    paragraphs: section.p ?? [],
+    list: section.list,
+  })),
 }
 
 const terms: LegalDoc = {
   slug: 'terms',
-  title: 'Terms',
-  navLabel: 'Terms',
-  intro:
-    'Sample terms for this demonstration website. They describe how to read the demo. They are not a legal agreement and they do not create rights, duties, or an offer to invest.',
+  title: 'Terms of use',
+  intro: 'The basic terms for using the Serene Investors website. Please read them with the privacy policy and the risk notice.',
   sections: [
     {
-      id: 'fictional-demonstration',
-      title: 'A fictional demonstration',
+      id: 'about-these-terms',
+      title: 'About these terms',
       paragraphs: [
-        'Serene Investors is a fictional product used for a design study. The buildings, funds, figures, and journeys on this site are demonstration content. They are not a live marketplace and they are not an invitation to send funds.',
-        'These sample terms do not form a contract with a live legal entity. They exist so the demonstration can say, in plain language, what the site is and is not.',
+        `This website is Serene Investors, part of ${company.name}, developed by ${company.developer}. By using it, you accept these terms.`,
       ],
     },
     {
-      id: 'sample-information',
-      title: 'Sample information',
+      id: 'information-on-this-site',
+      title: 'Information on this site',
       paragraphs: [
-        'Every yield, minimum, portfolio value, distribution, status, and property count on this site is sample data. Labels such as “sample yield” and “illustrative sample” are part of the demonstration. They are not live prices and they are not a record of performance.',
-        {
-          parts: [
-            'If you want a short reading of how those figures are presented, open ',
-            { to: '/learn', label: 'Learn' },
-            ' or ',
-            { to: '/how-it-works', label: 'How it works' },
-            '.',
-          ],
-        },
+        'Project details, payment plans, owner benefits and projections are shown as Serene Heights publishes them. We work to keep them accurate, but they can change. What applies to you is what is set out in your booking form, your agreement and the payment plan you sign.',
+        'Renders and illustrations show the intended design. The finished buildings may differ.',
       ],
     },
     {
-      id: 'no-real-transaction',
-      title: 'No real investment transaction',
+      id: 'not-advice-or-an-offer',
+      title: 'Not advice or a binding offer',
       paragraphs: [
-        {
-          parts: [
-            'Nothing on this site processes a real investment. ',
-            { to: '/login', label: 'Login' },
-            ' and ',
-            { to: '/get-started', label: 'get started' },
-            ' are sample journeys. They do not collect funds, open an account, or place an order.',
-          ],
-        },
-        'Browsing a listing, choosing a sample amount, or submitting a demo form does not create a holding and does not move money.',
+        'Nothing on this site is financial, legal or tax advice, and nothing on it is a binding offer. Ask the team any question you have, read the documents before you sign, and take independent advice if you need it.',
+        { parts: ['Property investment carries risk. Read the ', { to: '/legal/risks', label: 'risk notice' }, ' before you invest.'] },
       ],
     },
     {
-      id: 'no-guarantee-of-returns',
-      title: 'No guarantee of returns',
+      id: 'enquiries',
+      title: 'Enquiries',
       paragraphs: [
-        'Sample yields and sample distributions are invented for the layout. They do not guarantee a return, an income, or a recovery of capital. Returns are not promised, and past or sample figures are not a guide to any future result.',
         {
           parts: [
             'The ',
-            { to: '/legal/risks', label: 'key risks' },
-            ' note repeats this in one place.',
-          ],
-        },
-      ],
-    },
-    {
-      id: 'informational-purpose',
-      title: 'Informational and educational purpose',
-      paragraphs: [
-        'The demonstration is here to show how property investing might be presented with clarity: named buildings, diversified fictional funds, and a sample portfolio experience. It is informational and educational. It is not investment advice, not a recommendation, and not an offer to buy or sell anything.',
-        {
-          parts: [
-            'For the product idea in plain language, see ',
-            { to: '/about', label: 'About' },
+            { to: '/contact', label: 'contact form' },
+            ' does not send anything by itself. It opens WhatsApp or your email app with your enquiry filled in, and nothing is sent until you press send there. How we handle your details is set out in the ',
+            { to: '/legal/privacy', label: 'privacy policy' },
             '.',
           ],
         },
       ],
     },
     {
-      id: 'acceptable-use',
-      title: 'Acceptable use',
+      id: 'other-sites',
+      title: 'Links to other sites',
       paragraphs: [
-        'Use this site as a demonstration. Do not present it as a live regulated platform. Do not submit other people’s real personal information into the sample forms. Do not treat sample listings as live offers or as a place to send funds.',
-        'If a page asks for a name, email, or password, it is asking for fictional demo details only.',
+        'Some links lead to the Serene Heights project websites, YouTube, social media, WhatsApp and Google Maps. Those sites have their own terms and privacy policies.',
       ],
     },
     {
-      id: 'intellectual-property',
-      title: 'Intellectual property',
-      paragraphs: [
-        'The Serene Investors name, the layout, the sample copy, and the sample listings are part of this design study. They are shown so a visitor can understand the demonstration. They are not a live product identity to be treated as a real investment brand in the market.',
-        'Do not copy sample figures out of context and present them as actual performance.',
-      ],
+      id: 'content',
+      title: 'Text, images and video',
+      paragraphs: ['The text, images and video on this site come from Serene Heights. Please do not reuse them without permission.'],
     },
     {
-      id: 'limitation-of-liability',
-      title: 'Limitation of liability',
+      id: 'contact',
+      title: 'Changes and contact',
       paragraphs: [
-        'This demonstration is provided as a design study, as it stands. It does not create a live service, a duty to process information, or a duty to complete an investment. You should not rely on it for financial decisions.',
-        'Because the product is fictional, these sample terms do not attempt to name a legal person, a jurisdiction, or a regulator. Those details would be invented.',
-      ],
-    },
-    {
-      id: 'changes',
-      title: 'Changes to the demonstration',
-      paragraphs: [
-        'The demonstration may change as the design study changes. Sample listings, sample figures, and these notes can be updated, replaced, or removed. A change to the demo is not a change to a live product, because there is no live product here.',
+        'We may update these terms from time to time; changes are posted on this page.',
+        `Questions about these terms: call ${contact.uan}, WhatsApp ${contact.whatsapp}, or email ${contact.emails.nathiagali}.`,
       ],
     },
   ],
 }
 
+const projection = smartUnit.projection.map((row) => `${row.label}: ${row.value}`).join('; ')
+
 const risks: LegalDoc = {
   slug: 'risks',
-  title: 'Key risks',
-  navLabel: 'Risk disclosure',
-  intro:
-    'A sample risk note for this demonstration website. Property investing involves risk, including the possible loss of capital. Every figure here is invented sample data.',
+  title: 'Risk notice',
+  intro: 'Buying property that is still being built carries risk. Please read this before you invest.',
   sections: [
     {
-      id: 'what-this-is',
-      title: 'What this page is',
+      id: 'construction-and-delivery',
+      title: 'Construction and delivery',
       paragraphs: [
-        'This is a plain-language caution for the Serene Investors demonstration. It is not a complete legal disclosure, not investment advice, and not a document from a regulator.',
-        site.disclaimer,
-      ],
-    },
-    {
-      id: 'sample-figures',
-      title: 'Sample figures are illustrative',
-      paragraphs: [
-        'Yields, minima, portfolio values, rent notices, and distributions on this site are labelled as sample or illustrative. They are invented for the demonstration. They are not live prices, not paid income, and not a track record.',
         {
           parts: [
-            'The catalogues on ',
-            { to: '/properties', label: 'Properties' },
-            ' and ',
-            { to: '/funds', label: 'Funds' },
-            ' use the same rule: if a number is shown, it is sample data.',
+            'Serene Heights Nathia Gali has been under construction since 2021, and Serene Heights Lahore has a 2-year delivery timeline. Building projects can be delayed, for example by approvals, costs, materials, weather or access, and the finished building can differ from the renders. You can follow site visits on the ',
+            { to: '/progress', label: 'construction progress' },
+            ' page.',
           ],
         },
+        'Rental income and owner stays start only once a building is complete and operating.',
       ],
     },
     {
-      id: 'values-and-income-can-change',
-      title: 'Property values and income can change',
+      id: 'projections',
+      title: 'Projections are not guaranteed',
       paragraphs: [
-        'In real property investing, values can go down as well as up. Rental income can fall, pause, or stop. Occupancy, costs, and the condition of a building can change. This demonstration does not model those outcomes, and it does not predict them.',
-        'A sample yield on a listing is not a forecast. A sample rent notice is not money received.',
+        `Serene Heights publishes a projection for one Smart Property Unit (${projection}). ${smartUnit.projectionNote}`,
+        'Rental income depends on how many nights are booked, the rates guests pay and the cost of running the hotel. It can be lower than projected, and in some periods there may be none.',
       ],
     },
     {
-      id: 'investment-involves-risk',
-      title: 'Investment products can involve risk',
+      id: 'resale-and-transfer',
+      title: 'Selling or transferring your unit',
       paragraphs: [
-        'Property investing involves risk, including the possible loss of capital. A person can get back less than they put in. That sentence is part of this demonstration’s caution. It is not a full description of every risk that can attach to a real product.',
-        'Because Serene Investors is fictional, this page does not list licences, structures, or a live fund document. Those would be invented.',
+        'Smart Property Units are transferable, but a sale depends on finding a buyer. There is no guarantee of how quickly you can sell or at what price, and you may get back less than you paid.',
       ],
     },
     {
-      id: 'no-future-results',
-      title: 'Sample figures do not guarantee future results',
+      id: 'market-risk',
+      title: 'Market risk',
       paragraphs: [
-        'Past performance is not a guide to future results. Sample performance is not past performance either. A labelled sample yield, sample distribution, or sample portfolio value does not mean a similar figure would appear later, in this demo or anywhere else.',
-        'Nothing on this site should be read as a guarantee of return, income, or capital.',
+        'Property values, tourism and demand for office and retail space can fall as well as rise, with the economy, inflation, interest rates and local conditions. Past growth in an area does not mean it will continue.',
       ],
     },
     {
-      id: 'not-an-offer',
-      title: 'Not an offer or investment advice',
+      id: 'payments',
+      title: 'Your payment commitments',
       paragraphs: [
-        'This demonstration does not constitute an offer to invest, a solicitation, or an invitation to send funds. It does not constitute investment, tax, or legal advice. Named buildings and funds are demonstration listings only.',
-        {
-          parts: [
-            'If you want the product idea without the catalogues, read ',
-            { to: '/about', label: 'About' },
-            '.',
-          ],
-        },
+        `Payment plans run over ${pricing.months} monthly instalments after the down payment. Make sure you can meet every instalment, and read what your agreement says about late or missed payments before you sign.`,
       ],
     },
     {
-      id: 'no-real-investment',
-      title: 'No real investment is processed',
+      id: 'before-you-invest',
+      title: 'Before you invest',
       paragraphs: [
         {
           parts: [
-            'No real investment is processed through this demo. Sample journeys on ',
-            { to: '/get-started', label: 'Get started' },
-            ' and ',
-            { to: '/login', label: 'Login' },
-            ' stay in the browser as local interactions. They do not collect funds or create a holding.',
-          ],
-        },
-        {
-          parts: [
-            'For how the four-step demonstration is shown, see ',
-            { to: '/how-it-works', label: 'How it works' },
-            '. For a short note on risk in the Learn collection, see ',
-            { to: '/learn/understanding-risk', label: 'Understanding risk' },
-            '.',
+            'Only invest money you can leave in place for several years. Read your booking form and agreement carefully, ask the team anything that is unclear through the ',
+            { to: '/contact', label: 'contact page' },
+            ', and take independent advice if you need it.',
           ],
         },
       ],
@@ -297,5 +193,5 @@ const risks: LegalDoc = {
 export const legalDocs: LegalDoc[] = [privacy, terms, risks]
 
 export function getLegalDoc(slug: string) {
-  return legalDocs.find((item) => item.slug === slug)
+  return legalDocs.find((doc) => doc.slug === slug)
 }

@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Mail } from 'lucide-react'
+import { MessageCircle, Phone } from 'lucide-react'
+import { contact } from '@/global/data/serene'
 import { legalLinks, menuGroups } from '@/global/data/navigation'
 import { footerIntro, site } from '@/global/data/site'
 import { SereneLogo } from './Navbar'
@@ -15,13 +16,34 @@ export function SereneFooter() {
             <SereneLogo tone="light" />
             <p className="mt-3 max-w-sm text-sm text-white/60">{footerIntro.description}</p>
           </div>
-          <a
-            href="mailto:hello@sereneinvestors.com"
-            className="flex w-fit items-center gap-3 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-white hover:text-sx-ink"
-          >
-            <Mail size={16} /> hello@sereneinvestors.com
-          </a>
+          {/* Real Serene Heights contact lines (src/global/data/serene.ts). */}
+          <div className="flex flex-wrap gap-2">
+            <a
+              href={contact.uanHref}
+              className="flex min-h-11 w-fit items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-semibold transition-colors hover:bg-white hover:text-sx-ink"
+            >
+              <Phone size={16} aria-hidden="true" /> UAN {contact.uan}
+            </a>
+            <a
+              href={contact.whatsappHref}
+              target="_blank"
+              rel="noreferrer"
+              className="flex min-h-11 w-fit items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-semibold transition-colors hover:bg-white hover:text-sx-ink"
+            >
+              <MessageCircle size={16} aria-hidden="true" /> WhatsApp {contact.whatsapp}
+            </a>
+          </div>
         </div>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-6 text-sm text-white/60" aria-label="Serene Heights on social media">
+          {contact.social.map((s) => (
+            <li key={s.label}>
+              <a href={s.href} target="_blank" rel="noreferrer" className="transition-colors hover:text-white">
+                {s.label}
+              </a>
+            </li>
+          ))}
+          <li className="text-white/60">Head office: {contact.headOffice}</li>
+        </ul>
 
         <nav aria-label="Footer" className="grid grid-cols-2 gap-8 py-12 md:grid-cols-5">
           {menuGroups.map((group) => (

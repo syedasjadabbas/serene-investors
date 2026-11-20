@@ -97,7 +97,7 @@ body {
   translate: 0 1rem;
 }
 
-/* 3D depth for layered cards (data-depth-stage / data-depth); used by the funds featured band. */
+/* 3D depth for layered cards (data-depth-stage / data-depth). */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   [data-depth-stage] {
     perspective: var(--depth-perspective);

@@ -17,7 +17,7 @@ export function otpEmailHtml(code: string): string {
           <!-- Header Banner -->
           <tr>
             <td style="background-color: #173829; padding: 36px 32px; text-align: center;">
-              <span style="display: inline-block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #a5d6a7; font-weight: 600; margin-bottom: 8px;">Private Real Estate &amp; Syndicates</span>
+              <span style="display: inline-block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #a5d6a7; font-weight: 600; margin-bottom: 8px;">Serene Heights Group</span>
               <h1 style="margin: 0; color: #ffffff; font-size: 22px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Serene Investors</h1>
             </td>
           </tr>

@@ -17,7 +17,7 @@ export function StatsGrid() {
             data-reveal-item
             className="flex min-h-[180px] flex-col justify-between rounded-[20px] bg-sx-card p-5 text-white sm:min-h-[220px] sm:p-7"
           >
-            <span className="whitespace-nowrap font-heading text-4xl font-bold tracking-[-0.03em] sm:text-5xl xl:text-6xl">
+            <span className="font-heading text-[2rem] font-bold leading-none tracking-[-0.03em] sm:text-5xl xl:text-6xl">
               {item.value}
             </span>
             <span className="text-sm text-white/70 sm:text-base">{item.label}</span>

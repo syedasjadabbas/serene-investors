@@ -1,17 +1,21 @@
+// Site-wide wording. Facts come from src/global/data/serene.ts (the real Serene Heights data).
+
 export const site = {
   name: 'Serene Investors',
-  tagline: 'Invest in Dubai and Saudi Arabia Real Estate.',
+  tagline: 'Invest in Serene Heights — Nathia Gali and Lahore.',
+  description:
+    'Own a share of Serene Heights: Smart Property Units from PKR 2 million and hotel apartments in Nathia Gali, and smart property in the Serene Heights Lahore tower.',
   disclaimer:
-    'Serene Investors is regulated by the Dubai Financial Services Authority (DFSA) and CMA FinTech Lab framework in Saudi Arabia.',
+    'Serene Investors is part of Serene Heights Group, developed by DM Consortium. Payment plans and projections are as published by Serene Heights; returns are not guaranteed.',
 } as const
 
 export const footerIntro = {
-  description: 'The modern way for anyone to invest in real estate.',
-  sampleLabel: 'Real Estate Investment Platform',
+  description: 'Invest in Serene Heights Nathia Gali and Serene Heights Lahore, from PKR 2 million.',
+  sampleLabel: 'Serene Heights Group',
   cta: {
-    label: 'Explore properties',
+    label: 'See the projects',
     href: '/properties',
   },
-  copyright: '© 2026 Serene Investors',
-  note: 'All property investments are subject to market risks. Client funds are segregated in regulated Tier-1 custodian accounts.',
+  copyright: '© 2026 Serene Heights Group',
+  note: 'Property investment carries risk, including the value of your investment falling and delays in construction. Read the risk notice before you invest.',
 } as const

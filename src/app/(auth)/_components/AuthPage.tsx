@@ -81,8 +81,8 @@ export function AuthPage({ title }: Props) {
 
   function handleQuickDemo() {
     login({
-      name: 'Yasir Khokhar',
-      email: 'investor@serene-investors.com',
+      name: 'Sample Investor',
+      email: 'sample@example.com',
       investorType: 'individual',
     })
     setAuthState('success')
@@ -91,8 +91,8 @@ export function AuthPage({ title }: Props) {
   function handleOtpSuccess() {
     // Authenticate user in persistent context
     login({
-      name: email.includes('@') ? email.split('@')[0].replace(/[._-]/g, ' ') : 'Yasir Khokhar',
-      email: email || 'investor@serene-investors.com',
+      name: email.includes('@') ? email.split('@')[0].replace(/[._-]/g, ' ') : 'Sample Investor',
+      email: email || 'sample@example.com',
       investorType: 'individual',
     })
     setAuthState('success')

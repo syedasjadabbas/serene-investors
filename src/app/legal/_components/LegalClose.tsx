@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
 import { PillLink } from '@/global/components/ui/PillLink'
-import type { LegalDoc } from '@/global/types/legal'
+import type { LegalDoc } from '../_lib/legal'
 import { legalFrame, legalIndex } from '../_lib/legal'
 
 export function LegalClose({ doc }: { doc: LegalDoc }) {

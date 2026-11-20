@@ -13,12 +13,12 @@ export function NotFoundPage() {
           <Highlighted title="Page not found." highlight="not found" className="text-sx-brand" />
         </h1>
         <p className="max-w-xl text-base leading-relaxed text-sx-ink/60 sm:text-lg">
-          The page you are looking for doesn’t exist or has moved. Head back to the home page or browse available properties.
+          The page you are looking for doesn’t exist or has moved. Head back to the home page or see Serene Heights Nathia Gali and Serene Heights Lahore.
         </p>
         <div className="mt-2 flex flex-wrap justify-center gap-3">
           <PillLink href="/">Back to home</PillLink>
           <PillLink href="/properties" variant="brand">
-            Browse properties
+            See the projects
           </PillLink>
         </div>
       </div>

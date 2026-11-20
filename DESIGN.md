@@ -65,8 +65,10 @@ inner pages start below it (`pt-24` on `main`).
 
 ## Imagery
 
-Building and city photography from `public/images` (served through `withBase()`). Small UI-style
-visuals (activity rows, allocation bars) are fine inside cards; label any figures as samples.
+Serene Heights photography and renders live in `public/images/serene/` (served through `withBase()`),
+covering Nathia Gali, Lahore, the resort, floor plans, the Journal and brand assets. Real project
+figures come from `src/global/data/serene.ts`; illustrative visuals (such as the `/dashboard`
+portfolio preview) are explicitly labelled as samples.
 
 ## Motion
 

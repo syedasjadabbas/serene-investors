@@ -15,7 +15,7 @@ type Props = {
   actions?: HeroAction[]
   /**
    * light: centred title on the paper background (most pages).
-   * dark: rounded dark panel, optionally over a dimmed photo (product pages like Golden Visa).
+   * dark: rounded dark panel, optionally over a dimmed photo (product pages like The Resort).
    */
   tone?: 'light' | 'dark'
   align?: 'center' | 'left'

@@ -16,8 +16,8 @@ type Props = {
   body?: ReactNode
   actions?: HeroAction[]
   /**
-   * tint: pale mint background, dark text, a visual rising from the bottom (Properties, Funds).
-   * dark: full-bleed photo or video under a dark overlay, white text (Golden Visa, Security).
+   * tint: pale mint background, dark text, a visual rising from the bottom (Projects, Smart Property).
+   * dark: full-bleed photo or video under a dark overlay, white text (The Resort, Trust & compliance).
    */
   tone?: 'tint' | 'dark'
   image?: { src: string; alt?: string }

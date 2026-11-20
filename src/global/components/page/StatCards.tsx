@@ -7,7 +7,7 @@ import { cn } from '@/global/lib/cn'
 type Stat = { value: string; label: string }
 
 /**
- * Splits "AED 2,000,000" / "4×" / "12%" into prefix, number and suffix so the number can count
+ * Splits "PKR 2,250,000" / "4×" / "15%" into prefix, number and suffix so the number can count
  * up. Values without a plain number ("24/7", "Online") are shown as they are.
  */
 function parse(value: string) {

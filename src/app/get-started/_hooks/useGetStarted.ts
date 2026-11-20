@@ -1,119 +1,94 @@
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import type { Fund } from '@/global/types/fund'
-import type { Property } from '@/global/types/property'
-import { catalogueFeaturedFund, funds, sampleFundMinimum } from '@/global/data/funds'
-import { properties } from '@/global/data/properties'
-import { sampleOnboardingAmounts } from '../_lib/get-started'
+import { interests, plans, projectById, type InterestKey, type Plan } from '@/global/data/serene'
+import { isInterestKey, planBody, planTitle, plansFor, projectOf, visitProjects, type Project } from '../_lib/get-started'
 
-export type StartInterest = 'property' | 'fund'
-export type SampleAmount = (typeof sampleOnboardingAmounts)[number]
 export type OnboardingStep = 0 | 1 | 2
 
-const cedarCourt = properties.find((item) => item.id === 'cedar-court')
-if (!cedarCourt) {
-  throw new Error('Missing sample record: cedar-court')
-}
-const defaultProperty: Property = cedarCourt
-const defaultFund = catalogueFeaturedFund
+type Initial = { interest: InterestKey | null; planId: Plan['id'] | null; visit: Project | null }
 
-function isSampleAmount(value: number): value is SampleAmount {
-  return sampleOnboardingAmounts.includes(value as SampleAmount)
-}
-
-function propertyFromQuery(id: string | null) {
-  if (!id) return undefined
-  return properties.find((item) => item.id === id)
-}
-
-function fundFromQuery(id: string | null) {
-  if (!id) return undefined
-  return funds.find((item) => item.id === id)
-}
-
-function closestSampleAmount(minimum: number): SampleAmount {
-  if (isSampleAmount(minimum)) return minimum
-  return sampleOnboardingAmounts.reduce((current, amount) => {
-    return Math.abs(amount - minimum) < Math.abs(current - minimum) ? amount : current
-  })
+/**
+ * Reads `?intent=&id=` and maps it to a real option. Supported:
+ *   intent=project&id=nathia-gali|lahore · intent=plan&id=<plan id> · intent=interest&id=<interest key>
+ * Anything else is ignored.
+ */
+function initialFromQuery(intent: string | null | undefined, id: string | null | undefined): Initial {
+  const none: Initial = { interest: null, planId: null, visit: null }
+  if (!intent || !id) return none
+  if (intent === 'project') {
+    if (id === 'nathia-gali') return { interest: 'ng-smart', planId: 'spu', visit: null }
+    if (id === 'lahore') return { interest: 'lhr-smart', planId: null, visit: null }
+  }
+  if (intent === 'plan') {
+    const plan = plans.find((p) => p.id === id)
+    if (plan) return { interest: plan.id === 'spu' ? 'ng-smart' : 'ng-apartment', planId: plan.id, visit: null }
+  }
+  if (intent === 'interest' && isInterestKey(id)) {
+    return { interest: id, planId: id === 'ng-smart' ? 'spu' : null, visit: null }
+  }
+  return none
 }
 
 /**
- * Sample onboarding state. Initial interest and amount come from `?intent=property|fund&id=...`;
- * the page remounts the onboarding (via `key`) when that query changes, which resets this state.
+ * Enquiry state. The page remounts the onboarding (via `key`) when the query changes, which resets it.
  */
 export function useGetStarted() {
   const params = useSearchParams()
-  const intent = params?.get('intent')
-  const relatedId = params?.get('id')
-  const queryProperty = propertyFromQuery(intent === 'property' ? relatedId : null)
-  const queryFund = fundFromQuery(intent === 'fund' ? relatedId : null)
+  const initial = initialFromQuery(params?.get('intent'), params?.get('id'))
 
   const [step, setStep] = useState<OnboardingStep>(0)
-  const [completed, setCompleted] = useState(false)
-  const [interest, setInterest] = useState<StartInterest | null>(
-    queryFund ? 'fund' : queryProperty ? 'property' : null,
-  )
-  const [amount, setAmount] = useState<SampleAmount | null>(() => {
-    if (queryFund) return closestSampleAmount(sampleFundMinimum)
-    if (queryProperty) return closestSampleAmount(queryProperty.sampleMinInvestment)
-    return null
-  })
+  const [interest, setInterest] = useState<InterestKey | null>(initial.interest)
+  const [planId, setPlanId] = useState<Plan['id'] | null>(initial.planId)
+  const [visit, setVisit] = useState<Project | null>(initial.visit)
 
-  const sampleProperty: Property = queryProperty ?? defaultProperty
-  const sampleFund: Fund = queryFund ?? defaultFund
-
-  const listing = useMemo(() => {
-    if (interest === 'fund') return { kind: 'fund' as const, fund: sampleFund }
-    return { kind: 'property' as const, property: sampleProperty }
-  }, [interest, sampleFund, sampleProperty])
+  const project = interest ? projectOf(interest) : null
+  const plan = plans.find((p) => p.id === planId) ?? null
+  const planOptions = interest && project === 'nathia-gali' ? plansFor(interest) : []
 
   const canAdvance =
     (step === 0 && interest !== null) ||
-    (step === 1 && amount !== null) ||
-    (step === 2 && interest !== null && amount !== null)
+    (step === 1 && (project === 'lahore' || (project === 'nathia-gali' && plan !== null) || (interest === 'visit' && visit !== null)))
+
+  const summary = useMemo(() => {
+    if (!interest) return ''
+    const lines = ['Hello Serene Heights, I would like to enquire.', `Interest: ${interests[interest]}`]
+    if (project === 'nathia-gali' && plan) lines.push(`Preferred plan: ${planTitle(plan)} (${planBody(plan)})`)
+    if (project === 'lahore') lines.push(`Project: ${projectById('lahore')?.name}. Please ask the Lahore team to contact me.`)
+    if (interest === 'visit' && visit) lines.push(`Site visit at: ${visitProjects.find((v) => v.id === visit)?.title}`)
+    return lines.join('\n')
+  }, [interest, plan, project, visit])
 
   function next() {
-    if (!canAdvance) return
-    if (step === 2) {
-      setCompleted(true)
-      return
-    }
+    if (step === 2 || !canAdvance) return
     setStep((current) => (current + 1) as OnboardingStep)
   }
 
   function back() {
-    if (completed) {
-      setCompleted(false)
-      setStep(2)
-      return
-    }
     if (step === 0) return
     setStep((current) => (current - 1) as OnboardingStep)
   }
 
-  function chooseInterest(value: StartInterest) {
+  function chooseInterest(value: InterestKey) {
     setInterest(value)
-    setCompleted(false)
-  }
-
-  function chooseAmount(value: SampleAmount) {
-    setAmount(value)
-    setCompleted(false)
+    // Keep a chosen plan only if it is still offered for the new interest.
+    if (projectOf(value) !== 'nathia-gali') setPlanId(null)
+    else if (value === 'ng-smart' && planId === null) setPlanId('spu')
+    if (value !== 'visit') setVisit(null)
   }
 
   return {
-    amount,
     back,
     canAdvance,
-    chooseAmount,
     chooseInterest,
-    completed,
+    choosePlan: setPlanId,
+    chooseVisit: setVisit,
     interest,
-    listing,
     next,
-    sampleFund,
-    sampleProperty,
+    plan,
+    planOptions,
+    project,
     step,
+    summary,
+    visit,
   }
 }

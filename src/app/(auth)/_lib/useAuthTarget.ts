@@ -1,9 +1,9 @@
 import { useSearchParams } from 'next/navigation'
-import { funds } from '@/global/data/funds'
-import { properties } from '@/global/data/properties'
+import { nathiagali, projectById } from '@/global/data/serene'
 
 export type RelatedListing = {
-  kind: 'property' | 'fund'
+  /** Shown in copy: "View project", "Continuing from Smart Property". */
+  kind: 'project' | 'Smart Property'
   name: string
   href: string
   image: string
@@ -12,20 +12,26 @@ export type RelatedListing = {
 
 /**
  * Reads the `intent`, `id` and `redirect` query params shared by /login and /signup:
- * the property or fund the visitor came from, where to send them after signing in,
- * and the link to the other auth page that keeps the same context.
+ * the Serene Heights project (`intent=property&id=nathia-gali|lahore`) or Smart Property
+ * (`intent=fund`) the visitor came from, where to send them after signing in, and the link to
+ * the other auth page that keeps the same context.
  */
 export function useAuthTarget(otherPage: '/login' | '/signup') {
   const params = useSearchParams()
   const intent = params?.get('intent')
   const relatedId = params?.get('id')
-  const property = intent === 'property' ? properties.find((item) => item.id === relatedId) : undefined
-  const fund = intent === 'fund' ? funds.find((item) => item.id === relatedId) : undefined
+  const project = intent === 'property' && relatedId ? projectById(relatedId) : undefined
 
-  const related: RelatedListing | undefined = property
-    ? { kind: 'property', name: property.name, href: `/properties/${property.id}`, image: property.image, imageAlt: property.imageAlt }
-    : fund
-      ? { kind: 'fund', name: fund.name, href: `/funds/${fund.id}`, image: fund.image, imageAlt: fund.imageAlt }
+  const related: RelatedListing | undefined = project
+    ? { kind: 'project', name: project.name, href: `/properties/${project.id}`, image: project.image, imageAlt: `${project.name}` }
+    : intent === 'fund'
+      ? {
+          kind: 'Smart Property',
+          name: 'Smart Property Units, Nathia Gali',
+          href: '/smart-property',
+          image: nathiagali.amenityGroups[0].image,
+          imageAlt: 'Aerial view of the pool at Serene Heights Nathia Gali',
+        }
       : undefined
 
   const otherHref =

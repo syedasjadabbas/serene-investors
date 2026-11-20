@@ -1,4 +1,4 @@
-import type { LegalDoc } from '@/global/types/legal'
+import type { LegalDoc } from '../_lib/legal'
 import { cn } from '@/global/lib/cn'
 import { useActiveSection } from '../_hooks/useActiveSection'
 

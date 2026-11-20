@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
-import { Building2, Check, Copy, Info, Search, X } from 'lucide-react'
+import { Building2, Check, Copy, Search, X } from 'lucide-react'
 import { CtaBand } from '@/global/components/page/CtaBand'
 import { PageHeader } from '@/global/components/page/PageHeader'
 import { PageSection } from '@/global/components/page/PageSection'
@@ -30,26 +30,17 @@ function TermCard({ item, copied, onCopy, onTag }: { item: GlossaryItem; copied:
         </button>
       </div>
 
-      <p className="font-semibold leading-snug text-sx-ink">{item.shortDef}</p>
-      <p className="text-sm leading-relaxed text-sx-ink/65 sm:text-base">{item.fullDef}</p>
+      <p className="text-base leading-relaxed text-sx-ink/80">{item.definition}</p>
 
-      {item.formulaOrRule && (
-        <div className="flex items-start gap-2.5 rounded-[14px] bg-sx-paper p-4">
-          <Info size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-sx-brand" />
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sx-ink/60">Formula · standard</p>
-            <p className="mt-1 font-mono text-sm font-semibold leading-snug text-sx-ink">{item.formulaOrRule}</p>
-          </div>
+      {item.atSerene && (
+        <div className="rounded-[14px] bg-sx-forest p-4 text-white">
+          <p className="flex items-center gap-1.5 text-xs font-semibold text-sx-mint">
+            <Building2 size={13} aria-hidden="true" />
+            At Serene Heights
+          </p>
+          <p className="mt-1.5 text-sm leading-relaxed text-white/85">{item.atSerene}</p>
         </div>
       )}
-
-      <div className="rounded-[14px] bg-sx-forest p-4 text-white">
-        <p className="flex items-center gap-1.5 text-xs font-semibold text-sx-mint">
-          <Building2 size={13} aria-hidden="true" />
-          In practice
-        </p>
-        <p className="mt-1.5 text-sm leading-relaxed text-white/80">{item.example}</p>
-      </div>
 
       <ul aria-label={`Tags for ${item.term}`} className="mt-auto flex flex-wrap gap-1.5 border-t border-sx-ink/10 pt-4">
         {item.tags.map((tag) => (
@@ -71,8 +62,8 @@ function TermCard({ item, copied, onCopy, onTag }: { item: GlossaryItem; copied:
 
 export function GlossaryPage() {
   usePageMeta(
-    'Serene Investors | Investor glossary',
-    'Plain definitions of the returns, legal structures, regulators and metrics behind fractional property investing.',
+    'Serene Investors | Glossary',
+    'Plain definitions of the terms used at Serene Heights: Smart Property Units, payment plans, owner benefits and the two projects.',
   )
 
   const searchId = useId()
@@ -95,8 +86,8 @@ export function GlossaryPage() {
       const matchesSearch =
         !q ||
         item.term.toLowerCase().includes(q) ||
-        item.shortDef.toLowerCase().includes(q) ||
-        item.fullDef.toLowerCase().includes(q) ||
+        item.definition.toLowerCase().includes(q) ||
+        (item.atSerene ?? '').toLowerCase().includes(q) ||
         item.tags.some((tag) => tag.toLowerCase().includes(q))
       const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory
       const matchesLetter = activeLetter === 'ALL' || item.term[0].toUpperCase() === activeLetter
@@ -111,7 +102,7 @@ export function GlossaryPage() {
   }, [])
 
   function copyDefinition(item: GlossaryItem) {
-    const text = `${item.term} (${item.category}):\n${item.fullDef}\n\nExample: ${item.example}`
+    const text = item.atSerene ? `${item.term}: ${item.definition}\n\nAt Serene Heights: ${item.atSerene}` : `${item.term}: ${item.definition}`
     void navigator.clipboard?.writeText(text)
     setCopiedId(item.id)
     clearTimeout(copyTimer.current)
@@ -128,10 +119,10 @@ export function GlossaryPage() {
     <>
       <PageHeader
         align="center"
-        eyebrow="Investor glossary"
-        title="Demystify real estate investing."
-        highlight="real estate investing"
-        body="The formulas, legal ownership structures and regulatory terms behind fractional property investing, in plain language."
+        eyebrow="Glossary"
+        title="The words behind Serene Heights."
+        highlight="Serene Heights"
+        body="Smart Property Units, payment plans, owner benefits and the two projects, in plain language."
         aside={
           <div className="flex w-[min(42rem,calc(100vw-2rem))] flex-col gap-5">
           <div role="search">
@@ -143,7 +134,7 @@ export function GlossaryPage() {
               <input
                 id={searchId}
                 type="search"
-                placeholder="Search terms, e.g. IRR, SPV, yield"
+                placeholder="Search terms, e.g. instalment, BHK, kanal"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/50 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
@@ -232,7 +223,7 @@ export function GlossaryPage() {
             <h3 className="font-heading text-xl font-semibold text-sx-ink">
               {search ? `No definitions match “${search}”` : 'No definitions match these filters'}
             </h3>
-            <p className="max-w-md text-sm text-sx-ink/60">Try common terms like IRR, yield, SPV, DFSA or Golden Visa.</p>
+            <p className="max-w-md text-sm text-sx-ink/60">Try terms like Smart Property Unit, payment plan or owner stays.</p>
             <button
               type="button"
               onClick={resetFilters}
@@ -263,11 +254,11 @@ export function GlossaryPage() {
 
       <CtaBand
         tone="brand"
-        title="Put what you’ve learned to work."
-        highlight="to work"
-        body="Look through the sample listings with the terms fresh in mind, or read the FAQs."
+        title="See the terms in practice."
+        highlight="in practice"
+        body="Look at the published payment plans, or read the answers to common questions."
         actions={[
-          { label: 'Explore properties', href: '/properties' },
+          { label: 'Payment plans', href: '/calculator' },
           { label: 'Read the FAQs', href: '/faq' },
         ]}
       />

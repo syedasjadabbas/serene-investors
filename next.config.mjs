@@ -12,7 +12,16 @@ const nextConfig = {
   env: { NEXT_PUBLIC_BASE_PATH: BASE_PATH },
   // On this app's own domain, the bare root forwards to the base path (the group site owns "/").
   async redirects() {
-    return BASE_PATH ? [{ source: '/', destination: BASE_PATH, basePath: false, permanent: false }] : []
+    // Pages that moved when the site switched to real Serene Heights data. Old links keep working.
+    const moved = [
+      { source: '/funds', destination: '/smart-property', permanent: true },
+      { source: '/funds/:slug*', destination: '/smart-property', permanent: true },
+      { source: '/golden-visa', destination: '/resort', permanent: true },
+      { source: '/rewards', destination: '/owner-benefits', permanent: true },
+      { source: '/market-reports', destination: '/progress', permanent: true },
+    ]
+    const root = BASE_PATH ? [{ source: '/', destination: BASE_PATH, basePath: false, permanent: false }] : []
+    return [...root, ...moved]
   },
   images: {
     remotePatterns: [

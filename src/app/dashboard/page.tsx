@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { DashboardPage } from './_components/DashboardPage'
 
 export const metadata: Metadata = {
-  title: 'Investor Dashboard & Portfolio | Serene Investors',
-  description: 'View your real-time fractional property holdings, quarterly rental dividend history, and tax documentation.',
+  title: 'Sample portfolio | Serene Investors',
+  description: 'A demonstration investor portfolio built from published Serene Heights Nathia Gali payment plans, in PKR.',
 }
 
 export default function Page() {

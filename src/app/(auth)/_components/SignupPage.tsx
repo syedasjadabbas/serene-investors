@@ -27,8 +27,8 @@ import { OtpVerificationStep } from './OtpVerificationStep'
 type InvestorType = 'individual' | 'institutional'
 
 const INVESTOR_TYPES: { value: InvestorType; label: string; body: string; icon: typeof User }[] = [
-  { value: 'individual', label: 'Individual', body: 'Personal wealth & accredited', icon: User },
-  { value: 'institutional', label: 'Institutional', body: 'Family office & syndicates', icon: Building2 },
+  { value: 'individual', label: 'Individual', body: 'For yourself or your family', icon: User },
+  { value: 'institutional', label: 'Institutional', body: 'For a company or group', icon: Building2 },
 ]
 
 /** /signup: investor type + details, then a one-time code by email, then redirect. `?email=` prefills the email. */
@@ -47,7 +47,7 @@ export function SignupPage() {
 
   usePageMeta(
     `${site.name} | Create account`,
-    `Create your investor account on ${site.name} and own shares in income-generating real estate.`,
+    `Create your investor account on ${site.name} and own a share of Serene Heights Nathia Gali and Serene Heights Lahore.`,
   )
 
   useEffect(() => {
@@ -94,8 +94,8 @@ export function SignupPage() {
 
   function handleOtpSuccess() {
     login({
-      name: fullName || 'Eleanor Vance',
-      email: email || 'investor@serene-investors.com',
+      name: fullName || 'Sample Investor',
+      email: email || 'sample@example.com',
       investorType,
     })
     setStep('success')
@@ -112,8 +112,8 @@ export function SignupPage() {
           actions={
             <>
               <PillLink href={targetHref}>Continue to portal</PillLink>
-              <Link href="/funds" className={`text-sm ${textLinkClass}`}>
-                Explore funds
+              <Link href="/smart-property" className={`text-sm ${textLinkClass}`}>
+                Explore Smart Property
               </Link>
             </>
           }
@@ -130,7 +130,7 @@ export function SignupPage() {
             <div className="flex justify-between gap-3">
               <dt className="text-sx-ink/60">Type</dt>
               <dd className="font-medium text-sx-ink">
-                {investorType === 'institutional' ? 'Institutional / Syndicate' : 'Individual / Accredited'}
+                {investorType === 'institutional' ? 'Institutional' : 'Individual'}
               </dd>
             </div>
           </dl>
@@ -146,7 +146,7 @@ export function SignupPage() {
       ) : (
         <>
           <AuthHeading eyebrow="New investor" title="Create an account">
-            Join {site.name} to own shares in vetted, income-generating property.
+            Join {site.name} to own a share of Serene Heights, from PKR 2 million.
           </AuthHeading>
 
           <RelatedNotice related={related} />
@@ -187,7 +187,7 @@ export function SignupPage() {
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="e.g. Eleanor Vance"
+              placeholder="Your full name"
             />
 
             <TextField

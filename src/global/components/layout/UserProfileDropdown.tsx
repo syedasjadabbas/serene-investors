@@ -3,12 +3,12 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Building2, ChevronDown, Gift, LayoutDashboard, LogOut, Settings, ShieldCheck, type LucideIcon } from 'lucide-react'
+import { Building2, ChevronDown, Gift, HardHat, LayoutDashboard, LogOut, Phone, ShieldCheck, type LucideIcon } from 'lucide-react'
 import { useAuth, type User } from '@/global/stores/auth'
 import { cn } from '@/global/lib/cn'
 
 export function getInitials(name?: string): string {
-  if (!name) return 'YK'
+  if (!name) return 'SI'
   const parts = name.trim().split(/\s+/)
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
@@ -19,10 +19,11 @@ type Props = {
 }
 
 const LINKS: { href: string; label: string; icon: LucideIcon }[] = [
-  { href: '/dashboard', label: 'Portfolio dashboard', icon: LayoutDashboard },
-  { href: '/properties', label: 'Explore properties', icon: Building2 },
-  { href: '/rewards', label: 'Serene Rewards', icon: Gift },
-  { href: '/about#contact', label: 'Account settings', icon: Settings },
+  { href: '/dashboard', label: 'Sample portfolio', icon: LayoutDashboard },
+  { href: '/properties', label: 'Serene Heights projects', icon: Building2 },
+  { href: '/owner-benefits', label: 'Owner benefits', icon: Gift },
+  { href: '/progress', label: 'Construction progress', icon: HardHat },
+  { href: '/contact', label: 'Contact the team', icon: Phone },
 ]
 
 /** Navbar account button. Opens a panel (disclosure pattern) with account links and log out. */

@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import type { Property } from '@/global/types/property'
-import { formatStatus } from '@/global/lib/format'
 import { withBase } from '@/global/lib/asset'
 import { cn } from '@/global/lib/cn'
 
-/** Main photo with a row of thumbnails, in one white card under the listing header. */
-export function PropertyGallery({ property }: { property: Property }) {
-  const frames = property.gallery.length > 0 ? property.gallery : [{ src: property.image, alt: property.imageAlt }]
+export type GalleryFrame = { src: string; alt: string }
+
+/** Main photo with a row of thumbnails, in one white card under the project header. */
+export function PropertyGallery({ frames, label, badge }: { frames: GalleryFrame[]; label: string; badge?: { top: string; bottom: string } }) {
   const [active, setActive] = useState(0)
   const current = frames[active] ?? frames[0]
 
@@ -26,14 +25,16 @@ export function PropertyGallery({ property }: { property: Property }) {
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute bottom-3 left-3 hidden rounded-[14px] bg-white px-4 py-3 text-sx-ink sm:block">
-          <p className="text-xs font-semibold text-sx-brand">{formatStatus(property.status)}</p>
-          <p className="mt-0.5 text-sm font-semibold">{property.unitsLabel}</p>
-        </div>
+        {badge && (
+          <div className="absolute bottom-3 left-3 hidden rounded-[14px] bg-white px-4 py-3 text-sx-ink sm:block">
+            <p className="text-xs font-semibold text-sx-brand">{badge.top}</p>
+            <p className="mt-0.5 text-sm font-semibold">{badge.bottom}</p>
+          </div>
+        )}
       </div>
 
       {frames.length > 1 && (
-        <div role="group" aria-label="Property images" className="mt-2 flex gap-2 overflow-x-auto p-0.5 sm:mt-3">
+        <div role="group" aria-label={label} className="mt-2 flex gap-2 overflow-x-auto p-0.5 sm:mt-3">
           {frames.map((image, index) => {
             const selected = index === active
             return (
@@ -49,15 +50,7 @@ export function PropertyGallery({ property }: { property: Property }) {
                   selected ? 'border-sx-brand' : 'border-transparent opacity-60 hover:opacity-100',
                 )}
               >
-                <img
-                  src={withBase(image.src)}
-                  alt=""
-                  width={224}
-                  height={160}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover"
-                />
+                <img src={withBase(image.src)} alt="" width={224} height={160} loading="lazy" decoding="async" className="h-full w-full object-cover" />
               </button>
             )
           })}

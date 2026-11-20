@@ -212,7 +212,12 @@
   }
 }
 
-/* Reviews strip: same film-strip motion, moving left-to-right and a little slower. */
+/* Custom-styled selects: hide the Chromium picker icon alongside appearance: none. */
+select.sx-select::picker-icon {
+  display: none;
+}
+
+/* Alternate film-strip direction, moving left-to-right and a little slower. */
 .sx-strip-reverse {
   animation-direction: reverse;
   animation-duration: 55s;

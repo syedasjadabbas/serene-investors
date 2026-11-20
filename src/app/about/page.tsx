@@ -1,5 +1,3 @@
-'use client'
-
 import { AboutPage } from './_components/AboutPage'
 
 export default function Page() {

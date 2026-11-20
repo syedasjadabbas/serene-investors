@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowRight, Award, Plus } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { usePrefersReducedMotion } from '@/global/hooks/usePrefersReducedMotion'
 import { withBase } from '@/global/lib/asset'
 import { cn } from '@/global/lib/cn'
@@ -39,41 +39,17 @@ function PhotoMedia({ card, still }: { card: Card; still: boolean }) {
   )
 }
 
-function VisaMedia({ card, still }: { card: Card; still: boolean }) {
-  return (
-    <div className="relative h-full w-full">
-      <PhotoMedia card={card} still={still} />
-      <div className="absolute inset-0 bg-gradient-to-t from-sx-ink/70 to-transparent" />
-      <div className="sx-float-slow absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 -rotate-12 flex-col items-center gap-1 rounded-[14px] border border-sx-sand/40 bg-sx-ink/80 px-6 py-4 backdrop-blur">
-        <Award size={22} className="text-sx-sand" />
-        <span className="font-heading text-sm font-extrabold uppercase leading-tight tracking-[0.06em] text-white">
-          UAE Golden
-          <br />
-          Visa
-        </span>
-      </div>
-    </div>
-  )
-}
-
-function ListingsMedia() {
+/** The four published payment plans gliding past as mini cards. */
+function PlansMedia() {
   return (
     <div className="flex h-full w-full items-center overflow-hidden bg-sx-paper">
       <ul className="sx-slide flex gap-3 px-4">
-        {[...ecosystem.listings, ...ecosystem.listings].map((item, index) => (
-          <li key={`${item.name}-${index}`} className="w-[120px] shrink-0 rounded-[12px] bg-white p-2 shadow-md" aria-hidden={index >= ecosystem.listings.length}>
+        {[...ecosystem.plans, ...ecosystem.plans].map((item, index) => (
+          <li key={`${item.id}-${index}`} className="w-[130px] shrink-0 rounded-[12px] bg-white p-2 shadow-md" aria-hidden={index >= ecosystem.plans.length}>
             <img src={withBase(item.image)} alt="" loading="lazy" className="aspect-[4/3] w-full rounded-[8px] object-cover" />
             <p className="mt-2 line-clamp-2 text-[11px] font-semibold leading-tight text-sx-ink">{item.name}</p>
-            <p className="text-[10px] text-sx-ink/60">{item.price}</p>
-            <div className="mt-1.5 h-1 rounded-full bg-sx-paper">
-              <div className="h-1 rounded-full bg-sx-brand" style={{ width: `${item.funded}%` }} />
-            </div>
-            <div className="mt-2 flex items-center justify-between text-[10px]">
-              <span className="text-sx-ink/60">{item.funded}% funded</span>
-              <span className="flex items-center gap-0.5 rounded-full bg-sx-brand px-2 py-0.5 font-semibold text-white">
-                <Plus size={10} /> Add
-              </span>
-            </div>
+            <p className="text-[10px] tabular-nums text-sx-ink/65">{item.price}</p>
+            <p className="mt-1.5 w-fit rounded-full bg-sx-brand px-2 py-0.5 text-[10px] font-semibold text-white">{item.down}</p>
           </li>
         ))}
       </ul>
@@ -81,29 +57,8 @@ function ListingsMedia() {
   )
 }
 
-function ChartMedia() {
-  const bars = [28, 36, 41, 50, 58, 64, 73, 84]
-  return (
-    <div className="flex h-full w-full flex-col justify-end gap-3 bg-sx-forest p-6">
-      <div className="flex items-baseline justify-between text-white">
-        <span className="text-xs uppercase tracking-[0.14em] text-white/60">Sample value over 8 years</span>
-        <span className="font-heading text-xl font-bold text-sx-mint">+84%</span>
-      </div>
-      <div className="flex h-[60%] items-end gap-2">
-        {bars.map((h, i) => (
-          <span
-            key={i}
-            className="sx-bar flex-1 rounded-t-[6px] bg-sx-mint"
-            style={{ height: `${h}%`, animationDelay: `${i * 0.12}s`, opacity: 0.45 + i * 0.07 }}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/** A block of "shares" lighting up one by one, like a building filling with owners. */
-function SharesMedia() {
+/** A block of 50 sq ft units lighting up one by one, like an apartment filling with co-owners. */
+function UnitsMedia() {
   const cols = 12
   const rows = 8
   return (
@@ -128,14 +83,10 @@ function Media({ card, still }: { card: Card; still: boolean }) {
   switch (card.media) {
     case 'video':
       return <VideoMedia card={card} still={still} />
-    case 'listings':
-      return <ListingsMedia />
-    case 'chart':
-      return <ChartMedia />
-    case 'visa':
-      return <VisaMedia card={card} still={still} />
-    case 'shares':
-      return <SharesMedia />
+    case 'plans':
+      return <PlansMedia />
+    case 'units':
+      return <UnitsMedia />
     default:
       return <PhotoMedia card={card} still={still} />
   }
@@ -178,7 +129,7 @@ export function EcosystemCarousel() {
 
       {still ? (
         // Reduced motion: a plain scrollable row.
-        <ul className="sx-rail mt-10 scroll-px-4 px-4 sm:scroll-px-8 sm:px-8" aria-label="Serene Investors services">
+        <ul className="sx-rail mt-10 scroll-px-4 px-4 sm:scroll-px-8 sm:px-8" aria-label="Serene Heights at a glance">
           {ecosystem.cards.map((card) => (
             <EcoCard key={card.title} card={card} still />
           ))}
@@ -186,7 +137,7 @@ export function EcosystemCarousel() {
       ) : (
         // Film-strip: the row glides continuously and pauses on hover or keyboard focus.
         <div className="sx-strip mt-10 overflow-hidden">
-          <ul className="sx-strip-track flex w-max" aria-label="Serene Investors services">
+          <ul className="sx-strip-track flex w-max" aria-label="Serene Heights at a glance">
             {ecosystem.cards.map((card) => (
               <EcoCard key={card.title} card={card} still={false} />
             ))}

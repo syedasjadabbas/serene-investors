@@ -9,7 +9,6 @@ import { MissionQuote } from './MissionQuote'
 import { ProductCards } from './ProductCards'
 import { LocationsMarquee, StatsGrid } from './StatsGrid'
 import { StoryCards } from './StoryCards'
-import { ReviewStrip } from '@/global/components/sections/ReviewStrip'
 
 export function HomePage() {
   usePageMeta(site.name, site.disclaimer)
@@ -31,7 +30,6 @@ export function HomePage() {
           <StatsGrid />
           <LocationsMarquee />
           <StoryCards />
-          <ReviewStrip />
           <HomeFaq />
         </>
       }

@@ -5,7 +5,7 @@ inner pages (studied November 2026); the brand, copy, colours and images are Ser
 copy PRYPCO text, logos, figures or images.
 
 All shared building blocks live in `src/global/components/page/` (see README, "Inner page kit").
-`src/app/golden-visa/_components/GoldenVisaPage.tsx` is the reference product page.
+`src/app/resort/_components/ResortPage.tsx` is the reference dark product page.
 
 ## Every page
 
@@ -17,53 +17,58 @@ All shared building blocks live in `src/global/components/page/` (see README, "I
 - Section headings ~35px bold (`SectionHeading`); page titles 44px (`PageHeader`) or the big
   product hero (`ProductHero`).
 
-## Pattern A: product page (Properties, Funds, How it works, Rewards, Security, Golden Visa)
+## Pattern A: product page (Projects, Smart Property, How it works, Owner benefits, Trust & compliance, The resort)
 
 1. `ProductHero` — full screen, pinned; everything after it goes inside `HeroCover`, which scrolls
    up over it with rounded top corners.
    - `tone="tint"`: pale mint gradient, dark text, a `visual` rising from the bottom edge (a photo
-     card or mini UI). Properties, Funds, How it works, Rewards.
-   - `tone="dark"`: photo (or video) under a dark overlay, white text. Golden Visa, Security. Pair
-     with `HeroCover tone="dark"` and dark tones below.
+     card or mini UI). Projects (`/properties`), Smart Property (`/smart-property`), How it works
+     (`/how-it-works`), Owner benefits (`/owner-benefits`).
+   - `tone="dark"`: photo (or video) under a dark overlay, white text. The resort (`/resort`), Trust
+     & compliance (`/security`). Pair with `HeroCover tone="dark"` and dark tones below.
 2. `StatCards` — four big-number cards; numbers count up on scroll. Keep values short
-   (≤ 8 characters, e.g. "AED 2M", "12%", "4×").
-3. `StickySteps` — "Step 01 … Step 04": step texts scroll on the left, a pinned image on the
+   (≤ 8 characters, e.g. "PKR 2M", "13–15%", "28", "7,906 ft").
+3. `StickySteps` — "Step 01 … Step 05": step texts scroll on the left, a pinned image on the
    right cross-fades to the active step.
 4. `FeatureCarousel` — a row of wide cards (text left, image right) paged with arrows: "why us" /
    benefits.
 5. `VideoExplainer` — a video or photo card beside rows that open on click: "how you earn".
-6. A listings row or grid (feature-specific cards).
-7. `CtaBand tone="brand"` — bright green sign-up band, no image.
-8. `ReviewStrip` — moving strip of sample reviews (`tone="dark"` on dark pages).
-9. FAQ: two columns — `SectionHeading` left (sticky on desktop), `FaqAccordion` right.
-10. `CtaBand tone="white"` with an image — the large "guide / handbook" card — or `tone="forest"`.
+6. A listings row or grid (feature-specific cards, e.g. projects or Smart Property programmes).
+7. `CtaBand tone="brand"` — bright green CTA band, no image.
+8. FAQ: two columns — `SectionHeading` left (sticky on desktop), `FaqAccordion` right.
+9. `CtaBand tone="white"` with an image — the large closing card — or `tone="forest"`.
 
-Not every product page needs every block; keep the order.
+Not every product page needs every block; keep the order. Do not add invented reviews or testimonials.
 
-## Pattern B: list or tool page (Calculator, Contact, FAQ, Glossary, Market reports)
+## Pattern B: list or tool page (Payment plans calculator, Contact, FAQ, Glossary, Construction progress)
 
 - `PageHeader` — 44px title left-aligned, one line under it, optional `aside` on the right.
 - One main block:
-  - Listings: two-column grid of big white listing cards (photo top, dark status pills top-right,
-    grey "AREA ✦ TYPE" line, 26px title, label/value rows with icons).
-  - Calculator: one large white card (`rounded-[30px]`, padding 24px) with a grid inside: input
-    tiles on paper (`bg-sx-paper rounded-[16px]`), two dark result tiles (ink and forest) with big
-    figures, and a chart tile on the right.
-  - Contact: a split card — left half a dark photo panel, right half a white form (name, email,
-    phone, message, consent, submit); below it an office card (white address card on a tinted
-    panel).
+  - Projects (`/properties`): two-column grid of project cards plus published Nathia Gali payment
+    plans.
+  - Payment plans calculator (`/calculator`): one large white card (`rounded-[30px]`, padding 24px)
+    with a grid inside: published Nathia Gali plan selector or custom sq ft area on paper
+    (`bg-sx-paper rounded-[16px]`), and dark summary tiles (ink and forest) with total price, 30%
+    down payment and 36 monthly instalments in PKR.
+  - Construction progress (`/progress`): dated Nathia Gali site-visit videos from the Serene
+    Heights YouTube channel, click-to-play, newest first.
+  - Contact (`/contact`): a split card — left half a dark photo panel, right half a white enquiry
+    form (name, email, phone, interest, message, WhatsApp or email choice, consent, submit); below
+    it the offices panel (Nathia Gali, Lahore, DM Consortium head office) and social links.
 - Optional `CtaBand tone="brand"` after it.
 
-## Pattern C: content pages (Learn, Article, About, Legal)
+## Pattern C: content pages (Journal, Article, About, Legal)
 
-- Learn hub: centred `PageHeader`; a row of tall featured image cards (photo fills the card, tag
-  pill + date + title over a dark gradient); then "Latest guides" — a 3-column grid of white cards
-  (16:9 photo, tag · date, 22px title).
-- Article: a dark title band (`rounded-b-[30px]`, ~500px) with a back link ("← All guides"), tag,
-  44px title and date; then two columns — a sticky summary on the left (~350px) and the reading
-  column on the right (~700px, 18–20px text, relaxed line height, `text-sx-ink/70`); related guides
-  as the 3-column cards.
-- About: `PageHeader`, then the mission quote, a 3-column grid of principle cards, a
-  `FeatureCarousel` or `StepRow`s, and a `CtaBand` to Contact.
-- Legal: two columns — title and contents list on the left (sticky), the document in a white card
-  on the right.
+- Journal hub (`/learn`): centred `PageHeader`; a row of tall featured image cards for the latest
+  Investment articles (photo fills the card, category pill + date + title over a dark gradient); then
+  "All articles" — a filterable 3-column grid of white cards (16:9 photo, category · date, 22px
+  title).
+- Article (`/learn/[slug]`): a dark title band (`rounded-b-[30px]`, ~500px) with a back link
+  ("← All articles"), category, 44px title, date and author; then two columns — a sticky summary
+  and contents list on the left (~320px) and the reading column on the right (~720px, 18px text,
+  relaxed line height, `text-sx-ink/75`); related articles as 3-column cards.
+- About (`/about`): `PageHeader`, project photo and ownership model, leadership (`Fahad Masud Lone`)
+  and 3-column philosophy cards, `DM Consortium` management cards, `StepRow`s for the two projects,
+  completed work (`Serene Farms`), offices, and a `CtaBand` to Contact.
+- Legal (`/legal/[privacy|terms|risks]`): two columns — title, updated date (when present) and
+  contents list on the left (sticky), the document in a white card on the right.

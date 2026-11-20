@@ -71,7 +71,7 @@ function FaqAnswer({ faq, feedback, onFeedback }: { faq: FaqEntry; feedback?: Fe
 export function FaqPage() {
   usePageMeta(
     'Serene Investors | Frequently asked questions',
-    'Answers about fractional Dubai real estate, rental income, regulation and the UAE Golden Visa with Serene Investors.',
+    'Answers about Serene Heights Nathia Gali and Lahore: Smart Property Units, payment plans, owner benefits, delivery, site visits and contact details.',
   )
 
   const searchId = useId()
@@ -134,7 +134,7 @@ export function FaqPage() {
               <input
                 id={searchId}
                 type="search"
-                placeholder="Search questions, e.g. minimum investment"
+                placeholder="Search questions, e.g. payment plan"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 className="w-full rounded-full bg-white py-4 pl-13 pr-14 text-base text-sx-ink outline-none ring-sx-brand/40 placeholder:text-sx-ink/50 focus-visible:ring-2 [&::-webkit-search-cancel-button]:hidden"
@@ -217,7 +217,7 @@ export function FaqPage() {
                 <Search size={20} aria-hidden="true" />
               </span>
               <h3 className="font-heading text-xl font-semibold text-sx-ink">No answers match “{searchQuery}”</h3>
-              <p className="max-w-sm text-sm text-sx-ink/60">Try broader keywords like “rent”, “passport” or “SPV”.</p>
+              <p className="max-w-sm text-sm text-sx-ink/60">Try broader keywords like “instalment”, “owner” or “visit”.</p>
               <button
                 type="button"
                 onClick={reset}
@@ -236,10 +236,10 @@ export function FaqPage() {
         tone="brand"
         title="Still have a question?"
         highlight="question"
-        body="Send us a message and we will reply by email, or read the guides first."
+        body="Call, WhatsApp or email the Serene Heights team, or read the Journal first."
         actions={[
           { label: 'Contact us', href: '/contact' },
-          { label: 'Read the guides', href: '/learn' },
+          { label: 'Read the Journal', href: '/learn' },
         ]}
       />
     </>

@@ -1,6 +1,6 @@
 # SERENE INVESTORS
 
-Fictional fractional real estate marketing site. Layout and interaction take cues from public marketing patterns. Branding, copy, yields, and assets are original.
+Investor site for Serene Heights Group (Serene Heights Nathia Gali and Serene Heights Lahore, developed by DM Consortium). Real project data, payment plans in PKR, contacts and progress updates live in `src/global/data/serene.ts`.
 
 ## Stack
 
@@ -83,8 +83,11 @@ Every inner page is built from `src/global/components/page/` so pages look like 
 | `VideoExplainer` | Video or photo card beside rows that open on click. |
 
 Every page ends with the newsletter card, added by the shell (`NewsletterCard`); pages don't render
-their own. `ReviewStrip` (moving sample reviews) is in `global/components/sections`. Which blocks
-each page type uses, and in what order, is in `docs/INNER-PAGE-PATTERNS.md`.
+their own. The Nathia Gali `PaymentPlanCalculator` lives in `global/components/sections`. Which
+blocks each page type uses, and in what order, is in `docs/INNER-PAGE-PATTERNS.md`.
+
+Old routes redirect permanently in `next.config.mjs`: `/funds` → `/smart-property`,
+`/golden-visa` → `/resort`, `/rewards` → `/owner-benefits`, `/market-reports` → `/progress`.
 
 Buttons that lead somewhere are `PillLink` (`global/components/ui`). Colours come from the `sx-*`
 Tailwind tokens in `globals.css` (`sx-ink`, `sx-card`, `sx-paper`, `sx-brand`, `sx-mint`,

@@ -1,37 +1,37 @@
+import { Building2, CalendarHeart, HandCoins, Hotel, ShieldCheck, Timer } from 'lucide-react'
+import type { FaqItem } from '@/global/components/page/FaqAccordion'
+import type { Feature } from '@/global/components/page/FeatureCards'
 import type { Step } from '@/global/components/page/StickySteps'
 import { PillLink } from '@/global/components/ui/PillLink'
-import { howPageJourney } from '@/global/data/how-it-works'
-import type { StoryState } from '@/global/types/content'
+import { company, contact, investorReasons, ownerBenefits, pkr, smartUnit } from '@/global/data/serene'
 
-// Steps and "how you earn" rows for the /how-it-works page.
+// Steps, "how you earn" rows, reasons and FAQ for /how-it-works. Facts come from serene.ts only.
 
-const STEP_IMAGES: Record<string, { src: string; alt: string }> = {
-  choose: { src: '/images/story/choose-cedar-court.png', alt: 'Pale residential court with planted walks and simple geometric facades' },
-  invest: { src: '/images/funds/fund-stage-field.png', alt: 'A quiet residential neighborhood of pale apartment blocks and planted courts' },
-  track: { src: '/images/story/grow-townhouses.png', alt: 'A quiet row of contemporary townhouses' },
-  receive: { src: '/images/story/receive-cedar-court.png', alt: 'Warm afternoon light on a pale contemporary house and planted front garden' },
-}
+const IMG = '/images/serene'
 
-const STEP_ACTIONS: Record<string, { label: string; href: string }> = {
-  choose: { label: 'Browse properties', href: '/properties' },
-  invest: { label: 'Try the sample onboarding', href: '/get-started' },
-  track: { label: 'Explore funds', href: '/funds' },
-}
+const STEP_IMAGES = [
+  { src: `${IMG}/nathiagali/approach.webp`, alt: 'The approach road to Serene Heights Nathia Gali' },
+  { src: `${IMG}/nathiagali/terraces.webp`, alt: 'Apartment balconies on the Serene Heights tower' },
+  { src: `${IMG}/nathiagali/facade-entrance.webp`, alt: 'The entrance of Serene Heights Nathia Gali' },
+  { src: `${IMG}/resort/rooftop-restaurant.jpg`, alt: 'The rooftop restaurant at Serene Heights Nathia Gali' },
+  { src: `${IMG}/nathiagali/snow-tower.webp`, alt: 'The Serene Heights tower in the snow' },
+]
 
-/** "Choose" + "a property or a fund." -> "Choose a property or a fund." */
-function stepTitle(state: StoryState) {
-  const subtitle = state.subtitle ?? ''
-  if (!subtitle) return state.heading
-  return `${state.heading} ${subtitle.charAt(0).toLowerCase()}${subtitle.slice(1)}`
-}
+const STEP_ACTIONS: (null | { label: string; href: string })[] = [
+  { label: 'Start an enquiry', href: '/get-started' },
+  { label: 'Open the calculator', href: '/calculator' },
+  null,
+  { label: 'See owner benefits', href: '/owner-benefits' },
+  null,
+]
 
-export const howSteps: Step[] = howPageJourney.map((state, index) => {
-  const action = STEP_ACTIONS[state.id]
+export const howSteps: Step[] = smartUnit.steps.map((step, index) => {
+  const action = STEP_ACTIONS[index]
   return {
-    step: `Step ${state.number ?? String(index + 1).padStart(2, '0')}`,
-    title: stepTitle(state),
-    body: state.body,
-    image: STEP_IMAGES[state.id],
+    step: `Step ${String(index + 1).padStart(2, '0')}`,
+    title: step.title,
+    body: step.body,
+    image: STEP_IMAGES[index],
     action: action ? (
       <div className="mt-2">
         <PillLink href={action.href}>{action.label}</PillLink>
@@ -40,17 +40,34 @@ export const howSteps: Step[] = howPageJourney.map((state, index) => {
   }
 })
 
+const quarterly = ownerBenefits.find((b) => b.title === 'Quarterly profit share')!
+
 export const earnRows = [
   {
-    title: 'Rent',
-    body: 'When a building is let, the net rent is shared between its owners. Your part is paid into your account every quarter, in proportion to your shares.',
+    title: 'Rental income',
+    body: `On completion the apartment is let by ${company.developer} and rental income is distributed according to your units.`,
   },
+  { title: 'Quarterly profit share', body: quarterly.body },
+  { title: 'Managed by experts', body: `${company.management}` },
+  { title: 'Transferable units', body: smartUnit.steps[4].body },
+]
+
+const REASON_ICONS = [Hotel, HandCoins, Building2, CalendarHeart, Timer, ShieldCheck]
+
+export const reasons: Feature[] = investorReasons.map((reason, index) => ({ ...reason, icon: REASON_ICONS[index] }))
+
+export const howFaq: FaqItem[] = [
+  { q: 'What exactly do I own?', a: smartUnit.what },
   {
-    title: 'Value growth',
-    body: 'If the building’s value rises, so does the value of your shares. Values can also fall, and nothing is guaranteed. On this site every figure is a sample.',
+    q: 'What does it cost to start?',
+    a: `One standard ${smartUnit.sqft} sq ft unit in Nathia Gali is ${pkr(smartUnit.value)}: ${pkr(smartUnit.down)} down and 36 monthly instalments of ${pkr(smartUnit.monthly)}. Smart property in Serene Heights Lahore starts from PKR 2 million.`,
   },
+  { q: 'How are returns paid?', a: `${earnRows[0].body} ${quarterly.body}` },
+  { q: 'Who looks after the property?', a: company.management },
+  { q: 'Can I sell my units later?', a: `Yes. ${smartUnit.steps[4].body}` },
+  { q: 'Are returns guaranteed?', a: `No. ${smartUnit.projectionNote}` },
   {
-    title: 'Selling shares',
-    body: 'When the building is sold at the end of its holding period, you receive your part of the sale proceeds after costs.',
+    q: 'How do I begin?',
+    a: `${smartUnit.steps[0].body} Call ${contact.uan}, or message ${contact.whatsapp} on WhatsApp.`,
   },
 ]

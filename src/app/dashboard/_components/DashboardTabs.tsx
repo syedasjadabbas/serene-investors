@@ -2,21 +2,23 @@
 
 import { useId, useRef, useState, type KeyboardEvent } from 'react'
 import Link from 'next/link'
-import { CheckCircle2, Download, FileText } from 'lucide-react'
+import { Download, FileText } from 'lucide-react'
 import { ArrowCircle } from '@/global/components/ui/ArrowCircle'
+import { pkr } from '@/global/data/serene'
 import { withBase } from '@/global/lib/asset'
 import { cn } from '@/global/lib/cn'
-import { distributionLedger, distributionTotal, documentItems, holdingsData } from '../_lib/portfolio'
+import { documentItems, holdingsData, holdingTotals, projection } from '../_lib/portfolio'
 
 const TABS = [
   { id: 'holdings', label: `Holdings (${holdingsData.length})` },
-  { id: 'distributions', label: 'Distributions' },
+  { id: 'schedule', label: 'Payment schedule' },
+  { id: 'projection', label: 'Projection' },
   { id: 'documents', label: 'Documents' },
 ] as const
 
 type Tab = (typeof TABS)[number]['id']
 
-/** Holdings / distributions / documents in an ARIA tab set (arrow keys, Home and End move between tabs). */
+/** Holdings / payment schedule / projection / documents in an ARIA tab set (arrow keys, Home and End move between tabs). */
 export function DashboardTabs({ onDownload }: { onDownload: (title: string) => void }) {
   const [active, setActive] = useState<Tab>('holdings')
   const baseId = useId()
@@ -79,7 +81,8 @@ export function DashboardTabs({ onDownload }: { onDownload: (title: string) => v
           className="mt-6 rounded-[20px]"
         >
           {tab.id === 'holdings' && <Holdings />}
-          {tab.id === 'distributions' && <Distributions />}
+          {tab.id === 'schedule' && <Schedule />}
+          {tab.id === 'projection' && <Projection />}
           {tab.id === 'documents' && <Documents onDownload={onDownload} />}
         </div>
       ))}
@@ -89,41 +92,44 @@ export function DashboardTabs({ onDownload }: { onDownload: (title: string) => v
 
 function Holdings() {
   return (
-    <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {holdingsData.map((holding) => (
-        <li key={holding.id} className="flex flex-col gap-5 rounded-[20px] bg-white p-4 sm:p-5">
-          <div className="relative overflow-hidden rounded-[14px] bg-sx-paper">
-            <img src={withBase(holding.image)} alt="" loading="lazy" className="aspect-[16/10] w-full object-cover" />
-            <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-semibold text-sx-ink">{holding.type}</span>
-            <span className="absolute right-3 top-3 rounded-full bg-sx-mint px-3 py-1 text-xs font-semibold text-sx-ink">{holding.status}</span>
-          </div>
-
-          <div className="flex items-start justify-between gap-3 px-1">
-            <div>
-              <h3 className="font-heading text-xl font-bold tracking-[-0.015em] text-sx-ink">{holding.name}</h3>
-              <p className="text-sm text-sx-ink/60">{holding.location}</p>
+    <ul className="grid gap-4 md:grid-cols-2">
+      {holdingsData.map((holding) => {
+        const totals = holdingTotals(holding)
+        return (
+          <li key={holding.id} className="flex flex-col gap-5 rounded-[20px] bg-white p-4 sm:p-5">
+            <div className="relative overflow-hidden rounded-[14px] bg-sx-paper">
+              <img src={withBase(holding.image)} alt={holding.imageAlt} loading="lazy" className="aspect-[16/10] w-full object-cover" />
+              <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-semibold text-sx-ink">{holding.type}</span>
+              <span className="absolute right-3 top-3 rounded-full bg-sx-mint px-3 py-1 text-xs font-semibold text-sx-ink">{holding.status}</span>
             </div>
-            <span className="shrink-0 rounded-full bg-sx-paper px-3 py-1 text-xs font-semibold text-sx-forest">
-              {holding.yieldPct}% net yield
-            </span>
-          </div>
 
-          <dl className="grid grid-cols-2 gap-x-4 gap-y-3 rounded-[14px] bg-sx-paper p-4 text-sm">
-            <Metric label="Shares owned" value={`${holding.shares}`} />
-            <Metric label="Current value" value={`£${holding.currentValue.toLocaleString('en-GB')}`} />
-            <Metric label="Est. monthly income" value={`£${holding.monthlyIncome.toFixed(2)}`} />
-            <Metric label="Unrealised gain" value={`+${holding.gainPct}%`} accent />
-          </dl>
+            <div className="flex items-start justify-between gap-3 px-1">
+              <div className="min-w-0">
+                <h3 className="font-heading text-xl font-bold tracking-[-0.015em] text-sx-ink">{holding.name}</h3>
+                <p className="text-sm text-sx-ink/60">{holding.location}</p>
+              </div>
+              <span className="shrink-0 rounded-full bg-sx-paper px-3 py-1 text-xs font-semibold text-sx-forest">
+                {holding.units} {holding.units === 1 ? 'unit' : 'units'}
+              </span>
+            </div>
 
-          <Link
-            href={holding.link}
-            className="group mt-auto flex items-center justify-between rounded-full bg-sx-paper py-1.5 pl-5 pr-1.5 text-sm font-semibold text-sx-ink transition-colors hover:bg-sx-sand"
-          >
-            View {holding.name}
-            <ArrowCircle size="sm" />
-          </Link>
-        </li>
-      ))}
+            <dl className="grid grid-cols-1 gap-x-4 gap-y-3 rounded-[14px] bg-sx-paper p-4 text-sm min-[420px]:grid-cols-2">
+              <Metric label="Total price" value={pkr(totals.total)} />
+              <Metric label="Area" value={`${holding.plan.area * holding.units} sq ft`} />
+              <Metric label="Down payment (30%)" value={pkr(totals.down)} />
+              <Metric label="Monthly × 36" value={pkr(totals.monthly)} accent />
+            </dl>
+
+            <Link
+              href={holding.link}
+              className="group mt-auto flex items-center justify-between rounded-full bg-sx-paper py-1.5 pl-5 pr-1.5 text-sm font-semibold text-sx-ink transition-colors hover:bg-sx-sand"
+            >
+              About {holding.linkLabel}
+              <ArrowCircle size="sm" />
+            </Link>
+          </li>
+        )
+      })}
     </ul>
   )
 }
@@ -137,56 +143,81 @@ function Metric({ label, value, accent }: { label: string; value: string; accent
   )
 }
 
-function Distributions() {
+function Schedule() {
+  const rows = holdingsData.map((holding) => ({ holding, totals: holdingTotals(holding) }))
+  const sum = (key: 'total' | 'down' | 'monthly') => rows.reduce((acc, row) => acc + row.totals[key], 0)
+
   return (
     <div className="overflow-hidden rounded-[20px] bg-white">
       <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
         <div>
-          <h3 className="font-heading text-xl font-bold tracking-[-0.015em] text-sx-ink">Quarterly rental payouts</h3>
-          <p className="text-sm text-sx-ink/60">Every rental distribution paid to date.</p>
+          <h3 className="font-heading text-xl font-bold tracking-[-0.015em] text-sx-ink">Instalment plan</h3>
+          <p className="text-sm text-sx-ink/60">30% down payment, then 36 monthly instalments, as published by Serene Heights.</p>
         </div>
-        <span className="w-fit rounded-full bg-sx-mint px-3 py-1 text-sm font-semibold text-sx-ink">Total paid: {distributionTotal}</span>
+        <span className="w-fit rounded-full bg-sx-mint px-3 py-1 text-sm font-semibold text-sx-ink">Monthly: {pkr(sum('monthly'))}</span>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[680px] text-left text-sm">
-          <caption className="sr-only">Sample distribution history</caption>
+        <table className="w-full min-w-[640px] text-left text-sm">
+          <caption className="sr-only">Sample payment schedule</caption>
           <thead className="bg-sx-paper text-xs font-semibold text-sx-ink/60">
             <tr>
-              <th scope="col" className="px-5 py-3 sm:px-7">Payment date</th>
-              <th scope="col" className="px-5 py-3">Holding</th>
-              <th scope="col" className="px-5 py-3">Period</th>
-              <th scope="col" className="px-5 py-3">Amount</th>
-              <th scope="col" className="px-5 py-3">Method</th>
-              <th scope="col" className="px-5 py-3 text-right sm:px-7">Status</th>
+              <th scope="col" className="px-5 py-3 sm:px-7">Holding</th>
+              <th scope="col" className="px-5 py-3">Units</th>
+              <th scope="col" className="px-5 py-3">Down payment (30%)</th>
+              <th scope="col" className="px-5 py-3">Monthly × 36</th>
+              <th scope="col" className="px-5 py-3 text-right sm:px-7">Total price</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-sx-ink/[0.07] text-sx-ink">
-            {distributionLedger.map((row) => (
-              <tr key={`${row.date}-${row.asset}`}>
-                <td className="px-5 py-4 text-sx-ink/60 sm:px-7">{row.date}</td>
-                <td className="px-5 py-4 font-semibold">{row.asset}</td>
-                <td className="px-5 py-4 text-sx-ink/60">{row.period}</td>
-                <td className="px-5 py-4 font-semibold text-sx-forest">{row.amount}</td>
-                <td className="px-5 py-4 text-sx-ink/60">{row.method}</td>
-                <td className="px-5 py-4 text-right sm:px-7">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-sx-mint/50 px-2.5 py-0.5 text-xs font-semibold text-sx-forest">
-                    <CheckCircle2 size={12} aria-hidden="true" />
-                    {row.status}
-                  </span>
-                </td>
+            {rows.map(({ holding, totals }) => (
+              <tr key={holding.id}>
+                <th scope="row" className="px-5 py-4 font-semibold sm:px-7">{holding.name}</th>
+                <td className="px-5 py-4 text-sx-ink/60">{holding.units}</td>
+                <td className="px-5 py-4">{pkr(totals.down)}</td>
+                <td className="px-5 py-4 font-semibold text-sx-forest">{pkr(totals.monthly)}</td>
+                <td className="px-5 py-4 text-right sm:px-7">{pkr(totals.total)}</td>
               </tr>
             ))}
           </tbody>
+          <tfoot className="bg-sx-paper font-semibold text-sx-ink">
+            <tr>
+              <th scope="row" className="px-5 py-4 sm:px-7">Total</th>
+              <td className="px-5 py-4" />
+              <td className="px-5 py-4">{pkr(sum('down'))}</td>
+              <td className="px-5 py-4 text-sx-forest">{pkr(sum('monthly'))}</td>
+              <td className="px-5 py-4 text-right sm:px-7">{pkr(sum('total'))}</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
   )
 }
 
+function Projection() {
+  return (
+    <div className="flex flex-col gap-5 rounded-[20px] bg-white p-5 sm:p-7">
+      <div>
+        <h3 className="font-heading text-xl font-bold tracking-[-0.015em] text-sx-ink">Smart Property Unit projection</h3>
+        <p className="text-sm text-sx-ink/60">For one unit, as published by Serene Heights.</p>
+      </div>
+      <dl className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 lg:grid-cols-4">
+        {projection.rows.map((row) => (
+          <div key={row.label} className="rounded-[14px] bg-sx-paper p-4">
+            <dt className="text-sm text-sx-ink/60">{row.label}</dt>
+            <dd className="mt-1 font-heading text-xl font-bold text-sx-ink">{row.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="text-xs text-sx-ink/60">{projection.note}</p>
+    </div>
+  )
+}
+
 function Documents({ onDownload }: { onDownload: (title: string) => void }) {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2">
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {documentItems.map((doc) => (
         <li key={doc.id} className="flex flex-col gap-4 rounded-[20px] bg-white p-6">
           <div className="flex items-start gap-4">
@@ -195,9 +226,7 @@ function Documents({ onDownload }: { onDownload: (title: string) => void }) {
             </span>
             <div className="min-w-0">
               <h3 className="font-heading text-lg font-semibold leading-snug tracking-[-0.01em] text-sx-ink">{doc.title}</h3>
-              <p className="mt-1 text-xs text-sx-ink/60">
-                {doc.date} · {doc.type} · {doc.size}
-              </p>
+              <p className="mt-1 text-xs text-sx-ink/60">Sample document</p>
             </div>
           </div>
           <p className="text-sm leading-relaxed text-sx-ink/65">{doc.desc}</p>

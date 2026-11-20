@@ -1,7 +1,27 @@
-// Home page content. All copy is Serene Investors' own; figures are product facts or labelled samples.
+// Home page content. Every fact and figure comes from src/global/data/serene.ts; only the
+// connecting sentences, headings and labels are written here.
+
+import {
+  company,
+  contact,
+  investorReasons,
+  nathiagali,
+  ownerBenefits,
+  pkr,
+  pkrShort,
+  plans,
+  projects,
+  smartUnit,
+  progressUpdates,
+} from '@/global/data/serene'
+
+const [ngProject, lahoreProject] = projects
+const apartmentPlans = plans.filter((plan) => plan.id !== 'spu')
+const lowestApartment = Math.min(...apartmentPlans.map((plan) => plan.total))
+const galleryImage = (tag: string) => nathiagali.gallery.find((item) => item.tag === tag) ?? nathiagali.gallery[0]
 
 export type HeroMode = {
-  id: 'property' | 'fund'
+  id: 'smart' | 'apartment'
   label: string
   heading: [string, string]
   body: string
@@ -9,176 +29,180 @@ export type HeroMode = {
 
 export const heroModes: HeroMode[] = [
   {
-    id: 'property',
-    label: 'Own a property share',
-    heading: ['Own Dubai real estate,', 'one share at a time.'],
-    body: 'Buy a fraction of a vetted rental home from AED 500, earn your share of the rent every quarter, and follow every payout from one account.',
+    id: 'smart',
+    label: 'Smart Property Unit',
+    heading: ['Own a share of Serene Heights,', 'from PKR 2 million.'],
+    body: `Co-own a fully furnished hotel apartment in Nathia Gali in standard ${smartUnit.sqft} sq ft units: ${pkr(smartUnit.value)}, 30% down, then 36 monthly instalments of ${pkr(smartUnit.monthly)}. DM Consortium runs the hotel for you.`,
   },
   {
-    id: 'fund',
-    label: 'Own a fund',
-    heading: ['A whole portfolio,', 'in a single step.'],
-    body: 'Spread one investment across several managed buildings in Dubai and Saudi Arabia, with rent and valuations reported in one place.',
+    id: 'apartment',
+    label: 'Hotel apartment',
+    heading: ['A whole hotel apartment,', 'in the pines at 7,906 ft.'],
+    body: `1 BHK hotel apartments at ${ngProject.name} from ${pkr(lowestApartment)}, fully furnished and managed as one hotel, with 28 free owner nights a year and zero maintenance fees.`,
   },
 ]
 
 export const heroBar = {
-  text: 'Dubai and Saudi real estate from AED 500.',
+  text: 'Serene Heights Nathia Gali and Lahore, from PKR 2 million.',
   actions: [
-    { label: 'Browse properties', href: '/properties', tone: 'brand' as const },
-    { label: 'Explore funds', href: '/funds', tone: 'sand' as const },
+    { label: 'Projects', href: '/properties', tone: 'brand' as const },
+    { label: 'Smart Property', href: '/smart-property', tone: 'sand' as const },
   ],
+  // Fly-through of the Serene Heights Nathia Gali tower; the poster is its first frame.
   video: '/videos/hero.mp4',
-  // First frame of the video, so the hero looks the same before and after it starts playing.
   videoPoster: '/videos/hero-poster.jpg',
-  image: '/images/journey/dubai-marina.jpg',
-  imageAlt: 'Dubai Marina towers along the water at dusk',
 }
 
 export const intro = {
   tag: 'Serene basics',
-  heading: 'What is a property share?',
-  paragraphs: [
-    'A share is a measured piece of a single building. You own that piece outright, and it earns its part of the rent the building collects.',
-    'Start with one share and add more when it suits you. There is no need to buy, finance or manage a whole home to own real estate.',
-  ],
-  cta: { label: 'See how it works', href: '/how-it-works' },
-  image: '/images/journey/residential.jpg',
-  imageAlt: 'A row of modern low-rise homes with balconies and planted terraces',
+  heading: 'What is a Smart Property Unit?',
+  paragraphs: [smartUnit.what, company.management],
+  cta: { label: 'How Smart Property works', href: '/smart-property' },
+  image: projects[0].gallery[3],
+  imageAlt: 'Balconied terraces on the Serene Heights Nathia Gali tower',
 }
 
+export type ProductCardId = 'smart' | 'apartment' | 'lahore'
+
 export const products = {
-  heading: ['Own a share of a home, a whole portfolio,', 'or a path to residency. It all starts here.'],
+  heading: ['A 50 sq ft share, a whole apartment, or a part of a city tower.', 'Every Serene Heights investment starts here.'],
   cards: [
     {
-      id: 'properties',
-      title: 'Properties',
-      body: 'Pick a building, buy shares from AED 500 and receive your part of the rent every quarter.',
-      href: '/properties',
+      id: 'smart' as const,
+      title: 'Smart Property Unit',
+      body: `Co-own a Nathia Gali hotel apartment in ${smartUnit.sqft} sq ft units for ${pkrShort(smartUnit.value)}, with 30% down.`,
+      href: '/smart-property',
     },
     {
-      id: 'funds',
-      title: 'Funds',
-      body: 'One investment spread across several managed buildings, with a single quarterly report.',
-      href: '/funds',
+      id: 'apartment' as const,
+      title: '1 BHK hotel apartments',
+      body: `Fully furnished hotel apartments in Nathia Gali from ${pkrShort(lowestApartment)}, run as one hotel.`,
+      href: '/properties/nathia-gali',
     },
     {
-      id: 'visa',
-      title: 'Golden Visa',
-      body: 'See how property ownership can support a UAE Golden Visa application, step by step.',
-      href: '/golden-visa',
+      id: 'lahore' as const,
+      title: 'Serene Heights Lahore',
+      body: 'A 21-storey LDA-approved tower on Gulberg Main Boulevard, with smart property from PKR 2 million.',
+      href: '/properties/lahore',
     },
   ],
-  note: 'Sample activity and figures for illustration only.',
-  // Sample investors. Stock portraits (Unsplash); names and actions are invented.
-  activity: [
-    {
-      name: 'Sara',
-      action: 'Owns 3% of a building',
-      shares: 20,
-      photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&h=160&q=70',
-    },
-    {
-      name: 'Omar',
-      action: 'Earned AED 500 in rent',
-      shares: 90,
-      photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=70',
-    },
-    {
-      name: 'Lina',
-      action: 'Bought 45 shares',
-      shares: 45,
-      photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=160&h=160&q=70',
-    },
+  note: 'Prices and instalments as published in the Serene Heights payment plans.',
+  // Smart Property Unit card: the published plan, line by line.
+  smartRows: [
+    { label: 'Unit size', value: `${smartUnit.sqft} sq ft` },
+    { label: 'Down payment (30%)', value: pkr(smartUnit.down) },
+    { label: '36 monthly instalments', value: pkr(smartUnit.monthly) },
   ],
-  // Fund "rate cards" shown tilted on the Funds card.
-  fundTiles: [
-    { name: 'Urban Living', yield: '6.8%', tag: 'Residential' },
-    { name: 'Quay Mixed', yield: '7.4%', tag: 'Mixed use' },
-    { name: 'Olive Court', yield: '6.1%', tag: 'Townhouses' },
-  ],
-  // Phone portfolio on the Golden Visa card.
-  visa: {
-    total: 'AED 1,740,000',
-    target: 'AED 2,000,000',
-    progress: 87,
-    holdings: [
-      { name: 'Marina Tower', value: 'AED 820,000' },
-      { name: 'Urban Living Fund', value: 'AED 560,000' },
-      { name: 'Palm Residences', value: 'AED 360,000' },
+  // Apartment card: the three published 1 BHK plans.
+  apartmentTiles: apartmentPlans.map((plan) => ({
+    id: plan.id,
+    area: `${plan.area} sq ft`,
+    total: pkrShort(plan.total),
+    monthly: `${pkr(plan.monthly)} / month`,
+  })),
+  // Lahore card: the tower's published floor mix.
+  lahore: {
+    name: lahoreProject.name,
+    from: 'From PKR 2 million',
+    image: lahoreProject.image,
+    rows: [
+      { name: 'Commercial', value: 'LG + 6 floors' },
+      { name: 'Parking', value: '5 floors' },
+      { name: 'Offices', value: '7 floors' },
+      { name: 'Co-working', value: '2 floors' },
+      { name: 'Hotel apartments', value: '2 floors' },
     ],
   },
 }
 
+export type EcoMedia = 'video' | 'plans' | 'units' | 'photo'
+
 export const ecosystem = {
-  heading: 'Everything in one place',
-  body: 'From your first share to residency, each step lives in the same account.',
-  // `media` picks the moving visual at the top of each card (see EcosystemCarousel).
+  heading: 'Everything Serene Heights, in one place',
+  body: 'Both projects, the ways to own them and the progress on site.',
   cards: [
-    { title: 'Buy property shares', meta: 'Start from AED 500', href: '/properties', media: 'video', image: '/images/properties/marina-tower.jpg' },
-    { title: 'Invest in a fund', meta: 'Diversify in one step', href: '/funds', media: 'listings', image: '/images/journey/palm-aerial.jpg' },
-    { title: 'Plan your returns', meta: 'Try the calculator', href: '/calculator', media: 'chart', image: '/images/journey/tower-pool.jpg' },
-    { title: 'Get a UAE Golden Visa', meta: 'Check the steps', href: '/golden-visa', media: 'visa', image: '/images/journey/burj-al-arab.jpg' },
-    { title: 'Earn rewards as you grow', meta: 'See the tiers', href: '/rewards', media: 'shares', image: '/images/properties/boulevard-point-hero.jpg' },
-    { title: 'Read market reports', meta: 'Quarterly insights', href: '/market-reports', media: 'photo', image: '/images/journey/dubai-marina.jpg' },
+    { title: 'Projects', meta: 'Nathia Gali and Lahore', href: '/properties', media: 'video' as EcoMedia, image: ngProject.image },
+    { title: 'Smart Property', meta: `Co-own from ${smartUnit.sqft} sq ft`, href: '/smart-property', media: 'units' as EcoMedia, image: ngProject.gallery[4] },
+    { title: 'Payment plans', meta: '30% down, 36 months', href: '/calculator', media: 'plans' as EcoMedia, image: ngProject.gallery[1] },
+    { title: 'The resort', meta: '50+ amenities', href: '/resort', media: 'photo' as EcoMedia, image: nathiagali.resortImages[0].src },
+    { title: 'Construction progress', meta: `Site videos since ${progressUpdates[progressUpdates.length - 1].date.split(' ').pop()}`, href: '/progress', media: 'photo' as EcoMedia, image: galleryImage('Arrival').src },
+    { title: 'Journal', meta: 'Guides to the Galiyat', href: '/learn', media: 'photo' as EcoMedia, image: galleryImage('Galiyat').src },
   ],
-  // Mini listings shown on the fund card.
-  listings: [
-    { name: '2 bed, Dubai Marina', price: 'AED 2,250,000', image: '/images/properties/marina-tower.jpg', funded: 82 },
-    { name: '1 bed, Business Bay', price: 'AED 1,400,000', image: '/images/journey/residential.jpg', funded: 64 },
-    { name: 'Townhouse, Dubai Hills', price: 'AED 2,480,000', image: '/images/story/grow-townhouses.png', funded: 47 },
-  ],
+  // Mini plan cards shown on the payment plans card.
+  plans: plans.map((plan, index) => ({
+    id: plan.id,
+    name: `${plan.kind}, ${plan.area} sq ft`,
+    price: pkr(plan.total),
+    down: `30% down ${pkrShort(plan.down)}`,
+    image: ngProject.gallery[index % ngProject.gallery.length],
+  })),
 }
 
 export const mission = {
-  label: 'Our mission',
-  quote:
-    'Real estate should not need a fortune, a stack of paperwork or a lifetime of experience. We make owning part of a building as clear as opening an account, so anyone can start, wherever they are.',
-  attribution: 'The Serene Investors team',
+  label: 'Our model',
+  quote: company.model,
+  attribution: `${company.developer} · ${company.name}`,
 }
 
+const statFigure = (label: string) => nathiagali.figures.find((item) => item.label === label) ?? nathiagali.figures[0]
+
 export const stats = {
-  caption: 'How the platform works',
-  items: [
-    { value: 'AED 500', label: 'minimum investment' },
-    { value: '4×', label: 'rent payouts a year' },
-    { value: '2', label: 'markets: Dubai and Saudi Arabia' },
-    { value: '24/7', label: 'portfolio access online' },
-  ],
+  caption: `${ngProject.name} in numbers`,
+  items: [statFigure('Altitude'), statFigure('Kanals of land'), statFigure('Apartments'), statFigure('Amenities')].map((item) => ({
+    value: item.value,
+    label: item.label.toLowerCase(),
+  })),
 }
 
 export const locations = {
-  caption: 'Where our listings are',
-  items: ['Dubai Marina', 'Palm Jumeirah', 'Downtown Dubai', 'Business Bay', 'Jumeirah Village Circle', 'Dubai Hills', 'Riyadh', 'Jeddah'],
+  caption: 'Where Serene Heights is building',
+  items: [
+    'Nathia Gali',
+    'Galiyat',
+    `Islamabad · ${nathiagali.route[0].time.replace(' drive', '')}`,
+    'Abbottabad',
+    'Kala Bagh Air Base Road',
+    'Gulberg Main Boulevard',
+    'Lahore CBD',
+    'Gulberg III',
+  ],
 }
+
+const ownerStays = ownerBenefits.find((item) => item.title.includes('free nights'))
+const lowEntry = investorReasons.find((item) => item.title === 'Low entry')
 
 export const story = [
   {
     id: 'what',
     tag: 'What we do',
-    heading: 'We make real estate simple to own.',
-    body: 'Serene Investors lets you buy shares in individual rental homes or in managed funds, follow your rent and valuations, and explore residency options, all from one account.',
+    heading: 'We build hotels you can own a share of.',
+    body: `${company.name}, developed by ${company.developer} since ${company.founded}, is building ${ngProject.name}, a hotel and resort in the Galiyat, and ${lahoreProject.name}, a 21-storey mixed-use tower on Gulberg Main Boulevard.`,
     tone: 'forest' as const,
+    tiles: [ngProject.gallery[0], ngProject.gallery[1], lahoreProject.image, ngProject.gallery[4]],
   },
   {
     id: 'why',
     tag: 'Why we do it',
-    heading: 'Because owning property should be open to everyone.',
-    body: 'Buying a home has meant large deposits, long paperwork and local know-how. Shares remove those barriers, so you can start small and build at your own pace.',
+    heading: 'Because real estate in Pakistan should be easier to own.',
+    body: `${lowEntry?.body ?? ''} ${company.philosophy[1].body}`.trim(),
     tone: 'light' as const,
-    image: '/images/journey/tower-pool.jpg',
-    imageAlt: 'A rooftop pool beside a residential tower in the afternoon sun',
+    image: ngProject.gallery[1],
+    imageAlt: 'The heated infinity pool at Serene Heights Nathia Gali, seen from above',
+    badge: ownerStays?.title ?? 'Zero maintenance fees',
   },
   {
     id: 'how',
     tag: 'How we do it',
-    heading: 'Every step, in your hands.',
-    body: 'Browse vetted listings, read the documents, invest, and watch rent arrive. Each building is held in its own structure and reported every quarter.',
+    heading: 'Managed as one hotel, from booking to returns.',
+    body: `Fill the booking form, choose a payment plan and confirm ownership once payments are complete. ${smartUnit.steps[3].body} ${smartUnit.steps[4].body}`,
     tone: 'dark' as const,
-    image: '/images/properties/boulevard-point-hero.jpg',
-    imageAlt: 'A modern residential tower rising above a tree-lined boulevard',
+    image: ngProject.gallery[4],
+    imageAlt: 'The rooftop restaurant terrace at Serene Heights Nathia Gali',
+    badge: 'Quarterly profit share',
   },
 ]
+
+const projection = (label: string) => smartUnit.projection.find((row) => row.label === label)?.value ?? ''
 
 export const homeFaq = {
   heading: 'FAQs',
@@ -187,47 +211,37 @@ export const homeFaq = {
   items: [
     {
       q: 'What is Serene Investors?',
-      a: 'An online platform for buying shares in income-producing homes and managed property funds in Dubai and Saudi Arabia, starting from AED 500.',
+      a: `The investor site of ${company.name}, developed by ${company.developer}. It brings together ${ngProject.name} and ${lahoreProject.name}, and the ways to own a part of them.`,
+    },
+    { q: 'What is a Smart Property Unit?', a: smartUnit.what },
+    {
+      q: 'How much does a Smart Property Unit cost?',
+      a: `${pkr(smartUnit.value)} for a ${smartUnit.sqft} sq ft unit: 30% down (${pkr(smartUnit.down)}), then 36 monthly instalments of ${pkr(smartUnit.monthly)}.`,
     },
     {
-      q: 'How do I earn from a share?',
-      a: 'Each building collects rent. After costs, your part of that rent is paid to your account every quarter. If the building is sold, you receive your share of the sale.',
+      q: 'What do the hotel apartments in Nathia Gali cost?',
+      a: `The published 1 BHK plans are ${apartmentPlans.map((plan) => `${plan.area} sq ft for ${pkr(plan.total)}`).join(', ')}. Each is 30% down with the rest over 36 monthly instalments.`,
     },
     {
-      q: 'What is the difference between a property and a fund?',
-      a: 'A property share is a piece of one building. A fund spreads your investment across several buildings, so one amount is diversified for you.',
+      q: 'What do owners get?',
+      a: `${ownerBenefits.map((item) => item.title).join(', ')}. ${ownerBenefits.find((item) => item.title === 'Quarterly profit share')?.body ?? ''}`,
+    },
+    { q: 'Who manages the property?', a: company.management },
+    { q: 'Can I sell or transfer my units?', a: `Yes. ${smartUnit.steps[4].body}` },
+    {
+      q: 'What returns does Serene Heights project?',
+      a: `For a ${projection('Investment amount')} Smart Property Unit, Serene Heights projects ${projection('Expected annual rental income')} in expected annual rental income, a ${projection('Annual capital gain on investment')} annual capital gain and a projected return of ${projection('Projected return')}. ${smartUnit.projectionNote}`,
     },
     {
-      q: 'Can I sell my shares?',
-      a: 'Shares can be offered for sale at set windows during the hold period, or held until the building is sold. Selling depends on another investor buying.',
+      q: 'Is it Shariah-compliant?',
+      a: `${smartUnit.why[3].body} ${smartUnit.why[2].body}`,
     },
     {
-      q: 'Who can invest?',
-      a: 'Anyone aged 18 or over who completes identity checks. You can invest from inside or outside the UAE and Saudi Arabia.',
-    },
-    {
-      q: 'What are the risks?',
-      a: 'Property values and rent can fall, and shares may take time to sell. Read the risk notice before investing and only invest what you can leave invested.',
-    },
-    {
-      q: 'How much do I need to start?',
-      a: 'You can buy your first shares from AED 500. There is no maximum, and you can add more shares to a building or fund at any time while it is open.',
-    },
-    {
-      q: 'How are the buildings chosen?',
-      a: 'Each listing is reviewed for location, condition, rental demand and price before it opens. The figures and documents behind that review are on its page.',
-    },
-    {
-      q: 'What fees do I pay?',
-      a: 'Fees are listed on every property and fund page before you invest, so you can see what comes out of the rent and the sale before you commit.',
-    },
-    {
-      q: 'Can property help with a UAE Golden Visa?',
-      a: 'Owning AED 2,000,000 of Dubai property can support a 10-year Golden Visa application. Your shares across several buildings count towards that total.',
+      q: 'Where are the projects?',
+      a: `${ngProject.name} is at ${contact.offices[0].address}, about ${nathiagali.route[0].dist} (${nathiagali.route[0].time}) from Islamabad. ${lahoreProject.name} is a 21-storey tower on Gulberg Main Boulevard, within walking distance of Lahore's Central Business District.`,
     },
   ],
   moreNote: 'Still have questions?',
-  moreBody: 'Browse every answer, or send us a message and we will reply.',
+  moreBody: `Browse every answer, or call ${contact.uan} and we will help.`,
   contact: { label: 'Contact us', href: '/contact' },
 }
-

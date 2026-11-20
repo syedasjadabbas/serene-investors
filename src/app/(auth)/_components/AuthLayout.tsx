@@ -3,6 +3,7 @@ import type { InputHTMLAttributes, ReactNode } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { Eyebrow } from '@/global/components/page/PageSection'
 import { PillLink } from '@/global/components/ui/PillLink'
+import { projectById } from '@/global/data/serene'
 import { site } from '@/global/data/site'
 import { withBase } from '@/global/lib/asset'
 import { cn } from '@/global/lib/cn'
@@ -10,10 +11,14 @@ import type { RelatedListing } from '../_lib/useAuthTarget'
 
 // Shared building blocks for /login and /signup: the page frame, form fields, buttons and messages.
 
+const nathiagaliProject = projectById('nathia-gali')!
+
 const DEFAULT_ASIDE = {
-  image: '/images/journey/dubai-marina.jpg',
-  imageAlt: 'Dubai Marina towers along the water',
+  image: nathiagaliProject.image,
+  imageAlt: 'The Serene Heights Nathia Gali tower in the pines',
 }
+
+const kindLabel = (related: RelatedListing) => (related.kind === 'project' ? 'Project' : related.kind)
 
 /** White form card on the paper background, with a photo panel beside it on wide screens. */
 export function AuthShell({ children, related }: { children: ReactNode; related?: RelatedListing }) {
@@ -26,7 +31,7 @@ export function AuthShell({ children, related }: { children: ReactNode; related?
         <div className="mx-auto w-full max-w-[480px] rounded-[30px] bg-white p-6 text-sx-ink sm:p-10">{children}</div>
 
         <aside
-          aria-label={related ? `Sample ${related.kind} you came from` : undefined}
+          aria-label={related ? `The ${related.kind} you came from` : undefined}
           aria-hidden={related ? undefined : true}
           className="relative hidden min-h-[560px] overflow-hidden rounded-[30px] bg-sx-forest lg:block"
         >
@@ -35,7 +40,7 @@ export function AuthShell({ children, related }: { children: ReactNode; related?
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-4 p-10 text-white">
             {related ? (
               <>
-                <Eyebrow>Sample {related.kind}</Eyebrow>
+                <Eyebrow>{kindLabel(related)}</Eyebrow>
                 <p className="font-heading text-3xl font-bold tracking-[-0.025em]">{related.name}</p>
                 <PillLink href={related.href} variant="light">
                   View {related.kind}
@@ -43,10 +48,11 @@ export function AuthShell({ children, related }: { children: ReactNode; related?
               </>
             ) : (
               <>
-                <Eyebrow>{site.name}</Eyebrow>
+                <Eyebrow>{nathiagaliProject.name}</Eyebrow>
                 <p className="max-w-md font-heading text-3xl font-bold leading-[1.1] tracking-[-0.025em]">
-                  Own a share of income-generating property.
+                  Own a share of Serene Heights.
                 </p>
+                <p className="max-w-md text-base text-white/80">{nathiagaliProject.facts.join(' · ')}</p>
               </>
             )}
           </div>
@@ -62,7 +68,7 @@ export function RelatedNotice({ related }: { related?: RelatedListing }) {
   return (
     <p className="mt-5 flex items-center justify-between gap-3 rounded-[12px] bg-sx-paper px-4 py-3 text-sm text-sx-ink/70">
       <span>
-        Continuing from sample {related.kind}: <strong className="font-semibold text-sx-ink">{related.name}</strong>
+        Continuing from {related.kind}: <strong className="font-semibold text-sx-ink">{related.name}</strong>
       </span>
       <Link href={related.href} className="shrink-0 font-semibold text-sx-brand underline underline-offset-4 hover:text-sx-forest">
         View

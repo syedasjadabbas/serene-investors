@@ -1,243 +1,135 @@
-import Link from 'next/link'
 import { CtaBand } from '@/global/components/page/CtaBand'
-import { FaqAccordion } from '@/global/components/page/FaqAccordion'
 import { FeatureCarousel } from '@/global/components/page/FeatureCarousel'
 import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
 import { HeroCover, ProductHero } from '@/global/components/page/ProductHero'
 import { StatCards } from '@/global/components/page/StatCards'
-import { StickySteps } from '@/global/components/page/StickySteps'
-import { VideoExplainer } from '@/global/components/page/VideoExplainer'
-import { ReviewStrip } from '@/global/components/sections/ReviewStrip'
-import { properties } from '@/global/data/properties'
+import { PillLink } from '@/global/components/ui/PillLink'
+import { investorReasons, lahore, nathiagali, projects } from '@/global/data/serene'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
-import { formatPercent, formatSampleAmount } from '@/global/lib/format'
-import { useCatalogue } from '../_hooks/useCatalogue'
-import { PropertiesHeroVisual } from './PropertiesHeroVisual'
-import { PropertyCatalogue } from './PropertyCatalogue'
-import { PropertyFilters } from './PropertyFilters'
+import { lahoreProject, nathiaGaliProject, plans } from '../_lib/projects'
+import { LahoreFloors } from './LahoreFloors'
+import { PlanGrid } from './PlanCard'
+import { ProjectCard } from './ProjectCard'
+import { ProjectsHeroVisual } from './ProjectsHeroVisual'
 
-// Product page (Pattern A, tint) in docs/INNER-PAGE-PATTERNS.md: pinned hero → stats → steps →
-// how you earn → why us → listings → sign-up band → reviews → FAQ → guide card.
+// Product page (Pattern A, tint) in docs/INNER-PAGE-PATTERNS.md: pinned hero → stats → the two
+// projects → why invest → published payment plans → Lahore floors → closing band.
 
-const cityCount = new Set(properties.map((item) => item.city)).size
-const lowestMinimum = Math.min(...properties.map((item) => item.sampleMinInvestment))
+const apartments = nathiagali.figures.find((item) => item.label === 'Apartments')?.value ?? '150+'
 
-// Every figure here is derived from the sample catalogue itself.
 const STATS = [
-  { value: String(properties.length), label: 'sample listings' },
-  { value: String(cityCount), label: cityCount === 1 ? 'city in the collection' : 'cities in the collection' },
-  { value: formatSampleAmount(lowestMinimum), label: 'lowest sample minimum' },
-  { value: formatPercent(Math.max(...properties.map((item) => item.sampleYieldPct))), label: 'highest sample yield' },
+  { value: String(projects.length), label: 'Serene Heights projects' },
+  { value: '21', label: 'storeys in Lahore' },
+  { value: apartments, label: 'apartments in Nathia Gali' },
+  { value: '30%', label: 'down, then 36 monthly instalments' },
 ]
 
-const STEPS = [
-  {
-    step: 'Step 01',
-    title: 'Browse',
-    body: 'Filter the collection by type, location, ticket size and status. Each listing shows its figures, photos and property record.',
-    image: { src: '/images/story/choose-cedar-court.png', alt: 'Pale residential court with planted walks and simple geometric facades' },
-  },
-  {
-    step: 'Step 02',
-    title: 'Invest',
-    body: 'Choose how much to put into a listing, starting from its sample minimum, and confirm in a few steps from your account.',
-    image: { src: '/images/journey/tower-pool.jpg', alt: 'A rooftop pool beside a residential tower' },
-  },
-  {
-    step: 'Step 03',
-    title: 'Earn',
-    body: 'Once a building is let, your part of the rent after costs is paid to your account each quarter.',
-    image: { src: '/images/story/receive-cedar-court.png', alt: 'Warm afternoon light on a pale contemporary house and planted front garden' },
-  },
-  {
-    step: 'Step 04',
-    title: 'Manage',
-    body: 'Follow every holding, payout and document from one dashboard, and list your shares when you want to step out.',
-    image: { src: '/images/story/grow-townhouses.png', alt: 'A row of townhouses with planted front gardens' },
-  },
+// One real photo per reason, from both projects.
+const REASON_IMAGES = [
+  { src: nathiaGaliProject.gallery[4], alt: 'The rooftop at Serene Heights Nathia Gali' },
+  { src: nathiaGaliProject.gallery[1], alt: 'The heated infinity pool at Serene Heights Nathia Gali' },
+  { src: nathiaGaliProject.gallery[3], alt: 'Balconied terraces on the Nathia Gali tower' },
+  { src: nathiagali.resortImages[2].src, alt: nathiagali.resortImages[2].alt },
+  { src: lahoreProject.image, alt: 'The Serene Heights Lahore tower on Gulberg Main Boulevard' },
+  { src: nathiaGaliProject.gallery[2], alt: 'The ridge above the cloud line at Nathia Gali' },
 ]
 
-const EARNINGS = [
-  {
-    title: 'Rental income',
-    body: 'Each building collects rent. After costs, your part of that rent is paid to your account.',
-  },
-  {
-    title: 'Value growth',
-    body: 'If the building gains value, you realise that growth when you sell your shares or the building is sold.',
-  },
-  {
-    title: 'Selling your shares',
-    body: 'List your shares for other investors in the community when you want to exit. Sales depend on demand and can take time.',
-  },
-]
-
-const WHY = [
-  {
-    title: 'Start small',
-    body: `Sample listings open from ${formatSampleAmount(lowestMinimum)}, so you can own part of a building without buying all of it.`,
-    image: { src: '/images/journey/residential.jpg', alt: 'Low-rise homes with planted terraces' },
-  },
-  {
-    title: 'Documents for every listing',
-    body: 'Each listing carries its property record, ownership structure and documentation status, so you can read before you invest.',
-    image: { src: '/images/properties/boulevard-point-hero.jpg', alt: 'A residential tower above a tree-lined boulevard' },
-  },
-  {
-    title: 'Invest from anywhere',
-    body: 'Browse, invest and follow your holdings online, from wherever you live.',
-    image: { src: '/images/journey/dubai-marina.jpg', alt: 'Residential towers along a marina' },
-  },
-  {
-    title: 'Rent paid quarterly',
-    body: 'Your share of the rent after costs lands in your account every quarter while the building is let.',
-    image: { src: '/images/story/value-cedar-walk.png', alt: 'A planted walk between two pale residential wings' },
-  },
-  {
-    title: 'Spread across buildings',
-    body: 'Hold small shares in several properties, types and cities instead of putting everything into one.',
-    image: { src: '/images/properties/marina-tower.jpg', alt: 'A residential tower in a waterfront district' },
-  },
-]
-
-const FAQS = [
-  {
-    q: 'What am I buying when I invest in a property?',
-    a: 'A share in the structure that owns the building. Your share decides your part of the rent after costs and of any change in value.',
-  },
-  {
-    q: 'What is the minimum investment?',
-    a: `Each listing shows its own sample minimum. In the current sample collection the lowest is ${formatSampleAmount(lowestMinimum)}.`,
-  },
-  {
-    q: 'How is rental income paid?',
-    a: 'Once a building is let, your part of the rent after costs is paid to your account each quarter. Income can vary and is not guaranteed.',
-  },
-  {
-    q: 'What do the listing statuses mean?',
-    a: 'Open listings accept investments, Funding listings are still raising, Funded listings have reached their target, and Exited listings have been sold.',
-  },
-  {
-    q: 'Can I sell my shares before the building is sold?',
-    a: 'You can list your shares for other investors. A sale depends on demand, so it can take time and the price is not fixed.',
-  },
-  {
-    q: 'What documents can I see before investing?',
-    a: 'Every listing has a property record with its ownership structure, documentation and status, alongside its photos and figures.',
-  },
-  {
-    q: 'Are the figures on this site real?',
-    a: 'No. Every listing, yield and price here is sample data for demonstration. Returns are never guaranteed and values can fall as well as rise.',
-  },
-]
+const WHY = investorReasons.map((reason, index) => ({
+  title: reason.title,
+  body: reason.body,
+  image: REASON_IMAGES[index % REASON_IMAGES.length],
+}))
 
 export function PropertiesPage() {
-  const catalogue = useCatalogue(properties)
-
   usePageMeta(
-    'Serene Investors | Properties',
-    'Browse a fictional Serene Investors property catalogue. All listings, yields, and prices are sample data for this demonstration platform.',
+    'Serene Investors | Projects',
+    'Serene Heights Nathia Gali, a hotel and resort at 7,906 ft, and Serene Heights Lahore, a 21-storey mixed-use tower on Gulberg Main Boulevard. Own a part from PKR 2 million.',
   )
 
   return (
     <>
       <ProductHero
         tone="tint"
-        eyebrow="Properties"
-        title="Own a share of income-generating property."
-        highlight="income-generating"
-        body="Pick a building, invest from a small sample minimum and collect your part of the rent. Every listing comes with its figures and property record."
+        eyebrow="Projects"
+        title="Own a part of Serene Heights, in the mountains or the city."
+        highlight="Serene Heights"
+        body="A hotel and resort in the pines of Nathia Gali, and a 21-storey mixed-use tower on Gulberg Main Boulevard, Lahore. Both are run in-house, with smart property from PKR 2.25M in Nathia Gali and PKR 2 million in Lahore."
         actions={[
-          { label: 'Browse listings', href: '#property-collection' },
-          { label: 'How it works', href: '/how-it-works' },
+          { label: 'See the projects', href: '#projects' },
+          { label: 'Payment plans', href: '/calculator' },
         ]}
-        visual={<PropertiesHeroVisual />}
+        visual={<ProjectsHeroVisual />}
       />
 
       <HeroCover>
-        <PageSection label="The collection at a glance" pad="top">
-          <StatCards items={STATS} caption="Sample data for demonstration only." />
-          <p className="mt-6 text-base text-sx-ink/70">
-            Want to see what a share could earn?{' '}
-            <Link
-              href="/calculator"
-              className="font-semibold text-sx-brand underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sx-brand"
-            >
-              Try the returns calculator
-            </Link>
-          </p>
+        <PageSection label="Serene Heights at a glance" pad="top">
+          <StatCards items={STATS} caption="Figures as published by Serene Heights." />
         </PageSection>
 
-        <PageSection labelledBy="invest-steps">
-          <SectionHeading id="invest-steps" eyebrow="How to invest" title="Four steps from browsing to earning." highlight="earning" />
-          <div className="mt-6">
-            <StickySteps steps={STEPS} />
+        <PageSection id="projects" labelledBy="projects-heading" className="scroll-mt-24">
+          <SectionHeading
+            id="projects-heading"
+            eyebrow="The projects"
+            title="Two projects, managed as one."
+            highlight="managed as one"
+            body="Open a project for its photos, amenities, floors and payment plans."
+          />
+          <div className="mt-10 flex flex-col gap-4">
+            {projects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} reverse={index % 2 === 1} />
+            ))}
           </div>
         </PageSection>
 
-        <section aria-labelledby="earn-heading" className="px-4 py-16 sm:px-8 sm:py-24">
-          <VideoExplainer
-            heading="How you earn from a property share"
-            headingId="earn-heading"
-            rows={EARNINGS}
-            video="/videos/hero.mp4"
-            poster={{ src: '/videos/hero-poster.jpg', alt: 'Residential buildings at dusk' }}
-          />
-        </section>
-
         <section aria-labelledby="why-heading" className="py-16 sm:py-24">
-          <FeatureCarousel heading="Why invest with Serene Investors" headingId="why-heading" slides={WHY} />
+          <FeatureCarousel heading="Why invest with Serene Heights" headingId="why-heading" slides={WHY} />
         </section>
 
-        <PageSection id="property-collection" labelledBy="collection-heading" className="scroll-mt-24">
+        <PageSection id="plans" labelledBy="plans-heading" className="scroll-mt-24">
           <SectionHeading
-            id="collection-heading"
-            eyebrow="The collection"
-            title="Browse sample properties."
-            highlight="sample properties"
-            body="Filter by type, location, ticket size and status, or sort by yield and minimum investment."
+            id="plans-heading"
+            eyebrow="Nathia Gali payment plans"
+            title="Four published plans, 30% down."
+            highlight="30% down"
+            body="Each plan is 30% down, with the rest over 36 monthly instalments. Figures exactly as issued by Serene Heights."
+            action={
+              <PillLink href="/calculator" variant="dark">
+                Open payment plans
+              </PillLink>
+            }
           />
-          <PropertyFilters
-            filters={catalogue.filters}
-            locations={catalogue.locations}
-            resultCount={catalogue.visible.length}
-            isFiltered={catalogue.isFiltered}
-            onChange={catalogue.update}
-            onReset={catalogue.reset}
+          <div className="mt-10">
+            <PlanGrid plans={plans} />
+          </div>
+        </PageSection>
+
+        <PageSection labelledBy="lahore-floors-heading">
+          <SectionHeading
+            id="lahore-floors-heading"
+            eyebrow="Serene Heights Lahore"
+            title="One tower, every kind of floor."
+            highlight="every kind of floor"
+            body={lahore.configuration}
+            action={
+              <PillLink href="/properties/lahore" variant="dark">
+                Explore Lahore
+              </PillLink>
+            }
           />
-          <PropertyCatalogue properties={catalogue.visible} onReset={catalogue.reset} />
+          <div className="mt-10">
+            <LahoreFloors />
+          </div>
         </PageSection>
 
         <CtaBand
           tone="brand"
-          title="Start with your first share."
-          highlight="first share"
-          body="Create a free account to invest, or keep browsing the sample collection."
+          title="Find the plan that fits, then talk to us."
+          highlight="talk to us"
+          body="Compare the published payment plans, or ask the Serene Heights team about either project."
           actions={[
-            { label: 'Create an account', href: '/signup' },
-            { label: 'Browse listings', href: '#property-collection' },
+            { label: 'Payment plans', href: '/calculator' },
+            { label: 'Contact us', href: '/contact' },
           ]}
-        />
-
-        <ReviewStrip />
-
-        <PageSection labelledBy="properties-faq">
-          <div className="grid items-start gap-10 md:grid-cols-[1fr_2fr]">
-            <SectionHeading id="properties-faq" title="FAQs" body="What investors ask before buying a property share." className="md:sticky md:top-28" />
-            <FaqAccordion items={FAQS} />
-          </div>
-        </PageSection>
-
-        <CtaBand
-          tone="white"
-          title="New to property investing? Start with the guides."
-          highlight="the guides"
-          body="Short reads on yields, fees, ownership structures and how to compare listings."
-          actions={[
-            { label: 'Read the guides', href: '/learn' },
-            { label: 'Try the calculator', href: '/calculator' },
-          ]}
-          image={{ src: '/images/journey/palm-aerial.jpg', alt: 'Aerial view of a coastal residential district' }}
         />
       </HeroCover>
     </>

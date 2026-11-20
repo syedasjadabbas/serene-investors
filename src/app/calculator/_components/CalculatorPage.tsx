@@ -1,41 +1,52 @@
 'use client'
 
+import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { CtaBand } from '@/global/components/page/CtaBand'
 import { PageHeader } from '@/global/components/page/PageHeader'
-import { InvestmentYieldCalculator } from '@/global/components/sections/InvestmentYieldCalculator'
+import { PaymentPlanCalculator } from '@/global/components/sections/PaymentPlanCalculator'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
 
-// Tool page (Pattern B in docs/INNER-PAGE-PATTERNS.md): plain header → one calculator card → sign-up band.
+// Tool page (Pattern B in docs/INNER-PAGE-PATTERNS.md): plain header → one calculator card → closing band.
+
+/** Reads ?plan= (set by the plan cards on /properties) to preselect a published plan. */
+function CalculatorFromQuery() {
+  const params = useSearchParams()
+  const plan = params?.get('plan')
+  return <PaymentPlanCalculator key={plan ?? 'default'} initialPlan={plan} />
+}
 
 export function CalculatorPage() {
   usePageMeta(
-    'Serene Investors | Returns calculator',
-    'Estimate the rental income and value growth a property share could produce over time. Illustrative figures only.',
+    'Serene Investors | Payment plans',
+    'The published Serene Heights Nathia Gali payment plans: 30% down and 36 monthly instalments, from PKR 2,250,000 for a Smart Property Unit.',
   )
 
   return (
     <>
       <PageHeader
-        eyebrow="Returns calculator"
-        title="See what a property share could earn."
-        highlight="could earn"
-        body="Set an amount, how long you would hold it and a net rental yield. The projection updates as you go. Figures are illustrative, not a forecast."
+        eyebrow="Payment plans"
+        title="Pay 30% down, the rest over 36 months."
+        highlight="36 months"
+        body="Pick one of the four published Serene Heights Nathia Gali plans to see its total, down payment and monthly instalment, or estimate a custom apartment area at the published price per sq ft."
       />
 
-      <section aria-label="Returns calculator" className="px-4 sm:px-8">
+      <section aria-label="Payment plan calculator" className="px-4 sm:px-8">
         <div className="mx-auto max-w-[1240px]">
-          <InvestmentYieldCalculator variant="card" />
+          <Suspense fallback={<PaymentPlanCalculator />}>
+            <CalculatorFromQuery />
+          </Suspense>
         </div>
       </section>
 
       <CtaBand
         tone="brand"
-        title="Ready to put a number to work?"
-        highlight="to work"
-        body="Create an account to invest from a small sample minimum, or browse the listings first."
+        title="Found the plan that fits?"
+        highlight="that fits"
+        body="See both Serene Heights projects, or talk to the team about booking."
         actions={[
-          { label: 'Create an account', href: '/signup' },
-          { label: 'Browse properties', href: '/properties' },
+          { label: 'See the projects', href: '/properties' },
+          { label: 'Contact us', href: '/contact' },
         ]}
       />
     </>

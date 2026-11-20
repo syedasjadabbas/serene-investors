@@ -15,15 +15,15 @@ export function DashboardPage() {
   const [downloadNotice, setDownloadNotice] = useState<string | null>(null)
   const noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
-  const displayName = user?.name || 'Alexander Wright'
+  const displayName = user?.name || 'Sample Investor'
   const firstName = displayName.trim().split(/\s+/)[0]
-  const displayEmail = user?.email || 'alexander.wright@wealth.co.uk'
+  const displayEmail = user?.email || 'sample@example.com'
   const isInstitutional = user?.investorType === 'institutional'
 
   useEffect(() => () => clearTimeout(noticeTimer.current), [])
 
   function handleDownload(title: string) {
-    setDownloadNotice(`Downloading: ${title}`)
+    setDownloadNotice(`${title}: sample only, not available in this demonstration`)
     clearTimeout(noticeTimer.current)
     noticeTimer.current = setTimeout(() => setDownloadNotice(null), 3500)
   }
@@ -34,7 +34,7 @@ export function DashboardPage() {
       <section className="px-4 pt-6 sm:px-8 sm:pt-10">
         <div className="mx-auto flex max-w-[1240px] flex-col gap-8 rounded-[30px] bg-white p-6 text-sx-ink sm:p-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex min-w-0 flex-col items-start gap-5">
-            <Eyebrow tone="sand">Sample portfolio</Eyebrow>
+            <Eyebrow tone="sand">Sample portfolio — demonstration</Eyebrow>
             <div className="flex min-w-0 items-center gap-4">
               <span
                 aria-hidden="true"
@@ -48,19 +48,19 @@ export function DashboardPage() {
             </div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-sx-ink/60">
               <span className="break-all">{displayEmail}</span>
-              <span>Client ID #SER-94821</span>
+              <span>Serene Heights Nathia Gali</span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-sx-mint px-3 py-1 text-xs font-semibold text-sx-ink">
                 <ShieldCheck size={13} aria-hidden="true" />
-                {isInstitutional ? 'Institutional Partner' : 'Accredited Investor'}
+                {isInstitutional ? 'Institutional investor' : 'Individual investor'}
               </span>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <PillLink href="/properties">Explore new holdings</PillLink>
+            <PillLink href="/properties">Explore the projects</PillLink>
             <button
               type="button"
-              onClick={() => handleDownload('Consolidated Portfolio Summary')}
+              onClick={() => handleDownload('Portfolio statement')}
               className="inline-flex items-center gap-2 rounded-full bg-sx-paper px-5 py-2.5 text-sm font-semibold text-sx-ink transition-colors hover:bg-sx-sand sm:text-base"
             >
               <Download size={16} aria-hidden="true" />
@@ -71,11 +71,11 @@ export function DashboardPage() {
       </section>
 
       <PageSection label="Portfolio summary" pad="none" className="pt-4">
-        <StatCards items={portfolioStats} caption="Sample figures for demonstration. Not real holdings or payments." />
+        <StatCards items={portfolioStats} caption="Sample portfolio — demonstration, built from published Serene Heights payment plans. Not real holdings or payments." />
       </PageSection>
 
       <PageSection labelledBy="portfolio-details" pad="bottom" className="pt-14 sm:pt-20">
-        <SectionHeading id="portfolio-details" title="Your portfolio" highlight="portfolio" className="mb-8" />
+        <SectionHeading id="portfolio-details" title="Your sample portfolio" highlight="portfolio" className="mb-8" />
         <DashboardTabs onDownload={handleDownload} />
       </PageSection>
 

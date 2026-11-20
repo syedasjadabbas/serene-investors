@@ -1,193 +1,219 @@
 'use client'
 
-import Link from 'next/link'
-import { FileText, KeyRound, Lock, UserCheck } from 'lucide-react'
+import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 import { CtaBand } from '@/global/components/page/CtaBand'
-import { FaqAccordion } from '@/global/components/page/FaqAccordion'
-import { FeatureCarousel } from '@/global/components/page/FeatureCarousel'
-import { FeatureCards } from '@/global/components/page/FeatureCards'
-import { PageSection, SectionHeading } from '@/global/components/page/PageSection'
+import { FeatureCarousel, type FeatureSlide } from '@/global/components/page/FeatureCarousel'
+import { Eyebrow, PageSection, SectionHeading } from '@/global/components/page/PageSection'
 import { HeroCover, ProductHero } from '@/global/components/page/ProductHero'
 import { StatCards } from '@/global/components/page/StatCards'
-import { StickySteps } from '@/global/components/page/StickySteps'
-import { ReviewStrip } from '@/global/components/sections/ReviewStrip'
+import { PillLink } from '@/global/components/ui/PillLink'
+import { company, contact, lahore, progressUpdates, projectById, smartUnit, tel, whatsappWith } from '@/global/data/serene'
 import { usePageMeta } from '@/global/hooks/usePageMeta'
+import { withBase } from '@/global/lib/asset'
 
-// Product page, dark tone (docs/INNER-PAGE-PATTERNS.md, pattern A), mirroring Golden Visa.
-// Protections are described in general product terms. Serene Investors does not claim any
-// licence, permit or regulator approval here; regulatory details will be added when published.
+// Dark product page (docs/INNER-PAGE-PATTERNS.md, pattern A). Only protections that Serene Heights
+// itself publishes (src/global/data/serene.ts); no other regulator or licence is claimed.
+
+const lahoreProject = projectById('lahore')!
+const nathiagaliProject = projectById('nathia-gali')!
+const transparent = company.philosophy.find((p) => p.title === 'Transparent ownership')!
+const why = (title: string) => smartUnit.why.find((w) => w.title === title)!.body
+const transferable = smartUnit.steps.find((s) => s.title === 'Transferable units')!.body
+const latestUpdate = progressUpdates[0]
 
 const STATS = [
-  { value: '1:1', label: 'one holding company for each building' },
-  { value: '4 checks', label: 'before a listing goes live' },
-  { value: '2-step', label: 'sign-in with a one-time email code' },
-  { value: 'Separate', label: 'client money, held apart from ours' },
+  { value: '0', label: 'maintenance charges or hidden costs' },
+  { value: '2 years', label: 'delivery commitment for Serene Heights Lahore' },
+  { value: '50 sq ft', label: 'standard Smart Property Unit' },
+  { value: '2017', label: `${company.name} founded` },
 ]
 
-const PROTECTIONS = [
+const PROTECTIONS: FeatureSlide[] = [
   {
-    title: 'Each building in its own holding company',
-    body: 'Every property sits in its own holding structure. You own shares in that company, kept apart from Serene Investors’ own business.',
-    image: { src: '/images/properties/boulevard-point-hero.jpg', alt: 'A residential tower above a tree-lined boulevard' },
+    title: 'Shariah-compliant transactions',
+    body: why('Legal compliance'),
+    image: { src: nathiagaliProject.gallery[0], alt: 'Serene Heights Nathia Gali tower in the snow' },
   },
   {
-    title: 'Documents for every listing',
-    body: 'Each listing comes with its own documents, from ownership records to the valuation, and your holdings appear in your account.',
-    image: { src: '/images/story/direct-cedar-court.png', alt: 'A low-rise residential building with its document card' },
+    title: 'Every unit under a legal agreement',
+    body: why('Secure contracts'),
+    image: { src: lahoreProject.gallery[2], alt: 'The facade of the Serene Heights Lahore tower' },
   },
   {
-    title: 'Independent valuations',
-    body: 'Properties are valued by independent valuers before they are listed, so the price you see is not set by us alone.',
-    image: { src: '/images/journey/dubai-marina.jpg', alt: 'Dubai Marina towers along the water' },
+    title: 'In-house management',
+    body: company.management,
+    image: { src: nathiagaliProject.gallery[1], alt: 'Aerial view of the Serene Heights Nathia Gali pool' },
   },
   {
-    title: 'Client money held separately',
-    body: 'Uninvested cash and rental payouts are held separately from the money we use to run the company.',
-    image: { src: '/images/journey/tower-pool.jpg', alt: 'A rooftop pool beside a residential tower' },
-  },
-]
-
-const CHECKS = [
-  {
-    step: 'Step 01',
-    title: 'Screen the property',
-    body: 'We look at location, condition, rental demand and the numbers behind the asking price before a property goes any further.',
-    image: { src: '/images/journey/palm-aerial.jpg', alt: 'Aerial view of a coastal residential district' },
-  },
-  {
-    step: 'Step 02',
-    title: 'Get an independent valuation',
-    body: 'An independent valuer assesses the property, and the listing price is checked against that valuation.',
-    image: { src: '/images/properties/marina-tower.jpg', alt: 'A residential tower in Dubai Marina' },
-  },
-  {
-    step: 'Step 03',
-    title: 'Review title and set up the company',
-    body: 'Ownership records are reviewed and the property is placed in its own holding company before shares are offered.',
-    image: { src: '/images/story/marble-house.png', alt: 'A residential building with stone facades' },
-  },
-  {
-    step: 'Step 04',
-    title: 'Publish the documents',
-    body: 'The listing goes live with its documents attached, so you can read them before you invest and find them in your account afterwards.',
-    image: { src: '/images/story/pines-loft.png', alt: 'A residential loft building among pine trees' },
-  },
-]
-
-const ACCOUNT = [
-  { icon: UserCheck, title: 'Identity checks', body: 'We verify who you are before you can invest or withdraw, which helps keep your account and your money in your hands.' },
-  { icon: KeyRound, title: 'One-time sign-in codes', body: 'Signing in asks for a six-digit code sent to your email, as well as your password.' },
-  { icon: Lock, title: 'Encrypted connections', body: 'Everything you send to and from Serene Investors travels over an encrypted connection.' },
-  { icon: FileText, title: 'Regulation', body: 'Regulatory details will be published on this page. Until then, read the risk notice before you invest.' },
-]
-
-const FAQS = [
-  {
-    q: 'What do I own when I invest?',
-    a: 'Shares in the holding company that owns that one building. It is kept apart from Serene Investors’ own business.',
-  },
-  {
-    q: 'Where is my uninvested cash kept?',
-    a: 'Cash waiting to be invested and rental payouts are held separately from the money we use to run the company.',
-  },
-  {
-    q: 'How are properties valued?',
-    a: 'By independent valuers before a property is listed. The valuation is part of the listing’s documents.',
-  },
-  {
-    q: 'Is Serene Investors regulated?',
-    a: (
-      <>
-        Regulatory details will be published on this page. Until then, please read our{' '}
-        <Link href="/legal/risks" className="font-semibold underline underline-offset-4 hover:text-sx-mint">
-          risk notice
-        </Link>{' '}
-        before investing.
-      </>
-    ),
-  },
-  {
-    q: 'Can I lose money?',
-    a: 'Yes. Property values and rental income can go down as well as up, and shares may take time to sell. Only invest what you can afford to leave invested.',
+    title: 'Transferable units',
+    body: `${transferable} Units are standardised at ${smartUnit.sqft} sq ft, so what you own is clear and fair.`,
+    image: { src: nathiagaliProject.gallery[3], alt: 'Balconies on the Serene Heights Nathia Gali tower' },
   },
 ]
 
 /** /security (also served at /regulation and /safety). */
 export function SecurityPage() {
   usePageMeta(
-    'Serene Investors | Safety & security',
-    'How Serene Investors keeps property shares, cash and personal data protected.',
+    'Serene Investors | Trust & compliance',
+    'Shariah-compliant transactions, legal agreements for every unit, LDA approval for Serene Heights Lahore and in-house management by DM Consortium.',
   )
 
   return (
     <>
       <ProductHero
         tone="dark"
-        image={{ src: '/images/journey/dubai-marina.jpg' }}
-        eyebrow="Safety & security"
-        title="Your investment, protected by design."
-        highlight="protected"
-        body="Each building sits in its own holding company, every listing comes with its documents, and your cash is held separately from ours."
+        image={{ src: lahoreProject.image }}
+        eyebrow="Trust & compliance"
+        title="What you own is what you own."
+        highlight="what you own"
+        body="Shariah-compliant transactions, a legal agreement behind every unit, and one in-house team running the property, with zero hidden costs."
         actions={[
-          { label: 'How listings are checked', href: '#listing-checks' },
-          { label: 'Read the risk notice', href: '/legal/risks' },
+          { label: 'How you are protected', href: '#trust-protections' },
+          { label: 'See construction progress', href: '/progress' },
         ]}
       />
 
       <HeroCover tone="dark">
-        <PageSection tone="dark" label="Security at a glance" pad="top">
-          <StatCards items={STATS} tone="dark" caption="How the platform is designed. Illustrative summary." />
+        <PageSection tone="dark" label="Trust at a glance" pad="top">
+          <StatCards items={STATS} tone="dark" />
         </PageSection>
 
-        <section aria-labelledby="security-protections" className="py-16 sm:py-24">
-          <FeatureCarousel heading="How your investment is protected" headingId="security-protections" slides={PROTECTIONS} tone="dark" />
+        <section id="trust-protections" aria-labelledby="trust-protections-heading" className="scroll-mt-24 py-16 sm:py-24">
+          <FeatureCarousel heading="How your ownership is protected" headingId="trust-protections-heading" slides={PROTECTIONS} tone="dark" />
         </section>
 
-        <PageSection tone="dark" id="listing-checks" labelledBy="security-checks">
-          <SectionHeading id="security-checks" eyebrow="Before it goes live" title="How a listing is checked." highlight="checked" tone="dark" />
-          <div className="mt-6">
-            <StickySteps steps={CHECKS} tone="dark" />
+        {/* LDA approval */}
+        <PageSection tone="dark" labelledBy="trust-lda">
+          <div className="grid items-center gap-8 rounded-[30px] bg-sx-card p-6 sm:p-10 md:grid-cols-[auto_1fr] md:gap-12">
+            <div className="flex justify-center rounded-[20px] bg-white p-6">
+              <img
+                src={withBase(lahore.ldaBadge)}
+                alt="LDA approved badge for Serene Heights Lahore"
+                width={200}
+                height={200}
+                loading="lazy"
+                className="h-32 w-auto object-contain sm:h-44"
+              />
+            </div>
+            <div className="flex flex-col items-start gap-4">
+              <Eyebrow>{lahoreProject.since}</Eyebrow>
+              <h2 id="trust-lda" className="font-heading text-3xl font-bold tracking-[-0.025em] sm:text-[2.75rem]">
+                {lahoreProject.name} is LDA approved.
+              </h2>
+              <p className="max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">{lahore.tagline}</p>
+              <p className="max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
+                It carries a 2-year delivery commitment. Current status: <strong className="font-semibold text-white">{lahoreProject.status}</strong>.
+              </p>
+            </div>
           </div>
         </PageSection>
 
-        <PageSection tone="dark" labelledBy="security-account">
+        {/* Transparent ownership + progress */}
+        <PageSection tone="dark" labelledBy="trust-transparency">
           <SectionHeading
-            id="security-account"
-            title="Protecting your account."
-            highlight="your account"
-            body="The everyday safeguards around your sign-in and your data."
+            id="trust-transparency"
+            eyebrow="Transparency"
+            title="Nothing more to pay later."
+            highlight="Nothing more"
             tone="dark"
           />
-          <FeatureCards items={ACCOUNT} tone="dark" columns={2} className="mt-10" />
-          <p className="mt-6 text-sm text-white/60">
-            Read the{' '}
-            <Link href="/legal/risks" className="font-semibold text-white underline underline-offset-4 hover:text-sx-mint">
-              risk notice
-            </Link>{' '}
-            for the risks of investing in property.
-          </p>
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            <article className="flex flex-col gap-4 rounded-[20px] bg-sx-card p-6 sm:p-8">
+              <h3 className="font-heading text-2xl font-bold tracking-[-0.02em]">{transparent.title}</h3>
+              <p className="text-base leading-relaxed text-white/70">{transparent.body}</p>
+            </article>
+            <article className="flex flex-col items-start gap-4 rounded-[20px] bg-sx-card p-6 sm:p-8">
+              <h3 className="font-heading text-2xl font-bold tracking-[-0.02em]">Progress you can watch</h3>
+              <p className="text-base leading-relaxed text-white/70">
+                Dated site-visit videos are published on the Serene Heights YouTube channel and collected here, newest first. The latest
+                update is from {latestUpdate.date}.
+              </p>
+              <PillLink href="/progress" variant="light" className="mt-auto">
+                Construction progress
+              </PillLink>
+            </article>
+          </div>
         </PageSection>
 
-        <ReviewStrip tone="dark" />
-
-        <PageSection tone="dark" labelledBy="security-faq">
-          <div className="grid items-start gap-10 md:grid-cols-[1fr_2fr]">
-            <SectionHeading id="security-faq" title="FAQs" body="What investors ask about safety." tone="dark" className="md:sticky md:top-28" />
-            <FaqAccordion items={FAQS} tone="dark" />
+        {/* Contacts */}
+        <PageSection tone="dark" labelledBy="trust-contacts">
+          <SectionHeading
+            id="trust-contacts"
+            eyebrow="Talk to us"
+            title="Real offices, real people."
+            highlight="real people"
+            body={`${company.name} is developed by ${company.developer}. Reach the team directly.`}
+            tone="dark"
+          />
+          <div className="mt-10 grid gap-4 lg:grid-cols-[1fr_1.3fr]">
+            <ul className="flex flex-col gap-3 rounded-[20px] bg-sx-card p-6 sm:p-8">
+              <ContactRow icon={Phone} label="UAN" value={contact.uan} href={contact.uanHref} />
+              <ContactRow icon={MessageCircle} label="WhatsApp" value={contact.whatsapp} href={contact.whatsappHref} external />
+              <ContactRow icon={Mail} label="Nathia Gali" value={contact.emails.nathiagali} href={`mailto:${contact.emails.nathiagali}`} />
+              <ContactRow icon={Mail} label="Lahore" value={contact.emails.lahore} href={`mailto:${contact.emails.lahore}`} />
+              {contact.lahorePhones.map((group) =>
+                group.numbers.map((n) => <ContactRow key={n} icon={Phone} label={`Lahore · ${group.label}`} value={n} href={tel(n)} />),
+              )}
+            </ul>
+            <ul className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+              {contact.offices.map((office) => (
+                <li key={office.name} className="flex gap-4 rounded-[20px] bg-sx-card p-6">
+                  <MapPin size={20} aria-hidden="true" className="mt-0.5 shrink-0 text-sx-mint" />
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-white/60">{office.label}</p>
+                    <p className="font-heading text-lg font-semibold">{office.name}</p>
+                    <p className="text-sm text-white/70">{office.address}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </PageSection>
 
         <CtaBand
-          title="Invest with peace of mind."
-          highlight="peace of mind"
-          body="Browse properties, read each listing’s documents, and start from AED 500."
+          title="Ask us anything before you invest."
+          highlight="anything"
+          body="Our team will walk you through the agreements, the payment plan and the site."
           actions={[
-            { label: 'Browse properties', href: '/properties' },
-            { label: 'Create an account', href: '/signup' },
+            { label: 'Contact us', href: '/contact' },
+            { label: 'WhatsApp us', href: whatsappWith('I have a question about investing in Serene Heights') },
           ]}
-          image={{ src: '/images/journey/tower-pool.jpg', alt: 'A rooftop pool beside a residential tower in the afternoon sun' }}
+          image={{ src: lahoreProject.gallery[1], alt: 'Serene Heights Lahore at dusk' }}
         />
       </HeroCover>
     </>
+  )
+}
+
+function ContactRow({
+  icon: Icon,
+  label,
+  value,
+  href,
+  external,
+}: {
+  icon: typeof Phone
+  label: string
+  value: string
+  href: string
+  external?: boolean
+}) {
+  return (
+    <li className="flex items-start gap-4">
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-sx-mint">
+        <Icon size={18} aria-hidden="true" />
+      </span>
+      <div className="min-w-0">
+        <p className="text-xs font-semibold text-white/60">{label}</p>
+        <a
+          href={href}
+          {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          className="break-all font-semibold text-white underline-offset-4 hover:text-sx-mint hover:underline"
+        >
+          {value}
+          {external && <span className="sr-only"> (opens in a new tab)</span>}
+        </a>
+      </div>
+    </li>
   )
 }

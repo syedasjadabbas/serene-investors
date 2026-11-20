@@ -7,25 +7,25 @@ export const menuGroups: NavGroup[] = [
   {
     title: 'Invest',
     links: [
-      { label: 'Properties', href: '/properties' },
-      { label: 'Funds', href: '/funds', badge: 'New' },
+      { label: 'Projects', href: '/properties' },
+      { label: 'Smart Property', href: '/smart-property', badge: 'From PKR 2M' },
+      { label: 'Payment plans', href: '/calculator' },
       { label: 'How it works', href: '/how-it-works' },
-      { label: 'Returns calculator', href: '/calculator' },
     ],
   },
   {
-    title: 'Benefits',
+    title: 'Owners',
     links: [
-      { label: 'Golden Visa', href: '/golden-visa' },
-      { label: 'Rewards', href: '/rewards' },
-      { label: 'Safety & regulation', href: '/security' },
+      { label: 'Owner benefits', href: '/owner-benefits' },
+      { label: 'The resort', href: '/resort' },
+      { label: 'Construction progress', href: '/progress' },
+      { label: 'Trust & compliance', href: '/security' },
     ],
   },
   {
     title: 'Learn',
     links: [
-      { label: 'Blog & insights', href: '/learn' },
-      { label: 'Market reports', href: '/market-reports' },
+      { label: 'Journal', href: '/learn' },
       { label: 'Glossary', href: '/glossary' },
       { label: 'FAQs', href: '/faq' },
     ],
@@ -41,7 +41,7 @@ export const menuGroups: NavGroup[] = [
 ]
 
 export const legalLinks: NavLink[] = [
-  { label: 'Privacy notice', href: '/legal/privacy' },
+  { label: 'Privacy policy', href: '/legal/privacy' },
   { label: 'Terms of use', href: '/legal/terms' },
   { label: 'Risk notice', href: '/legal/risks' },
 ]

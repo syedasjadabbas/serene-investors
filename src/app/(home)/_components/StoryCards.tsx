@@ -1,7 +1,7 @@
 'use client'
 
 import { useLayoutEffect, useRef } from 'react'
-import { Building2, TrendingUp } from 'lucide-react'
+import { BadgeCheck, CalendarCheck } from 'lucide-react'
 import { usePrefersReducedMotion } from '@/global/hooks/usePrefersReducedMotion'
 import { gsap, registerGsapPlugins } from '@/global/lib/gsap'
 import { withBase } from '@/global/lib/asset'
@@ -22,8 +22,8 @@ const TAG_TONE = {
   dark: 'bg-sx-brand text-white',
 } as const
 
-function WordmarkPanel() {
-  const tiles = ['/images/journey/palm-aerial.jpg', '/images/journey/hittin.jpg', '/images/properties/marina-tower.jpg', '/images/journey/burj-al-arab.jpg']
+function WordmarkPanel({ card }: { card: Card }) {
+  const tiles = ('tiles' in card && card.tiles) || []
   const spots = ['left-[8%] top-[10%] rotate-[-8deg]', 'right-[10%] top-[14%] rotate-[6deg]', 'left-[14%] bottom-[12%] rotate-[5deg]', 'right-[8%] bottom-[10%] rotate-[-6deg]']
   return (
     <div className="relative flex h-full min-h-[320px] items-center justify-center overflow-hidden rounded-[16px] bg-sx-ink">
@@ -51,14 +51,14 @@ function PhotoPanel({ card }: { card: Card }) {
       {card.id === 'why' ? (
         <div className="absolute bottom-4 left-4 flex items-center gap-3 rounded-[14px] bg-white/95 p-3 text-sx-ink shadow-lg">
           <span className="flex size-9 items-center justify-center rounded-[10px] bg-sx-brand text-white">
-            <TrendingUp size={18} />
+            <CalendarCheck size={18} aria-hidden="true" />
           </span>
-          <span className="text-sm font-semibold">Rent paid this quarter</span>
+          <span className="text-sm font-semibold">{card.badge}</span>
         </div>
       ) : (
         <div className="absolute right-4 top-4 flex items-center gap-3 rounded-[14px] bg-sx-ink/85 p-3 text-white shadow-lg backdrop-blur">
-          <Building2 size={18} className="text-sx-mint" />
-          <span className="text-sm font-semibold">Documents ready to read</span>
+          <BadgeCheck size={18} className="text-sx-mint" aria-hidden="true" />
+          <span className="text-sm font-semibold">{card.badge}</span>
         </div>
       )}
     </div>
@@ -95,7 +95,7 @@ export function StoryCards() {
   }, [reduced])
 
   return (
-    <section ref={ref} aria-label="About Serene Investors" className="px-4 sm:px-8">
+    <section ref={ref} aria-label="About Serene Heights" className="px-4 sm:px-8">
       <div className="mx-auto flex max-w-[1240px] flex-col gap-10 md:gap-[85vh]">
         {story.map((card, index) => (
           <article
@@ -119,7 +119,7 @@ export function StoryCards() {
                 {card.body}
               </p>
             </div>
-            {card.tone === 'forest' ? <WordmarkPanel /> : <PhotoPanel card={card} />}
+            {card.tone === 'forest' ? <WordmarkPanel card={card} /> : <PhotoPanel card={card} />}
           </article>
         ))}
       </div>
