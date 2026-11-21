@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 @import '../global/styles/tokens.css';
 @import '../global/styles/serene.css';
 
 @theme inline {
-  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: var(--font-plus-jakarta-sans), var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: var(--font-plus-jakarta-sans), -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Stake Brand Color Tokens */
   --color-stake-green: var(--stake-green);
@@ -74,6 +73,11 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:where(a, button, summary, [role='button'], input, select, textarea) {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 :where(a, button, summary, [tabindex]:not([tabindex='-1'])):focus-visible {

@@ -7,6 +7,8 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '/serene-investors'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
   basePath: BASE_PATH || undefined,
   // Same value for client code so image, link and API paths match the base path.
   env: { NEXT_PUBLIC_BASE_PATH: BASE_PATH },
@@ -24,12 +26,7 @@ const nextConfig = {
     return [...root, ...moved]
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-    ],
+    formats: ['image/avif', 'image/webp'],
   },
 }
 

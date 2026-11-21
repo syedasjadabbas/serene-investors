@@ -16,8 +16,9 @@ export function HomeHero() {
 
   return (
     <section
+      data-home-hero
       aria-labelledby="home-hero-heading"
-      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-sx-ink text-white"
+      className="relative isolate flex min-h-[clamp(620px,100svh,960px)] flex-col justify-between gap-8 overflow-hidden bg-sx-ink text-white"
     >
       <div className="absolute inset-0 -z-10">
         {reducedMotion ? (
@@ -39,7 +40,7 @@ export function HomeHero() {
         <div className="absolute inset-0 bg-gradient-to-b from-sx-ink/70 via-sx-ink/45 to-sx-ink/85" />
       </div>
 
-      <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col items-center px-4 pt-32 text-center sm:px-8 sm:pt-36">
+      <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col items-center justify-center px-4 pb-4 pt-24 text-center sm:px-8 sm:pt-28">
         <div
           role="group"
           aria-label="What would you like to own?"
@@ -72,34 +73,51 @@ export function HomeHero() {
         <h1
           id="home-hero-heading"
           key={mode.id}
-          className="sx-menu-in mt-10 max-w-4xl font-heading text-[2.4rem] font-extrabold uppercase leading-[0.95] tracking-[-0.03em] text-balance sm:text-6xl lg:text-7xl"
+          className="sx-menu-in mt-6 max-w-4xl font-heading text-[clamp(2rem,5vw,4.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.03em] text-balance sm:mt-8"
         >
           {mode.heading[0]}
           <br />
           {mode.heading[1]}
         </h1>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">{mode.body}</p>
+        <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:mt-6 sm:text-lg">{mode.body}</p>
       </div>
 
-      <div className="mx-auto w-full max-w-[1400px] px-4 pb-6 sm:px-8 sm:pb-8">
-        <div className="flex flex-col gap-4 rounded-[20px] bg-white p-3 text-sx-ink shadow-2xl sm:flex-row sm:items-center sm:justify-between sm:p-4">
-          <div className="flex items-center gap-4 px-1">
-            <span className="flex size-12 shrink-0 items-center justify-center rounded-[14px] bg-sx-brand text-white">
-              <Building2 size={22} />
+      <div className="mx-auto w-full max-w-[780px] px-4 pb-6 sm:px-8 sm:pb-8">
+        <div className="flex flex-col gap-3 rounded-[24px] bg-sx-ink/75 p-2.5 text-white shadow-[0_24px_60px_rgba(0,0,0,0.45)] ring-1 ring-white/15 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:rounded-full sm:py-2 sm:pl-3 sm:pr-2">
+          <div className="flex items-center gap-3 px-1">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-sx-mint/15 text-sx-mint ring-1 ring-sx-mint/25">
+              <Building2 size={18} aria-hidden="true" />
             </span>
-            <p className="text-base font-medium sm:text-lg">{heroBar.text}</p>
+            <p className="flex flex-wrap items-center gap-x-2 text-sm font-medium tracking-[-0.01em] text-white/90 sm:text-[0.9375rem]">
+              <span>{heroBar.place}</span>
+              <span aria-hidden="true" className="text-white/30">
+                ·
+              </span>
+              <span className="font-semibold text-sx-mint">{heroBar.from}</span>
+            </p>
           </div>
-          <div className="flex flex-col gap-2 sm:flex-row">
-            {heroBar.actions.map((action) => (
-              <Link
-                key={action.href}
-                href={action.href}
-                className="group flex items-center justify-between gap-6 rounded-full bg-sx-ink py-1.5 pl-6 pr-1.5 text-sm font-semibold text-white transition-colors hover:bg-sx-forest sm:text-base"
-              >
-                {action.label}
-                <ArrowCircle tone={action.tone} />
-              </Link>
-            ))}
+
+          <div className="flex items-center justify-between gap-2 sm:justify-end">
+            {heroBar.actions.map((action) =>
+              action.variant === 'primary' ? (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className="group inline-flex items-center gap-3 whitespace-nowrap rounded-full bg-white py-1.5 pl-5 pr-1.5 text-sm font-semibold text-sx-ink transition-colors hover:bg-sx-mint"
+                >
+                  {action.label}
+                  <ArrowCircle tone="dark" size="sm" />
+                </Link>
+              ) : (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  {action.label}
+                </Link>
+              ),
+            )}
           </div>
         </div>
       </div>

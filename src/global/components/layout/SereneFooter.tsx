@@ -9,7 +9,7 @@ const GROUP_URL = process.env.NEXT_PUBLIC_GROUP_URL ?? '/'
 
 export function SereneFooter() {
   return (
-    <footer className="relative overflow-hidden bg-sx-ink pt-24 text-white">
+    <footer className="relative overflow-hidden bg-sx-ink pb-[env(safe-area-inset-bottom)] pt-24 text-white">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-8">
         <div className="flex flex-col gap-6 border-b border-white/10 pb-10 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -86,7 +86,7 @@ export function SereneFooter() {
         </div>
       </div>
 
-      <p aria-hidden="true" className="sx-wordmark -mb-[0.12em] whitespace-nowrap text-center font-heading text-[23vw]">
+      <p aria-hidden="true" className="sx-wordmark -mb-[0.12em] whitespace-nowrap text-center font-heading text-[clamp(4.5rem,21vw,22rem)]">
         serene
       </p>
     </footer>

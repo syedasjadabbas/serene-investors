@@ -26,3 +26,7 @@ dist-ssr
 *.sln
 *.sw?
 *.tsbuildinfo
+
+# Local tooling and generated walkthrough videos
+.claude/
+demo-output/

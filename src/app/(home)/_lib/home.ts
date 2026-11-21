@@ -43,10 +43,11 @@ export const heroModes: HeroMode[] = [
 ]
 
 export const heroBar = {
-  text: 'Serene Heights Nathia Gali and Lahore, from PKR 2 million.',
+  place: 'Nathia Gali & Lahore',
+  from: 'From PKR 2M',
   actions: [
-    { label: 'Projects', href: '/properties', tone: 'brand' as const },
-    { label: 'Smart Property', href: '/smart-property', tone: 'sand' as const },
+    { label: 'Projects', href: '/properties', variant: 'secondary' as const },
+    { label: 'Smart Property', href: '/smart-property', variant: 'primary' as const },
   ],
   // Fly-through of the Serene Heights Nathia Gali tower; the poster is its first frame.
   video: '/videos/hero.mp4',

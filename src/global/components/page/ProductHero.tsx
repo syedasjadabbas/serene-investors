@@ -40,8 +40,9 @@ export function ProductHero({ eyebrow, title, highlight, body, actions, tone = '
   return (
     <section
       className={cn(
-        // Pulled up under the floating navbar so it fills the screen like the home hero.
-        'sticky top-0 isolate -mt-24 flex min-h-[100svh] flex-col overflow-hidden rounded-b-[30px]',
+        // Pulled up under the floating navbar. Only pins when the viewport is tall enough so zoomed-in
+        // or short screens never get overlapped by HeroCover.
+        'relative isolate -mt-24 flex min-h-[clamp(560px,100svh,900px)] flex-col overflow-hidden rounded-b-[30px] [@media(min-height:760px)]:sticky [@media(min-height:760px)]:top-0',
         dark ? 'bg-sx-ink text-white' : 'bg-gradient-to-b from-sx-tint to-sx-paper text-sx-ink',
       )}
     >
@@ -65,9 +66,9 @@ export function ProductHero({ eyebrow, title, highlight, body, actions, tone = '
         </div>
       )}
 
-      <div className="mx-auto flex w-full max-w-[1240px] flex-1 flex-col items-center gap-5 px-4 pt-36 text-center sm:px-8 sm:pt-44">
+      <div className="mx-auto flex w-full max-w-[1240px] flex-1 flex-col items-center gap-5 px-4 pb-16 pt-28 text-center sm:px-8 sm:pb-20 sm:pt-36">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-        <h1 className="max-w-4xl text-balance font-heading text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:text-[4.25rem]">
+        <h1 className="max-w-4xl text-balance font-heading text-[clamp(2.2rem,5vw,4.25rem)] font-bold leading-[1.04] tracking-[-0.035em]">
           <Highlighted title={title} highlight={highlight} className={dark ? 'text-sx-mint' : 'text-sx-brand'} />
         </h1>
         {body && <div className={cn('max-w-xl text-base leading-relaxed sm:text-lg', dark ? 'text-white/75' : 'text-sx-ink/65')}>{body}</div>}
@@ -85,7 +86,7 @@ export function ProductHero({ eyebrow, title, highlight, body, actions, tone = '
           </div>
         )}
         {children}
-        {visual && !dark && <div className="mt-auto w-full max-w-3xl translate-y-10 pt-10">{visual}</div>}
+        {visual && !dark && <div className="mt-auto w-full max-w-3xl pt-8">{visual}</div>}
       </div>
     </section>
   )
@@ -98,7 +99,7 @@ export function ProductHero({ eyebrow, title, highlight, body, actions, tone = '
  */
 export function HeroCover({ children, tone = 'paper' }: { children: ReactNode; tone?: 'paper' | 'dark' }) {
   return (
-    <div className={cn('relative z-[2] -mt-10 rounded-t-[32px] pt-6', tone === 'dark' ? 'rounded-b-[32px] bg-sx-ink text-white' : 'bg-sx-paper')}>
+    <div className={cn('relative z-[2] -mt-6 rounded-t-[32px] pt-6', tone === 'dark' ? 'rounded-b-[32px] bg-sx-ink text-white' : 'bg-sx-paper')}>
       {children}
     </div>
   )

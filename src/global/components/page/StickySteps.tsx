@@ -53,7 +53,7 @@ export function StickySteps({ steps, tone = 'light' }: { steps: Step[]; tone?: '
               }}
               data-index={index}
               className={cn(
-                'flex flex-col justify-center gap-4 py-8 transition-opacity duration-500 md:min-h-[75vh] md:py-0',
+                'flex flex-col justify-center gap-4 py-8 transition-opacity duration-500 md:min-h-[clamp(380px,65vh,660px)] md:py-0',
                 active === index ? 'md:opacity-100' : 'md:opacity-35',
               )}
             >
@@ -71,7 +71,7 @@ export function StickySteps({ steps, tone = 'light' }: { steps: Step[]; tone?: '
       </ol>
 
       <div className="hidden md:block">
-        <div className="sticky top-[12vh] h-[76vh] overflow-hidden rounded-[24px] bg-sx-card">
+        <div className="sticky top-24 h-[clamp(360px,calc(100vh-7.5rem),680px)] overflow-hidden rounded-[24px] bg-sx-card">
           {steps.map((s, index) => (
             <div
               key={s.step}

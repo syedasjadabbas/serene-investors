@@ -198,7 +198,12 @@ export function Navbar({ overlay = false }: Props) {
   useEffect(() => {
     if (!overlay) return
     const onScroll = () => {
-      // Stay transparent through the full-height hero, then switch to the white bar at the second section.
+      // Stay transparent while the hero covers the top of the viewport, then turn white at the next section.
+      const hero = document.querySelector<HTMLElement>('[data-home-hero]')
+      if (hero) {
+        setScrolled(hero.getBoundingClientRect().bottom <= 96)
+        return
+      }
       const threshold = Math.max(120, window.innerHeight - 96)
       setScrolled(window.scrollY >= threshold)
     }
@@ -238,7 +243,7 @@ export function Navbar({ overlay = false }: Props) {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-[1000] px-3 pt-3 sm:px-6 sm:pt-4">
+      <header className="fixed inset-x-0 top-0 z-[1000] px-3 pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-6 sm:pt-[max(1rem,env(safe-area-inset-top))]">
         <nav
           aria-label="Main"
           className={cn(
@@ -251,7 +256,7 @@ export function Navbar({ overlay = false }: Props) {
           )}
         >
           {/* Left: single pill (account dropdown when signed in, compact account/quick pill when signed out). */}
-          <div className="flex shrink-0 items-center sm:min-w-0 sm:flex-1">
+          <div className="flex shrink-0 items-center md:min-w-0 md:flex-1">
             {!menuOpen &&
               (isLoaded && isAuthenticated && user ? (
                 <UserProfileDropdown user={user} tone={tone} />
@@ -260,14 +265,14 @@ export function Navbar({ overlay = false }: Props) {
               ))}
           </div>
 
-          {/* Center: bold wordmark (flex-centered between controls on phones, dead-centred on sm+). */}
+          {/* Center: bold wordmark (flex-centered between controls on narrow/zoomed viewports, dead-centred on md+). */}
           <SereneLogo
             tone={tone}
-            className="text-[13px] sm:absolute sm:left-1/2 sm:-translate-x-1/2 sm:text-[20px]"
+            className="text-[13px] sm:text-[16px] md:absolute md:left-1/2 md:-translate-x-1/2 md:text-[20px]"
           />
 
           {/* Right: single pill with minimalist two-bar Menu icon. */}
-          <div className="flex shrink-0 items-center justify-end sm:flex-1">
+          <div className="flex shrink-0 items-center justify-end md:flex-1">
             <button
               ref={menuButtonRef}
               type="button"

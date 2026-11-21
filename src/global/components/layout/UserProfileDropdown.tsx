@@ -98,7 +98,7 @@ export function UserProfileDropdown({ user, tone = 'dark' }: Props) {
         <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-sx-forest font-heading text-xs font-bold text-sx-mint">
           {initials}
         </span>
-        <span className="hidden min-w-0 flex-col pr-0.5 sm:flex">
+        <span className="hidden min-w-0 flex-col pr-0.5 md:flex">
           <span
             className={cn(
               'max-w-[110px] truncate text-xs font-semibold leading-tight md:max-w-[130px]',
