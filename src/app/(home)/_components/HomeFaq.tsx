@@ -5,7 +5,7 @@ import { homeFaq } from '../_lib/home'
 
 export function HomeFaq() {
   return (
-    <section aria-labelledby="home-faq-heading" className="px-4 sm:px-8">
+    <section aria-labelledby="home-faq-heading" className="px-4 pt-20 sm:px-8 sm:pt-28">
       <div className="mx-auto grid max-w-[1240px] items-start gap-10 md:grid-cols-[1fr_2fr]">
         {/* Stays in view while the questions scroll past on wider screens. */}
         <div className="flex flex-col gap-6 md:sticky md:top-28">

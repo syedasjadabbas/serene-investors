@@ -75,9 +75,9 @@ export function StoryCards() {
     const root = ref.current
     if (!root || reduced) return
     registerGsapPlugins()
-    // Only stack cards when the viewport is both wide and tall enough so zoomed-in screens never clip or overlap.
+    // Phones: cards scroll normally; from md (768px) upward, cards scale to fit the viewport and stack like a deck.
     const mm = gsap.matchMedia(root)
-    mm.add('(min-width: 768px) and (min-height: 720px)', () => {
+    mm.add('(min-width: 768px)', () => {
       const cards = gsap.utils.toArray<HTMLElement>('[data-stack-card]', root)
       cards.forEach((card, index) => {
         const next = cards[index + 1]
@@ -96,17 +96,17 @@ export function StoryCards() {
 
   return (
     <section ref={ref} aria-label="About Serene Heights" className="px-4 sm:px-8">
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-8 [@media(min-width:768px)_and_(min-height:720px)]:gap-[clamp(360px,70vh,640px)]">
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-10 md:gap-[clamp(320px,65vh,620px)]">
         {story.map((card, index) => (
           <article
             key={card.id}
             data-stack-card
             aria-labelledby={`story-${card.id}`}
             // Each later card sticks a little lower so the edge of the one beneath stays visible.
-            style={reduced ? undefined : { top: `${104 + index * 18}px` }}
+            style={reduced ? undefined : { top: `${96 + index * 14}px` }}
             className={cn(
-              'grid origin-top gap-6 rounded-[24px] p-4 shadow-[0_-20px_50px_rgba(0,0,0,0.12)] sm:p-5 md:min-h-[clamp(440px,62vh,560px)] md:grid-cols-2',
-              !reduced && '[@media(min-width:768px)_and_(min-height:720px)]:sticky',
+              'grid origin-top gap-6 rounded-[24px] p-4 shadow-[0_-20px_50px_rgba(0,0,0,0.12)] sm:p-5 md:min-h-[clamp(360px,calc(100vh-9.5rem),540px)] md:grid-cols-2',
+              !reduced && 'md:sticky',
               CARD_TONE[card.tone],
             )}
           >

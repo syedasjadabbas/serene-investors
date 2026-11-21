@@ -42,7 +42,7 @@ export function ProductHero({ eyebrow, title, highlight, body, actions, tone = '
       className={cn(
         // Pulled up under the floating navbar. Only pins when the viewport is tall enough so zoomed-in
         // or short screens never get overlapped by HeroCover.
-        'relative isolate -mt-24 flex min-h-[clamp(560px,100svh,900px)] flex-col overflow-hidden rounded-b-[30px] [@media(min-height:760px)]:sticky [@media(min-height:760px)]:top-0',
+        'relative isolate -mt-24 flex min-h-[clamp(540px,100svh,900px)] flex-col overflow-hidden rounded-b-[30px] [@media(min-height:600px)]:sticky [@media(min-height:600px)]:top-0',
         dark ? 'bg-sx-ink text-white' : 'bg-gradient-to-b from-sx-tint to-sx-paper text-sx-ink',
       )}
     >
